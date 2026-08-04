@@ -1,3 +1,5 @@
+import json
+
 import unicodedata
 import re
 import pdfplumber
@@ -128,6 +130,38 @@ def clean_document(pdf_path):
 
     return cleaned_pages
 
+def build_documents(doc_id, title, source_type, cleaned_pages):
+    text_parts = []
+    page_spans = []
+    cursor = 0
+
+    for page_num, page_text in enumerate(cleaned_pages, start=1):
+        char_start = cursor
+        text_parts.append(page_text)
+        cursor += len(page_text)
+        char_end = cursor
+
+        page_spans.append({
+            "page": page_num,
+            "char_start": char_start,
+            "char_end": char_end
+        })
+
+        text_parts.append("\n\n")
+        cursor += 2
+
+    full_text = "".join(text_parts).strip()
+
+    return {
+        "doc_id": doc_id,
+        "title": title,
+        "source_type": source_type,
+        "n_pages": len(cleaned_pages),
+        "text": full_text,
+        "pages": page_spans
+    }
+
+
 def save_processed_documents():
 
     for row in df.itertuples():
@@ -135,12 +169,14 @@ def save_processed_documents():
 
         cleaned_pages = clean_document(pdf_path)
 
-        full_text = "\n\n".join(cleaned_pages)
+        doc = build_documents(row.doc_id, row.title, row.source_type, cleaned_pages)
 
-        processed_path = PROCESSED_FOLDER / (row.doc_id + ".txt")
-        processed_path.write_text(full_text, encoding="UTF-8")
+        json_path = PROCESSED_FOLDER / f"{row.doc_id}.json"
+        json_path.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="UTF-8")
 
-        print(f"{row.doc_id} {len(cleaned_pages):>3} pages and {len(full_text):>7} characters " 
-              f"{row.filename}")
+        txt_path = PROCESSED_FOLDER / f"{row.doc_id}.txt"
+        txt_path.write_text(doc["text"], encoding="UTF-8")
+
+        print(f"{row.doc_id} {doc['n_pages']:>3} pages,{len(doc['text']):>7} characters")
 
 save_processed_documents()

@@ -1,0 +1,29 @@
+{
+  "doc_id": "024",
+  "title": "Software engineering and information systems (4 years)",
+  "source_type": "студиски програми",
+  "n_pages": 4,
+  "text": "EN\nМК\nSoftware engineering and information systems (4 years)\nGeneral information\nUndergraduate studies in the according study program should provide for superb engineering staff capable of satisfying\nthe ever-increasing demand for software engineers, especially programmers. Students enrolled in this study program\nacquire knowledge enabling them great professional flexibility and wide choice of employment opportunities wherever\nthere is a need of analysis, specification, design, planning, implementation and programming, project management and\nmaintaining software and information systems. Bachelor of Engineering of this profile can build his own career in software\nindustry, in public and service sector, but especially in software development companies, real-time information systems,\nmobile and hybrid applications, internet and cloud software, advanced user interfaces, solutions related to design and\nimplementation of software systems, etc.\nThe title obtained after completion of the study program\nBachelor of Science in Software Engineering and Information Technologies (240 ECTS)\nStudy program\nIn the curriculum, it is planned to have 29 compulsory subjects and 12 optional subjects. All optional subjects are divided\ninto three difficulty groups (H1, H2 and H3). The weight is shown in the item code. Subjects containing L1 are subjects of\nweight group H1. Subjects containing L2 are subjects of weight group H2. Subjects that contain L3 in the code are\nsubjects of weight group H3. The rules for optional subjects according to the level are defined as:\n• Number of subjects from H1 - the total number of credits of selected elective subjects from group H1 must not exceed 6\ncredits.\n• Number of H2 subjects - the total number of credits of selected elective subjects from the H2 group must not exceed 36\ncredits.\n• Number of H3 subjects – there is no limit to the number of selected subjects from the H3 group.\nThe student can choose more courses from group H1 and group H2 than the number provided, but in that case the credits\nearned for these courses do not count towards the total number of credits needed to obtain the diploma. The student can\nreceive a maximum of 6 ECTS credits from extracurricular activities approved by the teaching and scientific council of the\nfaculty. Passed subjects and earned credits will be part of the list of passed subjects in the certificate of passed subjects\nafter graduation from the faculty.\nSubjects\nSemester: 1 Semester: 2 Semester: 3 Semester: 4 Semester: 5 Semester: 6 Semester: 7 Semester: 8\nSemester: 1 ↑\nCompulsory subjects\n\nCode Subject\nF23L1W004 Sport and Health\nF23L1W005 Business and Management\nF23L1W007 Introduction to computer science\nF23L1W018 Professional skills\nF23L1W020 Structured programming\nF23L2W002 Mathematics 1\nSemester: 2 ↑\nCompulsory subjects\nCode Subject\nF23L1S003 Computer Architecture and Organization\nF23L1S016 Object-oriented programming\nF23L2S001 Mathematics 2\nF23L2S015 Object-oriented analysis and design\nElective subject with code starting with F23L1S F23L1S\nSemester: 3 ↑\nCompulsory subjects\nCode Subject\nF23L2W001 Algorithms and data structures\nF23L2W014 Computer Networks and Security\nF23L3W001 Mathematics 3\nElective subject with code starting with F23L2W F23L2W\nElective subject with code starting with F23L2W F23L2W\nSemester: 4 ↑\nCompulsory subjects\nCode Subject\nF23L2S002 Software requirements analysis\n\nF23L2S017 Operating systems\nF23L2S030 Artificial Intelligence\nF23L3S100 business practice\nElective subject with code starting with F23L2S F23L2S\nSemester: 5 ↑\nCompulsory subjects\nCode Subject\nF23L3W004 Databases\nF23L3W008 Introduction to datascience\nF23L3W009 Software design and architecture\nF23L3W140 Advanced programming\nElective subject with code starting with F23L2W или F23L3W F23L2W F23L3W\nSemester: 6 ↑\nCompulsory subjects\nCode Subject\nF23L3S010 Human-computer interaction design\nF23L3S012 System Integration\nF23L3S019 Software quality and testing\nF23L3S138 Advanced databases\nElective subject with code starting with F23L2S или F23L3S F23L2S F23L3S\nSemester: 7 ↑\nCompulsory subjects\nCode Subject\nF23L3W021 Team project\nElective subject with code starting with F23L3W F23L3W\nElective subject with code starting with F23L3W F23L3W\n\nElective subject with code starting with F23L3W F23L3W\nElective subject with code starting with F23L3W F23L3W\nSemester: 8 ↑\nCompulsory subjects\nCode Subject\nF23L3S022 ICT Projects Management\nF23L3S028 Entrepreneurship\nF23L3S168 Diploma thesis\nElective subject with code starting with F23L2S или F23L3S F23L2S F23L3S\nElective subject with code starting with F23L3S F23L3S\nElective subjects from group: F23L1S ↑\nCode Предмет Suggested Dependencies\nsemester\nF23L1S052 E-learning 2\nF23L1S116 Computer components 2\nF23L1S120 Creative skills for problem solving 2 нема\nF23L1S146 Fundamentals of Web design 2\nF23L2S066 F23L1S066 Cybersecurity fundamentals 2 нема\nElective subjects from group: F23L2S ↑\nCode Предмет Suggested Dependencies\nsemester\nF23L1S026 F23L2S026 Marketing 4 Освоени најмалку 36 ЕКТС\nF23L2S042 Electrical Circuits 4 Освоени најмалку 36 ЕКТС\nF23L2S051 Computational thinking in education 4 Вовед во компјутерски науки\nF23L2S061 Wireless and mobile systems 4 Освоени најмалку 36 ЕКТС",
+  "pages": [
+    {
+      "page": 1,
+      "char_start": 0,
+      "char_end": 2586
+    },
+    {
+      "page": 2,
+      "char_start": 2588,
+      "char_end": 3401
+    },
+    {
+      "page": 3,
+      "char_start": 3403,
+      "char_end": 4240
+    },
+    {
+      "page": 4,
+      "char_start": 4242,
+      "char_end": 5236
+    }
+  ]
+}
