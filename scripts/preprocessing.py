@@ -23,6 +23,13 @@ NAV_RATIO = 0.4
 PAGE_NUMBER_RE = re.compile(r"^(page|стр\.?|страна)?\s*\d{1,4}(\s*/\s*\d{1,4})?$", re.I)
 SUPERSCRIPT_RE = re.compile(r"[⁰¹²³⁴⁵⁶⁷⁸⁹]")
 LINK_RE = re.compile(r"\((?:/|https?://)[^)]*\)?", re.I)
+KNOWN_NAV_LINES = {
+    "MK", "МК", "EN",
+    "Република Северна Македонија",
+    "Министерство за образование и",
+    "наука",
+    "Почетна Конкурси и стипендии Стипендии - МОН",
+}
 
 def find_documents():
     rows = []
@@ -60,6 +67,18 @@ def strip_links(line):
 
     is_navigation = len(stripped) < len(line) * NAV_RATIO
     return stripped, is_navigation
+
+def strip_leading_navigation(lines, max_lines=8):
+    result = list(lines)
+
+    while result and max_lines > 0:
+        if result[0].strip() not in KNOWN_NAV_LINES:
+            break
+
+        result.pop(0)
+        max_lines -= 1
+
+    return result
 
 def find_headers_and_footers(pages):
     n = len(pages)
@@ -121,6 +140,11 @@ def clean_document(pdf_path):
     normalized_pages = []
     for page in raw_pages:
         normalized_pages.append(normalize_page(page))
+
+    if normalized_pages:
+        first_page_lines = normalized_pages[0].splitlines()
+        first_page_lines = strip_leading_navigation(first_page_lines)
+        normalized_pages[0] = "\n".join(first_page_lines)
 
     headers = find_headers_and_footers(normalized_pages)
 
