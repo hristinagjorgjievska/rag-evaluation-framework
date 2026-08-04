@@ -22,7 +22,6 @@ PAGE_NUMBER_RE = re.compile(r"^(page|стр\.?|страна)?\s*\d{1,4}(\s*/\s*\
 SUPERSCRIPT_RE = re.compile(r"[⁰¹²³⁴⁵⁶⁷⁸⁹]")
 LINK_RE = re.compile(r"\((?:/|https?://)[^)]*\)?", re.I)
 
-#Со оваа функција градиме патеки до сите документи во корпусот за потоа да можеме да ги пристапиме
 def find_documents():
     rows = []
     for row in df.itertuples():
@@ -41,17 +40,11 @@ def extract_pages(pdf_path):
                 pages.append("")
     return pages
 
-# правиме низа од документите кои се содржат во корпусот
 def build_corpus():
     corpus = {}
     for doc in find_documents():
         corpus[doc.name] = extract_pages(doc)
     return corpus
-
-# тука за секој фајл принтаме име на фајл и колку страници содржи истиот
-#corpus = build_corpus()
-#for filename, pages in corpus.items():
-    print(filename, len(pages), "pages")
 
 def normalize_page(text):
     text = SUPERSCRIPT_RE.sub("", text)
@@ -61,7 +54,7 @@ def normalize_page(text):
 def strip_links(line):
     stripped = LINK_RE.sub("", line)
     stripped = stripped.strip()
-    stripped = re.sub(r"\s{2,}", " ", stripped)      # двојни празни места по бришењето
+    stripped = re.sub(r"\s{2,}", " ", stripped)
 
     is_navigation = len(stripped) < len(line) * NAV_RATIO
     return stripped, is_navigation
@@ -94,7 +87,6 @@ def find_headers_and_footers(pages):
     return headers
 
 def clean_pages(text, headers):
-    #ги ставаме да бидат во ист формат сите документи, нормализација
     kept = []
     for line in text.splitlines():
         line = line.strip()
