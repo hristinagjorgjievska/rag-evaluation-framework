@@ -1,0 +1,567 @@
+Lecture 1. Data, Similarity Measures, Preprocessing, and
+Transformation of Data
+Data Mining, prof. Biljana Tojtovska Ribarski
+FCSE, Skopje
+Contents
+1 Similarity, Preprocessing, and Transformation in Data Mining 1
+1.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+1.2 A Guiding Framework for Choosing a Measure . . . . . . . . . . . . . . . . . . . 1
+1.3 When Are We Not Allowed to Transform Data? . . . . . . . . . . . . . . . . . . . 2
+1.4 Metrics and Non-Metrics: Why Properties Matter? . . . . . . . . . . . . . . . . . 4
+1.5 Non-Standard Data Types and the Measures That Match Them . . . . . . . . . . 5
+1.6 Graphs, Trees, and Structural Comparison . . . . . . . . . . . . . . . . . . . . . . 6
+1.7 Data Needing Non-Euclidean Geometries . . . . . . . . . . . . . . . . . . . . . . . 7
+1.8 Correlations Beyond Pearson, Spearman, and Kendall . . . . . . . . . . . . . . . 9
+1.9 How a Wrong Metric Breaks an Algorithm? . . . . . . . . . . . . . . . . . . . . . 10
+1.10 Do Algorithms Assume Metric Properties? . . . . . . . . . . . . . . . . . . . . . . 10
+1.11 Data Mining Beyond Prediction . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+1.12 One Dataset, Many Metrics for Different Questions . . . . . . . . . . . . . . . . . 11
+1.13 Distances for Earth and Atmosphere Objects: Problem → Metric . . . . . . . . . 11
+1.14 When to Use Similarity Versus Distance . . . . . . . . . . . . . . . . . . . . . . . 12
+1.15 Exercise . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+1.16 Practical Do’s and Don’ts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+1.17 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+1 Similarity, Preprocessing, and Transformation in Data Mining
+1.1 Introduction
+In data mining, one of the most common hidden assumptions is that once data have been encoded
+as vectors, the problem of comparison has been solved. This is not true. A representation tells
+us what the objects look like numerically, but it does not by itself tell us what it means for two
+objects to be close, similar, or different. A correct analysis therefore requires two decisions: how
+the data should be represented, and how that representation should be compared.
+The core message of this chapter is that similarity, distance, preprocessing, and transformation
+must be chosen in a way that respects the meaning of the data and the question being asked. A
+transformation that is perfectly reasonable for one task may be wrong for another. A distance
+that works well for numeric vectors may fail badly for sets, graphs, road networks, sequences,
+or probability distributions. Even within the same dataset, different goals may justify different
+comparison rules.
+1.2 A Guiding Framework for Choosing a Measure
+A useful way to read almost any comparison problem is through the sequence
+Data → Task → Compare → Measure → Why it fits / Pitfall.
+
+Many mistakes arise from skipping one of the middle steps.
+Definition: Comparison-aware analysis
+A comparison-aware analysis is an analysis in which the representation of the data, the
+comparison target, and the comparison rule are all chosen to match the scientific, business,
+or algorithmic question of interest.
+Remark
+Two objects may be represented by the same numeric structure and still require different
+comparison rules, because the notion of “difference” may change from one task to another.
+For example, a route can be compared by geometric shape, by travel time, by overlap in
+road segments, or by turn-by-turn sequence similarity.
+1.3 When Are We Not Allowed to Transform Data?
+Transformation is often useful, but it is not automatically harmless. The first question is not
+“Can this be standardized?” but rather “What would be changed conceptually if we standardized
+it?”
+1.3.1 When the Transformation Changes the Meaning of the Attribute
+Consider daily temperatures for ten cities measured in degrees Celsius, with the question: Which
+two cities have similar climate? The data objects are temperature series, the comparison is city
+versus city, and the scientific meaning concerns pattern similarity, not ratio claims.
+If one normalizes Celsius values and then interprets the result using ratio language such
+as “twice as hot,” the analyst is treating an interval-scale variable as if it were ratio-scale.
+Celsius has an arbitrary zero, so ratio statements are not meaningful in the same way they
+would be for a genuine ratio-scale variable.
+Transformations must respect the measurement scale of the attribute. If the transformation
+changes the meaning of the scale, it may change the meaning of the answer.
+1.3.2 When Regulation or Auditing Requires Original Values to Be Recoverable
+Suppose the data consist of hospital billing records containing monetary amounts, timestamps,
+and codes, and the task is to compare two fraud-detection or anomaly-detection model versions.
+In such a setting, derived features may be helpful, but the raw values must remain recoverable.
+If only standardized or transformed values are retained, the exact original evidence trail may be
+lost. This is unacceptable in regulated environments because auditability depends on reproducing
+the original case record.
+Remark
+The usual professional practice is not “replace raw data by transformed data,” but rather
+“retain raw data and add transformed features as additional fields.”
+1.3.3 When the Scientific Question Is About Absolute Magnitude
+Consider campus energy consumption measured in kilowatt-hours per building per month, with
+the question: Which building consumes the most energy? Here the correct comparison concerns
+absolute totals.
+
+If one z-scores each building separately, the problem changes. It no longer answers which building
+consumes the most. Instead, it answers which building has a month that is unusual relative to
+its own baseline. That may be a useful question, but it is a different question.
+A transformation can silently convert an absolute-comparison problem into a relative-
+within-object problem.
+1.3.4 When Variance Is the Signal
+Suppose multiple sensors measure vibration amplitude on machines, and the question is: Which
+machine is becoming unstable? In this setting, growing variability may itself be the warning
+signal.
+Standardizing each sensor to unit variance erases the very phenomenon we are trying to detect.
+A sensor that becomes more variable than before may stop looking unusual once its variance has
+been normalized away.
+Sometimes the spread, variance, or amplitude structure is the information of interest.
+In such cases, variance-normalizing transformations destroy signal rather than remove
+nuisance variation.
+1.3.5 Example: Scaling Changes the Geometry and Can Flip Clustering
+A simple two-dimensional example makes this concrete. Let Feature 1 contain the real signal, so
+that two clusters are separated mainly along that axis. Let Feature 2 be high-variance noise. If
+we run k - means with Euclidean distance on the raw variables, Feature 2 dominates the geometry
+because it has the larger numerical scale. After standardization, Feature 1 and Feature 2 receive
+comparable influence, and the clustering can change.
+
+−5
+−10
+−15
+−4 −2 0 2 4
+Feature 1 (signal)
+)esion
+ecnairav-hgih(
+erutaeF
+k-means on raw features
+−1
+−2
+−3
+−1 0 1
+Feature 1 (signal) [standardized]
+]dezidradnats[
+)esion
+ecnairav-hgih(
+erutaeF
+k-means after standardization
+Figure 1: Scaling can flip clustering: k-means on raw features (left) versus after standardization
+(right).
+1.4 Metrics and Non-Metrics: Why Properties Matter?
+Not every quantity that is called a “distance” behaves like a metric. This matters because many
+algorithms, data structures, and geometric intuitions assume metric properties.
+1.4.1 Why Metric Properties Matter in Practice
+Nearest-neighbor indexing structures (such as VP - trees, GNAT, and other metric trees) exploit
+the triangle inequality to prune candidates safely. If triangle inequality fails, those pruning rules
+can eliminate the true nearest neighbor.
+Definition: Metric
+A function d(x,y) is a metric if it satisfies nonnegativity, symmetry, identity of indiscernibles,
+and triangle inequality. (For details see the slides.)
+1.4.2 A Quantity That Looks Like a Metric but Is Not
+A clean example is cosine distance defined by
+d(x,y) = 1 − cos(x,y).
+Take x = (1,0) and y = (2,0). Their cosine similarity is 1, so d(x,y) = 0, even though x ̸= y.
+Thus identity of indiscernibles fails.
+A distance - like quantity can return zero for two nonidentical vectors. This means it is
+not a true metric, even if it is widely used in practice.
+Dynamic Time Warping (DTW) provides a second cautionary example. DTW is often very
+
+useful for time series, but it can fail both triangle inequality and identity of indiscernibles. This
+motivates semi-metric corrections in some settings.
+1.4.3 Example Where Cosine Similarity Is Zero
+If x = (1,0) and y = (0,1), their dot product is zero and therefore cosine similarity is zero. In
+text mining, the same phenomenon occurs when two bag-of-words vectors have no shared terms.
+A zero cosine here means “no overlap in direction” under the chosen representation; it does not
+necessarily mean semantic unrelatedness.
+1.4.4 Why Use General Minkowski Distances Instead of Euclidean?
+The Minkowski family lets us choose a notion of deviation that matches the task. Consider query
+point q = (0,0,0) and two candidates
+a = (2,0,0), b = (1,1,1).
+Under L , candidate b is closer because 3 < 2. Under L , candidate a is closer because 2 < 3.
+2 1
+The L norm treats many small deviations as accumulating in an energy-like way, while L sums
+2 1
+absolute deviations and is often preferred when sparse changes or robustness to one - feature
+spikes matter.
+A quality-control example makes the role of L clear. Suppose an item is measured by length,
+width, and thickness, and the task is to reject it if any one dimension deviates too much. Then
+d (x,y) = max|x − y |
+∞ j j
+fits the business rule, because the worst dimension is what matters.
+1.5 Non-Standard Data Types and the Measures That Match Them
+Many important data-mining objects are not best understood as ordinary Euclidean vectors.
+Even when they can be encoded numerically, the correct comparison measure often comes from
+their combinatorial or structural meaning rather than from vector geometry alone.
+1.5.1 Sets: Jaccard and Dice for Presence/Absence Data
+Suppose each customer order is represented as a set of purchased items, as in market-basket data.
+The task is to find customers with similar purchasing types, not customers who bought the same
+total quantity.
+In this setting, Jaccard or Dice overlap is natural because the question concerns shared assortment,
+not repeated counts. If repeated quantities should not dominate the comparison, a set-based
+similarity is preferable to Euclidean distance on counts.
+1.5.2 Strings and Sequences: Edit Distance and Alignment Distance*
+DNA sequences, barcodes, and other symbolic strings are compared by asking how many
+operations are needed to turn one sequence into another. The operational meaning is therefore
+not geometric displacement in p, but substitution, insertion, deletion, or alignment cost.
+Definition: Edit distance viewpoint
+For sequence data, a distance is often defined as the minimum cost of transforming one
+sequence into another through allowable edit or alignment operations.
+In bioinformatics, alignment-based distances such as those derived from Needleman–Wunsch, are
+canonical because biological similarity is often better captured by aligned correspondence than
+by coordinate - wise comparison.
+
+1.5.3 Example: Mixed Data and the Failure of One-Hot Euclidean Distance
+Consider a small mixed-type table of six customer or person records. Some variables are numeric
+(age, income), some ordinal (education level), some categorical (occupation, city), and one is
+asymmetric binary (a rare symptom where presence matters more than joint absence). The task
+is nearest-neighbor search or clustering of similar people.
+A common but problematic strategy is to one-hot encode the categorical variables, min–max
+scale the numeric ones, and then apply Euclidean distance. Gower-style distance is specifically
+designed for mixed-type data. It normalizes numeric variables by range, handles categorical
+mismatch as 0/1, normalizes ordinal levels, and can treat asymmetric binary variables in a
+presence-focused way.
+One-hot encoding is not “wrong” by itself, but Euclidean distance on one-hot vectors can
+impose a geometry that does not match the mixed-type semantics of the task.
+1.5.4 Time Series: Alignment-Based Distance*
+Time series from the UCR archive provide a standard example. If the same event occurs at
+slightly different times or speeds in two series, Euclidean pointwise comparison may declare them
+far apart even when they have the same underlying shape.
+DTW addresses this by aligning the series nonlinearly before measuring mismatch. The price of
+that flexibility is that DTW may fail metric axioms, which matters for indexing assumptions and
+some algorithmic guarantees.
+1.5.5 Distributions as Data Objects*
+Sometimes the observation itself is a probability distribution or histogram. In that case, the
+comparison must reflect how mass moves between bins, not merely how bin counts differ
+numerically.
+Example: Image retrieval
+Represent each image by a color histogram. The task is to retrieve images that are
+visually similar to a query image. If color mass shifts slightly from dark blue to light
+blue, bin-by-bin Euclidean distance can exaggerate the difference. Earth Mover’s Distance
+(EMD), or more broadly the Wasserstein idea, measures the minimum work needed to
+move mass from one histogram to another and therefore matches the visual intuition more
+closely.
+Example: Before versus after policy comparison
+Represent commute times before and after a transportation change as two distributions.
+The task is to ask whether the new system changed the shape of commute times, perhaps
+by shrinking the tail while leaving the mean similar. Wasserstein distances are appropriate
+because they respect the geometry of where probability mass moves. In contrast, KL
+divergence is not a metric, is asymmetric, and can blow up when one distribution assigns
+zero probability where the other does not.
+1.6 Graphs, Trees, and Structural Comparison
+Graphs and trees are structurally rich objects. Their comparison is rarely meaningful if reduced
+to naive Euclidean comparison of adjacency matrices or node-order-dependent encodings.
+
+1.6.1 Graphs and Networks
+Ego - network data such as SNAP ego - Facebook graphs are a good example. A common task is
+social - circle discovery or social - structure comparison. The question is not how different two
+adjacency matrices are numerically under an arbitrary node ordering, but how much structural
+editing is required to turn one pattern into another.
+Two concrete comparison strategies are particularly instructive:
+• Graph Edit Distance (GED): the minimal edit cost required to transform one graph into
+another. This is useful for nearest - neighbor retrieval of structurally similar social patterns.
+• Weisfeiler-Lehman (WL) graph kernel: a similarity based on matching subtree - like
+patterns, often used with kernel classifiers such as SVMs.
+Adjacency matrix Euclidean distance depends on node ordering. Unless the nodes are
+already aligned meaningfully, the comparison is often meaningless.
+1.6.2 Trees and Hierarchies
+WordNet-style hierarchies provide a canonical example of tree-structured data. If a predicted
+taxonomy is compared with a reference taxonomy, the natural question is how many insertions,
+deletions, and relabelings are needed to transform one hierarchy into the other.
+Tree Edit Distance (TED) gives a direct operational answer to that question. This is a structural
+error measure, not merely a node - level accuracy measure. From a geometric point of view,
+hierarchical data are also well known to be more naturally embedded in hyperbolic rather than
+Euclidean spaces.
+1.7 Data Needing Non-Euclidean Geometries
+Some domains are naturally curved, constrained, or graph-structured. In such settings, forcing
+Euclidean geometry can produce misleading results even before any algorithm is run.
+1.7.1 Spherical Geometry: GPS and GeoLife Trajectories
+Suppose each record is a route represented as a time-ordered sequence of latitude-longitude
+points. The task is route retrieval or clustering of similar trips.
+The point - level comparison should be geodesic (great-circle) distance on the Earth’s surface.
+For whole trajectories, one may then build curve or alignment distances such as Fréchet or DTW
+using geodesic point-to-point distances internally.
+The reason is straightforward. Latitude and longitude are angular coordinates, not Cartesian
+coordinates. One degree of longitude represents different physical distances at different latitudes.
+Moreover, the dateline makes naive coordinate subtraction particularly misleading.
+Example: Dateline wrap-around
+Let A = (0◦,179◦) and B = (0◦,−179◦). Naively, the longitude difference appears to be
+358◦, which looks enormous. But because longitudes wrap around the globe, the effective
+difference is
+∆lon = min(358◦,360◦ − 358◦) = 2◦.
+min
+These points are therefore close on Earth even though they look far apart numerically.
+
+1.7.2 When Spherical Geometry Is Still Not Enough: Street-Network Distance
+Geodesic closeness is still not the right concept when movement is constrained by a road network.
+If two points are separated by a river, they may be geographically close and yet require a long
+detour by road.
+In a road graph, intersections are nodes and road segments are weighted edges. The relevant
+comparison is shortest-path cost,
+(cid:88)
+d(u,v) = min edge weights.
+paths u→v
+This can represent travel time, driving distance, walking cost, toll burden, or other operational
+notions of accessibility.
+Example: Across the river failure of spherical distance
+Two points are only 200 meters apart in a straight line across a river. Geodesic distance
+suggests they are very close. But if the nearest bridge is 1.5 km upstream, the shortest
+driving route may be 3.2 km and about 6 minutes. For the question “Which hospital
+is closest by driving time?” the geodesic answer is wrong because it answers the wrong
+problem.
+Example: Graph
+Let nodes A (user), B (bridge entrance), and C (destination) be connected by one-way
+edges A → B with weight 2 minutes and B → C with weight 4 minutes, with no direct
+road from A to C. Then
+d(A,C) = 2 + 4 = 6 minutes.
+On a directed road network, one may also have d(C,A) ̸= d(A,C), so the result can be a
+quasi - metric rather than a symmetric metric.
+Remark: Similarity versus cost on roads
+Road maps support two fundamentally different forms of comparison. Similarity-based
+comparison treats a route or road as an object and asks whether two routes look alike or
+share structure. Cost-based comparison assigns travel costs to road segments and asks for
+the route that minimizes total cost. Navigation and dispatch systems use the second.
+1.7.3 Trajectory Similarity on Street Networks
+If the object is a full trip rather than a pair of points, then multiple comparison notions become
+reasonable. Suppose a map - matched trip is a sequence of road segments,
+T = (e ,e ,e ,e ,e ), T = (e ,e ,e ,e ).
+1 5 12 12 7 9 2 5 12 7 10
+One may compare such routes in at least three ways:
+1. Cost-based similarity: compare aligned positions by shortest - path travel cost and ask
+how far apart the trips are in time or road distance.
+2. Path-overlap similarity: convert each trip to a set of road segments and compute Jaccard
+overlap,
+|E(T ) ∩ E(T )|
+1 2
+J(T ,T ) = .
+1 2
+|E(T ) ∪ E(T )|
+1 2
+3. Sequence similarity: treat the edge sequence as a string and use edit distance to count
+inserted, deleted, or substituted segments.
+
+Example: Route comparison
+Let
+T = (a,b,c,d,e), T = (a,b,c,f,e).
+1 2
+Then E(T ) = {a,b,c,d,e} and E(T ) = {a,b,c,f,e}, so
+1 2
+|{a,b,c,e}| 4
+J(T ,T ) = = .
+1 2
+|{a,b,c,d,e,f}| 6
+An edit-distance view would say that the routes differ by one substitution, namely d → f,
+suggesting a small detour.
+Even on the same street-network data, the chosen similarity must match the question:
+shared roads, turn-by-turn changes, or actual travel cost are not the same concept.
+1.7.4 Compositional Data
+Consider yearly budget shares such as
+Year 1 = (0.50,0.30,0.20), Year 2 = (0.60,0.25,0.15),
+where the components sum to 1. The task is to decide whether the allocation changed meaningfully.
+Euclidean distance on the raw shares is often misleading because the sum-to-one constraint induces
+dependence: increasing one component necessarily decreases others. In compositional data, the
+natural question is often about ratios between parts rather than raw coordinate differences.
+Aitchison distance, which is Euclidean distance after a centered log-ratio transformation, is
+designed for this setting.
+1.7.5 Hyperbolic Geometry
+The hyperbolic case has already appeared implicitly in the discussion of trees and taxonomies.
+Hierarchical structure is often represented more faithfully in hyperbolic geometry than in Euclidean
+geometry, because exponential expansion away from the origin is more compatible with tree -
+like growth.
+1.8 Correlations Beyond Pearson, Spearman, and Kendall
+Correlation is another domain in which one measure rarely fits all tasks.
+1.8.1 Distance Correlation
+If Y = sin(X) + noise, Pearson correlation may be close to zero even though the variables are
+dependent. Distance correlation is designed to detect general dependence and equals zero only
+under independence.
+1.8.2 MIC for Exploratory Discovery
+When scanning thousands of variable pairs in a biomedical table, one may wish to flag a wide
+range of interesting relationship shapes. The maximal information coefficient (MIC) is useful
+for exploratory discovery, although it should be followed by confirmatory analysis because
+discovery-oriented measures trade off power and false positives in different ways.
+1.8.3 Mixed-Type Associations
+For mixed data types, specialized association measures are often more appropriate than forcing
+everything into a single generic correlation coefficient:
+• Point-biserial correlation: continuous versus binary variables, for example exam score
+versus pass/fail.
+
+• Phi coefficient: binary versus binary variables, for example smoker yes/no versus disease
+yes/no.
+1.8.4 Circular Correlation
+Wind direction illustrates why ordinary linear correlation can fail for angles. Directions 359◦ and
+1◦ are close on the circle but look far apart under naive linear subtraction. Circular or directional
+statistics are therefore needed.
+1.8.5 Cross-Correlation
+When marketing spend and sales are both time series, the interesting question may be whether
+spend leads sales by a lag such as two weeks. Cross-correlation across lags is designed for this
+lead-lag structure.
+1.9 How a Wrong Metric Breaks an Algorithm?
+Metric choice is not only interpretive; it directly affects algorithmic behavior.
+1.9.1 k-NN and Clustering Dominated by Scale
+If customer records contain age on a 0- 100 scale and income on a 0-100000 scale, Euclidean
+distance without scaling will mostly compare incomes. Neighbors then become “people with
+similar income,” while age contributes almost nothing.
+1.9.2 Mixed-Type Data and Euclidean Failure
+The UCI Adult dataset mixes categorical and numeric variables. One-hot Euclidean distance can
+create strange geometry in which rare categories receive disproportionate influence. A better
+approach is often to compute Gower distance and then use a clustering method that accepts a
+dissimilarity matrix, such as k-medoids or hierarchical clustering.
+1.9.3 Time Series Classification Failure
+If time-series patterns occur at variable speed, Euclidean pointwise distance can fail because it
+penalizes temporal misalignment. An alignment-based measure such as DTW is often better,
+provided we remember its non - metric caveats.
+1.10 Do Algorithms Assume Metric Properties?
+Different algorithms rely on different kinds of comparison structure.
+• Euclidean - specific methods: classical k - means uses centroids and is inherently
+Euclidean in its standard form.
+• Metric - assumption methods: metric trees use triangle inequality for pruning.
+• More general dissimilarity - based methods: some methods, such as k-medoids and
+certain hierarchical clustering procedures, can operate on arbitrary dissimilarity matrices,
+though one may lose geometric guarantees and speedups.
+Remark
+The question is therefore not “Does the algorithm use distance?” but rather “What
+structural assumptions does the algorithm make about that distance?”
+1.11 Data Mining Beyond Prediction
+Data mining is broader than supervised prediction. Important goals include:
+• Process mining: discover actual workflows, detect bottlenecks, and perform conformance
+checking, for example on event logs such as the BPI Challenge 2012 dataset.
+
+• Change-point or drift detection: detect when the generating process changes over time.
+• Causal discovery: infer plausible causal graph structure rather than only statistical
+association.
+• Anomaly explanation: explain why a record is anomalous, not merely flag it.
+1.12 One Dataset, Many Metrics for Different Questions
+GeoLife trajectories provide a particularly clear example of why one dataset can support several
+valid comparison measures.
+1. Route-shape similarity: use Fréchet distance between curves when the question is whether
+the same map path was followed.
+2. Coverage similarity: use Hausdorff distance on point sets when the question is whether
+two trajectories pass through the same places irrespective of order.
+3. Behavior similarity: compute a speed or acceleration time series and compare it using
+alignment distances when the question concerns travel behavior, such as walking versus bus
+riding.
+The same raw data can support different scientifically meaningful distances because the
+task changes what it means to be similar.
+1.13 Distances for Earth and Atmosphere Objects: Problem → Metric
+Domain meaning determines the appropriate distance.
+1.13.1 How Far Are Two Cities on Earth?
+The relevant quantity is shortest path on the Earth’s surface, so great-circle or geodesic distance
+is appropriate. Euclidean distance on latitude and longitude distorts physical distance, especially
+near the poles and the dateline.
+1.13.2 Which Hospital Is Closest by Driving?
+“Closest” means shortest driving time subject to road constraints, not shortest straight - line
+distance. The appropriate measure is shortest-path travel time on a road graph, computed for
+example by Dijkstra’s algorithm or A∗.
+1.13.3 Which Areas Can Reach a School Within Fifteen Minutes?
+This is an accessibility or catchment problem. The relevant quantity is minimum travel time
+d (s,v) from the school to each location v. The fifteen - minute isochrone is the set of all points
+satisfying d (s,v) ≤ T. Such regions are not circles; network structure creates arms and holes.
+1.13.4 Are Two Commuting Routes the Same?
+This depends on what “the same” means. Shared roads suggest Jaccard overlap on edge sets.
+Turn-by-turn similarity suggests edit distance on segment sequences. Comparable travel cost
+suggests cost-based alignment using shortest-path distances between aligned points.
+1.13.5 Which Flight Route Is Shortest?
+Airline planning is driven by time, fuel, restricted airspace, altitude, and safety, not only by
+geometric length. A cost function over permitted corridors is therefore more relevant than simple
+great-circle distance.
+
+1.13.6 Which City Will Be Affected First by Smoke or Pollution?
+Atmospheric spread follows flow rather than straight lines. A flow-based or Lagrangian travel-time
+notion is therefore more appropriate. A city farther away geographically but downwind may be
+effectively “closer” than a nearby city that is upwind.
+1.14 When to Use Similarity Versus Distance
+Similarity and distance are related, but they do not always play the same role in modeling and
+algorithms.
+Definition: Similarity-oriented problem
+A problem is similarity-oriented when the natural output is “higher means more alike,” as
+in ranking, retrieval, or similarity graph construction.
+Definition: Distance-oriented problem
+A problem is distance-oriented when the natural output is “lower means more alike,”
+especially when neighborhoods, metric balls, or minimization procedures are central.
+Similarity is often more interpretable for retrieval and ranking tasks. It is also natural when
+building a weighted similarity graph or when the downstream method explicitly uses a kernel or
+similarity.
+Distance is usually the more natural interface for clustering, nearest - neighbor search, den-
+sity - based neighborhoods, and embedding procedures. Standard examples include k-means,
+hierarchical clustering, DBSCAN, OPTICS, MDS, t-SNE, and UMAP.
+When a similarity s is bounded in [0,1], one common conversion is
+d = 1 − s.
+For Jaccard similarity this yields a proper metric distance. For cosine similarity, however, 1−cos(·)
+is commonly used but is not always a true metric; angular distance is sometimes preferable.
+A useful rule of thumb is this: if the goal is ranking, similarity is often the more interpretable
+language; if the goal is clustering, neighborhoods, or embedding, distance is usually the
+more natural interface.
+1.15 Exercise
+Example: Mixed binary similarity with asymmetric and symmetric variables
+Consider four binary patient variables:
+• x : cough present (asymmetric; only 1 matters),
+• x : fever present (asymmetric; only 1 matters),
+• x : vaccinated (symmetric),
+• x : smoker (symmetric).
+Two patients are encoded as
+x = [1,0,1,0], y = [0,0,1,1].
+Let A = {1,2} be the asymmetric variables and S = {3,4} the symmetric variables.
+Task.
+
+1. Compute the asymmetric counts on A:
+a = #(1,1), b = #(1,0), c = #(0,1).
+Then compute Jaccard similarity on A:
+J = .
+a + b + c
+2. Compute the number of matches on the symmetric variables:
+matches = #{i ∈ S : x = y }, m = |S|.
+S i i
+Then compute simple matching on S:
+matches
+SMC = .
+3. Compute the combined mixed - binary similarity and distance:
+a + matches
+sim(x,y) = , d(x,y) = 1 − sim(x,y).
+(a + b + c) + m
+Answer. On A, we have a = 0, b = 1, and c = 0, so J = 0. On S, we have matches = 1
+A S
+and m = 2, so SMC = 1/2. Therefore,
+0 + 1 1 1 2
+sim(x,y) = = , d(x,y) = 1 − = .
+1 + 2 3 3 3
+1.16 Practical Do’s and Don’ts
+Do’s
+• Start with the question, not with the formula.
+• Check whether the representation respects the scale and meaning of the variables.
+• Use transformations that remove nuisance variation only when they do not erase signal.
+• Match the measure to the data type: sets, sequences, graphs, routes, and distributions often
+need specialized comparisons.
+• Ask whether the algorithm requires Euclidean or metric structure.
+• Use multiple metrics when the problem has multiple risk dimensions.
+• Be explicit about the invariances your task assumes, such as translation invariance for images
+or timing invariance for time series.
+Don’ts
+• Do not standardize automatically without asking what question the transformed data now
+answer.
+• Do not assume cosine similarity is semantic by itself.
+• Do not use Euclidean distance on latitude and longitude as if they were Cartesian coordinates.
+
+• Do not compare mixed-type records with one-hot Euclidean distance without checking
+whether the induced geometry makes sense.
+• Do not assume that two routes, two graphs, or two distributions should be compared by
+ordinary vector distance simply because they can be numerically encoded.
+• Do not optimize only one benchmark or one metric and then infer overall quality.
+1.17 Summary
+Similarity, distance, preprocessing, and transformation are not merely technical details added
+after modeling. They are part of the modeling decision itself. A correct distance is one that
+reflects the scientific, operational, or algorithmic meaning of difference for the task at hand.
+A central theme of this chapter is that transformations must preserve meaning. Standardization
+can help when a feature scale is nuisance variation, but it can be wrong when absolute mag-
+nitude matters, when raw values must remain auditable, or when variance is itself the signal.
+Likewise, Euclidean distance is useful in many familiar numeric settings, but it can fail on mixed
+data, translated images, aligned sequences, routes on road networks, compositional data, and
+distributions.
+The same dataset can support multiple valid comparison rules. Thus, before computing any
+similarity or distance, first decide what the comparison is supposed to mean.
+Questions
+1. Explain the difference between nominal, ordinal, interval, and ratio attributes. For each
+type, state which comparisons or operations are meaningful and give one example.
+2. What is meant by data quality in data mining? List and briefly explain several common
+data quality problems, such as noise, outliers, missing values, wrong data, fake data, and
+duplicate data.
+3. Explain the difference between noise and an outlier. Why is it not always correct to remove
+an outlier immediately from the dataset?
+4. Why should preprocessing and transformation not be applied automatically? Give two
+examples in which a transformation changes the meaning of the original problem.
+5. What is the difference between similarity and dissimilarity (distance)? Why is this distinction
+important when choosing a method for data analysis?
+6. State the definition of a metric. Which properties must a distance measure satisfy in order
+to be a true metric?
+7. Why is 1 − cosine similarity not always a true metric? Explain which metric property can
+fail and why this matters in practice.
+8. Compare Euclidean distance, cosine similarity, and correlation with respect to scaling and
+translation. Which of them are invariant to scaling, and which are invariant to translation?
+9. Consider two customers represented in different ways.
+(a) Customer A and customer B are described by their spending vectors across product
+categories, for example
+A = (120,80,0,40,10), B = (240,160,0,80,20),
+
+where the components correspond to spending on groceries, clothing, electronics, books,
+and pharmacy products.
+(b) The same two customers are also described by their total monthly spending over the
+last six months, in euros.
+(c) Finally, the same two customers are described by standardized month-to-month spending
+profiles, where the goal is to compare the pattern of ups and downs rather than the
+absolute amounts.
+For each of the three cases above, which proximity measure would be most appropriate, and
+why? Discuss whether Euclidean distance, cosine similarity, or correlation would be more
+meaningful in each situation.
+10. Why can one-hot encoding followed by Euclidean distance be problematic for mixed-type
+data? What is the main idea of using a Gower-style distance instead?

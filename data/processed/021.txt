@@ -1,0 +1,1331 @@
+Speech and Language Processing. Daniel Jurafsky & James H. Martin. Copyright © 2026. All
+rights reserved. Draft of January 6, 2026.
+CHAPTER
+6 Neural Networks
+“[M]achines of this character can behave in a very complicated manner when
+the number of units is large.”
+Alan Turing (1948) “Intelligent Machines”, page 6
+Neural networks are a fundamental computational tool for language process-
+ing, and a very old one. They are called neural because their origins lie in the
+McCulloch-Pitts neuron (McCulloch and Pitts, 1943), a simplified model of the
+biological neuron as a kind of computing element that could be described in terms
+of propositional logic. But the modern use in language processing no longer draws
+on these early biological inspirations.
+Instead, a modern neural network is a network of small computing units, each
+of which takes a vector of input values and produces a single output value. In this
+chapter we introduce the neural net applied to classification. The architecture we
+feedforward introduce is called a feedforward network because the computation proceeds iter-
+atively from one layer of units to the next. The use of modern neural nets is often
+deeplearning called deep learning, because modern networks are often deep (have many layers).
+Neural networks share much of the same mathematics as logistic regression. But
+neural networks are a more powerful classifier than logistic regression, and indeed a
+minimal neural network (technically one with a single ‘hidden layer’) can be shown
+to learn any function.
+Neural net classifiers are different from logistic regression in another way. With
+logistic regression, we applied the regression classifier to many different tasks by
+developing many rich kinds of feature templates based on domain knowledge. When
+working with neural networks, it is more common to avoid most uses of rich hand-
+derived features, instead building neural networks that take raw tokens as inputs
+and learn to induce features as part of the process of learning to classify. We saw
+examples of this kind of representation learning for embeddings in Chapter 5, and
+we’ll see lots of examples once we start studying deep transformers networks. Nets
+that are very deep are particularly good at representation learning. For that reason
+deep neural nets are the right tool for tasks that offer sufficient data to learn features
+automatically.
+In this chapter we’ll introduce feedforward networks as classifiers, first with
+hand-built features, and then using the embeddings that we studied in Chapter 5.
+In subsequent chapters we’ll introduce many other kinds of neural models, most
+importantly the transformer and attention, (Chapter 8), but also recurrent neural
+networks (Chapter 13) and convolutional neural networks (Chapter 15). And in
+the next chapter we’ll introduce the paradigm of neural large language models.
+
+2 CHAPTER 6 • NEURAL NETWORKS
+6.1 Units
+The building block of a neural network is a single computational unit. A unit takes
+a set of real valued numbers as input, performs some computation on them, and
+produces an output.
+At its heart, a neural unit is taking a weighted sum of its inputs, with one addi-
+biasterm tional term in the sum called a bias term. Given a set of inputs x 1 ...x n , a unit has
+a set of corresponding weights w ...w and a bias b, so the weighted sum z can be
+1 n
+represented as:
+(cid:88)
+z = b+ w x (6.1)
+i i
+Often it’s more convenient to express this weighted sum using vector notation; recall
+vector from linear algebra that a vector is, at heart, just a list or array of numbers. Thus
+we’ll talk about z in terms of a weight vector w, a scalar bias b, and an input vector
+x, and we’ll replace the sum with the convenient dot product:
+z = w·x+b (6.2)
+As defined in Eq. 6.2, z is just a real valued number.
+Finally, instead of using z, a linear function of x, as the output, neural units
+apply a non-linear function f to z. We will refer to the output of this function as
+activation the activation value for the unit, a. Since we are just modeling a single unit, the
+activationforthenodeisinfactthefinaloutputofthenetwork, whichwe’llgenerally
+call y. So the value y is defined as:
+y = a = f(z)
+We’ll discuss three popular non-linear functions f below (the sigmoid, the tanh, and
+the rectified linear unit or ReLU) but it’s pedagogically convenient to start with the
+sigmoid sigmoid function since we saw it in Chapter 4:
+y = σ(z) = (6.3)
+1+e−z
+The sigmoid (shown in Fig. 6.1) has a number of advantages; it maps the output
+into the range (0,1), which is useful in squashing outliers toward 0 or 1. And it’s
+differentiable, which as we saw in Section ?? will be handy for learning.
+Figure 6.1 The sigmoid function takes a real value and maps it to the range (0,1). It is
+nearly linear around 0 but outlier values get squashed toward 0 or 1.
+Substituting Eq. 6.2 into Eq. 6.3 gives us the output of a neural unit:
+y = σ(w·x+b) = (6.4)
+1+exp(−(w·x+b))
+
+6.1 • UNITS 3
+Fig. 6.2 shows a final schematic of a basic neural unit. In this example the unit
+takes 3 input values x ,x , and x , and computes a weighted sum, multiplying each
+1 2 3
+value by a weight (w , w , and w , respectively), adds them to a bias term b, and then
+1 2 3
+passes the resulting sum through a sigmoid function to result in a number between 0
+and 1.
+1 w 1
+x w 2 ∑ z σ a y
+x b
++1
+Figure 6.2 A neural unit, taking 3 inputs x , x , and x (and a bias b that we represent as a
+1 2 3
+weight for an input clamped at +1) and producing an output y. We include some convenient
+intermediate variables: the output of the summation, z, and the output of the sigmoid, a. In
+this case the output of the unit y is the same as a, but in deeper networks we’ll reserve y to
+mean the final output of the entire network, leaving a as the activation of an individual node.
+Let’s walk through an example just to get an intuition. Let’s suppose we have a
+unit with the following weight vector and bias:
+w = [0.2,0.3,0.9]
+b = 0.5
+What would this unit do with the following input vector:
+x = [0.5,0.6,0.1]
+The resulting output y would be:
+1 1 1
+y = σ(w·x+b) = = = = .70
+1+e−(w·x+b) 1+e−(.5∗.2+.6∗.3+.1∗.9+.5) 1+e−0.87
+In practice, the sigmoid is not commonly used as an activation function. A function
+tanh that is very similar but almost always better is the tanh function shown in Fig. 6.3a;
+tanh is a variant of the sigmoid that ranges from -1 to +1:
+ez−e−z
+y = tanh(z) = (6.5)
+ez+e−z
+The simplest activation function, and perhaps the most commonly used, is the rec-
+ReLU tified linear unit, also called the ReLU, shown in Fig. 6.3b. It’s just the same as z
+when z is positive, and 0 otherwise:
+y = ReLU(z) = max(z,0) (6.6)
+Theseactivationfunctionshavedifferentpropertiesthatmakethemusefulfordiffer-
+ent language applications or network architectures. For example, the tanh function
+has the nice properties of being smoothly differentiable and mapping outlier values
+toward the mean. The rectifier function, on the other hand, has nice properties that
+
+4 CHAPTER 6 • NEURAL NETWORKS
+(a) (b)
+Figure 6.3 The tanh and ReLU activation functions.
+result from it being very close to linear. In the sigmoid or tanh functions, very high
+saturated values of z result in values of y that are saturated, i.e., extremely close to 1, and have
+derivatives very close to 0. Zero derivatives cause problems for learning, because as
+we’ll see in Section 6.6, we’ll train networks by propagating an error signal back-
+wards, multiplying gradients (partial derivatives) from each layer of the network;
+gradients that are almost 0 cause the error signal to get smaller and smaller until it is
+vanishing too small to be used for training, a problem called the vanishing gradient problem.
+gradient
+Rectifiers don’t have this problem, since the derivative of ReLU for high values of z
+is 1 rather than very close to 0.
+6.2 The XOR problem
+Early in the history of neural networks it was realized that the power of neural net-
+works, as with the real neurons that inspired them, comes from combining these
+units into larger networks.
+One of the most clever demonstrations of the need for multi-layer networks was
+the proof by Minsky and Papert (1969) that a single neural unit cannot compute
+some very simple functions of its input. Consider the task of computing elementary
+logical functions of two inputs, like AND, OR, and XOR. As a reminder, here are
+the truth tables for those functions:
+AND OR XOR
+x1 x2 y x1 x2 y x1 x2 y
+0 0 0 0 0 0 0 0 0
+0 1 0 0 1 1 0 1 1
+1 0 0 1 0 1 1 0 1
+1 1 1 1 1 1 1 1 0
+perceptron This example was first shown for the perceptron, which is a very simple neural
+unit that has a binary output and has a very simple step function as its non-linear
+activation function. The output y of a perceptron is 0 or 1, and is computed as
+follows (using the same weight w, input x, and bias b as in Eq. 6.2):
+(cid:26)
+0, if w·x+b ≤ 0
+y = (6.7)
+1, if w·x+b > 0
+
+6.2 • THE XOR PROBLEM 5
+It’s very easy to build a perceptron that can compute the logical AND and OR
+functions of its binary inputs; Fig. 6.4 shows the necessary weights.
+x x
+1 1
+1 1
+x 1 x 1
+2 2
+-1 0
++1 +1
+(a) (b)
+Figure 6.4 The weights w and bias b for perceptrons for computing logical functions. The
+inputsareshownasx andx andthebiasasaspecialnodewithvalue+1whichismultiplied
+1 2
+with the bias weight b. (a) logical AND, with weights w = 1 and w = 1 and bias weight
+1 2
+b = −1. (b) logical OR, with weights w = 1 and w = 1 and bias weight b = 0. These
+1 2
+weights/biases are just one from an infinite number of possible sets of weights and biases that
+would implement the functions.
+It turns out, however, that it’s not possible to build a perceptron to compute
+logical XOR! (It’s worth spending a moment to give it a try!)
+The intuition behind this important result relies on understanding that a percep-
+tron is a linear classifier. For a two-dimensional input x and x , the perceptron
+1 2
+equation, w x +w x +b = 0 is the equation of a line. (We can see this by putting
+1 1 2 2
+it in the standard linear format: x = (−w /w )x +(−b/w ).) This line acts as a
+2 1 2 1 2
+decision decision boundary in two-dimensional space in which the output 0 is assigned to all
+boundary
+inputs lying on one side of the line, and the output 1 to all input points lying on the
+other side of the line. If we had more than 2 inputs, the decision boundary becomes
+a hyperplane instead of a line, but the idea is the same, separating the space into two
+categories.
+Fig. 6.5 shows the possible logical inputs (00, 01, 10, and 11) and the line drawn
+by one possible set of parameters for an AND and an OR classifier. Notice that there
+is simply no way to draw a line that separates the positive cases of XOR (01 and 10)
+linearly from the negative cases (00 and 11). We say that XOR is not a linearly separable
+separable
+function. Of course we could draw a boundary with a curve, or some other function,
+but not a single line.
+6.2.1 The solution: neural networks
+While the XOR function cannot be calculated by a single perceptron, it can be cal-
+culated by a layered network of perceptron units. Rather than see this with networks
+of simple perceptrons, however, let’s see how to compute XOR using two layers of
+ReLU-based units following Goodfellow et al. (2016). Fig. 6.6 shows a figure with
+the input being processed by two layers of neural units. The middle layer (called
+h) has two units, and the output layer (called y) has one unit. A set of weights and
+biases are shown that allows the network to correctly compute the XOR function.
+Let’s walk through what happens with the input x = [0, 0]. If we multiply each
+input value by the appropriate weight, sum, and then add the bias b, we get the vector
+[0, -1], and we then apply the rectified linear transformation to give the output of the
+h layer as [0, 0]. Now we once again multiply by the weights, sum, and add the
+bias (0 in this case) resulting in the value 0. The reader should work through the
+computation of the remaining 3 possible input pairs to see that the resulting y values
+are 1 for the inputs [0, 1] and [1, 0] and 0 for [0, 0] and [1, 1].
+
+6 CHAPTER 6 • NEURAL NETWORKS
+x x x
+2 2 2
+1 1 1
+0 0 0
+x x x
+1 1 1
+0 1 0 1 0 1
+a) x AND x b) x OR x c) x XOR x
+1 2 1 2 1 2
+Figure 6.5 The functions AND, OR, and XOR, represented with input x on the x-axis and input x on the
+1 2
+y-axis. Filled circles represent perceptron outputs of 1, and white circles perceptron outputs of 0. There is no
+way to draw a line that correctly separates the two categories for XOR. Figure styled after Russell and Norvig
+(2002).
+x 1 h
+1 1
+-2
+2 1 h 2 0
+-1
++1 +1
+Figure 6.6 XOR solution after Goodfellow et al. (2016). There are three ReLU units, in
+two layers; we’ve called them h , h (h for “hidden layer”) and y . As before, the numbers
+1 2 1
+on the arrows represent the weights w for each unit, and we represent the bias b as a weight
+on a unit clamped to +1, with the bias weights/units in gray.
+It’s also instructive to look at the intermediate results, the outputs of the two
+hidden nodes h and h . We showed in the previous paragraph that the h vector for
+1 2
+the inputs x = [0, 0] was [0, 0]. Fig. 6.7b shows the values of the h layer for all
+4 inputs. Notice that hidden representations of the two input points x = [0, 1] and
+x = [1, 0] (the two cases with XOR output = 1) are merged to the single point h =
+[1, 0]. The merger makes it easy to linearly separate the positive and negative cases
+of XOR. In other words, we can view the hidden layer of the network as forming a
+representation of the input.
+In this example we just stipulated the weights in Fig. 6.6. But for real examples
+the weights for neural networks are learned automatically using the error backprop-
+agation algorithm to be introduced in Section 6.6. That means the hidden layers will
+learn to form useful representations. This intuition, that neural networks can auto-
+matically learn useful representations of the input, is one of their key advantages,
+and one that we will return to again and again in later chapters.
+
+6.3 • FEEDFORWARD NEURAL NETWORKS 7
+x 2 h 2
+1 1
+0 0
+1 h
+0 1 0 1 2 1
+a) The original x space b) The new (linearly separable) h space
+Figure 6.7 The hidden layer forming a new representation of the input. (b) shows the
+representation of the hidden layer, h, compared to the original input representation x in (a).
+Notice that the input point [0, 1] has been collapsed with the input point [1, 0], making it
+possible to linearly separate the positive and negative cases of XOR. After Goodfellow et al.
+(2016).
+6.3 Feedforward Neural Networks
+Let’s now walk through a slightly more formal presentation of the simplest kind of
+feedforward neural network, the feedforward network. A feedforward network is a multilayer
+network
+network in which the units are connected with no cycles; the outputs from units in
+each layer are passed to units in the next higher layer, and no outputs are passed
+back to lower layers. (In Chapter 13 we’ll introduce networks with cycles, called
+recurrent neural networks.)
+For historical reasons multilayer networks, especially feedforward networks, are
+multi-layer sometimes called multi-layer perceptrons (or MLPs); this is a technical misnomer,
+perceptrons
+MLP since the units in modern multilayer networks aren’t perceptrons (perceptrons have a
+simple step-function as their activation function, but modern networks are made up
+of units with many kinds of non-linearities like ReLUs and sigmoids), but at some
+point the name stuck.
+Simple feedforward networks have three kinds of nodes: input units, hidden
+units, and output units.
+Fig. 6.8 shows a picture. The input layer x is a vector of simple scalar values just
+as we saw in Fig. 6.2.
+hiddenlayer The core of the neural network is the hidden layer h formed of hidden units h i ,
+each of which is a neural unit as described in Section 6.1, taking a weighted sum of
+its inputs and then applying a non-linearity. In the standard architecture, each layer
+fully-connected is fully-connected, meaning that each unit in each layer takes as input the outputs
+from all the units in the previous layer, and there is a link between every pair of units
+from two adjacent layers. Thus each hidden unit sums over all the input units.
+Recall that a single hidden unit has as parameters a weight vector and a bias. We
+represent the parameters for the entire hidden layer by combining the weight vector
+and bias for each unit i into a single weight matrix W and a single bias vector b for
+the whole layer (see Fig. 6.8). Each element W of the weight matrix W represents
+ji
+the weight of the connection from the ith input unit x to the jth hidden unit h .
+i j
+The advantage of using a single matrix W for the weights of the entire layer is
+that now the hidden layer computation for a feedforward network can be done very
+
+8 CHAPTER 6 • NEURAL NETWORKS
+...
+...
++1
+...
+W U
+2 y
+input layer hidden layer output layer
+Figure 6.8 A simple 2-layer feedforward network, with one hidden layer, one output layer,
+and one input layer (the input layer is usually not counted when enumerating layers).
+efficiently with simple matrix operations. In fact, the computation only has three
+steps: multiplying the weight matrix by the input vector x, adding the bias vector b,
+and applying the activation function g (such as the sigmoid, tanh, or ReLU activation
+function defined above).
+The output of the hidden layer, the vector h, is thus the following (for this exam-
+ple we’ll use the sigmoid function σ as our activation function):
+h = σ(Wx+b) (6.8)
+Notice that we’re applying the σ function here to a vector, while in Eq. 6.3 it was
+applied to a scalar. We’re thus allowing σ(·), and indeed any activation function
+g(·), to apply to a vector element-wise, so g[z ,z ,z ] = [g(z ),g(z ),g(z )].
+1 2 3 1 2 3
+Let’s introduce some constants to represent the dimensionalities of these vectors
+and matrices. We’ll refer to the input layer as layer 0 of the network, and have
+n represent the number of inputs, so x is a vector of real numbers of dimension
+, or more formally x ∈ Rn0, a column vector of dimensionality [n
+×1]. Let’s
+call the hidden layer layer 1 and the output layer layer 2. The hidden layer has
+dimensionality n
+, so h ∈ Rn1 and also b ∈ Rn1 (since each hidden unit can take a
+different bias value). And the weight matrix W has dimensionality W ∈ Rn1×n0, i.e.
+[n ×n ].
+1 0
+Take a moment to convince yourself that the matrix multiplication in Eq. 6.8 will
+compute the value of each h as σ
+(cid:0)(cid:80)n0
+W x +b
+(cid:1)
+j i=1 ji i j
+As we saw in Section 6.2, the resulting value h (for hidden but also for hypoth-
+esis) forms a representation of the input. The role of the output layer is to take
+this new representation h and compute a final output. This output could be a real-
+valued number, but in many cases the goal of the network is to make some sort of
+classification decision, and so we will focus on the case of classification.
+If we are doing a binary task like sentiment classification, we might have a sin-
+gle output node, and its scalar value y is the probability of positive versus negative
+sentiment. If we are doing multinomial classification, such as assigning a part-of-
+speech tag, we might have one output node for each potential part-of-speech, whose
+output value is the probability of that part-of-speech, and the values of all the output
+nodes must sum to one. The output layer is thus a vector y that gives a probability
+distribution across the output nodes.
+
+6.3 • FEEDFORWARD NEURAL NETWORKS 9
+Let’s see how this happens. Like the hidden layer, the output layer has a weight
+matrix (let’s call it U), but some models don’t include a bias vector b in the output
+layer, so we’ll simplify by eliminating the bias vector in this example. The weight
+matrix is multiplied by its input vector (h) to produce the intermediate output z:
+z = Uh
+There are n
+output nodes, so z ∈ Rn2, weight matrix U has dimensionality U ∈
+Rn2×n1, and element U
+ij
+is the weight from unit j in the hidden layer to unit i in the
+output layer.
+However, z can’t be the output of the classifier, since it’s a vector of real-valued
+numbers, while what we need for classification is a vector of probabilities. There is
+normalizing a convenient function for normalizing a vector of real values, by which we mean
+converting it to a vector that encodes a probability distribution (all the numbers lie
+softmax between 0 and 1 and sum to 1): the softmax function that we saw on page ?? of
+Chapter 4. More generally for any vector z of dimensionality d, the softmax is
+defined as:
+exp(z )
+softmax(z i ) = (cid:80)d
+exp(z )
+1 ≤ i ≤ d (6.9)
+j=1 j
+Thus for example given a vector
+z = [0.6,1.1,−1.5,1.2,3.2,−1.1], (6.10)
+the softmax function will normalize it to a probability distribution (shown rounded):
+softmax(z) = [0.055,0.090,0.0067,0.10,0.74,0.010] (6.11)
+You may recall that we used softmax to create a probability distribution from a
+vector of real-valued numbers (computed from summing weights times features) in
+the multinomial version of logistic regression in Chapter 4.
+That means we can think of a neural network classifier with one hidden layer
+as building a vector h which is a hidden layer representation of the input, and then
+running standard multinomial logistic regression on the features that the network
+develops in h. By contrast, in Chapter 4 the features were mainly designed by hand
+via feature templates. So a neural network is like multinomial logistic regression,
+but (a) with many layers, since a deep neural network is like layer after layer of lo-
+gistic regression classifiers; (b) with those intermediate layers having many possible
+activation functions (tanh, ReLU, sigmoid) instead of just sigmoid (although we’ll
+continue to use σ for convenience to mean any activation function); (c) rather than
+forming the features by feature templates, the prior layers of the network induce the
+feature representations themselves.
+Here are the final equations for a feedforward network with a single hidden layer,
+which takes an input vector x, outputs a probability distribution y, and is parameter-
+ized by weight matrices W and U and a bias vector b:
+h = σ(Wx+b)
+z = Uh
+y = softmax(z) (6.12)
+And just to remember the shapes of all our variables, x ∈ Rn0, h ∈ Rn1, b ∈ Rn1,
+W ∈Rn1×n0, U∈Rn2×n1, and the output vector y ∈Rn2. We’ll call this network a 2-
+layer network (we traditionally don’t count the input layer when numbering layers,
+but do count the output layer). So by this terminology logistic regression is a 1-layer
+network.
+
+10 CHAPTER 6 • NEURAL NETWORKS
+6.3.1 More details on feedforward networks
+Let’s now set up some notation to make it easier to talk about deeper networks of
+depth more than 2. We’ll use superscripts in square brackets to mean layer num-
+bers, starting at 0 for the input layer. So W[1] will mean the weight matrix for the
+(first) hidden layer, and b[1] will mean the bias vector for the (first) hidden layer. n
+will mean the number of units at layer j. We’ll use g(·) to stand for the activation
+function, which will tend to be ReLU or tanh for intermediate layers and softmax
+for output layers. We’ll use a[i] to mean the output from layer i, and z[i] to mean the
+combination of previous layer output, weights and biases W[i]a[i−1] +b[i]. The 0th
+layer is for inputs, so we’ll refer to the inputs x more generally as a[0].
+Thus we can re-represent our 2-layer net from Eq. 6.12 as follows:
+z[1] = W[1]a[0]+b[1]
+a[1] = g[1](z[1])
+z[2] = W[2]a[1]+b[2]
+a[2] = g[2](z[2])
+yˆ = a[2] (6.13)
+Note that with this notation, the equations for the computation done at each layer are
+the same. The algorithm for computing the forward step in an n-layer feedforward
+network, given the input vector a[0] is thus simply:
+for i in 1,...,n
+z[i] = W[i] a[i−1] + b[i]
+a[i] = g[i](z[i])
+yˆ = a[n]
+It’softenusefultohaveanameforthefinalsetofactivationsrightbeforethefinal
+softmax. So however many layers we have, we’ll generally call the unnormalized
+values in the final vector z[n], the vector of scores right before the final softmax, the
+logits logits (see Eq. ??).
+The need for non-linear activation functions One of the reasons we use non-
+linear activation functions for each layer in a neural network is that if we did not, the
+resulting network is exactly equivalent to a single-layer network. Let’s see why this
+is true. Imagine the first two layers of such a network of purely linear layers:
+z[1] = W[1]x+b[1]
+z[2] = W[2]z[1]+b[2]
+We can rewrite the function that the network is computing as:
+z[2] = W[2]z[1]+b[2]
+= W[2](W[1]x+b[1])+b[2]
+= W[2]W[1]x+W[2]b[1]+b[2]
+= W(cid:48)x+b(cid:48) (6.14)
+This generalizes to any number of layers. So without non-linear activation functions,
+a multilayer network is just a notational variant of a single layer network with a
+different set of weights, and we lose all the representational power of multilayer
+networks.
+
+6.4 • FEEDFORWARD NETWORKS FOR NLP: CLASSIFICATION 11
+Replacing the bias unit In describing networks, we will sometimes use a slightly
+simplified notation that represents exactly the same function without referring to an
+explicit bias node b. Instead, we add a dummy node a to each layer whose value
+[0]
+will always be 1. Thus layer 0, the input layer, will have a dummy node a = 1,
+[1]
+layer1willhavea =1, andsoon. Thisdummynodestillhasanassociatedweight,
+and that weight represents the bias value b. For example instead of an equation like
+h = σ(Wx+b) (6.15)
+we’ll use:
+h = σ(Wx) (6.16)
+But now instead of our vector x having n values: x = x ,...,x , it will have n +
+0 1 n0 0
+1 values, with a new 0th dummy value x = 1: x = x ,...,x . And instead of
+0 0 n0
+computing each h as follows:
+(cid:32)
+(cid:88)
+n0 (cid:33)
+h j = σ W ji x i +b j , (6.17)
+i=1
+we’ll instead use:
+(cid:32)
+(cid:88)
+n0 (cid:33)
+h j = σ W ji x i , (6.18)
+i=0
+where the value W replaces what had been b . Fig. 6.9 shows a visualization.
+j0 j
+x 2
+n 0
+...
+...
+b +1
+...
+W U
+1 y
+2 y x 2 1
+x 2
+h n
+1 y
+n x 2 n
+...
+...
+x =1
+...
+W U
+h 1
+h 2 y
+n 1 y n
+(a) (b)
+Figure 6.9 Replacing the bias node (shown in a) with x (b).
+We’ll continue showing the bias as b when we go over the learning algorithm
+in Section 6.6, but going forward in the book, for most figures and some equations
+we’ll use this simplified notation without explicit bias terms.
+6.4 Feedforward networks for NLP: Classification
+Let’s see how to apply feedforward networks to NLP classification tasks. In practice,
+simple feedforward networks aren’t the way we do text classification; for real appli-
+cations we would use more sophisticated architectures like the BERT transformers
+
+12 CHAPTER 6 • NEURAL NETWORKS
+of Chapter 9. Nonetheless seeing a feedforward network text classifier will let us
+introduce key ideas that will play a role throughout the rest of the book, includ-
+ing the ideas of the embedding matrix, representation pooling, and representation
+learning.
+But before introducing any of these ideas, let’s start with a classifier by making
+only minimal change from the sentiment classifiers we saw in Chapter 4. Like them,
+we’ll take hand-built features, pass them through a classifier, and produce a class
+probability. The only difference is that we’ll use a neural network instead of logistic
+regression as the classifier.
+6.4.1 Neural net classifiers with hand-built features
+Let’s begin with a simple 2-layer sentiment classifier by taking our logistic regres-
+sion classifier from Chapter 4, which corresponds to a 1-layer network, and just
+adding a hidden layer. The input element x can be scalar features like those in
+Fig. ??, e.g., x = count(words ∈ doc), x = count(positive lexicon words ∈ doc),
+1 2
+x = 1 if “no” ∈ doc, and so on, for a total of d features. And the output layer
+yˆ could have two nodes (one each for positive and negative), or 3 nodes (positive,
+negative, neutral), in which case yˆ would be the estimated probability of positive
+sentiment, yˆ the probability of negative and yˆ the probability of neutral. The re-
+2 3
+sulting equations would be just what we saw above for a 2-layer network (as always,
+we’ll continue to use the σ to stand for any non-linearity, whether sigmoid, ReLU
+or other).
+x = [x ,x ,...x ] (each x is a hand-designed feature)
+1 2 d i
+h = σ(Wx+b)
+z = Uh
+yˆ = softmax(z) (6.19)
+Fig. 6.10 shows a sketch of this architecture. As we mentioned earlier, adding this
+hidden layer to our logistic regression classifier allows the network to represent the
+non-linear interactions between features. This alone might give us a better sentiment
+classifier.
+h1
+p(+)
+h2
+h3
+dh
+Input words W U
+[d⨉1] [d ⨉d] [3⨉d ]
+h [d ⨉1] h
+Hidden layer Output layer
+softmax
+...
+dessert wordcount x
+=3 1 y^
+was pos w it o iv r e d s l e = x i 1 con x 2 y^ 2 p(-)
+great count of “no” x y^ 3 p(neut)
+= 0
+x y
+[3⨉1]
+Input layer
+d=3 features
+Figure 6.10 Feedforward network sentiment analysis using traditional hand-built features
+of the input text.
+
+6.5 • EMBEDDINGS AS THE INPUT TO NEURAL NET CLASSIFIERS 13
+6.4.2 Vectorizing for parallelizing inference
+While Eq. 6.19 shows how to classify a single example x, in practice we want to
+efficiently classify an entire test set of m examples. We do this by vectorizing the
+process, just as we saw with logistic regression; instead of using for-loops to go
+through each example, we’ll use matrix multiplication to do the entire computation
+of an entire test set at once. First, we pack all the input feature vectors for each input
+x into a single input matrix X, with each row i a row vector consisting of the features
+for input example x(i) (i.e., the vector x(i)). If the dimensionality of our input feature
+vector is d, X will be a matrix of shape [m×d].
+Because we are now modeling each input as a row vector rather than a column
+vector, we also need to slightly modify Eq. 6.19. X is of shape [m×d] and W is of
+shape [d ×d], so we’ll reorder how we multiply X and W and transpose W so they
+correctly multiply to yield a matrix H of shape [m×d ]. 1
+The bias vector b from Eq. 6.19 of shape [1×d ] will now have to be replicated
+into a matrix of shape [m×d ]. We’ll need to similarly reorder the next step and
+transpose U. Finally, our output matrix Yˆ will be of shape [m×3] (or more gen-
+erally [m×d ], where d is the number of output classes), with each row i of our
+o o
+output matrix Yˆ consisting of the output vector yˆ(i). Here are the final equations for
+computing the output class distribution for an entire test set:
+(cid:124)
+H = σ(XW +b)
+(cid:124)
+Z = HU
+Yˆ = softmax(Z) (6.20)
+In this book, we’ll sometimes see orderings like WX+b and sometimes XW+b.
+That’s why it’s always important to be very aware of the shapes of your weight
+matrices participating in any given equation.
+6.5 Embeddings as the input to neural net classifiers
+While hand-built features are a traditional way to design classifiers, most applica-
+tions of neural networks for NLP don’t use hand-built human-engineered features as
+inputs. Instead, we draw on deep learning’s ability to learn features from the data by
+representing tokens as embeddings. For this section we’ll represent each token by
+its static word2vec or GloVe embeddings that we saw how to compute in Chapter 5.
+By static embedding, we mean that each token is represented by a fixed vector that
+we train once, and then just put into a big dictionary. When we want to refer to that
+token, we grab its embedding out of the dictionary.
+However when we apply neural models to the task of language modeling (as
+we’ll see in Chapter 8) the situation is more complex, and we’ll use a more power-
+ful kind of embedding called a contextual embedding. Contextual embeddings are
+different for each time a word occurs in a different context. Furthermore, we’ll have
+the network learn these embeddings as part of the task of word prediction.
+So let’s explore the text classification domain above, but using static embeddings
+as features instead of the hand-designed features. Let’s focus on the inference stage,
+1 Note that we could have kept the original order of our products if we had instead made our input
+matrixXrepresenteachinputasacolumnvectorinsteadofarowvector,makingitofshape[d×m]. But
+representinginputsasrowvectorsisconvenientandcommoninneuralnetworkmodels.
+
+14 CHAPTER 6 • NEURAL NETWORKS
+in which we have already learned embeddings for all the input tokens. An embed-
+ding is a vector of dimension d that represents the input token. The dictionary of
+embedding static embeddings in which we store these embeddings is the embedding matrix
+matrix
+E. Each row of the embedding matrix represents each token of the vocabulary V
+as a (row) vector of dimensionality d. Since E has a row for each of the |V| to-
+kens in the vocabulary, E has shape [|V|×d]. This embedding matrix E plays a role
+whenever we are using embeddings as input to neural NLP systems, including in the
+transformer-based large language models we will introduce over the next chapters.
+Givenaninputtokenstringlikedessert was greatwefirstconvertthetokens
+into vocabulary indices (these were created when we first tokenized the input using
+BPE or SentencePiece). So the representation of dessert was great might be
+w = [3,9824,226]. Next we use indexing to select the corresponding rows from E
+(row 3, row 9824, row 226).
+Another way to think about selecting token embeddings from the embedding
+matrix is to represent input tokens as one-hot vectors of shape [1×|V|], i.e., with
+one-hotvector one dimension for each word in the vocabulary. Recall that in a one-hot vector all
+the elements are 0 except one, the element whose dimension is the word’s index
+in the vocabulary, which has value 1. So if the word “dessert” has index 3 in the
+vocabulary, x = 1, and x = 0 ∀i (cid:54)= 3, as shown here:
+3 i
+[0 0 1 0 0 0 0 ... 0 0 0 0]
+1 2 3 4 5 6 7 ... ... |V|
+Multiplyingbyaone-hotvectorthathasonlyonenon-zeroelementx =1simply
+selects out the relevant row vector for word i, resulting in the embedding for word i,
+as depicted in Fig. 6.11.
+3 |V| d
+1 0 0 1 0 0 0 0 ... 0 0 0 0 ✕ E = 1
+|V|
+Figure 6.11 Selecting the embedding vector for word V by multiplying the embedding
+matrix E with a one-hot vector with a 1 in index 3.
+We can extend this idea to represent the entire input token sequence as a matrix
+of one-hot vectors, one for each of the N input positions as shown in Fig. 6.12.
+|V| d
+0 0 1 0 0 0 0 ... 0 0 0 0
+0 0 0 0 0 0 0 ... 0 0 1 0 ✕ E =
+1 0 0 0 0 0 0 ... 0 0 0 0
+... N
+N 0 0 0 0 1 0 0 ... 0 0 0 0 |V|
+Figure 6.12 Selecting the embedding matrix for the input sequence of token idsW by mul-
+tiplying a one-hot matrix corresponding toW by the embedding matrix E.
+We now need to classify this input of N [1×d] embeddings, representing a win-
+dow of N tokens, into a single class (like positive or negative).
+There are two common ways to pass embeddings to a classifier: concatenation
+and pooling. First, we can take this input of shape [N ×d] and reshape it by con-
+catenating all the input vectors into one very long vector of shape [1×dN]. Then
+
+6.5 • EMBEDDINGS AS THE INPUT TO NEURAL NET CLASSIFIERS 15
+we pass this input to our classifier and let it make its decision. This gives us lots of
+pool information, at the cost of using a pretty large network. Second, we can pool the
+N embeddings into a single embedding and then pass that single pooled embedding
+to the classifier. Pooling gives us less information than would have been present
+in all the original embeddings, but has the advantage of being small and efficient
+and is especially useful in tasks for which we don’t care as much about the origi-
+nal word order. Let’s give an example of each: pooling for the sentiment task, and
+concatenation for the language modeling task.
+Pooling input embeddings for sentiment So let’s begin with seeing how pooling
+can work for the sentiment classification task. The intuition of pooling is that for
+sentiment, the exact position of the input (is some word like great the first word?
+the second word?) is less important than the identity of the word itself.
+A pooling function is a way to turn a set of embeddings into a single embedding.
+For example, for a text with N input words/tokens w ,...,w , we want to turn
+1 N
+the N row embeddings e(w ),...,e(w ) (each of dimensionality d) into a single
+1 N
+embedding also of dimensionality d.
+mean-pooling There are various ways to pool. The simplest is mean-pooling: taking the mean
+by summing the embeddings and then dividing by N:
+1 (cid:88)
+x mean = e(w i ) (6.21)
+i=1
+Here are the equations for this classifier assuming mean pooling:
+x = mean(e(w ),e(w ),...,e(w ))
+1 2 n
+h = σ(xW+b)
+z = hU
+yˆ = softmax(z) (6.22)
+The architecture is sketched in Fig. 6.13, where we also give the shapes for all the
+relevant matrices.
+max-pooling There are many other options for pooling, like max-pooling, in which case for
+each dimension we take the element-wise max over all the inputs. The element-wise
+max of a set of N vectors is a new vector whose kth element is the max of the kth
+elements of all the N vectors.
+Concatenating input embeddings for language modeling For sentiment analy-
+sis we saw how to generate an output vector with probabilities over three classes:
+positive, negative, or neutral, given as input a window of N input tokens, by first
+pooling those token embeddings into a single embedding vector.
+Now let’s consider language modeling: predicting upcoming words from prior
+words. In this task we are given the same window of N input tokens, but our task
+now is to predict the next token that should follow the window. We’ll sketch a
+simple feedforward neural language model, drawing on an algorithm first introduced
+by Bengio et al. (2003). The feedforward language model introduces many of the
+important concepts of large language modeling that we will return to in Chapter 7
+and Chapter 8.
+Neural language models have many advantages over the n-gram language mod-
+els of Chapter 3. Neural language models can handle much longer histories, can
+generalize better over contexts of similar words, and are far more accurate at word-
+
+16 CHAPTER 6 • NEURAL NETWORKS
+p(+) p(-) p(neut) Output probabilities
+y^ ^y y^ y
+1 2 3 [1⨉3] Output layer softmax
+U [d h ⨉3] weights
+h 1 h 2 h 3 ... h dh h [1⨉d h ] Hidden layer
+W [d⨉d h ] weights
+[1⨉d] Input layer
+pooled embedding
++ pooling
+embedding for “dessert”
+embedding for “was” N⨉d embeddings
+embedding for “great”
+E E E |V|⨉d E matrix
+shared across words
+1 3 |V|
+1 524 |V|
+1 902 |V| N⨉|V| one-hot vectors
+00 1 00
+00 0 1 0 0
+“dessert” = V 3 “was” = V 524 “ 0 g 0 rea 0 t” 1 = V 0 0
+dessert was great Input words
+Figure 6.13 Feedforward network sentiment analysis using a pooled embedding of the input words. At each
+timestep the network computes a d-dimensional embedding for each context word (by multiplying a one-hot
+vector by the embedding matrix E), and pools the resulting N embeddings to get a single embedding that
+represents the context window as the layer e.
+prediction. On the other hand, neural net language models are slower, more com-
+plex, need vast amounts of energy to train, and are less interpretable than n-gram
+models, so for some smaller tasks an n-gram language model is still the right tool.
+A feedforward neural language model is a feedforward network that takes as
+input at time t a representation of some number of previous words (w ,w , etc.)
+t−1 t−2
+and outputs a probability distribution over possible next words. Thus—like the n-
+gram LM—the feedforward neural LM approximates the probability of a word given
+the entire prior context P(w |w ) by approximating based on the N −1 previous
+t 1:t−1
+words:
+P(w t |w 1 ,...,w t−1 ) ≈ P(w t |w t−N+1 ,...,w t−1 ) (6.23)
+In the following examples we’ll use a 4-gram example, so we’ll show a neural net to
+estimate the probability P(w = i|w ,w ,w ).
+t t−3 t−2 t−1
+Neural language models represent words in this prior context by their embed-
+dings, rather than just by their word identity as used in n-gram language models.
+Using embeddings allows neural language models to generalize better to unseen
+data. For example, suppose we’ve seen this sentence in training:
+I have to make sure that the cat gets fed.
+but have never seen the words “gets fed” after the word “dog”. Our test set has the
+
+6.5 • EMBEDDINGS AS THE INPUT TO NEURAL NET CLASSIFIERS 17
+prefix “I forgot to make sure that the dog gets”. What’s the next word? An n-gram
+language model will predict “fed” after “that the cat gets”, but not after “that the dog
+gets”. But a neural LM, knowing that “cat” and “dog” have similar embeddings, will
+be able to generalize from the “cat” context to assign a high enough probability to
+“fed” even after seeing “dog”.
+p(w=aardvark|w ,w ,w ) p(w=do|...) p(w=fish|...) p(w=zebra|...)
+t t-3 t-2 t-1 t t t
+output layer y y^ 1 ... y^ 34 ... y^ 42 ... ^y 35102 ... y^ |V| 1⨉|V|
+softmax
+d ⨉|V|
+hidden layer h h 1 h 2 h 3 ... h dh 1⨉d h
+W Nd⨉d h
+embedding layer e 1⨉Nd
+E is shared E E E
+across words
+|V|⨉d
+1 35 |V| 1 992 |V| 1 451 |V|
+Input layer N⨉|V|
+one-hot 00 1 00 00 0 1 00 00 0 1 00
+vectors “for” = V 35 “all” = V 992 “the” = V 451
+...
+... and thanks for all the ? ...
+wt-3 wt-2 wt-1 wt
+Figure 6.14 Forward inference in a feedforward neural language model. At each timestep
+t the network computes a d-dimensional embedding for each of the N =3 context tokens (by
+multiplying a one-hot vector by the embedding matrix E), and concatenates the three to get
+the embedding e. This embedding e is multiplied by weight matrix W and then an activation
+function is applied element-wise to produce the hidden layer h, which is then multiplied by
+another weight matrix U. A softmax layer predicts at each output node i the probability that
+the next word wt will be vocabulary wordV i. We show the context window size N as 3 just to
+fit on the page, but in practice language modeling requires a much longer context.
+This prediction task requires an output vector that expresses |V| probabilities:
+one probability value for each possible next token. We might have a vocabulary
+between 60,000 and 300,000 tokens, so the output vector for the task of language
+modeling is much longer than 3. Another difference for language modeling is that
+instead of pooling the embeddings of the N input tokens to create a single embed-
+ding, we concatenate the inputs into one very long input vector. To predict the next
+token, it helps to know each of the preceding tokens and what order they were in.
+Fig. 6.14 shows the language modeling task, sketched with a very short context
+window of N =3 just to fit on the page. These 3 embedding vectors are concatenated
+to produce e, the embedding layer. This is multiplied by a weight matrix W to pro-
+duce a hidden layer, and another weight matrix U to produce an output layer whose
+softmax gives a probability distribution over words. For example y , the value of
+output node 42, is the probability of the next word w beingV , the vocabulary word
+t 42
+with index 42 (which is the word ‘fish’ in our example).
+The equations for a simple feedforward neural language model with a window
+
+18 CHAPTER 6 • NEURAL NETWORKS
+size of 3, given one-hot input vectors for each input context word, are:
+e = [Ex ;Ex ;Ex ]
+t−3 t−2 t−1
+h = σ(We+b)
+z = Uh
+yˆ = softmax(z) (6.24)
+Note thatwe we use semicolons to mean concatenation of vectors, so we form the
+embedding layer e by concatenating the 3 embeddings for the three context vectors.
+We’ll return to this idea of using neural networks to do language modeling in
+Chapter 7 and Chapter 8 when we introduce transformer language models.
+6.6 Training Neural Nets
+A feedforward neural net is an instance of supervised machine learning in which we
+know the correct output y for each observation x. What the system produces, via
+Eq. 6.13, is yˆ, the system’s estimate of the true y. The goal of the training procedure
+is to learn parameters W[i] and b[i] for each layer i that make yˆ for each training
+observation as close as possible to the true y.
+In general, we do all this by drawing on the methods we introduced in Chapter 4
+for logistic regression, so the reader should be comfortable with that chapter before
+proceeding. We’ll explore the algorithm on simple generic networks rather than
+networks designed for sentiment or language modeling.
+First, we’ll need a loss function that models the distance between the system
+output and the gold output, and it’s common to use the loss function used for logistic
+regression, the cross-entropy loss.
+Second, to find the parameters that minimize this loss function, we’ll use the
+gradient descent optimization algorithm introduced in Chapter 4.
+Third, gradient descent requires knowing the gradient of the loss function, the
+vector that contains the partial derivative of the loss function with respect to each
+of the parameters. In logistic regression, for each observation we could directly
+compute the derivative of the loss function with respect to an individual w or b. But
+for neural networks, with millions of parameters in many layers, it’s much harder to
+see how to compute the partial derivative of some weight in layer 1 when the loss
+is attached to some much later layer. How do we partial out the loss over all those
+intermediate layers? The answer is the algorithm called error backpropagation or
+backward differentiation.
+6.6.1 Loss function
+cross-entropy The cross-entropy loss that is used in neural networks is the same one we saw for
+loss
+logistic regression. If the neural network is being used as a binary classifier, with
+the sigmoid at the final layer, the loss function is the same logistic regression loss
+we saw in Eq. ??:
+L CE (yˆ,y) = −logp(y|x) = −[ylogyˆ+(1−y)log(1−yˆ)] (6.25)
+If we are using the network to classify into 3 or more classes, the loss function is
+exactly the same as the loss for multinomial regression that we saw in Chapter 4 on
+
+6.6 • TRAINING NEURAL NETS 19
+page ??. Let’s briefly summarize the explanation here for convenience. First, when
+we have more than 2 classes we’ll need to represent both y and yˆ as vectors. Let’s
+assume we’re doing hard classification, where only one class is the correct one.
+The true label y is then a vector with K elements, each corresponding to a class,
+with y = 1 if the correct class is c, with all other elements of y being 0. Recall that
+a vector like this, with one value equal to 1 and the rest 0, is called a one-hot vector.
+And our classifier will produce an estimate vector with K elements yˆ, each element
+yˆ of which represents the estimated probability p(y = 1|x).
+k k
+The loss function for a single example x is the negative sum of the logs of the K
+output classes, each weighted by their probability y :
+(cid:88)
+L CE (yˆ,y) = − y k logyˆ k (6.26)
+k=1
+We can simplify this equation further; let’s first rewrite the equation using the func-
+tion 1{} which evaluates to 1 if the condition in the brackets is true and to 0 oth-
+erwise. This makes it more obvious that the terms in the sum in Eq. 6.26 will be 0
+except for the term corresponding to the true class for which y = 1:
+(cid:88)
+L (yˆ,y) = − 1{y = 1}logyˆ
+CE k k
+k=1
+In other words, the cross-entropy loss is simply the negative log of the output proba-
+bility corresponding to the correct class, and we therefore also call this the negative
+negativelog log likelihood loss:
+likelihoodloss
+L CE (yˆ,y) = −logyˆ c (where c is the correct class) (6.27)
+Plugging in the softmax formula from Eq. 6.9, and with K the number of classes:
+exp(z )
+L CE (yˆ,y) = −log (cid:80)K
+exp(z )
+(where c is the correct class) (6.28)
+j=1 j
+Let’s think about the negative log probability as a loss function. A perfect clas-
+sifier would assign the correct class i probability 1 and all the incorrect classes prob-
+ability 0. That means the higher p(yˆ ) (the closer it is to 1), the better the classifier;
+p(yˆ ) is (the closer it is to 0), the worse the classifier. The negative log of this prob-
+ability is a beautiful loss metric since it goes from 0 (negative log of 1, no loss)
+to infinity (negative log of 0, infinite loss). This loss function also insures that as
+probability of the correct answer is maximized, the probability of all the incorrect
+answers is minimized; since they all sum to one, any increase in the probability of
+the correct answer is coming at the expense of the incorrect answers.
+The number K of classes of the output vector yˆ can be small or large. Perhaps
+our task is 3-way sentiment, and then the classes might be positive, negative, and
+neutral. Or if our task is deciding the part of speech of a word (i.e., whether it is a
+noun or verb or adjective, etc.), then K is set of possible parts of speech in our tagset
+(of which there are 17 in the tagset we will define in Chapter 17). And if our task
+is language modeling, and our classifier is trying to predict which word is next, then
+our set of classes is the set of words, which might be 50,000 or 100,000.
+
+20 CHAPTER 6 • NEURAL NETWORKS
+6.6.2 Computing the Gradient
+How do we compute the gradient of this loss function? Computing the gradient
+requires the partial derivative of the loss function with respect to each parameter.
+For a network with one weight layer and sigmoid output (which is what logistic
+regression is), we could simply use the derivative of the loss that we used for logistic
+regression in Eq. 6.29 (and derived in Section ??):
+∂L (yˆ,y)
+CE
+= (yˆ−y)x
+∂w
+= (σ(w·x+b)−y)x j (6.29)
+Or for a network with one weight layer and softmax output (=multinomial logistic
+regression), we could use the derivative of the softmax loss from Eq. ??, shown for
+a particular weight w and input x
+k i
+∂L (yˆ,y)
+CE = −(y −yˆ )x
+k k i
+∂w
+k,i
+= −(y − p(y = 1|x))x
+k k i
+(cid:32) (cid:33)
+exp(w ·x+b )
+k k
+= − y k − (cid:80)K
+exp(w ·x+b )
+x i (6.30)
+j=1 j j
+But these derivatives only give correct updates for one weight layer: the last one!
+For deep networks, computing the gradients for each weight is much more complex,
+since we are computing the derivative with respect to weight parameters that appear
+all the way back in the very early layers of the network, even though the loss is
+computed only at the very end of the network.
+The solution to computing this gradient is an algorithm called error backprop-
+errorback- agation or backprop (Rumelhart et al., 1986). While backprop was invented spe-
+propagation
+cially for neural networks, it turns out to be the same as a more general procedure
+called backward differentiation, which depends on the notion of computation
+graphs. Let’s see how that works in the next subsection.
+6.6.3 Computation Graphs
+A computation graph is a representation of the process of computing a mathematical
+expression, in which the computation is broken down into separate operations, each
+of which is modeled as a node in a graph.
+Consider computing the function L(a,b,c) = c(a+2b). If we make each of the
+component addition and multiplication operations explicit, and add names (d and e)
+for the intermediate outputs, the resulting series of computations is:
+d = 2∗b
+e = a+d
+L = c∗e
+We can now represent this as a graph, with nodes for each operation, and di-
+rected edges showing the outputs from each operation as the inputs to the next, as
+in Fig. 6.15. The simplest use of computation graphs is to compute the value of
+the function with some given inputs. In the figure, we’ve assumed the inputs a = 3,
+b = 1, c = −2, and we’ve shown the result of the forward pass to compute the re-
+sult L(3,1,−2) = −10. In the forward pass of a computation graph, we apply each
+
+6.6 • TRAINING NEURAL NETS 21
+operation left to right, passing the outputs of each computation as the input to the
+next node.
+forward pass
+a=3
+e=5
+e=a+d
+d=2
+b=1
+b d = 2b L=ce L=-10
+c=-2
+Figure 6.15 ComputationgraphforthefunctionL(a,b,c)=c(a+2b),withvaluesforinput
+nodes a=3, b=1, c=−2, showing the forward pass computation of L.
+6.6.4 Backward differentiation on computation graphs
+The importance of the computation graph comes from the backward pass, which
+is used to compute the derivatives that we’ll need for the weight update. In this
+example our goal is to compute the derivative of the output function L with respect
+to each of the input variables, i.e., ∂L, ∂L, and ∂L. The derivative ∂L tells us how
+∂a ∂b ∂c ∂a
+much a small change in a affects L.
+chainrule Backwards differentiation makes use of the chain rule in calculus, so let’s re-
+mind ourselves of that. Suppose we are computing the derivative of a composite
+function f(x) = u(v(x)). The derivative of f(x) is the derivative of u(x) with respect
+to v(x) times the derivative of v(x) with respect to x:
+d f du dv
+= · (6.31)
+dx dv dx
+The chain rule extends to more than two functions. If computing the derivative of a
+composite function f(x) = u(v(w(x))), the derivative of f(x) is:
+d f du dv dw
+= · · (6.32)
+dx dv dw dx
+The intuition of backward differentiation is to pass gradients back from the final
+node to all the nodes in the graph. Fig. 6.16 shows part of the backward computation
+at one node e. Each node takes an upstream gradient that is passed in from its parent
+node to the right, and for each of its inputs computes a local gradient (the gradient
+of its output with respect to its input), and uses the chain rule to multiply these two
+to compute a downstream gradient to be passed on to the next earlier node.
+Let’s now compute the 3 derivatives we need. Since in the computation graph
+L = ce, we can directly compute the derivative ∂L:
+∂c
+∂L
+= e (6.33)
+∂c
+For the other two, we’ll need to use the chain rule:
+∂L ∂L ∂e
+∂a ∂e ∂a
+∂L ∂L ∂e ∂d
+= (6.34)
+∂b ∂e ∂d ∂b
+
+22 CHAPTER 6 • NEURAL NETWORKS
+d e
+d e L
+∂L ∂L ∂e ∂e ∂L
+∂d ∂e ∂d ∂d ∂e
+downstream local upstream
+gradient gradient gradient
+Figure 6.16 Each node (like e here) takes an upstream gradient, multiplies it by the local
+gradient(thegradientofitsoutputwithrespecttoitsinput),andusesthechainruletocompute
+a downstream gradient to be passed on to a prior node. A node may have multiple local
+gradients if it has multiple inputs.
+Eq. 6.34 and Eq. 6.33 thus require five intermediate derivatives: ∂L, ∂L, ∂e, ∂e, and
+∂e ∂c ∂a ∂d
+∂d, which are as follows (making use of the fact that the derivative of a sum is the
+∂b
+sum of the derivatives):
+∂L ∂L
+L = ce : = c, = e
+∂e ∂c
+∂e ∂e
+e = a+d : = 1, = 1
+∂a ∂d
+∂d
+d = 2b : = 2
+∂b
+In the backward pass, we compute each of these partials along each edge of the
+graph from right to left, using the chain rule just as we did above. Thus we begin by
+computing the downstream gradients from node L, which are ∂L and ∂L. For node e,
+∂e ∂c
+we then multiply this upstream gradient ∂L by the local gradient (the gradient of the
+∂e
+output with respect to the input), ∂e to get the output we send back to node d: ∂L.
+∂d ∂d
+And so on, until we have annotated the graph all the way to all the input variables.
+The forward pass conveniently already will have computed the values of the forward
+intermediate variables we need (like d and e) to compute these derivatives. Fig. 6.17
+shows the backward pass.
+a=3
+∂L ∂L∂e
+= =-2
+∂a ∂e ∂a e=d+a e=5
+d=2
+b=1
+∂e ∂e
+b d = 2b ∂L = ∂L∂e =-2 ∂a =1 ∂d =1 ∂ ∂ L e =-2 L=ce L=-10
+∂L ∂L∂d ∂d ∂d ∂e ∂d
+= =-4 =2 ∂L
+∂b ∂d ∂b ∂b =-2
+∂e
+c=-2 ∂L
+=5
+∂c
+∂L
+c =5 backward pass
+∂c
+Figure 6.17 Computation graph for the function L(a,b,c)=c(a+2b), showing the backward pass computa-
+tion of ∂L, ∂L, and ∂L.
+∂a ∂b ∂c
+
+6.6 • TRAINING NEURAL NETS 23
+Backward differentiation for a neural network
+Of course computation graphs for real neural networks are much more complex.
+Fig. 6.18 shows a sample computation graph for a 2-layer neural network with n =
+2, n = 2, and n = 1, assuming binary classification and hence using a sigmoid
+1 2
+output unit for simplicity. The function that the computation graph is computing is:
+z[1] = W[1]x+b[1]
+a[1] = ReLU(z[1])
+z[2] = W[2]a[1]+b[2]
+a[2] = σ(z[2])
+yˆ = a[2] (6.35)
+For the backward pass we’ll also need to compute the loss L. The loss function
+for binary sigmoid output from Eq. 6.25 is
+L CE (yˆ,y) = −[ylogyˆ+(1−y)log(1−yˆ)] (6.36)
+Our output yˆ = a[2], so we can rephrase this as
+(cid:104) (cid:105)
+L CE (a[2],y) = − yloga[2]+(1−y)log(1−a[2]) (6.37)
+[1]
+11 *
+[1]
+12 z [1] = a [1] =
+* 1 1
++ ReLU
+[1]
+b [2]
+x 2 1 w 1 [ 1 2] z + = a [2] = σ L (a [2] ,y)
+[1] [2]
+w [1] [1] w
+21 * z 2 = a 2 = 12
++ ReLU
+[1]
+w [2]
+22 b
+[1]
+Figure 6.18 Samplecomputationgraphforasimple2-layerneuralnet(=1hiddenlayer)withtwoinputunits
+and 2 hidden units. We’ve adjusted the notation a bit to avoid long equations in the nodes by just mentioning
+[1]
+the function that is being computed, and the resulting variable name. Thus the * to the right of node w means
+that w [1] is to be multiplied by x , and the node z[1] = + means that the value of z[1] is computed by summing
+11 1
+[1]
+the three nodes that feed into it (the two products, and the bias term b ).
+The weights that need updating (those for which we need to know the partial
+derivative of the loss function) are shown in teal. In order to do the backward pass,
+we’ll need to know the derivatives of all the functions in the graph. We already saw
+in Section ?? the derivative of the sigmoid σ:
+dσ(z)
+= σ(z)(1−σ(z)) (6.38)
+dz
+
+24 CHAPTER 6 • NEURAL NETWORKS
+We’ll also need the derivatives of each of the other activation functions. The
+derivative of tanh is:
+dtanh(z)
+= 1−tanh2(z) (6.39)
+dz
+The derivative of the ReLU is2
+(cid:26)
+dReLU(z) 0 for z < 0
+= (6.40)
+dz 1 for z ≥ 0
+We’ll give the start of the computation, computing the derivative of the loss function
+L with respect to z, or ∂L (and leaving the rest of the computation as an exercise for
+∂z
+the reader). By the chain rule:
+∂L ∂L ∂a[2]
+= (6.41)
+∂z ∂a[2] ∂z
+So let’s first compute ∂L , taking the derivative of Eq. 6.37, repeated here:
+∂a[2]
+(cid:104) (cid:105)
+L (a[2],y) = − yloga[2]+(1−y)log(1−a[2])
+CE
+(cid:32)(cid:32) (cid:33) (cid:33)
+∂L ∂ log(a[2]) ∂ log(1−a[2])
+= − y +(1−y)
+∂a[2] ∂a[2] ∂a[2]
+(cid:18)(cid:18) (cid:19) (cid:19)
+1 1
+= − y +(1−y) (−1)
+a[2] 1−a[2]
+(cid:18) (cid:19)
+y y−1
+= − + (6.42)
+a[2] 1−a[2]
+Next, by the derivative of the sigmoid:
+∂a[2]
+= a[2](1−a[2])
+∂z
+Finally, we can use the chain rule:
+∂L ∂L ∂a[2]
+∂z ∂a[2] ∂z
+(cid:18) (cid:19)
+y y−1
+= − + a[2](1−a[2])
+a[2] 1−a[2]
+= a[2]−y (6.43)
+Continuing the backward computation of the gradients (next by passing the gra-
+[2]
+dients over b and the two product nodes, and so on, back to all the teal nodes), is
+left as an exercise for the reader.
+6.6.5 More details on learning
+Optimization in neural networks is a non-convex optimization problem, more com-
+plex than for logistic regression, and for that and other reasons there are many best
+practices for successful learning.
+2 Thederivativeisactuallyundefinedatthepointz=0,butbyconventionwetreatitas1.
+
+6.7 • SUMMARY 25
+For logistic regression we can initialize gradient descent with all the weights and
+biases having the value 0. In neural networks, by contrast, we need to initialize the
+weights with small random numbers. It’s also helpful to normalize the input values
+to have 0 mean and unit variance.
+Various forms of regularization are used to prevent overfitting. One of the most
+dropout important is dropout: randomly dropping some units and their connections from
+the network during training (Hinton et al. 2012, Srivastava et al. 2014). At each
+iteration of training (whenever we update parameters, i.e. each mini-batch if we are
+using mini-batch gradient descent), we repeatedly choose a probability p and for
+each unit we replace its output with zero with probability p (and renormalize the
+rest of the outputs from that layer).
+hyperparameter Tuning of hyperparameters is also important. The parameters of a neural net-
+work are the weights W and biases b; those are learned by gradient descent. The
+hyperparameters are things that are chosen by the algorithm designer; optimal val-
+ues are tuned on a devset rather than by gradient descent learning on the training
+set. Hyperparameters include the learning rate η, the mini-batch size, the model
+architecture (the number of layers, the number of hidden nodes per layer, the choice
+of activation functions), how to regularize, and so on. Gradient descent itself also
+has many architectural variants such as Adam (Kingma and Ba, 2015).
+Finally, most modern neural networks are built using computation graph for-
+malisms that make it easy and natural to do gradient computation and parallelization
+on vector-based GPUs (Graphic Processing Units). PyTorch (Paszke et al., 2017)
+and TensorFlow (Abadi et al., 2015) are two of the most popular. The interested
+reader should consult a neural network textbook for further details; some sugges-
+tions are at the end of the chapter.
+6.7 Summary
+• Neural networks are built out of neural units. Originally inspired by biologi-
+cal neurons, neural networks are now an abstract computational device rather
+than a biological model.
+• Each neural unit multiplies input values by a weight vector, adds a bias, and
+then applies a non-linear activation function like sigmoid, tanh, or rectified
+linear unit.
+• In a fully-connected, feedforward network, each unit in layer i is connected
+to each unit in layer i+1, and there are no cycles.
+• The power of neural networks comes from the ability of early layers to learn
+representations that can be utilized by later layers in the network.
+• Neural networks are trained by optimization algorithms like gradient de-
+scent.
+• Error backpropagation, backward differentiation on a computation graph,
+is used to compute the gradients of the loss function for a network.
+• Neural language models use a neural network as a probabilistic classifier, to
+compute the probability of the next word given the previous n words.
+• Neural language models can use pretrained embeddings, or can learn embed-
+dings from scratch in the process of language modeling.
+
+26 CHAPTER 6 • NEURAL NETWORKS
+Historical Notes
+The origins of neural networks lie in the 1940s McCulloch-Pitts neuron (McCul-
+loch and Pitts, 1943), a simplified model of the biological neuron as a kind of com-
+puting element that could be described in terms of propositional logic. By the late
+1950s and early 1960s, a number of labs (including Frank Rosenblatt at Cornell and
+Bernard Widrow at Stanford) developed research into neural networks; this phase
+saw the development of the perceptron (Rosenblatt, 1958), and the transformation
+of the threshold into a bias, a notation we still use (Widrow and Hoff, 1960).
+The field of neural networks declined after it was shown that a single perceptron
+unit was unable to model functions as simple as XOR (Minsky and Papert, 1969).
+While some small amount of work continued during the next two decades, a major
+revival for the field didn’t come until the 1980s, when practical tools for building
+deeper networks like error backpropagation became widespread (Rumelhart et al.,
+1986). During the 1980s a wide variety of neural network and related architec-
+tures were developed, particularly for applications in psychology and cognitive sci-
+ence (Rumelhart and McClelland 1986b, McClelland and Elman 1986, Rumelhart
+connectionist and McClelland 1986a, Elman 1990), for which the term connectionist or paral-
+lel distributed processing was often used (Feldman and Ballard 1982, Smolensky
+1988). Many of the principles and techniques developed in this period are foun-
+dational to modern work, including the ideas of distributed representations (Hinton,
+1986), recurrent networks (Elman, 1990), and the use of tensors for compositionality
+(Smolensky, 1990).
+By the 1990s larger neural networks began to be applied to many practical lan-
+guage processing tasks as well, like handwriting recognition (LeCun et al. 1989) and
+speech recognition (Morgan and Bourlard 1990). By the early 2000s, improvements
+in computer hardware and advances in optimization and training techniques made it
+possible to train even larger and deeper networks, leading to the modern term deep
+learning (Hinton et al. 2006, Bengio et al. 2007). We cover more related history in
+Chapter 13 and Chapter 15.
+Thereareanumberofexcellentbooksonneuralnetworks, includingGoodfellow
+et al. (2016) and Nielsen (2015).
+
+Historical Notes 27
+Abadi, M., A. Agarwal, P. Barham, E. Brevdo, Z. Chen, Rumelhart, D. E. and J. L. McClelland. 1986a. On learning
+C. Citro, G. S. Corrado, A. Davis, J. Dean, M. Devin, the past tense of English verbs. In D. E. Rumelhart and
+S. Ghemawat, I. Goodfellow, A. Harp, G. Irving, M. Is- J. L. McClelland, eds, Parallel Distributed Processing,
+ard,Y.Jia,R.Jozefowicz,L.Kaiser,M.Kudlur,J.Leven- volume2,216–271.MITPress.
+berg,D.Mane ́,R.Monga,S.Moore,D.Murray,C.Olah, Rumelhart,D.E.andJ.L.McClelland,eds.1986b. Parallel
+M. Schuster, J. Shlens, B. Steiner, I. Sutskever, K. Tal- DistributedProcessing. MITPress.
+war, P. Tucker, V. Vanhoucke, V. Vasudevan, F. Vie ́gas,
+Russell, S. and P. Norvig. 2002. Artificial Intelligence: A
+O. Vinyals, P. Warden, M. Wattenberg, M. Wicke, Y. Yu,
+ModernApproach,2ndedition. PrenticeHall.
+and X. Zheng. 2015. TensorFlow: Large-scale machine
+learning on heterogeneous systems. Software available Smolensky, P. 1988. On the proper treatment of connection-
+fromtensorflow.org. ism. Behavioralandbrainsciences,11(1):1–23.
+Bengio, Y., R. Ducharme, P. Vincent, and C. Jauvin. 2003. Smolensky, P. 1990. Tensor product variable binding and
+A neural probabilistic language model. JMLR, 3:1137– therepresentationofsymbolicstructuresinconnectionist
+1155. systems. Artificialintelligence,46(1-2):159–216.
+Bengio, Y., P. Lamblin, D. Popovici, and H. Larochelle. Srivastava, N., G. E. Hinton, A. Krizhevsky, I. Sutskever,
+2007. Greedy layer-wise training of deep networks. and R. R. Salakhutdinov. 2014. Dropout: a simple
+NeurIPS. way to prevent neural networks from overfitting. JMLR,
+Elman, J. L. 1990. Finding structure in time. Cognitive sci- 15(1):1929–1958.
+ence,14(2):179–211. Widrow, B. and M. E. Hoff. 1960. Adaptive switching cir-
+Feldman,J.A.andD.H.Ballard.1982. Connectionistmod- cuits. IREWESCONConventionRecord,volume4.
+elsandtheirproperties. CognitiveScience,6:205–254.
+Goodfellow, I., Y. Bengio, and A. Courville. 2016. Deep
+Learning. MITPress.
+Hinton, G. E. 1986. Learning distributed representations of
+concepts. COGSCI.
+Hinton, G. E., S. Osindero, and Y.-W. Teh. 2006. A fast
+learning algorithm for deep belief nets. Neural computa-
+tion,18(7):1527–1554.
+Hinton,G.E.,N.Srivastava,A.Krizhevsky,I.Sutskever,and
+R. R. Salakhutdinov. 2012. Improving neural networks
+by preventing co-adaptation of feature detectors. ArXiv
+preprintarXiv:1207.0580.
+Kingma,D.andJ.Ba.2015. Adam: Amethodforstochastic
+optimization. ICLR2015.
+LeCun, Y., B. Boser, J. S. Denker, D. Henderson, R. E.
+Howard,W.Hubbard,andL.D.Jackel.1989. Backprop-
+agationappliedtohandwrittenzipcoderecognition. Neu-
+ralcomputation,1(4):541–551.
+McClelland,J.L.andJ.L.Elman.1986. TheTRACEmodel
+ofspeechperception. CognitivePsychology,18:1–86.
+McCulloch, W. S. and W. Pitts. 1943. A logical calculus of
+ideas immanent in nervous activity. Bulletin of Mathe-
+maticalBiophysics,5:115–133.
+Minsky,M.andS.Papert.1969. Perceptrons. MITPress.
+Morgan, N. and H. Bourlard. 1990. Continuous speech
+recognition using multilayer perceptrons with hidden
+markovmodels. ICASSP.
+Nielsen, M. A. 2015. Neural networks and Deep learning.
+DeterminationPressUSA.
+Paszke,A.,S.Gross,S.Chintala,G.Chanan,E.Yang,Z.De-
+Vito, Z. Lin, A. Desmaison, L. Antiga, and A. Lerer.
+2017. Automaticdifferentiationinpytorch. NIPS-W.
+Rosenblatt, F. 1958. The perceptron: A probabilistic model
+forinformationstorageandorganizationinthebrain.Psy-
+chologicalreview,65(6):386–408.
+Rumelhart, D. E., G. E. Hinton, and R. J. Williams. 1986.
+Learninginternalrepresentationsbyerrorpropagation. In
+D. E. Rumelhart and J. L. McClelland, eds, Parallel Dis-
+tributedProcessing,volume2,318–362.MITPress.

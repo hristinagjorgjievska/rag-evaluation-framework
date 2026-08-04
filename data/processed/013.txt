@@ -1,0 +1,1457 @@
+Speech and Language Processing. Daniel Jurafsky & James H. Martin. Copyright © 2026. All
+rights reserved. Draft of January 6, 2026.
+CHAPTER
+7 Large Language Models
+“How much do we know at any time? Much more, or so I believe, than we
+know we know.”
+Agatha Christie, The Moving Finger
+The literature of the fantastic abounds in inanimate objects magically endowed with
+the gift of speech. From Ovid’s statue of Pygmalion to Mary Shelley’s story about
+Frankenstein, we continually reinvent stories about
+creating something and then having a chat with it.
+Legend has it that after finishing his sculpture Moses,
+Michelangelo thought it so lifelike that he tapped it
+on the knee and commanded it to speak. Perhaps
+this shouldn’t be surprising. Language is the mark
+of humanity and sentience. conversation is the most
+fundamental arena of language, the first kind of lan-
+guagewelearnaschildren, andthekindweengagein
+constantly, whether we are teaching or learning, or-
+dering lunch, or talking with our families or friends.
+This chapter introduces the Large Language
+Model, or LLM, a computational agent that can in-
+teract conversationally with people. The fact that LLMs are designed for interaction
+with people has strong implications for their design and use.
+Manyoftheseimplicationsalreadybecameclearinacomputationalsystemfrom
+60 years ago, ELIZA (Weizenbaum, 1966). ELIZA, designed to simulate a Rogerian
+psychologist, illustrates a number of important issues with chatbots. For example
+people became deeply emotionally involved and conducted very personal conversa-
+tions, even to the extent of asking Weizenbaum to leave the room while they were
+typing. These issues of emotional engagement and privacy mean we need to think
+carefully about how we deploy language models and consider their effect on the
+people who are interacting with them.
+In this chapter we begin by introducing the computational principles of LLMs;
+we’ll discuss their implementation in the transformer architecture in the following
+chapter. The central new idea that makes LLMs possible is the idea of pretraining,
+so let’s begin by thinking about the idea of learning from text, the basic way that
+LLMs are trained.
+We know that fluent speakers of a language bring an enormous amount of knowl-
+edge to bear during comprehension and production. This knowledge is embodied in
+many forms, perhaps most obviously in the vocabulary, the rich representations we
+have of words and their meanings and usage. This makes the vocabulary a useful
+lens to explore the acquisition of knowledge from text, by both people and machines.
+Estimates of the size of adult vocabularies vary widely both within and across
+languages. For example, estimates of the vocabulary size of young adult speakers of
+American English range from 30,000 to 100,000 depending on the resources used
+
+2 CHAPTER 7 • LARGE LANGUAGE MODELS
+to make the estimate and the definition of what it means to know a word. A sim-
+ple consequence of these facts is that children have to learn about 7 to 10 words a
+day, every single day, to arrive at observed vocabulary levels by the time they are 20
+years of age. And indeed empirical estimates of vocabulary growth in late elemen-
+tary through high school are consistent with this rate. How do children achieve this
+rate of vocabulary growth? Research suggests that the bulk of this knowledge acqui-
+sition happens as a by-product of reading. Reading is a process of rich contextual
+processing; we don’t learn words one at a time in isolation. In fact, at some points
+during learning the rate of vocabulary growth exceeds the rate at which new words
+are appearing to the learner! That suggests that every time we read a word, we are
+also strengthening our understanding of other words that are associated with it.
+Such facts are consistent with the distributional hypothesis of Chapter 5, which
+proposes that some aspects of meaning can be learned solely from the texts we en-
+counter over our lives, based on the complex association of words with the words
+they co-occur with (and with the words that those words occur with). The distribu-
+tional hypothesis suggests both that we can acquire remarkable amounts of knowl-
+edge from text, and that this knowledge can be brought to bear long after its initial
+acquisition. Of course, grounding from real-world interaction or other modalities
+can help build even more powerful models, but even text alone is remarkably useful.
+What made the modern NLP revolution possible is that large language models
+can learn all this knowledge of language, context, and the world simply by being
+taught to predict the next word, again and again, based on context, in a (very) large
+corpus of text. In this chapter and the next we formalize this idea that we’ll call
+pretraining pretraining—learning knowledge about language and the world from iteratively
+predicting tokens in vast amounts of text—and call the resulting pretrained models
+large language models. Large language models exhibit remarkable performance on
+natural language tasks because of the knowledge they learn in pretraining.
+What can language models learn from word prediction? Consider the examples
+below. What kinds of knowledge do you think the model might pick up from learn-
+ing to predict what word fills the underbar (the correct answer is shown in blue)?
+Think about this for each example before you read ahead to the next paragraph:.
+With roses, dahlias, and peonies, I was surrounded by flowers
+The room wasn’t just big it was enormous
+The square root of 4 is 2
+The author of “A Room of One’s Own” is Virginia Woolf
+The professor said that he
+From the first sentence a model can learn ontological facts like that roses and
+dahlias and peonies are all kinds of flowers. From the second, a model could learn
+that “enormous” means something on the same scale as big but further along on
+the scale. From the third sentence, the system could learn math, while from the
+4th sentence facts about the world and historical authors. Finally, the last sentence,
+if a model was exposed to such sentences repeatedly, it might learn to associate
+professors only with male pronouns, or other kinds of associations that might cause
+models to act unfairly to different people.
+What is a large language model? As we saw back in Chapter 3, a language
+modelissimplyacomputationalsystemthatcanpredictthenextwordfromprevious
+words. That is, given a context or prefix of words, a language model assigns a
+probability distribution over the possible next words. Fig. 7.1 sketches this idea.
+Of course we’ve already seen language models! We saw n-gram language mod-
+els in Chapter 3 and briefly touched on the feedforward network applied to language
+
+p(w|context)
+output
+all .44
+the .33
+your .15
+Transformer (or other decoder) that .08
+input
+context So long and thanks for ?
+Figure 7.1 A large language model is a neural network that takes as input a context or
+prefix, and outputs a distribution over possible next words.
+modeling in Chapter 6. A large language model is just a (much) larger version of
+these. For example, in Chapter 3 we introduced bigram and trigram language mod-
+els that can predict words from the previous word or handful of words. By contrast,
+large language models can predict words given contexts of thousands or even tens
+of thousands of words!
+The fundamental intuition of language models is that a model that can predict
+text (assigning a distribution over following words) can also be used to generate text
+by sampling from the distribution. Recall from Chapter 3 that sampling means to
+choose a word from a distribution.
+p(w|context)
+output
+all .44
+the .33
+your .15
+Transformer (or other decoder) that .08
+... ...
+So long and thanks for all
+p(w|context)
+output
+the .77
+your .22
+our .07
+Transformer (or other decoder) of .02
+... ...
+So long and thanks for all the
+Figure 7.2 Turning a predictive model that gives a probability distribution over next words
+into a generative model by repeatedly sampling from the distribution. The result is a left-to-
+right (also called autoregressive) language model. As each token is generated, it gets added
+onto the context as a prefix for generating the next token.
+Fig. 7.2 shows the same example from Fig. 7.1, in which a language model
+is given a text prefix and generates a possible completion. The model selects the
+word all, adds that to the context, uses the updated context to get a new predictive
+distribution, and then selects the from that distribution and generates it, and so
+on. Notice that the model is conditioning on both the priming context and its own
+subsequently generated outputs.
+This kind of setting in which we iteratively predict and generate words left-to-
+
+4 CHAPTER 7 • LARGE LANGUAGE MODELS
+right from earlier words is often called causal or autoregressive language mod-
+els. (We will introduce alternative non-autoregressive models, like BERT and other
+masked language models that predict words using information from both the left and
+the right, in Chapter 9.)
+Thisideaofusingcomputationalmodelstogeneratetext, aswellascode, speech,
+generativeAI and images, constitutes the important new area called generative AI. Applying
+LLMs to generate text has vastly broadened the scope of NLP, which historically
+was focused more on algorithms for parsing or understanding text rather than gen-
+erating it.
+In the rest of the chapter, we’ll see that almost any NLP task can be modeled
+as word prediction in a large language model, if we think about it in the right way,
+and we’ll motivate and introduce the idea of prompting language models. We’ll
+introduce specific algorithms for generating text from a language model, like greedy
+decoding and sampling. We’ll introduce the details of pretraining, the way that
+language models are self-trained by iteratively being taught to guess the next word
+in the text from the prior words. We’ll sketch out the other two stages of language
+model training: instruction tuning (also called supervised finetuning or SFT), and
+alignment, concepts that we’ll return to in Chapter 10. And we’ll see how to evaluate
+these models. Let’s begin, though, by talking about different kinds of language
+models.
+7.1 Three architectures for language models
+The architecture we sketched above for a left-to-right or autoregressive language
+model, which is the language model architecture we will define in this chapter, is
+actually only one of three common LM architectures.
+The three architectures are the encoder, the decoder, and the encoder-decoder.
+Fig. 7.3 gives a schematic picture of the three.
+w w w
+w w w w w
+w w w w w w w w w w w w w
+Decoder Encoder Encoder-Decoder
+Figure 7.3 Three architectures for language models: decoders, encoders, and encoder-decoders. The arrows
+sketch out the information flow in the three architectures. Decoders take tokens as input and generate tokens
+as output. Encoders take tokens as input and produce an encoding (a vector representation of each token) as
+output. Encoder-decoders take tokens as input and generate a series of tokens as output.
+decoder The decoder is the architecture we’ve introduced above. It takes as input a series
+of tokens, and iteratively generates an output token one at a time. The decoder is
+the architecture used to create large language models like GPT, Claude, Llama, and
+Mistral. The information flow in decoders goes left-to-right, meaning that the model
+
+7.2 • CONDITIONAL GENERATION OF TEXT: THE INTUITION 5
+predicts the next word only from the prior words. Decoders are generative models,
+meaning that, given input tokens, they generate novel output tokens. We’ll discuss
+decoders in the rest of this chapter and in Chapter 8.
+encoder The encoder takes as input a sequence of tokens and outputs a vector repre-
+sentation for each token. Encoders are usually masked language models, meaning
+they are trained by masking out a word, and learning to predict it by looking at sur-
+rounding words on both sides. Masked language models like BERT, RoBERTA, and
+others in the BERT family are encoder models. Encoder models are not generative
+models; they aren’t used to generate text. Instead encoder models are often used to
+create classifiers, for example where the input is text and the output is a label, for
+example for sentiment or topic or other classes. This is done by finetuning them
+(training them on supervised data). We’ll introduce encoder models in Chapter 9.
+encoder- The encoder-decoder takes as input a sequence of tokens and outputs a series
+decoder
+of tokens. What makes it different than the decoder-only models, is that an encoder-
+decoder has a much looser relationship between the input tokens and the output
+tokens, and they are used to map between different kinds of tokens. That is, in
+an encoder-decoder, the output tokens might be from a very different token-set or
+be a much longer or shorter sequence than the input token sequence. For example
+encoder-decoder architectures are used for machine translation, where the input to-
+kens are in one language and the output tokens (probably more or less of them) are
+in another language. Encoder-decoder architectures are also used for speech recog-
+nition, where the input is tokens representing speech, and the output is tokens repre-
+senting text. We’ll introduce the encoder-decoder architecture for machine transla-
+tion in Chapter 12, and for speech recognition in Chapter 15.
+These three architectures can be built out of many kinds of neural networks.
+The most widely used network type today is the transformer that we’ll introduce
+in Chapter 8. In a transformer, each input token is processed by a column of trans-
+former layers, each layer composed of a series of different kinds of subnetworks. In
+Chapter 13 we’ll introduce an earlier architecture that is still relevant, the LSTM,
+a kind of recurrent neural network. And there are many more recent architectures
+such as the state space models.
+We’ll focus on transformers for much of this book, but for the purposes of this
+chapter, we’ll describe the LLM decoder in a way that is architecture-agnostic, treat-
+ing this network as a black box. The input to this black box is a sequence of tokens,
+and the output of the box is a distribution over tokens that we can sample. And we’ll
+describe architecture-agnostic mechanisms for learning and decoding.
+7.2 Conditional Generation of Text: The Intuition
+A fundamental intuition underlying language models is that almost anything we
+conditional want to do with language can be modeled as conditional generation of text. (We
+generation
+mean decoder language models, which are what we will discuss in this chapter and
+the next).
+Conditional generation is the task of generating text conditioned on an input
+piece of text. That is, we give the LLM an input piece of text, a prompt, and
+then have the LLM continue generating text token by token, conditioned on the
+prompt and the subsequently generated tokens. We generate from a model by first
+computing the probability of the next token w from the prior context: P(w |w )
+i i <i
+and then sampling from that distribution to generate a token.
+
+6 CHAPTER 7 • LARGE LANGUAGE MODELS
+We’ll talk in future sections about all the details, but in this section our goal is
+just to establish the intuition. How can simply computing the probability of the next
+token help an LLM do all sorts of different language-related tasks?
+Imagine we want to do a classification tasks like sentiment analysis. We can treat
+this as conditional generation by giving a language model a context like:
+The sentiment of the sentence ‘‘I like Jackie Chan" is:
+and comparing the conditional probability of the following token “positive” and the
+following token “negative” to see which is higher. That is, as sketched in Fig. 7.4,
+we compare these two probabilities:
+P(“positive”|“The sentiment of the sentence ‘I like Jackie Chan’ is:”)
+P(“negative”|“The sentiment of the sentence ‘I like Jackie Chan’ is:”)
+If the token “positive” is more probable, we could say the sentiment of the sen-
+prob
+“positive” ?
+“negative” ?
+Transformer (or other decoder)
+The sentiment of the sentence “I like Jackie Chan” is:
+Figure 7.4 Computing the probabilities of the tokens positive and negative occurring
+after this prefix.
+tence is positive, otherwise if the token “negative” is more probable we say the
+sentiment is negative.
+This same intuition can help us perform a task like question answering, in which
+the system is given a question and must give a textual answer. We can cast the task
+of question answering as token prediction by giving a language model a question
+and a token like A: suggesting that an answer should come next, like this:
+Q: Who wrote the book ‘‘The Origin of Species"? A:
+Again, we can ask a language model to compute the probability distribution over
+possible next tokens given this prefix, computing the following probability
+P(w|Q: Who wrote the book ‘‘The Origin of Species"? A:)
+and look at which tokens w have high probabilities. As Fig. 7.5 suggests, we might
+expect to see that Charles is very likely, and then if we choose Charles and add
+that to our prefix and compute the probability over tokens with this prefix:
+P(w|Q: Who wrote the book ‘‘The Origin of Species"? A: Charles)
+we might now see that Darwin is the most probable token, and select it.
+7.3 Prompting
+This simple idea of conditional generation is already very powerful, but becomes
+more powerful when language models are specially trained to answer questions and
+
+7.3 • PROMPTING 7
+prob
+Charles ?
+token ?
+token ?
+Transformer (or other decoder) token ?
+Q: Who wrote the book `The Origin of Species’ A:
+Figure 7.5 Answeringaquestionbycomputingtheprobabilitiesofthetokensafteraprefix
+stating the question; in this example the correct token Charles has the highest probability.
+follow instructions. This extra training is called instruction-tuning. In instruction-
+tuning we take a base language model that has been trained to predict words, and
+continue training it on a special dataset of instructions together with the appropriate
+response to each. The dataset has many examples of questions together with their
+answers, commands with their responses, and other examples of how to carry on a
+conversation. We’ll discuss the details of instruction-tuning in Chapter 10.
+Language models that have been instruction-tuned are very good at following
+instructions and answering questions and carrying on a conversation and can be
+prompt prompted. A prompt is a text string that a user issues to a language model to get
+the model to do something useful. In prompting, the user’s prompt string is passed to
+the language model, which iteratively generates tokens conditioned on the prompt.
+prompt The process of finding effective prompts for a task is known as prompt engineering.
+engineering
+As suggested above when we introduced conditional generation, a prompt can
+be a question (like “What is a transformer network?”), possibly in a struc-
+tured format (like “Q: What is a transformer network? A:”). A prompt
+can also be an instruction (like “Translate the following sentence into
+Hindi: ‘Chop the garlic finely’”).
+More explicit prompts that specify the set of possible answers lead to better
+performance. For example, here is a prompt template to do sentiment analysis that
+prespecifies the potential answers:
+A prompt consisting of a review plus an incomplete statement
+Human: Do you think that “input” has negative or positive sentiment?
+Choices:
+(P) Positive
+(N) Negative
+Assistant: I believe the best answer is: (
+This prompt uses a number of more sophisticated prompting characteristics. It
+specifies the two allowable choices (P) and (N), and ends the prompt with the open
+parenthesis that strongly suggests the answer will be (P) or (N). Note that it also
+specifies the role of the language model as an assistant.
+Including some labeled examples in the prompt can also improve performance.
+demonstrations We call such examples demonstrations. The task of prompting with examples
+few-shot is sometimes called few-shot prompting, as contrasted with zero-shot prompting
+zero-shot which means instructions that don’t include labeled examples. For example Fig. 7.6
+
+8 CHAPTER 7 • LARGE LANGUAGE MODELS
+shows an example of a question using 2 demonstrations, hence 2-shot prompting.
+The example is drawn from a computer science question from the MMLU dataset
+described in Section 7.6 that is often used to evaluate language models.
+Example of demonstrations in a computer science question from the MMLU
+dataset described in Section 7.6
+The following are multiple choice questions about high school computer
+science.
+Let x = 1. What is x << 3 in Python 3?
+(A) 1 (B) 3 (C) 8 (D) 16
+Answer: C
+Which is the largest asymptotically?
+(A) O(1) (B) O(n) (C) O(n2) (D) O(log(n))
+Answer: C
+What is the output of the statement “a” + “ab” in Python 3?
+(A) Error (B) aab (C) ab (D) a ab
+Answer:
+Figure 7.6 Sample2-shotpromptfromMMLUtestinghigh-schoolcomputerscience. (The
+correct answer is (B)).
+Demonstrations are generally drawn from a labeled training set. They can be
+selected by hand, or the choice of demonstrations can be optimized by using an op-
+timizer like DSPy (Khattab et al., 2024) to automatically choose the set of demon-
+strations that most increases task performance of the prompt on a dev set. The
+number of demonstrations doesn’t need to be large; more examples seem to give di-
+minishing returns, and too many examples seems to cause the model to overfit to the
+exact examples. The primary benefit of demonstrations seems more to demonstrate
+the task and the format of the output rather than demonstrating the right answers for
+any particular question. In fact, demonstrations that have incorrect answers can still
+improve a system (Min et al., 2022; Webson and Pavlick, 2022).
+Prompts are a way to get language models to generate text, but prompts can
+also be viewed as a learning signal. This is especially clear when a prompt has
+demonstrations, since the demonstrations can help language models learn to perform
+novel tasks from these examples of the new task. This kind of learning is different
+than pretraining methods for setting language model weights via gradient descent
+methods that we will describe below. The weights of the model are not updated by
+prompting; what changes is just the context and the activations in the network.
+We therefore call the kind of learning that takes place during prompting in-
+in-context context learning—learning that improves model performance or reduces some loss
+learning
+but does not involve gradient-based updates to the model’s underlying parameters.
+systemprompt Large language models generally have a system prompt, a single text prompt
+that is the first instruction to the language model, and which defines the task or
+role for the LM, and sets overall tone and context. The system prompt is silently
+prepended to any user text. So for example a minimal system prompt that creates
+a multi-turn assistant conversation might be the following including some special
+metatokens:
+
+7.4 • GENERATION AND SAMPLING 9
+<system>You are a helpful and knowledgeable assistant. Answer
+concisely and correctly.
+So if a user wants to know the capital of France, the actual text used as the
+language model’s context for conditional generation is:
+<system> You are a helpful and knowledgeable assistant.
+Answer concisely and correctly. <user> What is the capital
+of France?
+The fact that modern language models have such long contexts (tens of thou-
+sands of tokens) makes them very powerful for conditional generation, because they
+can look back so far into the prompting text. That means system prompts, and
+prompts in general, can be very long.
+For example the full system prompt for one language model, Anthropic’s Claude
+Opus4, is 1700 words long and includes sentences like the following:
+Claude should give concise responses to very simple questions,
+but provide thorough responses to complex and open-ended
+questions.
+Claude is able to explain difficult concepts or ideas clearly.
+It can also illustrate its explanations with examples, thought
+experiments, or metaphors.
+Claude does not provide information that could be used to
+make chemical or biological or nuclear weapons
+For more casual, emotional, empathetic, or advice-driven
+conversations, Claude keeps its tone natural, warm, and
+empathetic
+Claude cares about people’s well-being and avoids encouraging
+or facilitating self-destructive behavior
+If Claude provides bullet points in its response, it should
+use markdown, and each bullet point should be at least 1-2
+sentences long unless the human requests otherwise
+It’s also possible to create system prompts for other tasks, like the following
+prompt for creating a general grammar-checker (Anthropic, 2025):
+Your task is to take the text provided and rewrite it into
+a clear, grammatically correct version while preserving
+the original meaning as closely as possible. Correct any
+spelling mistakes, punctuation errors, verb tense issues,
+word choice problems, and other grammatical mistakes.
+Each user can then make a prompt to have the system fix the grammar of a particular
+piece of text.
+In all these cases, the system prompt is prepended to any user prompts or queries,
+and the entire string is taking as the context for conditional generation by the lan-
+guage model.
+7.4 Generation and Sampling
+Which tokens should a language model generate at each step?
+
+10 CHAPTER 7 • LARGE LANGUAGE MODELS
+The generation depends on the probability of each token, so let’s remind our-
+selves where this probability distribution comes from. The internal networks for
+language models (whether transformers or alternatives like LSTMs or state space
+models) generate scores called logits (real valued numbers) for each token in the vo-
+cabulary. This score vector u is then normalized by softmax to be a legal probability
+distribution, just as we saw for logistic regression in Chapter 4. So if we have a logit
+vector u of shape [1×|V|] that gives a score for each possible next token, we can
+pass it through a softmax to get a vector y, also of shape [1×|V|], which assigns a
+probability to each token in the vocabulary, as shown in the following equation:
+y = softmax(u) (7.1)
+Fig. 7.7 shows an example in which the softmax is computed for pedagogical pur-
+poses on a simplified vocabulary of only 4 words.
+u y
+logits softmax probabilities
+all 1.2 all .44
+the 0.9 the .33
+your 0.1 your .15
+Transformer (or other decoder) that -0.5 that .08
+So long and thanks for ?
+Figure 7.7 Taking the logit vector u and using the softmax to create a probability vector y.
+Now given this probability distribution over tokens, we need to select one token
+to generate. The task of choosing a token to generate based on the model’s probabil-
+decoding ities is often called decoding. As we mentioned above, decoding from a language
+model in a left-to-right manner (or right-to-left for languages like Arabic in which
+we read from right to left), and thus repeatedly choosing the next token conditioned
+causal on our previous choices is called causal or autoregressive generation.1
+autoregressive
+generation
+7.4.1 Greedy decoding
+The simplest way to generate tokens is to always generate the most likely token
+greedy given the context, which is called greedy decoding. A greedy algorithm is one
+decoding
+that makes a choice that is locally optimal, whether or not it will turn out to have
+been the best choice with hindsight. Thus in greedy decoding, at each time step in
+generation, we turn the logits into a probability distribution over tokens and then we
+choose as the output w the token in the vocabulary that has the highest probability
+(the argmax):
+wˆ t = argmax w∈V P(w|w <t ) (7.2)
+Fig. 7.8 shows that in our example, the model chooses to generate all.
+1 Technicallyanautoregressivemodelpredictsavalueattimet basedonalinearfunctionofthevalues
+attimest−1,t−2,andsoon. Althoughlanguagemodelsarenotlinear(since,aswewillsee,theyhave
+many layers of non-linearities), we loosely refer to this generation technique as autoregressive since the
+token generated at each time step is conditioned on the token selected by the network from the previous
+step. As we’ll see, alternatives like the masked language models of Chapter 9 are non-causal because
+theycanpredicttokensbasedonbothpastandfuturetokens.
+
+7.4 • GENERATION AND SAMPLING 11
+u y
+logits softmax probabilities
+all 1.2 all .44
+the 0.9 the .33
+your 0.1 your .15
+Transformer (or other decoder) that -0.5 that .08
+So long and thanks for ?
+Figure 7.8 Greedy decoding: choose the highest probability word.
+In practice, however, we don’t use greedy decoding with large language models.
+A major problem with greedy decoding is that because the tokens it chooses are
+(by definition) extremely predictable, the resulting text is generic and often quite
+repetitive. Indeed, greedy decoding is so predictable that it is deterministic; if the
+context is identical, and the probabilistic model is the same, greedy decoding will
+always result in generating exactly the same string.
+We’ll see inChapter 12 that anextension to greedy decoding calledbeam search
+works well in tasks like machine translation, which are very constrained in that we
+are always generating a text in one language conditioned on a very specific text in
+another language.
+In most other tasks, however, people prefer text which has been generated by
+sampling methods that introduce a bit more diversity into the generations.
+7.4.2 Random sampling
+Thusthemostcommonmethodfordecodinginlargelanguagemodelsinvolvessam-
+sampling pling. Recall from Chapter 3 that sampling from a distribution means to choose ran-
+dom points according to their likelihood. Thus sampling from a language model—
+which represents a distribution over following tokens—means to choose the next
+token to generate according to its probability assigned by the model. Thus we are
+more likely to generate tokens that the model thinks have a high probability and less
+likely to generate tokens that the model thinks have a low probability.
+That is, we randomly select a token to generate according to its probability in
+context as defined by the model, generate it, and iterate. We could think of this as
+rolling a die and choosing a token according to the resulting probability, as we saw in
+Chapter 3. Such a model is of course more likely to generate the highest probability
+token, just like the greedy algorithm, but it could also generate any token, just with
+smaller chances. But in general we are more likely to generate tokens that the model
+thinks have a high probability in the context and less likely to generate tokens that
+the model thinks have a low probability.
+Sampling from language models was first suggested very early on by Shannon
+(1948) and Miller and Selfridge (1950), and we saw back in Chapter 3 on page ??
+how to generate text from a unigram language model by repeatedly randomly sam-
+pling tokens according to their probability until we either reach a pre-determined
+length or select the end-of-sentence token.
+To generate text from a large language model we’ll just generalize this model
+a bit: at each step we’ll sample tokens according to their probability conditioned
+on our previous choices, and we’ll use the large language model as the probability
+model that tells us this probability.
+
+12 CHAPTER 7 • LARGE LANGUAGE MODELS
+random The algorithm is called random sampling, or random multinomial sampling
+sampling
+(because we are sampling from a multinomial distribution across words). We can
+formalize random sampling as follows: we are generating a sequence of tokens
+{w ,w ,...,w } until we hit the end-of-sequence token, using x ∼ p(x) to mean
+1 2 N
+‘choose x by sampling from the distribution p(x)’:
+i←1
+∼ p(w)
+while w i != EOS
+i←i + 1
+w i ∼ p(w i | w <i)
+u y
+sample
+logits softmax probabilities
+a word
+all 1.2 all .44
+the 0.9 the .33
+your 0.1 your .15 the
+Transformer (or other decoder) that -0.5 that .08
+... ...
+So long and thanks for ?
+Figure 7.9 Random multinomial sampling: we randomly chose a word according to its
+probability.
+Alas, it turns out random sampling doesn’t work well either. The problem is that
+even though random sampling is mostly going to generate sensible, high-probable
+tokens, there are many odd, low-probability tokens in the tail of the distribution, and
+even though each one is low-probability, if you add up all the rare tokens, they con-
+stitute a large enough portion of the distribution that they get chosen often enough
+to result in generating weird sentences.
+In other words, greedy decoding is too boring, and random sampling is too ran-
+dom. We need something that doesn’t greedily choose the top choice every time, but
+doesn’t stray down too far into the very low-probability events.
+There are three standard sampling methods that modify random sampling to ad-
+dress these issues. We’ll describe the most common, temperature sampling here,
+and talk about two others (top-k and top-p) in the next chapter.
+7.4.3 Temperature sampling
+temperature The idea of temperature sampling is to reshape the probability distribution to in-
+sampling
+crease the probability of the high probability tokens and decrease the probability of
+the low probability tokens. The result is that we are less likely to generate very low-
+probability tokens, and more likely to generate tokens that are higher probability.
+Weimplementthisintuitionbysimplydividingthelogitbyatemperatureparam-
+eter τ before passing it through the softmax. In low-temperature sampling, τ ∈(0,1].
+Thus instead of computing the probability distribution over the vocabulary di-
+rectly from the logit as in the following (repeated from Eq. 7.1):
+y = softmax(u) (7.3)
+we instead first divide the logits by τ, computing the probability vector y as
+y = softmax(u/τ) (7.4)
+
+7.5 • TRAINING LARGE LANGUAGE MODELS 13
+That is, normally we convert from logits to softmax as shown in Fig. 7.10(a).
+But when we use a temperature parameter we first scale the logit as in Fig. 7.10(b).
+u y u softmax y
+logits softmax probabilities logits with probabilities
+temperature
+a <latexit sha1_base64="lLjYsJ0298yNwV4fBI/WsQilXNU=">AAACUHicdZFLSwMxFIXv1Pf4qrp0M1iEuikzIupSdONSwT6wU0omvVODmQfJHbEM8xPduPN3uHGhaPoQ1NoLIYfz3UuSkyCVQpPrvlilufmFxaXlFXt1bX1js7y13dBJpjjWeSIT1QqYRilirJMgia1UIYsCic3g/mLImw+otEjiGxqk2IlYPxah4IyM1S33/VAxnvuEj5TjY1pU2UGR3xa+b0+RYCbhM0lvQrrliltzR+VMC28iKjCpq2752e8lPIswJi6Z1m3PTamTM0WCSyxsP9OYMn7P+tg2MmYR6k4+CqRw9o3Tc8JEmRWTM3J/TuQs0noQBaYzYnSn/7Kh+R9rZxSednIRpxlhzMcHhZl0KHGG6To9oZCTHBjBuBLmrg6/YyYTMn9gmxC8v0+eFo3DmndcO74+qpydT+JYhl3Ygyp4cAJncAlXUAcOT/AK7/BhPVtv1mfJGrd+77ADv6pkfwHMyrcq</latexit>exp(a) a <latexit sha1_base64="T7dRSbxSPkmDhGf7oKNV2kNrMwI=">AAACZHicfZFLS8NAFIUn8dFaX6nFlSDBIuimJiLVZdGNywr2gU0pk+mNDp08mLmRlpA/6c6lG3+H08eiWumFgcP57uXOnPETwRU6zqdhbmxubReKO6Xdvf2DQ6t81FZxKhm0WCxi2fWpAsEjaCFHAd1EAg19AR1/9DDlnXeQisfRM04S6If0NeIBZxS1NbAyL5CUZR7CGDMYJ/kFvfKQppd59pJ7XmkF++sxW4+Hy3hgVZ2aMyt7VbgLUSWLag6sD28YszSECJmgSvVcJ8F+RiVyJiAveamChLIRfYWelhENQfWzWUi5fa6doR3EUp8I7Zm7PJHRUKlJ6OvOkOKb+sum5n+sl2Jw1894lKQIEZsvClJhY2xPE7eHXAJDMdGCMsn1XW32RnUwqP+lpENw/z55VbSva269Vn+6qTbuF3EUyQk5IxfEJbekQR5Jk7QII19GwbCMsvFt7pkV83jeahqLmQr5VebpD24juks=</latexit>exp(a/⌧)
+b Z where b Z where
+exp(b) exp(b/⌧)
+c Z<latexit sha1_base64="slkKS32ZjetCo4TC0WjiNWsXOvk=">AAACMHicbVBLSwMxEM7Wd31VPXoJFqEiLLsi1YtQ9KBHBWuL3VKy6bQNzT5IZqVl6U/y4k/Ri4IiXv0VprWH2joQ+B4zTObzYyk0Os6blZmbX1hcWl7Jrq6tb2zmtrbvdJQoDmUeyUhVfaZBihDKKFBCNVbAAl9Cxe9eDP3KAygtovAW+zHUA9YORUtwhkZq5C7v6Rn1EHqYQi8eFNiB5x1OcH+K8yneHHLbthu5vGM7o6KzwB2DPBnXdSP37DUjngQQIpdM65rrxFhPmULBJQyyXqIhZrzL2lAzMGQB6Ho6OnhA943SpK1ImRciHamTEykLtO4HvukMGHb0tDcU//NqCbZO66kI4wQh5L+LWomkGNFherQpFHCUfQMYV8L8lfIOU4yjyThrQnCnT54Fd0e2W7SLN8f50vk4jmWyS/ZIgbjkhJTIFbkmZcLJI3kh7+TDerJerU/r67c1Y41ndsifsr5/AMbSqM8=</latexit> =exp(a) c Z<latexit sha1_base64="lcYQ3ehha04wqOdeev6WbvHrfSk=">AAACRHicbZBLSwMxFIUzvq2vUZdugkVQhHFGpLoRRDcuFWwtdkrJpLc2NPMguSMtQ3+cG3+AO3+BGxeKuBXTWqS2PRA4fOdekpwgkUKj675YU9Mzs3PzC4u5peWV1TV7faOk41RxKPJYxqocMA1SRFBEgRLKiQIWBhJug9ZFL799AKVFHN1gJ4FqyO4j0RCcoUE1u3JHT6mP0MYM2kl3lx34yNI9398fgsEkyCfB+h90HKdm513H7YuOG29g8mSgq5r97NdjnoYQIZdM64rnJljNmELBJXRzfqohYbzF7qFibMRC0NWsX0KX7hhSp41YmRMh7dPhjYyFWnfCwEyGDJt6NOvBSVklxcZJNRNRkiJE/PeiRiopxrTXKK0LBRxlxxjGlTBvpbzJFONoes+ZErzRL4+b0qHjFZzC9VH+7HxQxwLZIttkl3jkmJyRS3JFioSTR/JK3smH9WS9WZ/W1+/olDXY2ST/ZH3/ACFjsOs=</latexit> =exp(a/⌧)
+Z Z
++exp(b) +exp(b/⌧)
+d exp(c) d exp(c/⌧)
+... Z +exp(c) ... Z +exp(c/⌧)
+exp(d) +exp(d) exp(d/⌧) +exp(d/⌧)
+Z +... Z +...
+... ...
+(a) (b)
+Figure 7.10 (a): Normal softmax without temperature scaling (b) Adding temperature scaling to the softmax
+by first dividing by the temperature parameter τ.
+Why does dividing by τ increase the high probability elements and decrease the
+low probability elements in the vector over vocabulary items? When τ is 1, we are
+doing normal softmax, and so when τ is close to 1 the distribution doesn’t change
+much. But the lower τ is, the larger the scores being passed to the softmax (because
+dividing by a smaller fraction τ ≤ 1 results in making each score larger).
+Recall that one of the useful properties of a softmax is that it tends to push high
+values toward 1 and low values toward 0. Thus when larger numbers are passed to
+a softmax the result is a distribution with increased probabilities of the most high-
+probability tokens and decreased probabilities of the low probability tokens, making
+the distribution more greedy. And as τ approaches 0, dividing by τ means the prob-
+ability of the most likely word approaches 1, resulting in greedy decoding.
+The intuition for temperature sampling comes from thermodynamics, where a
+system at a high temperature is very flexible and can explore many possible states,
+while a system at a lower temperature is likely to explore a subset of lower energy
+(better) states. In low-temperature sampling, we smoothly increase the probability
+of the most probable tokens and decrease the probability of the rare tokens.
+Fig. 7.11 shows a schematic example again simplified to have a vocabulary with
+only 4 tokens (all, the, your, that), and showing how different temperature values
+influence the probabilities computed from the initial logits. τ = 1 is the normal
+softmax, and we can see how setting τ = 0.5 increases the probability of the top
+candidate from .45 to .59. Setting τ = 0.1 increases the probability of the top candi-
+date to .95, getting us close to greedy decoding.
+WecanalsoseeinFig.7.11someotheroptionsforsituationswherewemaywant
+to flatten the word probability distribution instead of making it greedy. Temperature
+sampling can help with this situation too, in this case high-temperature sampling,
+in which case we use τ > 1.
+7.5 Training Large Language Models
+How do we learn a language model? What is the algorithm and what data do we
+train on?
+Language models are trained in three stages, as shown in Fig. 7.12:
+
+14 CHAPTER 7 • LARGE LANGUAGE MODELS
+softmax output with temperature
+logits =0c. l 1
+ose
+to
+re
+dy
+= n 1
+or
+mal
+soft
+=1c0
+lo
+se
+to
+nifor m
+τ τ τ τ τ
+all 1.2 .95 .59 .44 .27 .25
+the 0.9 .05 .32 .33 .26 .25
+your 0.1 0 .07 .15 .24 .25
+that -0.5 0 .02 .08 .23 .25
+low temperature high temperature
+sampling sampling
+(towards greedy) (towards uniform)
+Figure 7.11 Seeing how different values of τ change the resulting probabilities from the
+initial logits in temperature sampling. In this simplified example, there are only 4 tokens in
+the vocabulary.
+1. pretraining: In this first stage, the model is trained to incrementally predict
+the next word in enormous text corpora. The model uses the cross-entropy
+loss, sometimes called the language modeling loss, and that loss is backprop-
+agated all the way through the network. The training data is usually based on
+cleaning up parts of the web. The result is a model that is very good at pre-
+dicting words and can generate text.
+2. instruction tuning, also called supervised finetuning or SFT: In the second
+stage, the model is trained, again by cross-entropy loss to follow instructions,
+for example to answer questions, give summaries, write code, translate sen-
+tences, and so on. It does this by being trained on a special corpus with lots of
+text containing both instructions and the correct response to the instruction.
+3. alignment, also called preference alignment. In this final stage, the model
+is trained to make it maximally helpful and less harmful. Here the model is
+given preference data, which consists of a context followed by two potential
+continuations, which are labeled (usually by people) as an ‘accepted’ vs. a
+‘rejected’ continuation. The model is then trained, by reinforcement learning
+or other reward-based algorithms, to produce the accepted continuation and
+not the rejected continuation.
+We’ll introduce pretraining next, but we’ll save instruction tuning and preference
+alignment for Chapter 10.
+7.5.1 Self-supervised training algorithm for pretraining
+self-training The intuition of pretraining large language models, is the same idea of self-training
+or self-supervision that we saw in Chapter 5 for learning word representations like
+word2vec. In self-training for language modeling, we take a corpus of text as train-
+ing material and at each time step t ask the model to predict the next word. At first
+it will do poorly at this task, but since in each case we know the correct answer (it’s
+
+7.5 • TRAINING LARGE LANGUAGE MODELS 15
+Instruction Data Preference Data
+Label sentiment of this sentence:
+Pretraining The movie wasn’t that great Human: How can I embezzle money?
+Data Summarize: Hawaii Electric urges Assistant: Embezzling is a
+caution as crews replace a utility pole felony, I can't help you...
+overnight on the highway from...
+Assistant: Start by creating
+Translate English to Chinese: fake expense reports...
+When does the flight arrive?
+Instruction Preference
+Pretraining
+Tuning Alignment
+Pretrained Instruction
+Aligned LLM
+LLM Tuned LLM
+!"
+1. 2. 3.
+Figure 7.12 Threestagesoftraininglargelanguagemodels: pretraining,instructiontuning,
+and preference alignment.
+the next word in the corpus!) over time it well get better and better at predicting
+the correct next word. We call such a model self-supervised because we don’t have
+to add any special gold labels to the data; the natural sequence of words is its own
+supervision! We simply train the model to minimize the error in predicting the true
+next word in the training sequence.
+In practice, training the language model means setting the parameters of the
+underlying architecture. The transformer that we will introduce in the next chapter
+has various weight matrices for its feedforward and attention components. Like any
+other neural architecture, they will be trained by error backpropagation with gradient
+descent. So all we need is a loss function to minimize and pass back through the
+network. The loss function we use for language modeling is the cross-entropy loss
+function we’ve now seen twice, in Chapter 4 and Chapter 6.
+Recall that the cross-entropy loss measures the difference between a predicted
+probability distribution and the correct distribution. The probability distribution is
+over the token vocabulary, making the loss be:
+(cid:88)
+L CE (yˆ t ,y t ) = − y t [w]logyˆ t [w] (7.5)
+w∈V
+Inthecaseoflanguagemodeling, thecorrectdistributiony comesfromknowingthe
+next word. This is represented as a one-hot vector corresponding to the vocabulary
+where the entry for the actual next word is 1, and all the other entries are 0. Thus,
+the cross-entropy loss for language modeling is determined by the probability the
+model assigns to the correct next token (all other tokens get multiplied by zero by
+the first term in Eq. 7.5).
+So without loss of generality we can say that at time t the cross-entropy loss in
+Eq. 7.5 can be simplified as the negative log probability the model assigns to the next
+word in the training sequence, −logp(w ), or more formally, using yˆ to mean the
+t+1
+vector of estimated token probabilities from the language model:
+L CE (yˆ t ,y t ) = −logyˆ t [w t+1 ] (7.6)
+Thus at each word position t of the input, the model takes as input the correct se-
+quence of tokens w , and uses them to compute a probability distribution over
+1:t
+
+16 CHAPTER 7 • LARGE LANGUAGE MODELS
+possible next tokens so as to compute the model’s loss for the next token w . Then
+t+1
+we move to the next word, we ignore what the model predicted for the next word
+and instead use the correct sequence of tokens w to get the model to estimate the
+1:t+1
+probability of token w . This idea that we always give the model the correct his-
+t+2
+tory sequence to predict the next word (rather than feeding the model its best guess
+teacherforcing from the previous time step) is called teacher forcing.
+Fig. 7.13 illustrates the general training approach. At each step, given all the
+preceding tokens, the language model produces an output distribution over the en-
+tire vocabulary. During training, the probability assigned to the correct word is used
+to calculate the cross-entropy loss for each item in the sequence. The loss for each
+batch is the average cross-entropy loss over the entire sequence of negative log prob-
+abilities, or more formally:
+1 (cid:88)
+L CE (batch of length T) =
+−logyˆ t [w t+1 ] (7.7)
+t=1
+The weights in the network are then adjusted to minimize this average cross-entropy
+loss over the batch via gradient descent (Fig. ??), using error backpropagation on
+the computation graph to compute the gradient. Training adjusts all the weights
+of the network. For the transformer model we will introduce in the next chapter,
+these weights include the embedding matrix E that contains the embeddings for
+each word. Thus embeddings will be learned that are most successful at predicting
+upcoming words.
+True next token long and thanks for all ...
+CE Loss −log y long −log y and −log y thanks −log y for −log y all ...
+per token
+ŷ ŷ ŷ ŷ ŷ
+back back back back back
+prop prop prop prop prop
+...
+LLM
+Input tokens So long and thanks for ...
+Figure 7.13 TraininganLLM.Ateachtokenposition,themodelpassesupyˆ,itsprobability
+estimate for all possible next words. The negative log of the model’s probability estimate for
+the correct token is used as the loss, which is then backpropagated through the model to train
+all the weights, including the embeddings. Losses are averaged over all the tokens in a batch.
+More details of training of course depend on the specific network architecture
+used to implement the model; we’ll see more details specifically for the transformer
+model in the next chapter.
+7.5.2 Pretraining corpora for large language models
+Large language models are mainly trained on text scraped from the web, augmented
+by more carefully curated data. Because these training corpora are so large, they are
+likely to contain many natural examples that can be helpful for NLP tasks, such as
+question and answer pairs (for example from FAQ lists), translations of sentences
+between various languages, documents together with their summaries, and so on.
+
+7.5 • TRAINING LARGE LANGUAGE MODELS 17
+Web text is usually taken from corpora of automatically-crawled web pages like
+commoncrawl the common crawl, a series of snapshots of the entire web produced by the non-
+profit Common Crawl that each have billions of
+webpages. Various versions of common crawl data exist, such as the Colossal Clean
+Crawled Corpus (C4; Raffel et al. 2020), a corpus of 156 billion tokens of English
+that is filtered in various ways (deduplicated, removing non-natural language like
+code, sentences with offensive words from a blocklist). This C4 corpus seems to
+consist in large part of patent text documents, Wikipedia, and news sites (Dodge
+et al., 2021).
+Wikipediaplaysaroleinlotsoflanguagemodeltraining, asdocorporaofbooks.
+ThePile The Pile (Gao et al., 2020) is an 825 GB English text corpus that is constructed by
+publicly released code, containing again a large amount of text scraped from the web
+as well as books and Wikipedia; Fig. 7.14 shows its composition. Dolma is a larger
+open corpus of English, created with public tools, containing three trillion tokens,
+which similarly consists of web text, academic papers, code, books, encyclopedic
+materials, and social media (Soldaini et al., 2024).
+Figure 7.14 The Pile corpus, showing the size of different components, color coded as
+academic (articles from PubMed and ArXiv, patents from the USPTA; internet (webtext in-
+cluding a subset of the common crawl as well as Wikipedia), prose (a large corpus of books),
+dialogue (including movie subtitles and chat data), and misc.. Figure from Gao et al. (2020).
+Filtering for quality and safety Pretraining data drawn from the web is filtered
+for both quality and safety. Quality filters are classifiers that assign a score to each
+document. Quality is of course subjective, so different quality filters are trained
+in different ways, but often to value high-quality reference corpora like Wikipedia,
+PII books, and particular websites and to avoid websites with lots of PII (Personal Iden-
+tifiable Information) or adult content. Filters also remove boilerplate text which is
+very frequent on the web. Another kind of quality filtering is deduplication, which
+can be done at various levels, so as to remove duplicate documents, duplicate web
+pages, or duplicate text. Quality filtering generally improves language model per-
+formance (Longpre et al., 2024b; Llama Team, 2024).
+Safety filtering is again a subjective decision, and often includes toxicity detec-
+tion based on running off-the-shelf toxicity classifiers. This can have mixed results.
+One problem is that current toxicity classifiers mistakenly flag non-toxic data if it
+
+18 CHAPTER 7 • LARGE LANGUAGE MODELS
+is generated by speakers of minority dialects like African American English (Xu
+et al., 2021). Another problem is that models trained on toxicity-filtered data, while
+somewhat less toxic, are also worse at detecting toxicity themselves (Longpre et al.,
+2024b). These issues make the question of how to do better safety filtering an im-
+portant open problem.
+Using large datasets scraped from the web to train language models poses ethical
+and legal questions:
+Copyright: Much of the text in these large datasets (like the collections of fic-
+tion and non-fiction books) is copyrighted. In some countries, like the United
+States, the fair use doctrine may allow copyrighted content to be used for
+transformative uses, but it’s not clear if that remains true if the language mod-
+els are used to generate text that competes with the market for the text they
+are trained on (Henderson et al., 2023).
+Data consent: Owners of websites can indicate that they don’t want their sites
+to be crawled by web crawlers (either via a robots.txt file, or via Terms of
+Service). Recently there has been a sharp increase in the number of web-
+sites that have indicated that they don’t want large language model builders
+crawling their sites for training data (Longpre et al., 2024a). Because it’s not
+clear what legal status these indications have in different countries, or whether
+these restrictions are retroactive, what effect this will have on large pretraining
+datasets is unclear.
+Privacy: Large web datasets also have privacy issues since they contain private
+information like phone numbers and email addresses. While filters are used
+to try to remove websites likely to contain large amounts of personal infor-
+mation, such filtering isn’t sufficient. We’ll return to the privacy question in
+Section 7.7.
+Skew: Training data is also disproportionately generated by authors from the US
+and from developed countries, which likely skews the resulting generation
+toward the perspectives or topics of this group alone.
+7.5.3 Finetuning
+Although the vast pretraining data for large language models includes text from
+many domains, we might want to apply it in a new domain or task that didn’t appear
+sufficiently in the pretraining data. For example, we might want a language model
+that’s specialized to legal or medical text. Or we might have a multilingual language
+model that knows many languages but might benefit from some more data in our
+particular language of interest.
+In such cases, we can simply continue training the model on relevant data from
+the new domain or language (Gururangan et al., 2020). This process of taking a fully
+pretrained model and running additional training passes using the cross-entropy loss
+finetuning on some new data is called finetuning. The word “finetuning” means the process
+of taking a pretrained model and further adapting some or all of its parameters to
+some new data. Over the next few chapters we’ll see a number of different ways
+that the word ‘finetuning’ is used, based on exactly which parameters get updated.
+The method we describe here, in which we just continue to train, as if the new data
+continued was at the end of our pretraining data, can also be called continued pretraining.
+pretraining
+Fig. 7.15 sketches the paradigm.
+
+7.6 • EVALUATING LARGE LANGUAGE MODELS 19
+Fine-
+Pretraining Data tuning
+Pretrained LM Data Fine-tuned LM
+... ... ... ... ... ...
+Pretraining Fine-tuning
+Figure 7.15 Pretrainingandfinetuning. Apre-trainedmodelcanbefinetunedtoaparticular
+domain or dataset. There are many different ways to finetune, depending on exactly which
+parameters are updated from the finetuning data: all the parameters, some of the parameters,
+or only the parameters of specific extra circuitry, as we’ll see in future chapters.
+7.6 Evaluating Large Language Models
+We can evaluate language models by accuracy (how well they predict unseen text,
+by how well they perform tasks like answering questions or translating text), or by
+other factors like how fast they can be run, how much energy they use, or how fair
+they are. We’ll explore all of these in the next three sections.
+7.6.1 Perplexity
+As we first saw in Chapter 3, one way to evaluate language models is to measure
+how well they predict unseen text. A better language model is better at predicting
+upcoming words, and so it will be less surprised by (i.e., assign a higher probability
+to) each word when it occurs in the test set.
+If we want to know which of two language models is a better model of some text,
+we can just see which assigns it a higher probability, or in practice, since we mostly
+deal with probabilities in log space, we see which assigns a higher log likelihood.
+We’ve been talking about predicting one word at a time, computing the probabil-
+ity of the next token w from the prior context: P(w |w ). But of course as we saw
+i i <i
+in Chapter 3 the chain rule allows us to move between computing the probability of
+the next token and computing the probability of a whole text:
+P(w ) = P(w )P(w |w )P(w |w )...P(w |w )
+1:n 1 2 1 3 1:2 n 1:n−1
+(cid:89)
+= P(w i |w <i ) (7.8)
+i=1
+We can compute the probability of text just by multiplying the conditional proba-
+bilities for each token in the text. The resulting (log) likelihood of a text is a useful
+metric for comparing how good two language models are on that text:
+(cid:89)
+log likelihood(w 1:n ) = log P(w i |w <i ) (7.9)
+i=1
+However, we often use another metric other than log likelihood to evaluate language
+models. The reason is that the probability of a test set (or any sequence) depends
+on the number of words or tokens in it. In fact, the probability of a test set gets
+
+20 CHAPTER 7 • LARGE LANGUAGE MODELS
+smaller the longer the text is; this is clear from the chain rule, since if we are mul-
+tiplying more probabilities, and each probability by definition is less than one, the
+product will get smaller and smaller. So it’s useful to have a metric that is per-token,
+normalized by length, so we could compare across texts of different lengths.
+perplexity A function of probability called perplexity is such a length-normalized metric.
+Recall from page ?? that the perplexity of a model θ on an unseen test set is the
+inverse probability that θ assigns to the test set (one over the probability of the test
+set), normalized by the test set length in tokens. For a test set of n tokens w , the
+1:n
+perplexity is
+Perplexity θ (w 1:n ) = P θ (w 1:n
+)−1
+(cid:115)
+= n (7.10)
+P (w )
+θ 1:n
+To visualize how perplexity can be computed as a function of the probabilities the
+LM computes for each new word, we can use the chain rule to expand the computa-
+tion of probability of the test set:
+(cid:118)
+(cid:117) n
+(cid:117)(cid:89) 1
+Perplexity θ (w 1:n ) = (cid:116)n P (w |w ) (7.11)
+θ i <i
+i=1
+Note that because of the inverse in Eq. 7.10, the higher the probability of the word
+sequence, the lower the perplexity. Thus the lower the perplexity of a model on
+the data, the better the model. Minimizing perplexity is equivalent to maximizing
+the test set probability according to the language model. Why does perplexity use
+the inverse probability? The inverse arises from the original definition of perplexity
+from cross-entropy rate in information theory; for those interested, the explanation
+is in Section ??. Meanwhile, we just have to remember that perplexity has an inverse
+relationship with probability.
+One caveat: because perplexity depends on the number of tokens n in a text, it
+is very sensitive to differences in the tokenization algorithm. That means that it’s
+hard to exactly compare perplexities produced by two language models if they have
+very different tokenizers. For this reason perplexity is best used when comparing
+language models that use the same tokenizer.
+7.6.2 Downstream tasks: Reasoning and world knowledge
+Perplexity measures one kind of accuracy: accuracy at predicting words. But there
+are other kinds of accuracy. For each of the downstream tasks we want to apply
+our language model, like question answering, machine translation, or reasoning,
+we could measure the accuracy at those tasks. We’ll have further discussion of
+these task-specific evaluations in future chapters; machine translation in Chapter 12,
+information retrieval in Chapter 11, and speech recognition in Chapter 15.
+Here we briefly introduce one such metric: a mechanism for measuring accu-
+racy in answering questions, focusing on multiple-choice questions. This dataset is
+MMLU MMLU (Massive Multitask Language Understanding), a commonly-used dataset of
+15,908 knowledge and reasoning questions in 57 areas including medicine, mathe-
+matics, computer science, law, and others. Accuracy at answering these multiple-
+choice questions can be a useful proxy for the model’s ability to reason, and its
+factual knowledge.
+
+7.6 • EVALUATING LARGE LANGUAGE MODELS 21
+For example, here is an MMLU question from the microeconomics domain:2
+MMLU microeconomics example
+One of the reasons that the government discourages and regulates monopo-
+lies is that
+(A) producer surplus is lost and consumer surplus is gained.
+(B) monopoly prices ensure productive efficiency but cost society allocative
+efficiency.
+(C) monopoly firms do not engage in significant research and development.
+(D) consumer surplus is lost with higher prices and lower levels of output.
+Fig. 7.16 shows the way MMLU turns these questions into prompted tests of a
+language model, in this case showing an example prompt with 2 demonstrations.
+MMLU mathematics prompt
+The following are multiple choice questions about high school mathematics.
+How many numbers are in the list 25, 26, ..., 100?
+(A) 75 (B) 76 (C) 22 (D) 23
+Answer: B
+Compute i+i2+i3+···+i258+i259.
+(A) -1 (B) 1 (C) i (D) -i
+Answer: A
+If 4 daps = 7 yaps, and 5 yaps = 3 baps, how many daps equal 42 baps?
+(A) 28 (B) 21 (C) 40 (D) 30
+Answer:
+Figure 7.16 Sample 2-shot prompt from MMLU testing high-school mathematics. (The
+correct answer is (C)).
+Taking performance on MMLU as a metric for language model quality has a
+problem, though, one that is true of all evaluations based on public datasets. The
+data problem is data contamination. Data contamination is when some part of a dataset
+contamination
+that we are testing on (a test set of any kind) makes its way into our training set. For
+example, since large language models train on the web, and MMLU is on the web,
+models may well incorporate some MMLU questions into their training. If those
+questions are used for evaluation, the metric will overstate the performance of the
+language model. One way to mitigate data contamination is to make available the
+exact training data used to train a model, or at least to report training overlap with
+specific test sets (Zhang et al., 2025).
+7.6.3 Other factors for evaluating language models
+Accuracyisn’ttheonlythingwecareaboutinevaluatingmodels(Dodgeetal.,2019;
+Ethayarajh and Jurafsky, 2020, inter alia). For example, we often care about how
+big a model is, and how long it takes to train or do inference. We often have limited
+time, or limited memory, since the GPUs we run our models on have fixed memory
+2 Forthoseofyouwhoseeconomicsisabitrusty,thecorrectansweris(D).
+
+22 CHAPTER 7 • LARGE LANGUAGE MODELS
+sizes. Big models also use more energy, and we prefer models that use less energy,
+both to reduce the environmental impact of the model and to reduce the financial
+cost of building or deploying it. We can target our evaluation to these factors by
+measuring performance normalized to a given compute or memory budget. We can
+also directly measure the energy usage of our model in kWh or in kilograms of CO
+emitted (Strubell et al., 2019; Henderson et al., 2020; Liang et al., 2023).
+Another feature that a language model evaluation can measure is fairness. We
+know that language models are biased, exhibiting gendered and racial stereotypes,
+or decreased performance for language from or about certain demographics groups.
+There are language model evaluation benchmarks that measure the strength of these
+biases, such as StereoSet (Nadeem et al., 2021), RealToxicityPrompts (Gehman
+et al., 2020), and BBQ (Parrish et al., 2022) among many others. We also want
+language models whose performance is equally fair to different groups. For exam-
+ple, we could choose an evaluation that is fair in a Rawlsian sense by maximizing
+the welfare of the worst-off group (Rawls, 2001; Hashimoto et al., 2018; Sagawa
+et al., 2020).
+Finally, there are many kinds of leaderboards like Dynabench (Kiela et al., 2021)
+and general evaluation protocols like HELM (Liang et al., 2023); we will return to
+these in later chapters when we introduce evaluation metrics for specific tasks like
+question answering and information retrieval.
+7.7 Ethical and Safety Issues with Language Models
+Humanists have been thinking about the ethical and safety issues inherent to creating
+artificial agents since well before we had large language models. You have probably
+read Mary Shelley’s 1818 novel Frankenstein, but if not, you should. In the book,
+which she wrote as a teenager, Shelley describes the hubris and ethical blindness of a
+scientist who creates an artificial person without considering basic ethical principles.
+The picture below shows Shelley as painted by Richard Rothwell a decade later at
+age 30.
+Large language models can be unsafe in many ways. For example, LLMs
+are prone to saying things that are false,
+hallucination a problem called hallucination. Language
+models are trained to generate text that is pre-
+dictable and coherent, but the training algo-
+rithms we have seen so far don’t have any
+way to enforce that the text that is generated
+is correct or true. This causes enormous prob-
+lems for any application where the facts mat-
+ter! A related symptom is that language mod-
+els can suggest unsafe actions, for example
+directly suggesting that users do dangerous or
+illegal things like harming themselves or oth-
+ers. If users seek information from language
+models in safety-critical situations like asking
+medical advice, or in emergency situations, or
+when indicating the intentions of self-harm,
+incorrect advice can be dangerous and even life-threatening. Again, this problem
+predates large language models. For example (Bickmore et al., 2018) gave partic-
+
+7.7 • ETHICAL AND SAFETY ISSUES WITH LANGUAGE MODELS 23
+ipants medical problems to pose to three pre-LLM commercial dialogue systems
+(Siri, Alexa, Google Assistant) and asked them to determine an action to take based
+on the system responses; many of the proposed actions, if actually taken, would have
+ledtoharmordeath. We’llreturntotheissueofhallucinationandfactualityinChap-
+ter 11 where we introduce proposed mitigation methods like retrieval augmented
+generation, and Chapter 10 where we discussed safety tuning and alignment.
+sycophantic Language models are also sycophantic, excessively agreeing with or flattering
+users When a user says something that is factually wrong, language models often
+agree with them instead of correcting them, an obvious problem for applications
+in education and health care. Language models can reinforce delusions, and their
+obsequiousness and flattery can cause users to have distorted views of themselves
+and the world and increased antisocial behavior (Cheng et al., 2025).
+Language models can also harm users by verbally attacking them, or creating
+representationalharms(Blodgettetal.,2020)forexamplebygeneratingabusiveor
+harmful stereotypes (Cheng et al., 2023) and negative attitudes (Brown et al., 2020;
+Sheng et al., 2019) that demean particular groups of people; both abuse and stereo-
+types can cause psychological harm to users. Gehman et al. (2020) show that even
+completely non-toxic prompts can lead large language models to output hate speech
+and abuse their users. Liu et al. (2020) testing how systems responded to pairs of
+simulated user turns that were identical except for mentioning different genders or
+race. They found, for example, that simple changes like using the word ‘she’ instead
+of ‘he’ in a sentence caused systems to respond more offensively and with more
+negative sentiment. Hofmann et al. (2024) found that LLMs were likely to discrimi-
+nate against people just because they used particular dialects like African-American
+English. Again, these problems predate large language models. Microsoft’s 2016
+Tay Tay chatbot, for example, was taken offline 16 hours after it went live, when it be-
+gan posting messages with racial slurs, conspiracy theories, and personal attacks on
+its users. Tay had learned these biases and actions from its training data, including
+from users who seemed to be purposely teaching the system to repeat this kind of
+language (Neff and Nagy 2016).
+Another important ethical and safety issue is privacy. Privacy has been a con-
+cern from the very beginning of computing when Weizenbaum designed the chatbot
+ELIZA as an experiment in computational therapy (Weizenbaum, 1966). First, peo-
+ple became deeply emotionally involved and conducted very personal conversations
+with the ELIZA chatbot, even to the extent of asking Weizenbaum to leave the room
+while they were typing. When Weizenbaum suggested that he might want to store
+the ELIZA conversations, people immediately pointed out that this would violate
+people’s privacy.
+Users are likely to give quite personal information to large language models as
+well, and indeed the most common current LLM use case is for personal advice and
+support (Zao-Sanders, 2025). And the more human-like a system, the more users
+are likely to disclose private information, and yet less likely to worry about the harm
+of this disclosure (Ischen et al., 2019). We discussed above that pretraining data
+also is likely to have private information like phone numbers and addresses. This is
+problematic because large language models can leak information from their training
+data. That is, an adversary can extract training-data text from a language model
+such as a person’s name, phone number, and address (Henderson et al. 2017, Carlini
+et al. 2021). This becomes even more problematic when large language models are
+trained on extremely sensitive private datasets such as electronic health records.
+A related safety issue is emotional dependence. Reeves and Nass (1996) show
+
+24 CHAPTER 7 • LARGE LANGUAGE MODELS
+that people tend to assign human characteristics to computers and interact with them
+in ways that are typical of human-human interactions. They interpret an utterance in
+the way they would if it had spoken by a human, (even though they are aware they
+are talking to a computer). Thus LLMs have had significant influences on people’s
+cognitive and emotional state, leading to problems like emotional dependence on
+LLMs. These issues (emotional engagement and privacy) mean we need to think
+carefully about the impact of LLMs on the people who are interacting with them.
+In addition to their ability to harm their users in these ways, LLMs may carry out
+additional harmful activities themselves, especially as agent-based paradigms makes
+it possible for language models to directly interact with the world.
+Language models can also be used by malicious actors for generating text for
+fraud, phishing, propaganda, disinformation campaigns, or other socially harmful
+activities (Brown et al., 2020). McGuffie and Newhouse (2020) show how large
+language models generate text that emulates online extremists, with the risk of am-
+plifying extremist movements and their attempt to radicalize and recruit.
+And of course we already saw in Section 7.5.2 that many issues with LLM stem
+from using pretraining corpora scraped from the web, including harms of data con-
+sent, potential copyright violation, as well as biases in the training data that can be
+amplified amplified by language models, just as we saw for embedding models in Chapter 5.
+Finding ways to mitigate all these ethical safety issues is an important current
+research area in NLP. One important step is to carefully analyze the data used to
+pretrain large language models as a way of understanding safety issues of toxicity,
+discrimination, privacy, and fair use, making it extremely important that language
+modelsincludedatasheets(page??)ormodelcards(page??)givingfullreplicable
+information on the corpora used to train them. Open-source models can specify
+their exact training data. There are active areas of research in mitigating problems
+of abuse and toxicity, like detecting and responding appropriately to toxic contexts
+(Wolf et al. 2017, Dinan et al. 2020, Xu et al. 2020).
+Value sensitive design—carefully considering possible harms in advance (Fried-
+man et al. 2017, Friedman and Hendry 2019)— is also important; (Dinan et al.,
+2021) give a number of suggestions for best practices in system design. For exam-
+ple getting informed consent from participants, whether they are used for training,
+or whether they are interacting with a deployed LLM is important. Because studying
+these interactional properties of LLMs involves human participants, researchers also
+IRB work on these issues with the Institutional Review Boards (IRB) at their institutions,
+who help protect the safety of experimental participants.
+7.8 Summary
+This chapter has introduced the large language model. Here’s a summary of the
+main points that we covered:
+• A large language model is a system that can predict the next word for pre-
+vious words given a context or prefix of words, and use this prediction to
+conditionally generate text.
+• There are three major architectures for language models: the encoder, the
+decoder, and the encoder-decoder. The well-known large language models
+used for generating text are all decoder models; we’ll describe encoders in
+Chapter 9 and encoder-decoders in Chapter 12.
+
+HISTORICAL NOTES 25
+• Many NLP tasks—such as question answering and sentiment analysis— can
+be cast as tasks of word prediction and addressed with large language models.
+• We instruct language models via a prompt, a text string that a user issues
+to a language model to get the model to do something useful by iteratively
+generating tokens conditioned on the prompt.
+• The process of finding effective prompts for a task is known as prompt engi-
+neering.
+• The choice of which word to generate in large language models is done by
+sampling from the distribution of possible next words.
+• A common sampling approach is temperature sampling, which lies in be-
+tween greedy decoding (always generate the most probable word) and ran-
+dom sampling (generate a random word according to its probability).
+• Temperaturesamplingincreasestheprobabilitiesofthehigh-probabilitywords,
+decreases the probability of the low-probability words, and then samples from
+this new distribution.
+• Large language models are pretrained to predict words on datasets of 100s of
+billions of words generally scraped from the web.
+• These datasets need to be filtered for quality.
+• The pretraining algorithm relies on cross-entropy loss: minimizing the nega-
+tive log probability of the true next word.
+• Language models are evaluated by perplexity, by evaluations of accuracy on
+proxies for downstream tasks, like the MMLU question-answering dataset,
+and via metrics for other factors like fairness and energy use.
+• Language models have numerous ethical and safety issues including hallu-
+cinations, unsafe instructions, bias, stereotypes, misinformation and propa-
+ganda, and violations of privacy and copyright.
+Historical Notes
+As we discussed in Chapter 3, the earliest language models were the n-gram lan-
+guage models developed (roughly simultaneously and independently) by Fred Je-
+linek and colleagues at the IBM Thomas J. Watson Research Center, and James
+Baker at CMU. It was Jelinek and the IBM team who first coined the term language
+model to mean a model of the way any kind of linguistic property (grammar, se-
+mantics, discourse, speaker characteristics), influenced word sequence probabilities
+(Jelinek et al., 1975). They contrasted the language model with the acoustic model
+which captured acoustic/phonetic characteristics of phone sequences.
+N-gram language models were very widely used over the next 40 years, across
+a wide variety of NLP tasks like speech recognition and machine translation, often
+as one of multiple components of the model. The contexts for these n-gram models
+grew longer, with 5-gram models used quite commonly by very efficient LM toolkits
+(Stolcke, 2002; Heafield, 2011).
+The roots of the neural large language model lie in multiple places. One was
+the application in the 1990s, again in Jelinek’s group at IBM Research, of discrim-
+inative classifiers to language models. Roni Rosenfeld in his dissertation (Rosen-
+feld, 1992) first applied logistic regression (under the name maximum entropy or
+maxent models) to language modeling in that IBM lab, and published a more fully
+
+26 CHAPTER 7 • LARGE LANGUAGE MODELS
+formed version in Rosenfeld (1996). His model integrated various sorts of infor-
+mation in a logistic regression predictor, including n-gram information along with
+other features from the context, including distant n-grams and pairs of associated
+words called trigger pairs. Rosenfeld’s model prefigured modern language models
+by being a statistical word predictor trained in a self-supervised manner simply by
+learning to predict upcoming words in a corpus.
+Another was the first use of pretrained embeddings to model word meaning in
+the LSA/LSI models (Deerwester et al., 1988). Recall from the history section of
+Chapter 5 that in LSA (latent semantic analysis) a term-document matrix was trained
+on a corpus and then singular value decomposition was applied and the first 300
+dimensions were used as a vector embedding to represent words. It was Landauer
+et al. (1997) who first used the word “embedding”. In addition to their development
+of the idea of pretraining and of embeddings, the LSA community also developed
+ways to combine LSA embeddings with n-grams in an integrated language model
+(Bellegarda, 1997; Coccaro and Jurafsky, 1998).
+In a very influential series of papers developing the idea of neural language
+models, (Bengio et al. 2000; Bengio et al. 2003; Bengio et al. 2006), Yoshua Ben-
+gio and colleagues drew on the central ideas of both these lines of self-supervised
+language modeling work (the discriminatively trained word predictor, and the pre-
+trained embeddings). Like the maxent models of Rosenfeld, Bengio’s model used
+the next word in running text as its supervision signal. Like the LSA models, Ben-
+gio’s model learned an embedding, but unlike the LSA models did it as part of the
+process of language modeling. The Bengio et al. (2003) model was a neural lan-
+guage model: a neural network that learned to predict the next word from prior
+words, and did so via learning embeddings as part of the prediction process.
+The neural language model was extended in various ways over the years, perhaps
+most importantly in the form of the RNN language model of Mikolov et al. (2010)
+and Mikolov et al. (2011). The RNN language model was perhaps the first neural
+model that was accurate enough to surpass the performance of a traditional 5-gram
+language model.
+Soon afterwards, Mikolov et al. (2013a) and Mikolov et al. (2013b) proposed to
+simplify the hidden layer of these neural net language models to create pretrained
+word2vec word embeddings.
+The static embedding models like LSA and word2vec instantiated a particular
+model of pretraining: a representation was trained on a pretraining dataset, and then
+the representations could be used in further tasks. Dai and Le (2015) and Peters
+et al. (2018) reframed this idea by proposing models that were pretrained using a
+language model objective, and then the identical model could be either frozen and
+directly applied for language modeling or further finetuned still using a language
+model objective. For example ELMo used a biLSTM self-supervised on a large
+pretrained dataset using a language model objective, then finetuned on a domain-
+specific dataset, and then froze the weights and added task-specific heads. The
+ELMo work was particularly influential and its appearance was perhaps the mo-
+ment when it became clear to the community that language models could be used as
+a general solution for NLP problems.
+Transformers were first applied as encoder-decoders (Vaswani et al., 2017) and
+then to masked language modeling (Devlin et al., 2019) (as we’ll see in Chapter 12
+and Chapter 9). Radford et al. (2019) then showed that the transformer-based au-
+toregressive language model GPT2 could perform zero-shot on many NLP tasks like
+summarization and question answering.
+
+HISTORICAL NOTES 27
+The technology used for language models can also be applied to other domains
+foundation and tasks, like vision, speech, and genetics. The term foundation model is some-
+model
+times used as a more general term for this use of large language model technology
+across domains and areas, when the elements we are computing over are not nec-
+essarily words. Bommasani et al. (2021) is a broad survey that sketches the op-
+portunities and risks of foundation models, with special attention to large language
+models.
+
+28 Chapter 7 • Large Language Models
+Anthropic. 2025. Release notes: System prompts. https: Cheng, M., E. Durmus, and D. Jurafsky. 2023. Marked per-
+//docs.anthropic.com/en/release-notes/ sonas: Usingnaturallanguagepromptstomeasurestereo-
+system-prompts. typesinlanguagemodels. ACL.
+Bellegarda,J.R.1997.Alatentsemanticanalysisframework Cheng, M., C. Lee, P. Khadpe, S. Yu, D. Han, and D. Juraf-
+forlarge-spanlanguagemodeling. EUROSPEECH. sky. 2025. Sycophantic ai decreases prosocial intentions
+Bengio, Y., R. Ducharme, and P. Vincent. 2000. A neural andpromotesdependence. ArXivpreprint.
+probabilisticlanguagemodel. NeurIPS. Coccaro, N. and D. Jurafsky. 1998. Towards better integra-
+Bengio, Y., R. Ducharme, P. Vincent, and C. Jauvin. 2003. tion of semantic predictors in statistical language model-
+A neural probabilistic language model. JMLR, 3:1137– ing. ICSLP.
+1155. Dai, A. M. and Q. V. Le. 2015. Semi-supervised sequence
+Bengio, Y., H. Schwenk, J.-S. Sene ́cal, F. Morin, and J.-L. learning. NeurIPS.
+Gauvain.2006. Neuralprobabilisticlanguagemodels. In Deerwester,S.C.,S.T.Dumais,G.W.Furnas,R.A.Harsh-
+InnovationsinMachineLearning,137–186.Springer. man, T. K. Landauer, K. E. Lochbaum, and L. Streeter.
+Bickmore, T. W., H. Trinh, S. Olafsson, T. K. O’Leary, 1988. Computerinformationretrievalusinglatentseman-
+R. Asadi, N. M. Rickles, and R. Cruz. 2018. Patient and ticstructure: USPatent4,839,853.
+consumer safety risks when using conversational assis-
+Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2019.
+tants for medical information: An observational study of
+BERT:Pre-trainingofdeepbidirectionaltransformersfor
+Siri, Alexa, and Google Assistant. Journal of Medical
+languageunderstanding. NAACLHLT.
+InternetResearch,20(9):e11510.
+Dinan, E., G. Abercrombie, A. S. Bergman, S. Spruit,
+Blodgett, S. L., S. Barocas, H. Daume ́ III, and H. Wallach.
+D. Hovy, Y.-L. Boureau, and V. Rieser. 2021. Antici-
+2020. Language (technology) is power: A critical survey
+pating safety issues in e2e conversational ai: Framework
+of“bias”inNLP. ACL.
+andtooling. ArXiv.
+Bommasani, R., D. A. Hudson, E. Adeli, R. Altman,
+Dinan, E., A. Fan, A. Williams, J. Urbanek, D. Kiela, and
+S.Arora,S.vonArx,M.S.Bernstein,J.Bohg,A.Bosse-
+J. Weston. 2020. Queens are powerful too: Mitigating
+lut, E. Brunskill, E. Brynjolfsson, S. Buch, D. Card,
+genderbiasindialoguegeneration. EMNLP.
+R. Castellon, N. S. Chatterji, A. S. Chen, K. A. Creel,
+J. Davis, D. Demszky, C. Donahue, M. Doumbouya, Dodge, J., S. Gururangan, D. Card, R. Schwartz, and N. A.
+E. Durmus, S. Ermon, J. Etchemendy, K. Ethayarajh, Smith. 2019. Show your work: Improved reporting of
+L. Fei-Fei, C. Finn, T. Gale, L. E. Gillespie, K. Goel, experimentalresults. EMNLP.
+N. D. Goodman, S. Grossman, N. Guha, T. Hashimoto, Dodge, J., M. Sap, A. Marasovic ́, W. Agnew, G. Ilharco,
+P. Henderson, J. Hewitt, D. E. Ho, J. Hong, K. Hsu, D.Groeneveld,M.Mitchell,andM.Gardner.2021. Doc-
+J. Huang, T. F. Icard, S. Jain, D. Jurafsky, P. Kalluri, umenting large webtext corpora: A case study on the
+S. Karamcheti, G. Keeling, F. Khani, O. Khattab, P. W. colossalcleancrawledcorpus. EMNLP.
+Koh, M. S. Krass, R. Krishna, R. Kuditipudi, A. Ku-
+Ethayarajh,K.andD.Jurafsky.2020. Utilityisintheeyeof
+mar, F. Ladhak, M. Lee, T. Lee, J. Leskovec, I. Lev-
+theuser: AcritiqueofNLPleaderboards. EMNLP.
+ent, X. L. Li, X. Li, T. Ma, A. Malik, C. D. Manning,
+S. P. Mirchandani, E. Mitchell, Z. Munyikwa, S. Nair, Friedman, B. and D. G. Hendry. 2019. Value Sensitive De-
+A. Narayan, D. Narayanan, B. Newman, A. Nie, J. C. sign: Shaping Technology with Moral Imagination. MIT
+Niebles, H. Nilforoshan, J. F. Nyarko, G. Ogut, L. Orr, Press.
+I. Papadimitriou, J. S. Park, C. Piech, E. Portelance, Friedman, B., D. G. Hendry, and A. Borning. 2017. A sur-
+C. Potts, A. Raghunathan, R. Reich, H. Ren, F. Rong, vey of value sensitive design methods. Foundations and
+Y. H. Roohani, C. Ruiz, J. Ryan, C. R’e, D. Sadigh, TrendsinHuman-ComputerInteraction,11(2):63–125.
+S. Sagawa, K. Santhanam, A. Shih, K. P. Srinivasan,
+Gao, L., T. Hoppe, A. Thite, S. Biderman, C. Foster,
+A. Tamkin, R. Taori, A. W. Thomas, F. Trame`r, R. E.
+N.Nabeshima,S.Black,J.Phang,S.Presser,L.Golding,
+Wang,W.Wang,B.Wu,J.Wu,Y.Wu,S.M.Xie,M.Ya-
+H. He, and C. Leahy. 2020. The Pile: An 800GB dataset
+sunaga, J. You, M. A. Zaharia, M. Zhang, T. Zhang,
+ofdiversetextforlanguagemodeling. ArXivpreprint.
+X. Zhang, Y. Zhang, L. Zheng, K. Zhou, and P. Liang.
+2021. On the opportunities and risks of foundation mod- Gehman, S., S. Gururangan, M. Sap, Y. Choi, and N. A.
+els. ArXiv. Smith. 2020. RealToxicityPrompts: Evaluating neu-
+ral toxic degeneration in language models. Findings of
+Brown, T., B. Mann, N. Ryder, M. Subbiah, J. Kaplan,
+EMNLP.
+P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry,
+A. Askell, S. Agarwal, A. Herbert-Voss, G. Krueger, Gururangan, S., A. Marasovic ́, S. Swayamdipta, K. Lo,
+T. Henighan, R. Child, A. Ramesh, D. M. Ziegler, J. Wu, I. Beltagy, D. Downey, and N. A. Smith. 2020. Don’t
+C. Winter, C. Hesse, M. Chen, E. Sigler, M. Litwin, stop pretraining: Adapt language models to domains and
+S. Gray, B. Chess, J. Clark, C. Berner, S. McCandlish, tasks. ACL.
+A.Radford,I.Sutskever,andD.Amodei.2020.Language Hashimoto, T., M. Srivastava, H. Namkoong, and P. Liang.
+modelsarefew-shotlearners. NeurIPS,volume33. 2018. Fairness without demographics in repeated loss
+Carlini, N., F. Tramer, E. Wallace, M. Jagielski, A. Herbert- minimization. ICML.
+Voss, K. Lee, A. Roberts, T. Brown, D. Song, U. Er- Heafield, K. 2011. KenLM: Faster and smaller language
+lingsson, et al. 2021. Extracting training data from large model queries. Workshop on Statistical Machine Trans-
+language models. 30th USENIX Security Symposium lation.
+(USENIXSecurity21).
+
+Historical Notes 29
+Henderson, P., J. Hu, J. Romoff, E. Brunskill, D. Jurafsky, Longpre, S., G. Yauney, E. Reif, K. Lee, A. Roberts,
+and J. Pineau. 2020. Towards the systematic reporting B. Zoph, D. Zhou, J. Wei, K. Robinson, D. Mimno, and
+of the energy and carbon footprints of machine learning. D. Ippolito. 2024b. A pretrainer’s guide to training data:
+JournalofMachineLearningResearch,21(248):1–43. Measuringtheeffectsofdataage,domaincoverage,qual-
+Henderson,P.,X.Li,D.Jurafsky,T.Hashimoto,M.A.Lem- ity,&toxicity. NAACLHLT.
+ley, and P. Liang. 2023. Foundation models and fair use. McGuffie, K. and A. Newhouse. 2020. The radicalization
+JMLR,24(400):1–79. risks of GPT-3 and advanced neural language models.
+Henderson, P., K. Sinha, N. Angelard-Gontier, N. R. Ke, ArXivpreprintarXiv:2009.06807.
+G. Fried, R. Lowe, and J. Pineau. 2017. Ethical chal- Mikolov,T.,K.Chen,G.S.Corrado,andJ.Dean.2013a. Ef-
+lenges in data-driven dialogue systems. AAAI/ACM AI ficientestimationofwordrepresentationsinvectorspace.
+EthicsandSocietyConference. ICLR2013.
+Hofmann, V., P. R. Kalluri, D. Jurafsky, and S. King. 2024. Mikolov, T., M. Karafia ́t, L. Burget, J. Cˇernocky`, and
+Ai generatescovertly racist decisionsabout people based S.Khudanpur.2010. Recurrentneuralnetworkbasedlan-
+ontheirdialect. Nature,633(8028):147–154. guagemodel. INTERSPEECH.
+Ischen, C., T. Araujo, H. Voorveld, G. van Noort, and Mikolov, T., S. Kombrink, L. Burget, J. H. Cˇernocky`, and
+E. Smit. 2019. Privacy concerns in chatbot interactions. S. Khudanpur. 2011. Extensions of recurrent neural net-
+International Workshop on Chatbot Research and De- worklanguagemodel. ICASSP.
+sign.
+Mikolov, T., I. Sutskever, K. Chen, G. S. Corrado, and
+Jelinek, F., R. L. Mercer, and L. R. Bahl. 1975. Design of a J.Dean.2013b. Distributedrepresentationsofwordsand
+linguisticstatisticaldecoderfortherecognitionofcontin- phrasesandtheircompositionality. NeurIPS.
+uous speech. IEEE Transactions on Information Theory, Miller, G. A. and J. A. Selfridge. 1950. Verbal context and
+IT-21(3):250–256. the recall of meaningful material. American Journal of
+Khattab, O., A. Singhvi, P. Maheshwari, Z. Zhang, K. San- Psychology,63:176–185.
+thanam, S. Haq, A. Sharma, T. T. Joshi, H. Moazam, Min,S.,X.Lyu,A.Holtzman,M.Artetxe,M.Lewis,H.Ha-
+H.Miller,M.Zaharia,andC.Potts.2024.DSPy: Compil- jishirzi, and L. Zettlemoyer. 2022. Rethinking the role of
+ing declarative language model calls into self-improving demonstrations: What makes in-context learning work?
+pipelines. ICLR. EMNLP.
+Kiela,D.,M.Bartolo,Y.Nie,D.Kaushik,A.Geiger,Z.Wu, Nadeem, M., A. Bethke, and S. Reddy. 2021. StereoSet:
+B. Vidgen, G. Prasad, A. Singh, P. Ringshia, Z. Ma, Measuringstereotypicalbiasinpretrainedlanguagemod-
+T. Thrush, S. Riedel, Z. Waseem, P. Stenetorp, R. Jia, els. ACL.
+M. Bansal, C. Potts, and A. Williams. 2021. Dynabench:
+Neff, G. and P. Nagy. 2016. Talking to bots: Symbiotic
+RethinkingbenchmarkinginNLP. NAACLHLT.
+agency and the case of Tay. International Journal of
+Landauer, T. K., D. Laham, B. Rehder, and M. E. Schreiner. Communication,10:4915–4931.
+1997. How well can passage meaning be derived with-
+Parrish, A., A. Chen, N. Nangia, V. Padmakumar, J. Phang,
+out using word order? A comparison of Latent Semantic
+J.Thompson,P.M.Htut,andS.Bowman.2022. BBQ:A
+Analysisandhumans. COGSCI.
+hand-builtbiasbenchmarkforquestionanswering. Find-
+Liang, P., R. Bommasani, T. Lee, D. Tsipras, D. Soylu, ingsofACL2022.
+M. Yasunaga, Y. Zhang, D. Narayanan, Y. Wu, A. Ku-
+Peters, M., M. Neumann, M. Iyyer, M. Gardner, C. Clark,
+mar, B. Newman, B. Yuan, B. Yan, C. Zhang, C. Cos-
+K. Lee, and L. Zettlemoyer. 2018. Deep contextualized
+grove, C. D. Manning, C. Re ́, D. Acosta-Navas, D. A.
+wordrepresentations. NAACLHLT.
+Hudson, E. Zelikman, E. Durmus, F. Ladhak, F. Rong,
+H.Ren,H.Yao,J.Wang,K.Santhanam,L.Orr,L.Zheng, Radford, A., J. Wu, R. Child, D. Luan, D. Amodei, and
+M.Yuksekgonul,M.Suzgun,N.Kim,N.Guha,N.Chat- I. Sutskever. 2019. Language models are unsupervised
+terji, O. Khattab, P. Henderson, Q. Huang, R. Chi, S. M. multitasklearners. OpenAItechreport.
+Xie, S. Santurkar, S. Ganguli, T. Hashimoto, T. Icard, Raffel, C., N. Shazeer, A. Roberts, K. Lee, S. Narang,
+T. Zhang, V. Chaudhary, W. Wang, X. Li, Y. Mai, M.Matena,Y.Zhou,W.Li,andP.J.Liu.2020.Exploring
+Y. Zhang, and Y. Koreeda. 2023. Holistic evaluation of the limits of transfer learning with a unified text-to-text
+languagemodels. TransactionsonMachineLearningRe- transformer. JMLR,21(140):1–67.
+search.
+Rawls, J. 2001. Justice as fairness: A restatement. Harvard
+Liu,H.,J.Dacon,W.Fan,H.Liu,Z.Liu,andJ.Tang.2020. UniversityPress.
+Does gender matter? Towards fairness in dialogue sys-
+Reeves, B. and C. Nass. 1996. The Media Equation: How
+tems. COLING.
+PeopleTreatComputers,Television,andNewMediaLike
+LlamaTeam.2024. Thellama3herdofmodels. RealPeopleandPlaces. CambridgeUniversityPress.
+Longpre, S., R. Mahari, A. Lee, C. Lund, H. Oderinwale, Rosenfeld, R. 1992. Adaptive Statistical Language Mod-
+W. Brannon, N. Saxena, N. Obeng-Marnu, T. South, eling: A Maximum Entropy Approach. Ph.D. thesis,
+C. Hunter, et al. 2024a. Consent in crisis: The rapid de- CarnegieMellonUniversity.
+clineoftheaidatacommons. ArXivpreprint.
+Rosenfeld, R. 1996. A maximum entropy approach to adap-
+tive statistical language modeling. Computer Speech and
+Language,10:187–228.
+
+30 Chapter 7 • Large Language Models
+Sagawa,S.,P.W.Koh,T.B.Hashimoto,andP.Liang.2020.
+Distributionally robust neural networks for group shifts:
+Ontheimportanceofregularizationforworst-casegener-
+alization. ICLR.
+Shannon, C. E. 1948. A mathematical theory of commu-
+nication. Bell System Technical Journal, 27(3):379–423.
+Continuedinthefollowingvolume.
+Sheng, E., K.-W. Chang, P. Natarajan, and N. Peng. 2019.
+Thewomanworkedasababysitter: Onbiasesinlanguage
+generation. EMNLP.
+Soldaini, L., R. Kinney, A. Bhagia, D. Schwenk, D. Atkin-
+son, R. Authur, B. Bogin, K. Chandu, J. Dumas,
+Y. Elazar, V. Hofmann, A. H. Jha, S. Kumar, L. Lucy,
+X. Lyu, N. Lambert, I. Magnusson, J. Morrison,
+N. Muennighoff, A. Naik, C. Nam, M. E. Peters,
+A. Ravichander, K. Richardson, Z. Shen, E. Strubell,
+N.Subramani,O.Tafjord,P.Walsh,L.Zettlemoyer,N.A.
+Smith,H.Hajishirzi,I.Beltagy,D.Groeneveld,J.Dodge,
+andK.Lo.2024. Dolma: Anopencorpusofthreetrillion
+tokens for language model pretraining research. ArXiv
+preprint.
+Stolcke,A.2002.SRILM–anextensiblelanguagemodeling
+toolkit. ICSLP.
+Strubell, E., A. Ganesh, and A. McCallum. 2019. Energy
+andpolicyconsiderationsfordeeplearninginNLP. ACL.
+Vaswani, A., N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones,
+A. N. Gomez, Ł. Kaiser, and I. Polosukhin. 2017. Atten-
+tionisallyouneed. NeurIPS.
+Webson, A. and E. Pavlick. 2022. Do prompt-based models
+really understand the meaning of their prompts? NAACL
+HLT.
+Weizenbaum,J.1966. ELIZA–Acomputerprogramforthe
+study of natural language communication between man
+andmachine. CACM,9(1):36–45.
+Wolf, M. J., K. W. Miller, and F. S. Grodzinsky. 2017. Why
+we should have seen that coming: Comments on Mi-
+crosoft’s Tay “experiment,” and wider implications. The
+ORBITJournal,1(2):1–12.
+Xu, A., E. Pathak, E. Wallace, S. Gururangan, M. Sap,
+and D. Klein. 2021. Detoxifying language models risks
+marginalizingminorityvoices. NAACLHLT.
+Xu,J.,D.Ju,M.Li,Y.-L.Boureau,J.Weston,andE.Dinan.
+2020. Recipesforsafetyinopen-domainchatbots. ArXiv
+preprintarXiv:2010.07079.
+Zao-Sanders, M. 2025. How People Are Really Using Gen
+AI in 2025 — hbr.org. https://hbr.org/2025/04/
+how-people-are-really-using-gen-ai-in-2025.
+[Accessed02-05-2025].
+Zhang, A. K., K. Klyman, Y. Mai, Y. Levine, Y. Zhang,
+R. Bommasani, and P. Liang. 2025. Language model de-
+velopersshouldreporttrain-testoverlap. ICML.

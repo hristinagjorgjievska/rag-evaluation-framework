@@ -1,0 +1,741 @@
+Machine Learning Operations (MLOps):
+Overview, Definition, and Architecture
+Dominik Kreuzberger Niklas Kühl Sebastian Hirschl
+KIT KIT IBM†
+Germany Germany Germany
+dominik.kreuzberger@alumni.kit.edu kuehl@kit.edu sebastian.hirschl@de.ibm.com
+ABSTRACT to a great extent, resulting in many issues during the operations of
+the respective ML solution [26].
+The final goal of all industrial machine learning (ML) projects is to
+To address these issues, the goal of this work is to examine how
+develop ML products and rapidly bring them into production.
+manual ML processes can be automated and operationalized so that
+However, it is highly challenging to automate and operationalize
+more ML proofs of concept can be brought into production. In this
+ML products and thus many ML endeavors fail to deliver on their
+work, we explore the emerging ML engineering practice “Machine
+expectations. The paradigm of Machine Learning Operations
+Learning Operations”—MLOps for short—precisely addressing
+(MLOps) addresses this issue. MLOps includes several aspects,
+the issue of designing and maintaining productive ML. We take a
+such as best practices, sets of concepts, and development culture.
+holistic perspective to gain a common understanding of the
+However, MLOps is still a vague term and its consequences for
+involved components, principles, roles, and architectures. While
+researchers and professionals are ambiguous. To address this gap,
+existing research sheds some light on various specific aspects of
+we conduct mixed-method research, including a literature review,
+MLOps, a holistic conceptualization, generalization, and
+a tool review, and expert interviews. As a result of these
+clarification of ML systems design are still missing. Different
+investigations, we provide an aggregated overview of the necessary
+perspectives and conceptions of the term “MLOps” might lead to
+principles, components, and roles, as well as the associated
+misunderstandings and miscommunication, which, in turn, can lead
+architecture and workflows. Furthermore, we furnish a definition
+to errors in the overall setup of the entire ML system. Thus, we ask
+of MLOps and highlight open challenges in the field. Finally, this
+the research question:
+work provides guidance for ML researchers and practitioners who
+RQ: What is MLOps?
+want to automate and operate their ML products with a designated
+To answer that question, we conduct a mixed-method research
+set of technologies.
+endeavor to (a) identify important principles of MLOps, (b) carve
+out functional core components, (c) highlight the roles necessary to
+KEYWORDS
+successfully implement MLOps, and (d) derive a general
+CI/CD, DevOps, Machine Learning, MLOps, Operations, architecture for ML systems design. In combination, these insights
+Workflow Orchestration result in a definition of MLOps, which contributes to a common
+understanding of the term and related concepts.
+In so doing, we hope to positively impact academic and
+1 Introduction
+practical discussions by providing clear guidelines for
+Machine Learning (ML) has become an important technique to professionals and researchers alike with precise responsibilities.
+leverage the potential of data and allows businesses to be more These insights can assist in allowing more proofs of concept to
+innovative [1], efficient [13], and sustainable [22]. However, the make it into production by having fewer errors in the system’s
+success of many productive ML applications in real-world settings design and, finally, enabling more robust predictions in real-world
+falls short of expectations [21]. A large number of ML projects environments.
+fail—with many ML proofs of concept never progressing as far as The remainder of this work is structured as follows. We will first
+production [30]. From a research perspective, this does not come as elaborate on the necessary foundations and related work in the field.
+a surprise as the ML community has focused extensively on the Next, we will give an overview of the utilized methodology,
+building of ML models, but not on (a) building production-ready consisting of a literature review, a tool review, and an interview
+ML products and (b) providing the necessary coordination of the study. We then present the insights derived from the application of
+resulting, often complex ML system components and infrastructure, the methodology and conceptualize these by providing a unifying
+including the roles required to automate and operate an ML system definition. We conclude the paper with a short summary,
+in a real-world setting [35]. For instance, in many industrial limitations, and outlook.
+applications, data scientists still manage ML workflows manually
+† This paper does not represent an official IBM
+statement
+
+2 Foundations of DevOps "Machine Learning") OR "MLOps" OR "CD4ML"). We query the
+In the past, different software process models and development
+methodologies surfaced in the field of software engineering.
+Prominent examples include waterfall [37] and the agile manifesto
+[5]. Those methodologies have similar aims, namely to deliver
+production-ready software products. A concept called “DevOps”
+emerged in the years 2008/2009 and aims to reduce issues in
+software development [9,31]. DevOps is more than a pure
+methodology and rather represents a paradigm addressing social
+and technical issues in organizations engaged in software
+development. It has the goal of eliminating the gap between
+development and operations and emphasizes collaboration,
+communication, and knowledge sharing. It ensures automation
+with continuous integration, continuous delivery, and continuous
+deployment (CI/CD), thus allowing for fast, frequent, and reliable
+scientific databases of Google Scholar, Web of Science, Science
+releases. Moreover, it is designed to ensure continuous testing,
+Direct, Scopus, and the Association for Information Systems
+quality assurance, continuous monitoring, logging, and feedback
+eLibrary. It should be mentioned that the use of DevOps for ML,
+loops. Due to the commercialization of DevOps, many DevOps
+MLOps, and continuous practices in combination with ML is a
+tools are emerging, which can be differentiated into six groups
+relatively new field in academic literature. Thus, only a few peer-
+[23,28]: collaboration and knowledge sharing (e.g., Slack, Trello,
+reviewed studies are available at the time of this research.
+GitLab wiki), source code management (e.g., GitHub, GitLab),
+Nevertheless, to gain experience in this area, the search included
+build process (e.g., Maven), continuous integration (e.g., Jenkins,
+non-peer-reviewed literature as well. The search was performed in
+GitLab CI), deployment automation (e.g., Kubernetes, Docker),
+May 2021 and resulted in 1,864 retrieved articles. Of those, we
+monitoring and logging (e.g., Prometheus, Logstash). Cloud
+screened 194 papers in detail. From that group, 27 articles were
+environments are increasingly equipped with ready-to-use DevOps
+selected based on our inclusion and exclusion criteria (e.g., the term
+tooling that is designed for cloud use, facilitating the efficient
+MLOps or DevOps and CI/CD in combination with ML was
+generation of value [38]. With this novel shift towards DevOps,
+described in detail, the article was written in English, etc.). All 27
+developers need to care about what they develop, as they need to
+of these articles were peer-reviewed.
+operate it as well. As empirical results demonstrate, DevOps
+ensures better software quality [34]. People in the industry, as well 3.2 Tool Review
+as academics, have gained a wealth of experience in software
+After going through 27 articles and eight interviews, various
+engineering using DevOps. This experience is now being used to
+open-source tools, frameworks, and commercial cloud ML services
+automate and operationalize ML.
+were identified. These tools, frameworks, and ML services were
+reviewed to gain an understanding of the technical components of
+which they consist. An overview of the identified tools is depicted
+3 Methodology
+in Table 1 of the Appendix.
+To derive insights from the academic knowledge base while
+also drawing upon the expertise of practitioners from the field, we 3.3 Interview Study
+apply a mixed-method approach, as depicted in Figure 1. As a first
+To answer the research questions with insights from practice,
+step, we conduct a structured literature review [20,43] to obtain an
+we conduct semi-structured expert interviews according to Myers
+overview of relevant research. Furthermore, we review relevant
+and Newman [33]. One major aspect in the research design of
+tooling support in the field of MLOps to gain a better understanding
+expert interviews is choosing an appropriate sample size [8]. We
+of the technical components involved. Finally, we conduct semi-
+apply a theoretical sampling approach [12], which allows us to
+structured interviews [33,39] with experts from different domains.
+choose experienced interview partners to obtain high-quality data.
+On that basis, we conceptualize the term “MLOps” and elaborate
+Such data can provide meaningful insights with a limited number
+on our findings by synthesizing literature and interviews in the next
+of interviews. To get an adequate sample group and reliable
+chapter (“Results”).
+insights, we use LinkedIn—a social network for professionals—to
+identify experienced ML professionals with profound MLOps
+3.1 Literature Review
+knowledge on a global level. To gain insights from various
+To ensure that our results are based on scientific knowledge, we perspectives, we choose interview partners from different
+conduct a systematic literature review according to the method of organizations and industries, different countries and nationalities,
+Webster and Watson [43] and Kitchenham et al. [20]. After an as well as different genders. Interviews are conducted until no new
+initial exploratory search, we define our search query as follows: categories and concepts emerge in the analysis of the data. In total,
+((("DevOps" OR "CICD" OR "Continuous Integration" OR we conduct eight interviews with experts (α - θ), whose details are
+"Continuous Delivery" OR "Continuous Deployment") AND depicted in Table 2 of the Appendix. According to Glaser and
+ygolodohteM
+stluseR
+MLOps
+selpicnirP
+stnenopmoC
+seloR
+erutcetihcrA
+Literature Review Tool Review Interview Study
+(27 articles) (11 tools) (8 interviewees)
+Figure 1. Overview of the methodology
+
+Strauss [5, p.61], this stage is called “theoretical saturation.” All P3 Reproducibility. Reproducibility is the ability to reproduce
+interviews are conducted between June and August 2021. an ML experiment and obtain the exact same results [14,32,40,46]
+With regard to the interview design, we prepare a semi- [α, β, δ, ε, η].
+structured guide with several questions, documented as an P4 Versioning. Versioning ensures the versioning of data,
+interview script [33]. During the interviews, “soft laddering” is model, and code to enable not only reproducibility, but also
+used with “how” and “why” questions to probe the interviewees’ traceability (for compliance and auditing reasons) [14,32,40,46] [α,
+means-end chain [39]. This methodical approach allowed us to gain β, δ, ε, η].
+additional insight into the experiences of the interviewees when P5 Collaboration. Collaboration ensures the possibility to
+required. All interviews are recorded and then transcribed. To work collaboratively on data, model, and code. Besides the
+evaluate the interview transcripts, we use an open coding scheme technical aspect, this principle emphasizes a collaborative and
+[8]. communicative work culture aiming to reduce domain silos
+between different roles [14,26,40] [α, δ, θ].
+P6 Continuous ML training & evaluation. Continuous
+4 Results
+training means periodic retraining of the ML model based on new
+We apply the described methodology and structure our resulting feature data. Continuous training is enabled through the support of
+insights into a presentation of important principles, their resulting a monitoring component, a feedback loop, and an automated ML
+instantiation as components, the description of necessary roles, as workflow pipeline. Continuous training always includes an
+well as a suggestion for the architecture and workflow resulting evaluation run to assess the change in model quality [10,17,19,46]
+from the combination of these aspects. Finally, we derive the [β, δ, η, θ].
+conceptualization of the term and provide a definition of MLOps. P7 ML metadata tracking/logging. Metadata is tracked and
+logged for each orchestrated ML workflow task. Metadata tracking
+4.1 Principles and logging is required for each training job iteration (e.g., training
+A principle is viewed as a general or basic truth, a value, or a date and time, duration, etc.), including the model specific
+guide for behavior. In the context of MLOps, a principle is a guide metadata—e.g., used parameters and the resulting performance
+to how things should be realized in MLOps and is closely related metrics, model lineage: data and code used—to ensure the full
+to the term “best practices” from the professional sector. Based on traceability of experiment runs [26,27,29,32,35] [α, β, δ, ε, ζ, η, θ].
+the outlined methodology, we identified nine principles required to P8 Continuous monitoring. Continuous monitoring implies
+realize MLOps. Figure 2 provides an illustration of these principles the periodic assessment of data, model, code, infrastructure
+and links them to the components with which they are associated. resources, and model serving performance (e.g., prediction
+accuracy) to detect potential errors or changes that influence the
+product quality [4,7,10,27,29,42,46] [α, β, γ, δ, ε, ζ, η].
+P P P 2 3 6 O C r W c o h m o e r p s k o t f r l n o a e w ti n o t n P P 3 4 R M eg o i d s e tr l y P9 Feedback loops. Multiple feedback loops are required to
+integrate insights from the quality assessment step into the
+P P 4 5 Source Code P P 1 6 CI/CD P6 Model Training P P 8 9 Monitoring P1 Model Serving development or engineering process (e.g., a feedback loop from the
+Repository P9 Component Infrastructure Component Component
+experimental model engineering stage to the previous feature
+P P R 1 I C N I C /C IP D L a E u S tomation P P 3 4 F S e t a o t r u e r s e P P 4 7 ML S M to e r t e a s data engineering stage). Another feedback loop is required from the
+P2Workflow orchestration monitoring component (e.g., observing the model serving
+P3Reproducibility
+P4Versioning of data, code, model performance) to the scheduler to enable the retraining
+P5Collaboration
+P P 6 7 C M o L n m tin e u ta o d u a s t a M t L ra t c ra k i i n n i g ng & evaluation [4,6,7,17,27,46] [α, β, δ, ζ, η, θ].
+P8Continuous monitoring
+P9Feedback loops
+4.2 Technical Components
+COMPONENT
+After identifying the principles that need to be incorporated into
+Figure 2. Implementation of principles within technical
+MLOps, we now elaborate on the precise components and
+components
+implement them in the ML systems design. In the following, the
+components are listed and described in a generic way with their
+P1 CI/CD automation. CI/CD automation provides continuous
+essential functionalities. The references in brackets refer to the
+integration, continuous delivery, and continuous deployment. It
+respective principles that the technical components are
+carries out the build, test, delivery, and deploy steps. It provides
+implementing.
+fast feedback to developers regarding the success or failure of
+C1 CI/CD Component (P1, P6, P9). The CI/CD component
+certain steps, thus increasing the overall productivity
+[15,17,26,27,35,42,46] [α, β, θ]. ensures continuous integration, continuous delivery, and
+continuous deployment. It takes care of the build, test, delivery, and
+P2 Workflow orchestration. Workflow orchestration
+deploy steps. It provides rapid feedback to developers regarding the
+coordinates the tasks of an ML workflow pipeline according to
+success or failure of certain steps, thus increasing the overall
+directed acyclic graphs (DAGs). DAGs define the task execution
+productivity [10,15,17,26,35,46] [α, β, γ, ε, ζ, η]. Examples are
+order by considering relationships and dependencies
+Jenkins [17,26] and GitHub actions (η).
+[14,17,26,32,40,41] [α, β, γ, δ, ζ, η].
+
+C2 Source Code Repository (P4, P5). The source code C8 Model Serving Component (P1). The model serving
+repository ensures code storing and versioning. It allows multiple component can be configured for different purposes. Examples are
+developers to commit and merge their code [17,25,42,44,46] [α, β, online inference for real-time predictions or batch inference for
+γ, ζ, θ]. Examples include Bitbucket [11] [ζ], GitLab [11,17] [ζ], predictions using large volumes of input data. The serving can be
+GitHub [25] [ζ ,η], and Gitea [46]. provided, e.g., via a REST API. As a foundational infrastructure
+C3 Workflow Orchestration Component (P2, P3, P6). The layer, a scalable and distributed model serving infrastructure is
+workflow orchestration component offers task orchestration of an recommended [7,11,25,40,45,46] [α, β, δ, ζ, η, θ]. One example of
+ML workflow via directed acyclic graphs (DAGs). These graphs a model serving component configuration is the use of Kubernetes
+represent execution order and artifact usage of single steps of the and Docker technology to containerize the ML model, and
+workflow [26,32,35,40,41,46] [α, β, γ, δ, ε, ζ, η]. Examples include leveraging a Python web application framework like Flask [17]
+Apache Airflow [α, ζ], Kubeflow Pipelines [ζ], Luigi [ζ], AWS with an API for serving [α]. Other Kubernetes supported
+SageMaker Pipelines [β], and Azure Pipelines [ε]. frameworks are KServing of Kubeflow [α], TensorFlow Serving,
+C4 Feature Store System (P3, P4). A feature store system and Seldion.io serving [40]. Inferencing could also be realized with
+ensures central storage of commonly used features. It has two Apache Spark for batch predictions [θ]. Examples of cloud services
+databases configured: One database as an offline feature store to include Microsoft Azure ML REST API [ε], AWS SageMaker
+serve features with normal latency for experimentation, and one Endpoints [α, β], IBM Watson Studio [γ], and Google Vertex AI
+database as an online store to serve features with low latency for prediction service [δ].
+predictions in production [10,14] [α, β, ζ, ε, θ]. Examples include C9 Monitoring Component (P8, P9). The monitoring
+Google Feast [ζ], Amazon AWS Feature Store [β, ζ], Tecton.ai and component takes care of the continuous monitoring of the model
+Hopswork.ai [ζ]. This is where most of the data for training ML serving performance (e.g., prediction accuracy). Additionally,
+models will come from. Moreover, data can also come directly monitoring of the ML infrastructure, CI/CD, and orchestration are
+from any kind of data store. required [7,10,17,26,29,36,46] [α, ζ, η, θ]. Examples include
+C5 Model Training Infrastructure (P6). The model training Prometheus with Grafana [η, ζ], ELK stack (Elasticsearch,
+infrastructure provides the foundational computation resources, Logstash, and Kibana) [α, η, ζ], and simply TensorBoard [θ].
+e.g., CPUs, RAM, and GPUs. The provided infrastructure can be Examples with built-in monitoring capabilities are Kubeflow [θ],
+either distributed or non-distributed. In general, a scalable and MLflow [η], and AWS SageMaker model monitor or cloud watch
+distributed infrastructure is recommended [7,10,24– [ζ].
+26,29,40,45,46] [δ, ζ, η, θ]. Examples include local machines (not
+scalable) or cloud computation [7] [η, θ], as well as non-distributed 4.3 Roles
+or distributed computation (several worker nodes) [25,27]. After describing the principles and their resulting instantiation
+Frameworks supporting computation are Kubernetes [η, θ] and Red of components, we identify necessary roles in order to realize
+Hat OpenShift [γ]. MLOps in the following. MLOps is an interdisciplinary group
+C6 Model Registry (P3, P4). The model registry stores process, and the interplay of different roles is crucial to design,
+centrally the trained ML models together with their metadata. It has manage, automate, and operate an ML system in production. In the
+two main functionalities: storing the ML artifact and storing the ML following, every role, its purpose, and related tasks are briefly
+metadata (see C7) [4,6,14,17,26,27] [α, β, γ, ε, ζ, η, θ]. Advanced described:
+storage examples include MLflow [α, η, ζ], AWS SageMaker R1 Business Stakeholder (similar roles: Product Owner,
+Model Registry [ζ], Microsoft Azure ML Model Registry [ζ], and Project Manager). The business stakeholder defines the business
+Neptune.ai [α]. Simple storage examples include Microsoft Azure goal to be achieved with ML and takes care of the communication
+Storage, Google Cloud Storage, and Amazon AWS S3 [17]. side of the business, e.g., presenting the return on investment (ROI)
+C7 ML Metadata Stores (P4, P7). ML metadata stores allow generated with an ML product [17,24,26] [α, β, δ, θ].
+for the tracking of various kinds of metadata, e.g., for each R2 Solution Architect (similar role: IT Architect). The
+D2
+orchestrated ML workflow pipeline task. Another metadata store solution architect designs the architecture and defines the
+can be configured within the model registry for tracking and technologies to be used, following a thorough evaluation [17,27] [α,
+logging the metadata of each training job (e.g., training date and ζ].
+time, duration, etc.), including the model specific metadata—e.g., R3 Data Scientist (similar roles: ML Specialist, ML
+used parameters and the resulting performance metrics, model Developer). The data scientist translates the business problem into
+lineage: data and code used [14,25–27,32] [α, β, δ, ζ, θ]. Examples an ML problem and takes care of the model engineering, including
+include orchestrators with built-in metadata stores tracking each the selection of the best-performing algorithm and hyperparameters
+step of experiment pipelines [α] such as Kubeflow Pipelines [α,ζ], [7,14,26,29] [α, β, γ, δ, ε, ζ, η, θ].
+AWS SageMaker Pipelines [α,ζ], Azure ML, and IBM Watson R4 Data Engineer (similar role: DataOps Engineer). The data
+Studio [γ]. MLflow provides an advanced metadata store in engineer builds up and manages data and feature engineering
+combination with the model registry [32,35]. pipelines. Moreover, this role ensures proper data ingestion to the
+databases of the feature store system [14,29,41] [α, β, γ, δ, ε, ζ, η,
+θ].
+
+R5 Software Engineer. The software engineer applies (A) MLOps project initiation. (1) The business stakeholder
+software design patterns, widely accepted coding guidelines, and (R1) analyzes the business and identifies a potential business
+best practices to turn the raw ML problem into a well-engineered problem that can be solved using ML. (2) The solution architect
+product [29] [α, γ]. (R2) defines the architecture design for the overall ML system and,
+R6 DevOps Engineer. The DevOps engineer bridges the gap decides on the technologies to be used after a thorough evaluation.
+between development and operations and ensures proper CI/CD (3) The data scientist (R3) derives an ML problem—such as
+automation, ML workflow orchestration, model deployment to whether regression or classification should be used—from the
+production, and monitoring [14–16,26] [α, β, γ, ε, ζ, η, θ]. business goal. (4) The data engineer (R4) and the data scientist (R3)
+R7 ML Engineer/MLOps Engineer. The ML engineer or work together in an effort to understand which data is required to
+MLOps engineer combines aspects of several roles and thus has solve the problem. (5) Once the answers are clarified, the data
+cross-domain knowledge. This role incorporates skills from data engineer (R4) and data scientist (R3) collaborate to locate the raw
+scientists, data engineers, software engineers, DevOps engineers, data sources for the initial data analysis. They check the distribution,
+and backend engineers (see Figure 3). This cross-domain role and quality of the data, as well as performing validation checks.
+builds up and operates the ML infrastructure, manages the Furthermore, they ensure that the incoming data from the data
+automated ML workflow pipelines and model deployment to sources is labeled, meaning that a target attribute is known, as this
+production, and monitors both the model and the ML infrastructure is a mandatory requirement for supervised ML. In this example, the
+[14,17,26,29] [α, β, γ, δ, ε, ζ, η, θ]. data sources already had labeled data available as the labeling step
+was covered during an upstream process.
+(B1) Requirements for feature engineering pipeline. The
+features are the relevant attributes required for model training.
+After the initial understanding of the raw data and the initial data
+DS BE
+Data Scientist Backend Engineer analysis, the fundamental requirements for the feature engineering
+(ML model development) (ML infrastructure management) pipeline are defined, as follows: (6) The data engineer (R4) defines
+ML
+ML Engineer / the data transformation rules (normalization, aggregations) and
+MLOps Engineer cleaning rules to bring the data into a usable format. (7) The data
+(cross-functional management
+of ML environment and assets: scientist (R3) and data engineer (R4) together define the feature
+ML infrastructure, engineering rules, such as the calculation of new and more
+ML models,
+ML workflow pipelines, advanced features based on other features. These initially defined
+data Ingestion,
+monitoring) rules must be iteratively adjusted by the data scientist (R3) either
+DE DO
+Data Engineer DevOps Engineer based on the feedback coming from the experimental model
+data ( d p a ip ta e l m in a e n m ag a e n m ag e e n m t, e nt) (S M of L t w w a o r r e k f e lo n w gi n p e ip e e r li w n i e th o D rc e h v e O st p ra s t s io k n il , ls, engineering stage or from the monitoring component observing the
+CI/CD pipeline management, model performance.
+monitoring)
+SE {...} (B2) Feature engineering pipeline. The initially defined
+Software Engineer requirements for the feature engineering pipeline are taken by the
+(applies design patterns and
+coding guidelines) data engineer (R4) and software engineer (R5) as a starting point to
+build up the prototype of the feature engineering pipeline. The
+initially defined requirements and rules are updated according to
+Figure 3. Roles and their intersections contributing to the
+the iterative feedback coming either from the experimental model
+MLOps paradigm
+engineering stage or from the monitoring component observing the
+model’s performance in production. As a foundational requirement,
+the data engineer (R4) defines the code required for the CI/CD (C1)
+5 Architecture and Workflow
+and orchestration component (C3) to ensure the task orchestration
+On the basis of the identified principles, components, and roles, we
+of the feature engineering pipeline. This role also defines the
+derive a generalized MLOps end-to-end architecture to give ML
+underlying infrastructure resource configuration. (8) First, the
+researchers and practitioners proper guidance. It is depicted in
+feature engineering pipeline connects to the raw data, which can be
+Figure 4. Additionally, we depict the workflows, i.e., the sequence
+(for instance) streaming data, static batch data, or data from any
+in which the different tasks are executed in the different stages. The
+cloud storage. (9) The data will be extracted from the data sources.
+artifact was designed to be technology-agnostic. Therefore, ML
+(10) The data preprocessing begins with data transformation and
+researchers and practitioners can choose the best-fitting
+cleaning tasks. The transformation rule artifact defined in the
+technologies and frameworks for their needs.
+requirement gathering stage serves as input for this task, and the
+As depicted in Figure 4, we illustrate an end-to-end process,
+main aim of this task is to bring the data into a usable format. These
+from MLOps project initiation to the model serving. It includes (A)
+transformation rules are continuously improved based on the
+the MLOps project initiation steps; (B) the feature engineering
+feedback.
+pipeline, including the data ingestion to the feature store; (C) the
+experimentation; and (D) the automated ML workflow pipeline up
+to the model serving.
+
+A MLOps Project Initiation
+BS SA DS DE AND DS DE AND DS
+Connect to raw data
+deriveML problem Understand required
+Business problem designs architecture for initial data analysis
+from business goal data to solve problem
+analysis and technologies to (distribution analysis,
+(e.g., classification, (data available?, where
+(define goal) be used data quality checks,
+regression) is it?, how to get it?)
+validation checks)
+MLOps Project Initiation Zone
+B1 R fe e a q tu u r ir e e e m n e g n in ts e e fo ri r n g DE DS AND DE feature F r e eq ed ui b re a m ck e n L t o s o ( p iterative)
+pipeline define
+define feature
+transformation
+engineering rules
+& cleaning rules
+Data Sources
+data pipeline code
+transformation feature
+streaming data rules engineering rules
+B2 Feature Engineering Pipeline DE AND SE {...} o c rc o h m e p s o tr n a e ti n o t n
+batchdata Connect to data data feature engineering data Ingestion
+raw data extraction transformation (e.g., calc. of new job(batch or artifact store
+& cleaning features) streaming)
+cloud storage
+data preprocessing
+(labeleddata) data processing computation infrastructure CI/CD component
+Data Engineering Zone
+C Experimentation model engineering (best algorithm selection, hyperparameter tuning) DS train m in o g d e c l o de SE {...} DO OR ML
+ML workflow
+data model model export ML pipeline code
+data analysis pr v e a p l a id ra at t i io on n & training validation model model model
+versioned Repository servingcode SE {...}
+feature data
+ML metadata store CI / CD component
+model training computation infrastructure continuous integration
+DE / continuous delivery
+Feature store ML Experimentation Zone versioned artifacts: model + ML training & workflow code (build, test and push)
+system
+ML Production Zone continuous deployment
+o l ( f a f n l t i o e n r n e m c D y a ) l B (t S r n ig c e h g w e e r d d w u at l h e a e r n Workflow orchestration component (e. a g s r ., t t o i I fa r m e c a t ge Model Registry prod r ( e b a u d il y d , test and deploy model)
+available, ML metadata store Registry) ML metadata store ML model DO OR ML
+(lo o w nl - i l n a e te D n B cy) ev p e e n r t- io b d a i s c e a d l) or (metadata logging of each ML workflow task) mo p d a e ra l m sta e t t u er s & (s p ta e g rf in . g m o e r t r p ic r s od)
+D Automated ML Workflow Pipeline (best algorithm selection, parameter & perf. metric logging)
+versioned DO OR ML
+feature data data data model training model export push to model
+extraction preparation & / refinement validation model registry
+validation
+model training computation infrastructure ML
+Feedback Loop –enables continuous training / retraining & continuous improvement M co o n n ti i n t u o o ri u n s g m c o o n m it p or o in n g e n o t f mod D e O l se O rv R ing M pe L rformance M (p o re d d e i l c s tio er n v o in n g n c e o w m b p a o tc n h e o n r t
+new versioned feature data (batch or streaming data) streaming data) SE {...}
+model serving computation
+ML infrastructure
+LEGEND {...} General process flow Feedback loop flow
+BS SA DS DE SE DO ML
+Data Engineering flow Versioned Feature Flow
+Business IT Solution Data Data Software DevOps ML Engineer
+Stakeholder Architect Scientist Engineer Engineer Engineer Model / Code flow
+Figure 4. End-to-end MLOps architecture and workflow with functional components and roles
+(11) The feature engineering task calculates new and more (C) Experimentation. Most tasks in the experimentation stage
+advanced features based on other features. The predefined feature are led by the data scientist (R3). The data scientist is supported by
+engineering rules serve as input for this task. These feature the software engineer (R5). (13) The data scientist (R3) connects to
+engineering rules are continuously improved based on the feedback. the feature store system (C4) for the data analysis. (Alternatively,
+(12) Lastly, a data ingestion job loads batch or streaming data into the data scientist (R3) can also connect to the raw data for an initial
+the feature store system (C4). The target can either be the offline or analysis.) In case of any required data adjustments, the data
+online database (or any kind of data store).
+
+scientist (R3) reports the required changes back to the data iterative adjustments of hyperparameters are executed, if required.
+engineering zone (feedback loop). Once the performance metrics indicate good results, the automated
+(14) Then the preparation and validation of the data coming iterative training stops. The automated model training task and the
+from the feature store system is required. This task also includes automated model validation task can be iteratively repeated until a
+the train and test split dataset creation. (15) The data scientist (R3) good result has been achieved. (22) The trained model is then
+estimates the best-performing algorithm and hyperparameters, and exported and (23) pushed to the model registry (C6), where it is
+the model training is then triggered with the training data (C5). The stored e.g., as code or containerized together with its associated
+software engineer (R5) supports the data scientist (R3) in the configuration and environment files.
+creation of well-engineered model training code. (16) Different For all training job iterations, the ML metadata store (C7)
+model parameters are tested and validated interactively during records metadata such as parameters to train the model and the
+several rounds of model training. Once the performance metrics resulting performance metrics. This also includes the tracking and
+indicate good results, the iterative training stops. The best- logging of the training job ID, training date and time, duration, and
+performing model parameters are identified via parameter tuning. sources of artifacts. Additionally, the model specific metadata
+The model training task and model validation task are then called “model lineage” combining the lineage of data and code is
+iteratively repeated; together, these tasks can be called “model tracked for each newly registered model. This includes the source
+engineering.” The model engineering aims to identify the best- and version of the feature data and model training code used to train
+performing algorithm and hyperparameters for the model. (17) The the model. Also, the model version and status (e.g., staging or
+data scientist (R3) exports the model and commits the code to the production-ready) is recorded.
+repository. Once the status of a well-performing model is switched from
+As a foundational requirement, either the DevOps engineer (R6) staging to production, it is automatically handed over to the
+or the ML engineer (R7) defines the code for the (C2) automated DevOps engineer or ML engineer for model deployment. From
+ML workflow pipeline and commits it to the repository. Once either there, the (24) CI/CD component (C1) triggers the continuous
+the data scientist (R3) commits a new ML model or the DevOps deployment pipeline. The production-ready ML model and the
+engineer (R6) and the ML engineer (R7) commits new ML model serving code are pulled (initially prepared by the software
+workflow pipeline code to the repository, the CI/CD component engineer (R5)). The continuous deployment pipeline carries out the
+(C1) detects the updated code and triggers automatically the CI/CD build and test step of the ML model and serving code and deploys
+pipeline carrying out the build, test, and delivery steps. The build the model for production serving. The (25) model serving
+step creates artifacts containing the ML model and tasks of the ML component (C8) makes predictions on new, unseen data coming
+workflow pipeline. The test step validates the ML model and ML from the feature store system (C4). This component can be
+workflow pipeline code. The delivery step pushes the versioned designed by the software engineer (R5) as online inference for real-
+artifact(s)—such as images—to the artifact store (e.g., image time predictions or as batch inference for predictions concerning
+registry). large volumes of input data. For real-time predictions, features
+(D) Automated ML workflow pipeline. The DevOps engineer must come from the online database (low latency), whereas for
+(R6) and the ML engineer (R7) take care of the management of the batch predictions, features can be served from the offline database
+automated ML workflow pipeline. They also manage the (normal latency). Model-serving applications are often configured
+underlying model training infrastructure in the form of hardware within a container and prediction requests are handled via a REST
+resources and frameworks supporting computation such as API. As a foundational requirement, the ML engineer (R7)
+Kubernetes (C5). The workflow orchestration component (C3) manages the model-serving computation infrastructure. The (26)
+orchestrates the tasks of the automated ML workflow pipeline. For monitoring component (C9) observes continuously the model-
+each task, the required artifacts (e.g., images) are pulled from the serving performance and infrastructure in real-time. Once a certain
+artifact store (e.g., image registry). Each task can be executed via threshold is reached, such as detection of low prediction accuracy,
+an isolated environment (e.g., containers). Finally, the workflow the information is forwarded via the feedback loop. The (27)
+orchestration component (C3) gathers metadata for each task in the feedback loop is connected to the monitoring component (C9) and
+form of logs, completion time, and so on. ensures fast and direct feedback allowing for more robust and
+Once the automated ML workflow pipeline is triggered, each of improved predictions. It enables continuous training, retraining,
+the following tasks is managed automatically: (18) automated and improvement. With the support of the feedback loop,
+pulling of the versioned features from the feature store systems information is transferred from the model monitoring component
+(data extraction). Depending on the use case, features are extracted to several upstream receiver points, such as the experimental stage,
+from either the offline or online database (or any kind of data store). data engineering zone, and the scheduler (trigger). The feedback to
+(19) Automated data preparation and validation; in addition, the the experimental stage is taken forward by the data scientist for
+train and test split is defined automatically. (20) Automated final further model improvements. The feedback to the data engineering
+model training on new unseen data (versioned features). The zone allows for the adjustment of the features prepared for the
+algorithm and hyperparameters are already predefined based on the feature store system. Additionally, the detection of concept drifts
+settings of the previous experimentation stage. The model is as a feedback mechanism can enable (28) continuous training. For
+retrained and refined. (21) Automated model evaluation and instance, once the model-monitoring component (C9) detects a drift
+
+in the data [3], the information is forwarded to the scheduler, which Posoldova (2020) [35] further stresses this aspect by remarking that
+then triggers the automated ML workflow pipeline for retraining students should not only learn about model creation, but must also
+(continuous training). A change in adequacy of the deployed model learn about technologies and components necessary to build
+can be detected using distribution comparisons to identify drift. functional ML products.
+Retraining is not only triggered automatically when a statistical Data scientists alone cannot achieve the goals of MLOps. A
+threshold is reached; it can also be triggered when new feature data multi-disciplinary team is required [14], thus MLOps needs to be a
+is available, or it can be scheduled periodically. group process [α]. This is often hindered because teams work in
+silos rather than in cooperative setups [α]. Additionally, different
+knowledge levels and specialized terminologies make
+6 Conceptualization
+communication difficult. To lay the foundations for more fruitful
+With the findings at hand, we conceptualize the literature and setups, the respective decision-makers need to be convinced that an
+interviews. It becomes obvious that the term MLOps is positioned increased MLOps maturity and a product-focused mindset will
+at the intersection of machine learning, software engineering, yield clear business improvements [γ].
+DevOps, and data engineering (see Figure 5 in the Appendix). We ML system challenges. A major challenge with regard to
+define MLOps as follows: MLOps systems is designing for fluctuating demand, especially in
+MLOps (Machine Learning Operations) is a paradigm, relation to the process of ML training [7]. This stems from
+including aspects like best practices, sets of concepts, as well as a potentially voluminous and varying data [10], which makes it
+development culture when it comes to the end-to-end difficult to precisely estimate the necessary infrastructure resources
+conceptualization, implementation, monitoring, deployment, and (CPU, RAM, and GPU) and requires a high level of flexibility in
+scalability of machine learning products. Most of all, it is an terms of scalability of the infrastructure [7,26] [δ].
+engineering practice that leverages three contributing disciplines: Operational challenges. In productive settings, it is
+machine learning, software engineering (especially DevOps), and challenging to operate ML manually due to different stacks of
+data engineering. MLOps is aimed at productionizing machine software and hardware components and their interplay. Therefore,
+learning systems by bridging the gap between development (Dev) robust automation is required [7,17]. Also, a constant incoming
+and operations (Ops). Essentially, MLOps aims to facilitate the stream of new data forces retraining capabilities. This is a repetitive
+creation of machine learning products by leveraging these task which, again, requires a high level of automation [18] [θ].
+principles: CI/CD automation, workflow orchestration, These repetitive tasks yield a large number of artifacts that require
+reproducibility; versioning of data, model, and code; a strong governance [24,29,40] as well as versioning of data, model,
+collaboration; continuous ML training and evaluation; ML and code to ensure robustness and reproducibility [11,27,29].
+metadata tracking and logging; continuous monitoring; and Lastly, it is challenging to resolve a potential support request (e.g.,
+feedback loops. by finding the root cause), as many parties and components are
+involved. Failures can be a combination of ML infrastructure and
+software [26].
+7 Open Challenges
+Several challenges for adopting MLOps have been identified
+8 Conclusion
+after conducting the literature review, tool review, and interview
+study. These open challenges have been organized into the With the increase of data availability and analytical capabilities,
+categories of organizational, ML system, and operational coupled with the constant pressure to innovate, more machine
+challenges. learning products than ever are being developed. However, only a
+Organizational challenges. The mindset and culture of data small number of these proofs of concept progress into deployment
+science practice is a typical challenge in organizational settings [2]. and production. Furthermore, the academic space has focused
+As our insights from literature and interviews show, to successfully intensively on machine learning model building and benchmarking,
+develop and run ML products, there needs to be a culture shift away but too little on operating complex machine learning systems in
+from model-driven machine learning toward a product-oriented real-world scenarios. In the real world, we observe data scientists
+discipline [γ]. The recent trend of data-centric AI also addresses still managing ML workflows manually to a great extent. The
+this aspect by putting more focus on the data-related aspects taking paradigm of Machine Learning Operations (MLOps) addresses
+place prior to the ML model building. Especially the roles these challenges. In this work, we shed more light on MLOps. By
+associated with these activities should have a product-focused conducting a mixed-method study analyzing existing literature and
+perspective when designing ML products [γ]. A great number of tools, as well as interviewing eight experts from the field, we
+skills and individual roles are required for MLOps (β). As our uncover four main aspects of MLOps: its principles, components,
+identified sources point out, there is a lack of highly skilled experts roles, and architecture. From these aspects, we infer a holistic
+for these roles—especially with regard to architects, data engineers, definition. The results support a common understanding of the term
+ML engineers, and DevOps engineers [29,41,44] [α, ε]. This is MLOps and its associated concepts, and will hopefully assist
+related to the necessary education of future professionals—as researchers and professionals in setting up successful ML projects
+MLOps is typically not part of data science education [7] [γ]. in the future.
+
+REFERENCES 1052–1064. DOI:https://doi.org/10.1109/TPDS.2018.2876844
+[20] Barbara Kitchenham, O. Pearl Brereton, David Budgen, Mark Turner, John
+[1] Muratahan Aykol, Patrick Herring, and Abraham Anapolsky. 2020. Bailey, and Stephen Linkman. 2009. Systematic literature reviews in
+Machine learning for continuous innovation in battery technologies. Nat. software engineering - A systematic literature review. Inf. Softw. Technol.
+Rev. Mater. 5, 10 (2020), 725–727. 51, 1 (2009), 7–15. DOI:https://doi.org/10.1016/j.infsof.2008.09.009
+[2] Lucas Baier, Fabian Jöhren, and Stefan Seebacher. 2020. Challenges in the [21] Rafal Kocielnik, Saleema Amershi, and Paul N Bennett. 2019. Will you
+deployment and operation of machine learning in practice. 27th Eur. Conf. accept an imperfect ai? exploring designs for adjusting end-user
+Inf. Syst. - Inf. Syst. a Shar. Soc. ECIS 2019 (2020), 0–15. expectations of ai systems. In Proceedings of the 2019 CHI Conference on
+[3] Lucas Baier, Niklas Kühl, and Gerhard Satzger. 2019. How to Cope with Human Factors in Computing Systems, 1–14.
+Change? Preserving Validity of Predictive Services over Time. In Hawaii [22] Ana De Las Heras, Amalia Luque-Sendra, and Francisco Zamora-Polo.
+International Conference on System Sciences (HICSS-52), Grand Wailea, 2020. Machine learning technologies for sustainability in smart cities in the
+Maui, Hawaii, USA. post-covid era. Sustainability 12, 22 (2020), 9320.
+[4] Amitabha Banerjee, Chien Chia Chen, Chien Chun Hung, Xiaobo Huang, [23] Leonardo Leite, Carla Rocha, Fabio Kon, Dejan Milojicic, and Paulo
+Yifan Wang, and Razvan Chevesaran. 2020. Challenges and experiences Meirelles. 2019. A survey of DevOps concepts and challenges. ACM
+with MLOps for performance diagnostics in hybrid-cloud enterprise Comput. Surv. 52, 6 (2019). DOI:https://doi.org/10.1145/3359981
+software deployments. OpML 2020 - 2020 USENIX Conf. Oper. Mach. [24] Yan Liu, Zhijing Ling, Boyu Huo, Boqian Wang, Tianen Chen, and Esma
+Learn. (2020), 7–9. Mouine. 2020. Building A Platform for Machine Learning Operations from
+[5] Kent Beck, Mike Beedle, Arie van Bennekum, Alistair Cockburn, Ward Open Source Frameworks. IFAC-PapersOnLine 53, 5 (2020), 704–709.
+Cunningham, Martin Fowler, James Grenning, Jim Highsmith, Andrew DOI:https://doi.org/10.1016/j.ifacol.2021.04.161
+Hunt, Ron Jeffries, Jon Kern, Brian Marick, Robert C. Martin, Steve [25] Alvaro Lopez Garcia, Viet Tran, Andy S. Alic, Miguel Caballer, Isabel
+Mellor, Ken Schwaber, Jeff Sutherland, and Dave Thomas. 2001. Campos Plasencia, Alessandro Costantini, Stefan Dlugolinsky, Doina
+Manifesto for Agile Software Development. (2001). Cristina Duma, Giacinto Donvito, Jorge Gomes, Ignacio Heredia Cacha,
+[6] Benjamin Benni, Blay Fornarino Mireille, Mosser Sebastien, Precisio Jesus Marco De Lucas, Keiichi Ito, Valentin Y. Kozlov, Giang Nguyen,
+Frederic, and Jungbluth Gunther. 2019. When DevOps meets meta- Pablo Orviz Fernandez, Zdenek Sustr, Pawel Wolniewicz, Marica
+learning: A portfolio to rule them all. Proc. - 2019 ACM/IEEE 22nd Int. Antonacci, Wolfgang Zu Castell, Mario David, Marcus Hardt, Lara Lloret
+Conf. Model Driven Eng. Lang. Syst. Companion, Model. 2019 (2019), Iglesias, Germen Molto, and Marcin Plociennik. 2020. A cloud-based
+605–612. DOI:https://doi.org/10.1109/MODELS-C.2019.00092 framework for machine learning workloads and applications. IEEE Access
+[7] Lucas Cardoso Silva, Fernando Rezende Zagatti, Bruno Silva Sette, Lucas 8, (2020), 18681–18692.
+Nildaimon Dos Santos Silva, Daniel Lucredio, Diego Furtado Silva, and DOI:https://doi.org/10.1109/ACCESS.2020.2964386
+Helena De Medeiros Caseli. 2020. Benchmarking Machine Learning [26] Lwakatare. 2020. From a Data Science Driven Process to a Continuous
+Solutions in Production. Proc. - 19th IEEE Int. Conf. Mach. Learn. Appl. Delivery Process for Machine Learning Systems. Lect. Notes Comput. Sci.
+ICMLA 2020 (2020), 626–633. (including Subser. Lect. Notes Artif. Intell. Lect. Notes Bioinformatics)
+DOI:https://doi.org/10.1109/ICMLA51294.2020.00104 12562 LNCS, (2020), 185–201. DOI:https://doi.org/10.1007/978-3-030-
+[8] Juliet M. Corbin and Anselm Strauss. 1990. Grounded theory research: 64148-1_12
+Procedures, canons, and evaluative criteria. Qual. Sociol. 13, 1 (1990), 3– [27] Lwakatare. 2020. DevOps for AI - Challenges in Development of AI-
+21. DOI:https://doi.org/10.1007/BF00988593 enabled Applications. (2020).
+[9] Patrick Debois. 2009. Patrick Debois - devopsdays Ghent. Retrieved March DOI:https://doi.org/10.23919/SoftCOM50211.2020.9238323
+25, 2021 from https://devopsdays.org/events/2019-ghent/speakers/patrick- [28] Ruth W. Macarthy and Julian M. Bass. 2020. An Empirical Taxonomy of
+debois/ DevOps in Practice. In 2020 46th Euromicro Conference on Software
+[10] Behrouz Derakhshan, Alireza Rezaei Mahdiraji, Tilmann Rabl, and Volker Engineering and Advanced Applications (SEAA), IEEE, 221–228.
+Markl. 2019. Continuous deployment of machine learning pipelines. Adv. DOI:https://doi.org/10.1109/SEAA51224.2020.00046
+Database Technol. - EDBT 2019-March, (2019), 397–408. [29] Sasu Mäkinen, Henrik Skogström, Eero Laaksonen, and Tommi
+DOI:https://doi.org/10.5441/002/edbt.2019.35 Mikkonen. 2021. Who Needs MLOps: What Data Scientists Seek to
+[11] Grigori Fursin. 2021. Collective knowledge: organizing research projects Accomplish and How Can MLOps Help? Ml (2021). Retrieved from
+as a database of reusable components and portable workflows with http://arxiv.org/abs/2103.08942
+common interfaces. Philos. Trans. A. Math. Phys. Eng. Sci. 379, 2197 [30] Rob van der Meulen and Thomas McCall. 2018. Gartner Says Nearly Half
+(2021), 20200211. DOI:https://doi.org/10.1098/rsta.2020.0211 of CIOs Are Planning to Deploy Artificial Intelligence. Retrieved
+[12] Barney Glaser and Anselm Strauss. 1967. The discovery of grounded December 4, 2021 from https://www.gartner.com/en/newsroom/press-
+theory: strategies for qualitative research. releases/2018-02-13-gartner-says-nearly-half-of-cios-are-planning-to-
+[13] Mahendra Kumar Gourisaria, Rakshit Agrawal, G M Harshvardhan, deploy-artificial-intelligence
+Manjusha Pandey, and Siddharth Swarup Rautaray. 2021. Application of [31] Steve Mezak. 2018. The Origins of DevOps: What’s in a Name? -
+Machine Learning in Industry 4.0. In Machine Learning: Theoretical DevOps.com. Retrieved March 25, 2021 from https://devops.com/the-
+Foundations and Practical Applications. Springer, 57–87. origins-of-devops-whats-in-a-name/
+[14] Akshita Goyal. 2020. MLOps - Machine Learning Operations. Int. J. Inf. [32] Antonio Molner Domenech and Alberto Guillén. 2020. Ml-experiment: A
+Technol. Insights Transform. (2020). Retrieved April 15, 2021 from Python framework for reproducible data science. J. Phys. Conf. Ser. 1603,
+http://technology.eurekajournals.com/index.php/IJITIT/article/view/655/7 1 (2020). DOI:https://doi.org/10.1088/1742-6596/1603/1/012025
+69 [33] Michael D. Myers and Michael Newman. 2007. The qualitative interview
+[15] Tuomas Granlund, Aleksi Kopponen, Vlad Stirbu, Lalli Myllyaho, and in IS research: Examining the craft. Inf. Organ. 17, 1 (2007), 2–26.
+Tommi Mikkonen. 2021. MLOps Challenges in Multi-Organization Setup: DOI:https://doi.org/10.1016/j.infoandorg.2006.11.001
+Experiences from Two Real-World Cases. (2021). Retrieved from [34] Pulasthi Perera, Roshali Silva, and Indika Perera. 2017. Improve software
+http://arxiv.org/abs/2103.08937 quality through practicing DevOps. In 2017 Seventeenth International
+[16] Willem Jan van den Heuvel and Damian A. Tamburri. 2020. Model-driven Conference on Advances in ICT for Emerging Regions (ICTer), 1–6.
+ml-ops for intelligent enterprise applications: vision, approaches and [35] Alexandra Posoldova. 2020. Machine Learning Pipelines: From Research
+challenges. Springer International Publishing. to Production. IEEE POTENTIALS (2020).
+DOI:https://doi.org/10.1007/978-3-030-52306-0_11 [36] Cedric Renggli, Luka Rimanic, Nezihe Merve Gürel, Bojan Karlaš,
+[17] Ioannis Karamitsos, Saeed Albarhami, and Charalampos Apostolopoulos. Wentao Wu, and Ce Zhang. 2021. A Data Quality-Driven View of MLOps.
+2020. Applying devops practices of continuous automation for machine 1 (2021), 1–12. Retrieved from http://arxiv.org/abs/2102.07750
+learning. Inf. 11, 7 (2020), 1–15. [37] Winston W. Royce. 1970. Managing the Development of Large Software
+DOI:https://doi.org/10.3390/info11070363 Systems. (1970).
+[18] Bojan Karlaš, Matteo Interlandi, Cedric Renggli, Wentao Wu, Ce Zhang, [38] Martin Rütz. 2019. DEVOPS: A SYSTEMATIC LITERATURE
+Deepak Mukunthu Iyappan Babu, Jordan Edwards, Chris Lauren, Andy REVIEW. Inf. Softw. Technol. (2019).
+Xu, and Markus Weimer. 2020. Building Continuous Integration Services [39] Ulrike Schultze and Michel Avital. 2011. Designing interviews to generate
+for Machine Learning. Proc. ACM SIGKDD Int. Conf. Knowl. Discov. rich data for information systems research. Inf. Organ. 21, 1 (2011), 1–16.
+Data Min. (2020), 2407–2415. DOI:https://doi.org/10.1016/j.infoandorg.2010.11.001
+DOI:https://doi.org/10.1145/3394486.3403290 [40] Ola Spjuth, Jens Frid, and Andreas Hellander. 2021. The machine learning
+[19] Rupesh Raj Karn, Prabhakar Kudva, and Ibrahim Abe M. Elfadel. 2019. life cycle and the cloud: implications for drug discovery. Expert Opin.
+Dynamic autoselection and autotuning of machine learning models for Drug Discov. 00, 00 (2021), 1–9.
+cloud network analytics. IEEE Trans. Parallel Distrib. Syst. 30, 5 (2019), DOI:https://doi.org/10.1080/17460441.2021.1932812
+
+[41] Damian A. Tamburri. 2020. Sustainable MLOps: Trends and Challenges.
+Proc. - 2020 22nd Int. Symp. Symb. Numer. Algorithms Sci. Comput.
+SYNASC 2020 (2020), 17–23.
+DOI:https://doi.org/10.1109/SYNASC51798.2020.00015
+[42] Chandrasekar Vuppalapati, Anitha Ilapakurti, Karthik Chillara, Sharat
+Kedari, and Vanaja Mamidi. 2020. Automating Tiny ML Intelligent
+Sensors DevOPS Using Microsoft Azure. Proc. - 2020 IEEE Int. Conf. Big
+Data, Big Data 2020 (2020), 2375–2384.
+DOI:https://doi.org/10.1109/BigData50022.2020.9377755
+[43] Jane Webster and Richard Watson. 2002. Analyzing the Past to Prepare for
+the Future: Writing a Literature Review. MIS Q. 26, 2 (2002), xiii–xxiii.
+DOI:https://doi.org/10.1.1.104.6570
+[44] Chaoyu Wu, E. Haihong, and Meina Song. 2020. An Automatic Artificial
+Intelligence Training Platform Based on Kubernetes. ACM Int. Conf.
+Proceeding Ser. (2020), 58–62.
+DOI:https://doi.org/10.1145/3378904.3378921
+[45] Geum Seong Yoon, Jungsu Han, Seunghyung Lee, and Jong Won Kim.
+2020. DevOps Portal Design for SmartX AI Cluster Employing Cloud-
+Native Machine Learning Workflows. Springer International Publishing.
+DOI:https://doi.org/10.1007/978-3-030-39746-3_54
+[46] Yue Zhou, Yue Yu, and Bo Ding. 2020. Towards MLOps: A Case Study
+of ML Pipeline Platform. Proc. - 2020 Int. Conf. Artif. Intell. Comput. Eng.
+ICAICE 2020 (2020), 494–500.
+DOI:https://doi.org/10.1109/ICAICE51518.2020.00102
+
+Appendix
+Table 1. List of evaluated technologies
+Technology Description Sources
+Name
+Open-source TensorFlow TensorFlow Extended (TFX) is a configuration framework [7,10,26,46] [δ, θ]
+examples Extended providing libraries for each of the tasks of an end-to-end ML
+pipeline. Examples are data validation, data distribution
+checks, model training, and model serving.
+Airflow Airflow is a task and workflow orchestration tool, which can [26,40,41] [α, β, ζ, η]
+also be used for ML workflow orchestration. It is also used
+for orchestrating data engineering jobs. Tasks are executed
+according to directed acyclic graphs (DAGs).
+Kubeflow Kubeflow is a Kubernetes-based end-to-end ML platform. [26,35,40,41,46] [α, β, γ, δ, ζ, η, θ]
+Each Kubeflow component is wrapped into a container and
+orchestrated by Kubernetes. Also, each task of an ML
+workflow pipeline is handled with one container.
+MLflow MLflow is an ML platform that allows for the management [11,32,35] [α, γ, ε, ζ, η, θ]
+of the ML lifecycle end-to-end. It provides an advanced
+experiment tracking functionality, a model registry, and
+model serving component.
+Commercial Databricks The Databricks platform offers managed services based on [26,32,35,40] [α, ζ]
+examples managed other cloud providers’ infrastructure, e.g., managed
+MLflow MLflow.
+Amazon Amazon CodePipeline is a CI/CD automation tool to [18] [γ]
+CodePipeline facilitate the build, test, and delivery steps. It also allows one
+to schedule and manage the different stages of an ML
+pipeline.
+Amazon With SageMaker, Amazon AWS offers an end-to-end ML [ 7,11,18,24,35] [α, β, γ, ζ, θ]
+SageMaker platform. It provides, out-of-the-box, a feature store,
+orchestration with SageMaker Pipelines, and model serving
+with SageMaker endpoints.
+Azure DevOps Azure DevOps Pipelines is a CI/CD automation tool to [18,42] [γ, ε]
+Pipelines facilitate the build, test, and delivery steps. It also allows one
+to schedule and manage the different stages of an ML
+pipeline.
+Azure ML Microsoft Azure offers, in combination with Azure DevOps [6,24,25,35,42] [α, γ, ε, ζ, η, θ]
+Pipelines and Azure ML, an end-to-end ML platform.
+
+GCP - Vertex GCP offers, along with Vertex AI, a fully managed end-to- [25,35,40,41] [α, γ, δ, ζ, θ]
+AI end platform. In addition, they offer a managed Kubernetes
+cluster with Kubeflow as a service.
+IBM Cloud IBM Cloud Pak for Data combines a list of software in a [41] [γ]
+Pak for Data package that offers data and ML capabilities.
+(IBM Watson
+Studio)
+Table 2. List of interview partners
+Interviewee Job Title Years of Years of Industry Company Size
+pseudonym experience with experience with (number of
+DevOps ML employees)
+Alpha (α) Senior Data Platform 3 4 Sporting Goods / Retail 60,000
+Engineer
+Beta (β) Solution architect / 6 10 IT Services / Cloud 25,000
+Specialist for ML and AI Provider / Cloud
+Computing
+Gamma (γ) AI Architect / Consultant 5 7 Cloud Provider 350,000
+Delta (δ) Technical Marketing & 10 5 Cloud Provider 139,995
+Manager in ML / AI
+Epsilon (ε) Technical Architect - Data 1 2 Cloud Provider 160,000
+& AI
+Zeta (ζ) ML engineering 5 6 Consulting Company 569,000
+Consultant
+Eta (η) Engineering Manager in 10 10 Conglomerate (multi- 400,000
+AI / Senior Deep Learning industry)
+Engineer
+Theta (θ) ML Platform Product 8 10 Music / audio streaming 6,500
+Lead
+
+Software
+Engineering
+Machine
+Learning
+CD4ML
+CI/CD
+Pipeline
+DevOps
+ML Model MLOps Code
+Data Engineering
+Data
+Figure 5. Intersection of disciplines of the MLOps paradigm
+1 22/04/22

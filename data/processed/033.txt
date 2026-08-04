@@ -1,0 +1,198 @@
+Linear Regression Questions
+Data Mining, prof. Biljana Tojtovska Ribarski
+The following questions are based on the material discussed in the lecture slides on simple and
+multiple linear regression.
+Question 1. The three goals of regression
+A regression model may be built for prediction, explanation of association, or
+causal inference.
+(a) Explain the difference between these three goals.
+(b) Give one example where the main goal is prediction.
+(c) Give one example where the main goal is explanation of association.
+(d) Why should causal language be used carefully in observational data?
+Question 2. What does a linear regression model predict?
+Consider the simple linear regression model
+Y = β + β X + ε, E(ε | X) = 0.
+(a) What does the regression line represent?
+(b) What is meant by the conditional mean E(Y | X = x)?
+(c) Why do several observations with the same predictor value x not necessarily
+have the same response Y ?
+(d) Define the residual for the ith observation.
+Question 3. Simple linear regression output: apartment rent and apartment size
+A study examines whether monthly rent depends on apartment size. The response
+variable is monthly rent (in euros), and the predictor is apartment size (in square
+meters).
+A simple linear regression gives the following output:
+Intercept 220.5 38.4 5.74 < 0.001
+Size 9.8 1.1 8.91 < 0.001
+The 95% confidence interval for the slope is
+[7.6, 12.0].
+(a) Interpret the slope coefficient carefully, including units.
+(b) Interpret the intercept. Why may this interpretation be questionable?
+
+(c) State the null and alternative hypotheses for testing whether apartment size
+is associated with rent.
+(d) What conclusion would you make from the p-value?
+(e) What does the confidence interval tell us about the slope?
+Question 4. Residual sum of squares and least squares
+(a) What is the residual sum of squares (RSS) in simple linear regression?
+(b) Why does the least-squares method choose βˆ and βˆ by minimizing RSS?
+(c) Explain in words what it means for a fitted line to have a smaller RSS than
+another fitted line.
+Question 5. Confidence interval versus prediction interval
+A company fits a simple linear regression model to predict the daily number of
+customers from the amount spent on local advertising.
+For a certain advertising budget, the fitted model gives: yˆ = 84.
+A 95% confidence interval for the mean response is [79, 89], and a 95% prediction
+interval for one new day is [60, 108].
+(a) Explain the difference between the confidence interval and the prediction
+interval.
+(b) Which interval is wider, and why?
+(c) Which interval is relevant if we want to estimate the average number of
+customers for all days with this advertising budget?
+(d) Which interval is relevant if we want to predict the number of customers on
+one particular future day?
+(e) Why are predictions outside the observed range of advertising budgets less
+reliable?
+Question 6. Assessing the overall accuracy of a simple regression model
+For the same model relating apartment rent to apartment size, suppose we also
+have:
+Quantity Value
+Residual Standard Error 82.4
+R2 0.58
+F-statistic 79.4
+(a) Interpret the residual standard error in words.
+(b) Interpret R2 = 0.58.
+(c) Why should R2 not be used alone to judge the quality of the model?
+(d) What does a large F-statistic suggest in this setting?
+(e) Suppose the correlation between rent and size is r = 0.76. How is this related
+to R2 in simple linear regression?
+
+Question 7. Multiple linear regression and interpretation “holding others fixed”
+A model is fitted to predict the final course score of a student using: Homework
+points, Attendance percentage, Hours of independent study per week.
+The fitted model is:
+(cid:91)
+Score = 18.2 + 0.45(Homework) + 0.22(Attendance) + 1.6(StudyHours).
+(a) Interpret the coefficient of Homework points.
+(b) Interpret the coefficient of Attendance percentage.
+(c) Interpret the coefficient of StudyHours.
+(d) In each interpretation above, what does “holding the other predictors fixed”
+mean?
+(e) Why can interpretation become difficult when predictors are strongly corre-
+lated?
+Question 8. Multiple regression output: hospital recovery time
+A study models recovery time after a minor procedure (in days) using patient age,
+number of exercise sessions per week, and average hours of sleep per night.
+Intercept 12.4 1.8 6.89 < 0.001
+Age 0.09 0.02 4.50 < 0.001
+Exercise -0.70 0.21 -3.33 0.0014
+Sleep -0.15 0.24 -0.63 0.5310
+(a) Interpret the coefficient of Age.
+(b) Interpret the coefficient of Exercise.
+(c) What does the coefficient of Sleep suggest in this fitted model?
+(d) Does the large p-value for Sleep prove that sleep is completely unrelated to
+recovery? Explain carefully.
+(e) State the null and alternative hypotheses for testing whether the Exercise
+coefficient is zero.
+(f) Should we add additional predictors in models? How do we evaluate which
+model is better?
+Question 9. Qualitative predictors and dummy variables
+Suppose we model monthly phone bill Y using monthly data usage and subscrip-
+tion type. The qualitative predictor Premium is coded as
+(cid:40)
+0, if standard plan,
+Premium =
+1, if premium plan.
+The fitted model is:
+Y ≈ β + β Usage + β Premium .
+i 0 1 i 2 i
+(a) Write the fitted regression equation separately for standard-plan users and
+premium-plan users.
+
+(b) What does β represent in this model?
+(c) What does it mean that the two regression lines are parallel? How do we
+know this is a suitable model?
+(d) Which group is the baseline group?
+(e) If β > 0, how do you interpret that?
+(f) When is it suitable to use dummy variables for modeling?
+Question 10. Graphical interpretation and interaction
+Consider the following figure showing the relationship between weekly study hours
+and final exam score for two groups of students.
+Group B
+Group A
+0 1 2 3 4 5 6 7 8 9 10
+Weekly study hours
+erocs
+maxe
+laniF
+(a) Do the two groups appear to have the same slope?
+(b) Would a model with only a dummy variable for group? Explain.
+(c) What does this graph suggest about the need for an interaction term?
+(d) What would a positive interaction coefficient mean in this setting?
+Question 11. Residual plots: what do they show, and what should we do next?
+A data analyst fits three different linear regression models. For each model, a
+residual-versus-fitted plot is shown below.
+Plot A
+Plot B
+
+Plot C
+(a) For each plot, describe what you observe.
+(b) Which plot looks most consistent with a reasonable linear regression fit?
+(c) Which plot suggests that the relationship may not be adequately modeled
+by a straight line?
+(d) Which plot suggests non-constant variance of the errors?
+(e) For Plot B, what would be a sensible next step in the modeling?
+(f) For Plot C, what practical caution or next step would you suggest?
+Question 12. A significant coefficient, but a small R2
+A health researcher studies whether daily walking time (in minutes) is associated
+with systolic blood pressure. A simple linear regression model is fitted using data
+from 300 adults.
+Intercept 142.8 2.9 49.24 < 0.001
+Walking time -0.18 0.05 -3.60 < 0.001
+Additional information:
+R2 = 0.042.
+(a) Interpret the slope coefficient, including units.
+(b) State the null and alternative hypotheses for testing whether walking time
+is associated with systolic blood pressure.
+(c) What conclusion would you make from the reported p-value?
+(d) Interpret R2 = 0.042.
+(e) Explain how it is possible for the slope to be statistically significant even
+though R2 is small.
+(f) Does this result suggest a strong predictive relationship? Explain.
+Question 13. The overall F-test in multiple regression
+In multiple linear regression, we may first ask whether the regression as a whole
+explains anything at all.
+(a) State the null and alternative hypotheses for the overall F-test in a multiple
+regression model with predictors X ,...,X .
+1 p
+(b) What does it mean if the p-value of the F-test is very small?
+
+(c) If the overall F-test is significant, what can we conclude?
+(d) If the overall F-test is significant, what can we not conclude yet?
+(e) After finding that the overall F-test is significant, what is the next natural
+question in the analysis?
+Question 14. Why can the conclusion change from simple to multiple regression?
+Suppose that in a simple linear regression, predictor X has a significant positive
+coefficient. However, after fitting a multiple regression with predictors X ,X ,
+1 2
+and X , the coefficient of X is no longer significant.
+3 3
+(a) Give one possible explanation for why this can happen.
+(b) What does it mean to interpret the coefficient of X in the multiple regression
+holding the other predictors fixed?
+(c) How can correlation among predictors affect this interpretation?
+(d) Does the loss of significance in the multiple regression prove that X has no
+causal effect? Explain carefully.
+(e) Why is this kind of comparison between simple and multiple regression im-
+portant in practice?
+Question 15. Simpson’s paradox and subgroup structure
+A trend in aggregated data may change or even reverse after the data are split
+into meaningful groups.
+(a) What is Simpson’s paradox?
+(b) Why can an aggregate trend be misleading?
+(c) What role does a third variable play in Simpson’s paradox?
+(d) Why is Simpson’s paradox important in regression analysis?
+(e) What should an analyst do if they suspect that the overall association may
+be hiding different subgroup patterns?
+(f) Why is it dangerous to interpret only the aggregate regression line without
+checking subgroup structure?
