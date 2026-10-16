@@ -1,0 +1,1381 @@
+====== страница 1 ======
+Imbalanced Class Problem
+Introduction to Data Mining, 2nd Edition
+by
+Tan, Steinbach, Karpatne, Kumar
+Data Mining 
+Classification: Alternative Techniques
+
+
+====== страница 2 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+2
+Class Imbalance Problem
+●Lots of classification problems where the classes 
+are skewed (more records from one class than 
+another)
+– Credit card fraud
+– Intrusion detection
+– Defective products in manufacturing assembly 
+line
+
+
+====== страница 3 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+3
+Challenges
+●Evaluation measures such as accuracy is not 
+well-suited for imbalanced class
+●Detecting the rare class is like finding needle in a 
+haystack
+
+
+====== страница 4 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+4
+Confusion Matrix
+●Confusion Matrix:
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+a
+b
+Class=No
+c
+d
+a: TP (true positive)
+b: FN (false negative)
+c: FP (false positive)
+d: TN (true negative)
+
+
+====== страница 5 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+5
+Accuracy
+●Most widely-used metric:
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+a
+(TP)
+b
+(FN)
+Class=No
+c
+(FP)
+d
+(TN)
+FN
+FP
+TN
+TP
+TN
+TP
+d
+c
+b
+a
+d
+a
++
++
++
++
+=
++
++
++
++
+=
+Accuracy 
+
+
+====== страница 6 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+6
+Problem with Accuracy
+●Consider a 2-class problem
+– Number of Class 0 examples = 9990
+– Number of Class 1 examples = 10
+
+
+====== страница 7 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+7
+Problem with Accuracy
+●Consider a 2-class problem
+– Number of Class NO examples = 990
+– Number of Class YES examples = 10
+●If a model predicts everything to be class NO, 
+accuracy is 990/1000 = 99 %
+– This is misleading because the model does 
+not detect any class YES example
+– Detecting the rare class is usually more 
+interesting (e.g., frauds, intrusions, defects, 
+etc)
+
+
+====== страница 8 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+8
+Alternative Measures
+c
+b
+a
+a
+p
+r
+rp
+b
+a
+a
+c
+a
+a
++
++
+=
++
+=
++
+=
++
+=
+2
+2
+2
+(F)
+ 
+measure
+-
+F
+(r)
+ 
+Recall
+ 
+(p)
+Precision 
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+a
+b
+Class=No
+c
+d
+
+
+====== страница 9 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+9
+Alternative Measures
+99
+.0
+1000
+990
+Accuracy 
+62
+.0
+5.0
+1
+5.0
+*
+1
+*
+2
+(F)
+ 
+measure
+-
+F
+1
+0
+10
+10
+(r)
+ 
+Recall
+5.0
+10
+10
+10
+ 
+(p)
+Precision 
+=
+=
+=
++
+=
+=
++
+=
+=
++
+=
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+10
+0
+Class=No
+10
+980
+
+
+====== страница 10 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+10
+Alternative Measures
+99
+.0
+1000
+990
+Accuracy 
+62
+.0
+5.0
+1
+5.0
+*
+1
+*
+2
+(F)
+ 
+measure
+-
+F
+1
+0
+10
+10
+(r)
+ 
+Recall
+5.0
+10
+10
+10
+ 
+(p)
+Precision 
+=
+=
+=
++
+=
+=
++
+=
+=
++
+=
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+10
+0
+Class=No
+10
+980
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+1
+9
+Class=No
+0
+990
+991
+.0
+1000
+991
+Accuracy 
+18
+.0
+1.0
+1
+1
+*
+1.0
+*
+2
+(F)
+ 
+measure
+-
+F
+1.0
+9
+1
+1
+(r)
+ 
+Recall
+1
+0
+1
+1
+ 
+(p)
+Precision 
+=
+=
+=
++
+=
+=
++
+=
+=
++
+=
+
+
+====== страница 11 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+11
+Alternative Measures
+8.0
+Accuracy 
+8.0
+(F)
+ 
+measure
+-
+F
+8.0
+(r)
+ 
+Recall
+8.0
+ 
+(p)
+Precision 
+=
+=
+=
+=
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+40
+10
+Class=No
+10
+40
+
+
+====== страница 12 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+12
+Alternative Measures
+8.0
+Accuracy 
+8.0
+(F)
+ 
+measure
+-
+F
+8.0
+(r)
+ 
+Recall
+8.0
+ 
+(p)
+Precision 
+=
+=
+=
+=
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+40
+10
+Class=No
+10
+40
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+40
+10
+Class=No
+1000
+4000
+8.0
+~
+Accuracy 
+08
+.0
+~
+(F)
+ 
+measure
+-
+F
+8.0
+(r)
+ 
+Recall
+04
+.0
+~
+ 
+(p)
+Precision 
+=
+=
+=
+=
+
+
+====== страница 13 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+13
+Measures of Classification Performance
+PREDICTED CLASS
+ACTUAL
+CLASS
+Yes
+No
+Yes
+TP
+FN
+No
+FP
+TN
+a is the probability that we reject 
+the null hypothesis when it is 
+true. This is a Type I error or a 
+false positive (FP).
+b is the probability that we 
+accept the null hypothesis when 
+it is false. This is a Type II error 
+or a false negative (FN). 
+
+
+====== страница 14 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+14
+Alternative Measures
+8.0
+Accuracy 
+8.0
+(F)
+ 
+measure
+-
+F
+2.0
+ 
+FPR
+8.0
+(r)
+ 
+Recall
+ 
+ 
+TPR
+8.0
+ 
+(p)
+Precision 
+=
+=
+=
+=
+=
+=
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+40
+10
+Class=No
+10
+40
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+40
+10
+Class=No
+1000
+4000
+8.0
+~
+Accuracy 
+08
+.0
+~
+(F)
+ 
+measure
+-
+F
+0.2
+ 
+ 
+FPR
+8.0
+(r)
+ 
+Recall
+ 
+ 
+TPR
+04
+.0
+~
+ 
+(p)
+Precision 
+=
+=
+=
+=
+=
+=
+
+
+====== страница 15 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+15
+Alternative Measures
+2
+.
+0 
+ 
+FPR
+2
+.
+0
+(r)
+ 
+Recall
+ 
+ 
+TPR
+5
+.
+0
+ 
+(p)
+Precision 
+=
+=
+=
+=
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+10
+40
+Class=No
+10
+40
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+25
+25
+Class=No
+25
+25
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+40
+10
+Class=No
+40
+10
+5
+.
+0 
+ 
+FPR
+5
+.
+0
+(r)
+ 
+Recall
+ 
+ 
+TPR
+5
+.
+0
+ 
+(p)
+Precision 
+=
+=
+=
+=
+8
+.
+0 
+ 
+FPR
+8
+.
+0
+(r)
+ 
+Recall
+ 
+ 
+TPR
+5
+.
+0
+ 
+(p)
+Precision 
+=
+=
+=
+=
+
+
+====== страница 16 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+16
+Precision-Recall
+FN
+FP
+TP
+TP
+c
+b
+a
+a
+p
+r
+rp
+p
+r
+FN
+TP
+TP
+b
+a
+a
+FP
+TP
+TP
+c
+a
+a
++
++
+=
++
++
+=
++
+=
+÷ø
+ö
+çè
+æ
++
+=
++
+=
++
+=
++
+=
++
+=
+2
+2
+2
+2
+2
+2
+/
+1
+/
+1
+1
+(F)
+ 
+measure
+-
+F
+(r)
+ 
+Recall
+ 
+(p)
+ 
+Precision
+●Precision is biased towards C(Yes|Yes) & C(Yes|No)
+●Recall is biased towards C(Yes|Yes) & C(No|Yes)
+●F-measure is biased towards all except C(No|No)
+Count
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+a
+b
+Class=No
+c
+d
+
+
+====== страница 17 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+17
+Precision-Recall plot
+●Usually for parameterized models, it controls the 
+precision/recall tradeoff
+
+
+====== страница 18 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+18
+ROC (Receiver Operating Characteristic)
+●A graphical approach for displaying trade-off 
+between detection rate and false alarm rate
+●Developed in 1950s for signal detection theory to 
+analyze noisy signals 
+●ROC curve plots TPR against FPR
+– Performance of a model represented as a 
+point in a ROC curve
+– Changing the threshold parameter of classifier 
+changes the location of the point
+
+
+====== страница 19 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+19
+ROC Curve
+(TPR,FPR):
+●(0,0): declare everything
+to be negative class
+●(1,1): declare everything
+to be positive class
+●(1,0): ideal
+●Diagonal line:
+– Random guessing
+– Below diagonal line:
+u prediction is opposite 
+of the true class
+
+
+====== страница 20 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+20
+ROC (Receiver Operating Characteristic)
+●To draw ROC curve, classifier must produce 
+continuous-valued output 
+– Outputs are used to rank test records, from the most 
+likely positive class record to the least likely positive 
+class record
+●Many classifiers produce only discrete outputs (i.e., 
+predicted class)
+– How to get continuous-valued outputs?
+u Decision trees, rule-based classifiers, neural networks, 
+Bayesian classifiers, k-nearest neighbors, SVM
+
+
+====== страница 21 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+21
+Example: Decision Trees
+x1 < 13.29
+x2 < 17.35
+x2 < 12.63
+x1 < 6.56
+x2 < 8.64
+x2 < 1.38
+x1 < 2.15
+x1 < 7.24
+x1 < 12.11
+x1 < 18.88
+0.107
+0.143
+0.669
+0.164
+0.059
+0.071
+0.727
+0.271
+0.654
+0
+0.220
+x1 < 13.29
+x2 < 17.35
+x2 < 12.63
+x1 < 6.56
+x2 < 8.64
+x2 < 1.38
+x1 < 2.15
+x1 < 7.24
+x1 < 12.11
+x1 < 18.88
+Decision Tree
+Continuous-valued outputs
+
+
+====== страница 22 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+22
+ROC Curve Example
+x1 < 13.29
+x2 < 17.35
+x2 < 12.63
+x1 < 6.56
+x2 < 8.64
+x2 < 1.38
+x1 < 2.15
+x1 < 7.24
+x1 < 12.11
+x1 < 18.88
+0.107
+0.143
+0.669
+0.164
+0.059
+0.071
+0.727
+0.271
+0.654
+0
+0.220
+
+
+====== страница 23 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+23
+ROC Curve Example
+At threshold t:
+TPR=0.5, FNR=0.5, FPR=0.12, TNR=0.88
+- 1-dimensional data set containing 2 classes (positive and negative)
+- Any points located at x > t is classified as positive
+
+
+====== страница 24 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+24
+Using ROC for Model Comparison
+●No model consistently 
+outperform the other
+●M1 is better for 
+small FPR
+●M2 is better for 
+large FPR
+●Area Under the ROC 
+curve
+●
+Ideal: 
+§ Area = 1
+●
+Random guess:
+§ Area = 0.5
+
+
+====== страница 25 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+25
+ROC curve vs Precision-Recall curve
+Area Under the Curve (AUC) as a single number for evaluation
+
+
+====== страница 26 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+26
+How to Construct an ROC curve
+Instance
+Score
+True Class
+1
+0.95
++
+2
+0.93
++
+3
+0.87
+-
+4
+0.85
+-
+5
+0.85
+-
+6
+0.85
++
+7
+0.76
+-
+8
+0.53
++
+9
+0.43
+-
+10
+0.25
++
+•
+Use a classifier that produces a 
+continuous-valued score for 
+each instance
+•
+The more likely it is for the 
+instance to be in the + class, the 
+higher the score
+•
+Sort the instances in decreasing 
+order according to the score 
+•
+Apply a threshold at each unique 
+value of the score
+•
+Count the number of TP, FP, 
+TN, FN at each threshold
+• TPR = TP/(TP+FN)
+• FPR = FP/(FP + TN)
+
+
+====== страница 27 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+27
+How to construct an ROC curve
+Class 
++ 
+- 
++ 
+- 
+- 
+- 
++ 
+- 
++ 
++ 
+ 
+0.25 
+0.43 
+0.53 
+0.76 
+0.85 
+0.85 
+0.85 
+0.87 
+0.93 
+0.95 
+1.00 
+TP 
+5 
+4 
+4 
+3 
+3 
+3 
+3 
+2 
+2 
+1 
+0 
+FP 
+5 
+5 
+4 
+4 
+3 
+2 
+1 
+1 
+0 
+0 
+0 
+TN 
+0 
+0 
+1 
+1 
+2 
+3 
+4 
+4 
+5 
+5 
+5 
+FN 
+0 
+1 
+1 
+2 
+2 
+2 
+2 
+3 
+3 
+4 
+5 
+TPR 
+1 
+0.8 
+0.8 
+0.6 
+0.6 
+0.6 
+0.6 
+0.4 
+0.4 
+0.2 
+0 
+FPR 
+1 
+1 
+0.8 
+0.8 
+0.6 
+0.4 
+0.2 
+0.2 
+0 
+0 
+0 
+ 
+Threshold >= 
+ROC Curve:
+
+
+====== страница 28 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+28
+Handling Class Imbalanced Problem
+●Class-based ordering (e.g. RIPPER)
+– Rules for rare class have higher priority 
+●Cost-sensitive classification
+– Misclassifying rare class as majority class is 
+more expensive than misclassifying majority 
+as rare class
+●Sampling-based approaches
+
+
+====== страница 29 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+29
+Cost Matrix
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+f(Yes, Yes)
+f(Yes,No)
+Class=No
+f(No, Yes)
+f(No, No)
+Cost 
+Matrix
+PREDICTED CLASS
+ACTUAL
+CLASS
+C(i, j)
+Class=Yes
+Class=No
+Class=Yes
+C(Yes, Yes)
+C(Yes, No)
+Class=No
+C(No, Yes)
+C(No, No)
+C(i,j): Cost of 
+misclassifying class i 
+example as class j
+å
+´
+=
+)
+,
+(
+)
+,
+(
+Cost
+j
+i
+f
+j
+i
+C
+
+
+====== страница 30 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+30
+Computing Cost of Classification
+Cost 
+Matrix
+PREDICTED CLASS
+ACTUAL
+CLASS
+C(i,j)
++
+-
++
+-1
+100
+-
+1
+0
+Model 
+M1
+PREDICTED CLASS
+ACTUAL
+CLASS
++
+-
++
+150
+40
+-
+60
+250
+Model 
+M2
+PREDICTED CLASS
+ACTUAL
+CLASS
++
+-
++
+250
+45
+-
+5
+200
+Accuracy = 80%
+Cost = 3910
+Accuracy = 90%
+Cost = 4255
+
+
+====== страница 31 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+31
+Cost vs Accuracy
+Count
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+a
+b
+Class=No
+c
+d
+Cost
+PREDICTED CLASS
+ACTUAL
+CLASS
+Class=Yes
+Class=No
+Class=Yes
+p
+q
+Class=No
+q
+p
+N = a + b + c + d
+Accuracy = (a + d)/N
+Cost = p (a + d) + q (b + c)
+= p (a + d) + q (N – a – d)
+= q N – (q – p)(a + d)
+= N [q – (q-p) ´ Accuracy] 
+Accuracy is proportional to cost if
+1. C(Yes|No)=C(No|Yes) = q 
+2. C(Yes|Yes)=C(No|No) = p
+
+
+====== страница 32 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+32
+Cost Sensitive Classification
+●Example: Bayesian classifer
+– Given a test record x:
+u Compute p(i|x) for each class i
+u Decision rule: classify node as class k if 
+– For 2-class, classify x as + if p(+|x) > p(-|x)
+u This decision rule implicitly assumes that 
+C(+|+) = C(-|-) = 0 and C(+|-) = C(-|+)
+)
+|
+(
+max
+arg
+x
+i
+p
+k
+i
+=
+
+
+====== страница 33 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+33
+Cost Sensitive Classification
+●General decision rule: 
+– Classify test record x as class k if
+●2-class:
+– Cost(+) = p(+|x) C(+,+) + p(-|x) C(-,+)
+– Cost(-) = p(+|x) C(+,-) + p(-|x) C(-,-)
+– Decision rule: classify x as + if Cost(+) < Cost(-)
+u if C(+,+) = C(-,-) = 0:           
+å
+´
+=
+i
+j
+j
+i
+C
+x
+i
+p
+k
+)
+,
+(
+)
+|
+(
+min
+arg
+)
+,
+(
+)
+,
+(
+)
+,
+(
+)
+|
+(
+-
++
++
++
+-
++
+-
+>
++
+C
+C
+C
+x
+p
+
+
+====== страница 34 ======
+02/03/2018
+Introduction to Data Mining, 2nd Edition 
+34
+Sampling-based Approaches
+●Modify the distribution of training data so that rare 
+class is well-represented in training set
+– Undersample the majority class
+– Oversample the rare class
+●Advantages and disadvantages
+
+

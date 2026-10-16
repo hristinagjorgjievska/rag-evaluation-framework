@@ -1,0 +1,2827 @@
+====== страница 1 ======
+Data Mining 
+Classification: Basic Concepts and 
+Techniques
+Lecture Notes for Chapter 3
+Introduction to Data Mining, 2nd Edition
+by
+Tan, Steinbach, Karpatne, Kumar
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+1
+
+
+====== страница 2 ======
+Classification: Definition
+l Given a collection of records (training set )
+– Each record is by characterized by a tuple 
+(x,y), where x is the attribute set and y is the 
+class label
+x: attribute, predictor, independent variable, input
+y: class, response, dependent variable, output
+l Task:
+– Learn a model that maps each attribute set x 
+into one of the predefined class labels y
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+2
+
+
+====== страница 3 ======
+Examples of Classification Task
+Task
+Attribute set, x
+Class label, y
+Categorizing 
+email 
+messages
+Features extracted from 
+email message header 
+and content
+spam or non-spam
+Identifying 
+tumor cells
+Features extracted from 
+x-rays or MRI scans
+malignant or benign 
+cells
+Cataloging 
+galaxies
+Features extracted from 
+telescope images
+Elliptical, spiral, or 
+irregular-shaped 
+galaxies
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+3
+
+
+====== страница 4 ======
+General Approach for Building 
+Classification Model
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+4
+
+
+====== страница 5 ======
+Classification Techniques
+
+Base Classifiers
+– Decision Tree based Methods
+– Rule-based Methods
+– Nearest-neighbor
+– Naïve Bayes and Bayesian Belief Networks
+– Support Vector Machines
+– Neural Networks, Deep Neural Nets
+
+Ensemble Classifiers
+– Boosting, Bagging, Random Forests
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+5
+
+
+====== страница 6 ======
+Example of a Decision Tree
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+1 
+Yes 
+Single 
+125K 
+No 
+2 
+No 
+Married 
+100K 
+No 
+3 
+No 
+Single 
+70K 
+No 
+4 
+Yes 
+Married 
+120K 
+No 
+5 
+No 
+Divorced 95K 
+Yes 
+6 
+No 
+Married 
+60K 
+No 
+7 
+Yes 
+Divorced 220K 
+No 
+8 
+No 
+Single 
+85K 
+Yes 
+9 
+No 
+Married 
+75K 
+No 
+10 
+No 
+Single 
+90K 
+Yes 
+10 
+ 
+Home 
+Owner
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, Divorced
+< 80K
+> 80K
+Splitting Attributes
+Training Data
+Model:  Decision Tree
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+6
+
+
+====== страница 7 ======
+Apply Model to Test Data
+Home 
+Owner
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+No 
+Married 
+80K 
+? 
+10 
+ 
+Test Data
+Start from the root of tree.
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+7
+
+
+====== страница 8 ======
+Apply Model to Test Data
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+No 
+Married 
+80K 
+? 
+10 
+ 
+Test Data
+Home 
+Owner
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+8
+
+
+====== страница 9 ======
+Apply Model to Test Data
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+ No 
+Married 
+80K 
+? 
+10 
+ 
+Test Data
+Home 
+Owner
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+9
+
+
+====== страница 10 ======
+Apply Model to Test Data
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+No 
+Married 
+80K 
+? 
+10 
+ 
+Test Data
+Home 
+Owner
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+10
+
+
+====== страница 11 ======
+Apply Model to Test Data
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married 
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+No 
+Married 
+80K 
+? 
+10 
+ 
+Test Data
+Home 
+Owner
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+11
+
+
+====== страница 12 ======
+Apply Model to Test Data
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married 
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+No 
+Married 
+80K 
+? 
+10 
+ 
+Test Data
+Assign Defaulted to 
+“No”
+Home 
+Owner
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+12
+
+
+====== страница 13 ======
+Another Example of Decision Tree
+MarSt
+Home 
+Owner
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, 
+Divorced
+< 80K
+> 80K
+There could be more than one tree that 
+fits the same data!
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+1 
+Yes 
+Single 
+125K 
+No 
+2 
+No 
+Married 
+100K 
+No 
+3 
+No 
+Single 
+70K 
+No 
+4 
+Yes 
+Married 
+120K 
+No 
+5 
+No 
+Divorced 95K 
+Yes 
+6 
+No 
+Married 
+60K 
+No 
+7 
+Yes 
+Divorced 220K 
+No 
+8 
+No 
+Single 
+85K 
+Yes 
+9 
+No 
+Married 
+75K 
+No 
+10 
+No 
+Single 
+90K 
+Yes 
+10 
+ 
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+13
+
+
+====== страница 14 ======
+Decision Tree Classification Task
+Apply 
+Model
+Induction
+Deduction
+Learn 
+Model
+Model
+Tid 
+Attrib1 
+Attrib2 
+Attrib3 
+Class 
+1 
+Yes 
+Large 
+125K 
+No 
+2 
+No 
+Medium 
+100K 
+No 
+3 
+No 
+Small 
+70K 
+No 
+4 
+Yes 
+Medium 
+120K 
+No 
+5 
+No 
+Large 
+95K 
+Yes 
+6 
+No 
+Medium 
+60K 
+No 
+7 
+Yes 
+Large 
+220K 
+No 
+8 
+No 
+Small 
+85K 
+Yes 
+9 
+No 
+Medium 
+75K 
+No 
+10 
+No 
+Small 
+90K 
+Yes 
+10 
+ 
+Tid 
+Attrib1 
+Attrib2 
+Attrib3 
+Class 
+11 
+No 
+Small 
+55K 
+? 
+12 
+Yes 
+Medium 
+80K 
+? 
+13 
+Yes 
+Large 
+110K 
+? 
+14 
+No 
+Small 
+95K 
+? 
+15 
+No 
+Large 
+67K 
+? 
+10 
+ 
+Test Set
+Tree
+Induction
+algorithm
+Training Set
+Decision 
+Tree
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+14
+
+
+====== страница 15 ======
+Decision Tree Induction
+
+Many Algorithms:
+– Hunt’s Algorithm (one of the earliest)
+– CART
+– ID3, C4.5
+– SLIQ,SPRINT
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+15
+
+
+====== страница 16 ======
+General Structure of Hunt’s Algorithm
+l
+Let Dt be the set of training 
+records that reach a node t
+l
+General Procedure:
+– If Dt contains records that 
+belong the same class yt, 
+then t is a leaf node 
+labeled as yt
+– If Dt contains records that 
+belong to more than one 
+class, use an attribute test 
+to split the data into smaller 
+subsets. Recursively apply 
+the procedure to each 
+subset.
+Dt
+?
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+1 
+Yes 
+Single 
+125K 
+No 
+2 
+No 
+Married 
+100K 
+No 
+3 
+No 
+Single 
+70K 
+No 
+4 
+Yes 
+Married 
+120K 
+No 
+5 
+No 
+Divorced 95K 
+Yes 
+6 
+No 
+Married 
+60K 
+No 
+7 
+Yes 
+Divorced 220K 
+No 
+8 
+No 
+Single 
+85K 
+Yes 
+9 
+No 
+Married 
+75K 
+No 
+10 
+No 
+Single 
+90K 
+Yes 
+10 
+ 
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+16
+
+
+====== страница 17 ======
+Hunt’s Algorithm
+(a)
+(b)
+(c)
+Defaulted = No
+Home
+Owner
+Yes
+No
+Defaulted = No
+Defaulted = No
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+(d)
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+Annual
+Income
+< 80K
+>= 80K
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+(3,0)
+(4,3)
+(3,0)
+(1,3)
+(3,0)
+(3,0)
+(1,0)
+(0,3)
+(3,0)
+(7,3)
+ 
+ 
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+1 
+Yes 
+Single 
+125K 
+No 
+2 
+No 
+Married 
+100K 
+No 
+3 
+No 
+Single 
+70K 
+No 
+4 
+Yes 
+Married 
+120K 
+No 
+5 
+No 
+Divorced 95K 
+Yes 
+6 
+No 
+Married 
+60K 
+No 
+7 
+Yes 
+Divorced 220K 
+No 
+8 
+No 
+Single 
+85K 
+Yes 
+9 
+No 
+Married 
+75K 
+No 
+10 
+No 
+Single 
+90K 
+Yes 
+10 
+ 
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+17
+
+
+====== страница 18 ======
+Hunt’s Algorithm
+(a)
+(b)
+(c)
+Defaulted = No
+Home
+Owner
+Yes
+No
+Defaulted = No
+Defaulted = No
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+(d)
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+Annual
+Income
+< 80K
+>= 80K
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+(3,0)
+(4,3)
+(3,0)
+(1,3)
+(3,0)
+(3,0)
+(1,0)
+(0,3)
+(3,0)
+(7,3)
+ 
+ 
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+1 
+Yes 
+Single 
+125K 
+No 
+2 
+No 
+Married 
+100K 
+No 
+3 
+No 
+Single 
+70K 
+No 
+4 
+Yes 
+Married 
+120K 
+No 
+5 
+No 
+Divorced 95K 
+Yes 
+6 
+No 
+Married 
+60K 
+No 
+7 
+Yes 
+Divorced 220K 
+No 
+8 
+No 
+Single 
+85K 
+Yes 
+9 
+No 
+Married 
+75K 
+No 
+10 
+No 
+Single 
+90K 
+Yes 
+10 
+ 
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+18
+
+
+====== страница 19 ======
+Hunt’s Algorithm
+(a)
+(b)
+(c)
+Defaulted = No
+Home
+Owner
+Yes
+No
+Defaulted = No
+Defaulted = No
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+(d)
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+Annual
+Income
+< 80K
+>= 80K
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+(3,0)
+(4,3)
+(3,0)
+(1,3)
+(3,0)
+(3,0)
+(1,0)
+(0,3)
+(3,0)
+(7,3)
+ 
+ 
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+1 
+Yes 
+Single 
+125K 
+No 
+2 
+No 
+Married 
+100K 
+No 
+3 
+No 
+Single 
+70K 
+No 
+4 
+Yes 
+Married 
+120K 
+No 
+5 
+No 
+Divorced 95K 
+Yes 
+6 
+No 
+Married 
+60K 
+No 
+7 
+Yes 
+Divorced 220K 
+No 
+8 
+No 
+Single 
+85K 
+Yes 
+9 
+No 
+Married 
+75K 
+No 
+10 
+No 
+Single 
+90K 
+Yes 
+10 
+ 
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+19
+
+
+====== страница 20 ======
+Hunt’s Algorithm
+(a)
+(b)
+(c)
+Defaulted = No
+Home
+Owner
+Yes
+No
+Defaulted = No
+Defaulted = No
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+(d)
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+Annual
+Income
+< 80K
+>= 80K
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+(3,0)
+(4,3)
+(3,0)
+(1,3)
+(3,0)
+(3,0)
+(1,0)
+(0,3)
+(3,0)
+(7,3)
+ 
+ 
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+1 
+Yes 
+Single 
+125K 
+No 
+2 
+No 
+Married 
+100K 
+No 
+3 
+No 
+Single 
+70K 
+No 
+4 
+Yes 
+Married 
+120K 
+No 
+5 
+No 
+Divorced 95K 
+Yes 
+6 
+No 
+Married 
+60K 
+No 
+7 
+Yes 
+Divorced 220K 
+No 
+8 
+No 
+Single 
+85K 
+Yes 
+9 
+No 
+Married 
+75K 
+No 
+10 
+No 
+Single 
+90K 
+Yes 
+10 
+ 
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+20
+
+
+====== страница 21 ======
+Design Issues of Decision Tree Induction
+l How should training records be split?
+– Method for expressing test condition 
+depending on attribute types
+– Measure for evaluating the goodness of a test 
+condition
+l How should the splitting procedure stop?
+– Stop splitting if all the records belong to the 
+same class or have identical attribute values
+– Early termination 
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+21
+
+
+====== страница 22 ======
+Methods for Expressing Test Conditions
+l Depends on attribute types
+– Binary
+– Nominal
+– Ordinal
+– Continuous
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+22
+
+
+====== страница 23 ======
+Test Condition for Nominal Attributes
+
+Multi-way split:
+– Use as many partitions as 
+distinct values. 
+
+Binary split:
+– Divides values into two subsets
+Marital
+Status
+Single
+Divorced
+Married
+{Single}
+{Married,
+Divorced}
+Marital
+Status
+{Married}
+{Single,
+Divorced}
+Marital
+Status
+OR
+OR
+{Single,
+Married}
+Marital
+Status
+{Divorced}
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+23
+
+
+====== страница 24 ======
+Test Condition for Ordinal Attributes
+l
+Multi-way split:
+– Use as many partitions 
+as distinct values
+l
+Binary split:
+– Divides values into two 
+subsets
+– Preserve order 
+property among 
+attribute values
+Large
+Shirt
+Size
+Medium
+Extra Large
+Small
+{Medium, Large,
+Extra Large}
+Shirt
+Size
+{Small}
+{Large,
+Extra Large}
+Shirt
+Size
+{Small,
+Medium}
+{Medium,
+Extra Large}
+Shirt
+Size
+{Small,
+Large}
+This grouping 
+violates order 
+property
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+24
+
+
+====== страница 25 ======
+Test Condition for Continuous Attributes
+Annual
+Income
+> 80K?
+Yes
+No
+Annual
+Income?
+(i) Binary split
+(ii) Multi-way split
+< 10K
+[10K,25K)
+[25K,50K)
+[50K,80K)
+> 80K
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+25
+
+
+====== страница 26 ======
+Splitting Based on Continuous Attributes
+
+Different ways of handling
+– Discretization to form an ordinal categorical 
+attribute
+Ranges can be found by equal interval bucketing, 
+equal frequency bucketing (percentiles), or 
+clustering.
+Static – discretize once at the beginning
+Dynamic – repeat at each node
+– Binary Decision: (A < v) or (A v)
+consider all possible splits and finds the best cut
+can be more compute intensive
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+26
+
+
+====== страница 27 ======
+How to determine the Best Split
+Gender
+C0: 6
+C1: 4
+C0: 4
+C1: 6
+C0: 1
+C1: 3
+C0: 8
+C1: 0
+C0: 1
+C1: 7
+Car
+Type
+C0: 1
+C1: 0
+C0: 1
+C1: 0
+C0: 0
+C1: 1
+Customer
+ID
+...
+Yes
+No
+Family
+Sports
+Luxury
+c1
+c10
+c20
+C0: 0
+C1: 1
+...
+c11
+Before Splitting: 10 records of class 0,
+10 records of class 1
+Which test condition is the best?
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+27
+
+
+====== страница 28 ======
+How to determine the Best Split
+l Greedy approach: 
+– Nodes with purer class distribution are 
+preferred
+l Need a measure of node impurity:
+C0: 5
+C1: 5
+C0: 9
+C1: 1
+High degree of impurity
+Low degree of impurity
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+28
+
+
+====== страница 29 ======
+Measures of Node Impurity
+l Gini Index
+l Entropy
+l Misclassification error
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+29
+𝐺𝑖𝑛𝑖𝐼𝑛𝑑𝑒𝑥= 1 −෍
+𝑖=0
+𝑐−1
+𝑝𝑖𝑡2
+𝐸𝑛𝑡𝑟𝑜𝑝𝑦= −෍
+𝑖=0
+𝑐−1
+𝑝𝑖𝑡𝑙𝑜𝑔2𝑝𝑖(𝑡)
+𝐶𝑙𝑎𝑠𝑠𝑖𝑓𝑖𝑐𝑎𝑡𝑖𝑜𝑛𝑒𝑟𝑟𝑜𝑟= 1 −max[𝑝𝑖(𝑡)]
+Where 𝒑𝒊𝒕is the frequency 
+of class 𝒊at node t, and 𝒄is 
+the total number of classes  
+
+
+====== страница 30 ======
+Finding the Best Split
+1. Compute impurity measure of the parent node I(P) before splitting
+2. Compute weighted impurity measure of the child nodes (M) after 
+splitting
+𝑀= σ𝑗=1
+𝑘
+𝑁𝑣𝑗
+𝑁
+𝐼(𝑣𝑗)
+Where k is the number of values of the splitting attribute, N is the 
+total number of records at the parent node, 𝑁𝑣𝑗is the number of 
+records associated with the child node 𝑣𝑗, and I(𝑣𝑗) is the impurity of 
+the child node. Choose the attribute test condition that produces the 
+highest gain
+Gain = I(P) – M   (often denoted with ∆)
+or equivalently, lowest impurity measure after splitting (M).
+When entropy is used for impurity measure, the previous difference 
+is called information gain. 
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+30
+
+
+====== страница 31 ======
+Finding the Best Split
+B?
+Yes
+No
+Node N3
+Node N4
+A?
+Yes
+No
+Node N1
+Node N2
+Before Splitting:
+C0 
+N10 
+C1 
+N11 
+ 
+ 
+C0 
+N20 
+C1 
+N21 
+ 
+ 
+C0 
+N30 
+C1 
+N31 
+ 
+ 
+C0 
+N40 
+C1 
+N41 
+ 
+ 
+C0 
+N00 
+C1 
+N01 
+ 
+ 
+P
+M11
+M12
+M21
+M22
+M1
+M2
+Gain = P – M1    vs      P – M2
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+31
+
+
+====== страница 32 ======
+Measure of Impurity: GINI
+
+Gini Index for a given node 𝒕
+Where 𝒑𝒊𝒕is the frequency of class 𝒊at node 𝒕, and 𝒄is the total 
+number of classes  
+– Maximum  of 1 −1/𝑐when records are equally 
+distributed among all classes, implying the least 
+beneficial situation for classification
+– Minimum  of 0 when all records belong to one class, 
+implying the most beneficial situation for classification
+– Gini index is used in decision tree algorithms such as 
+CART, SLIQ, SPRINT
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+32
+𝐺𝑖𝑛𝑖𝐼𝑛𝑑𝑒𝑥= 1 −෍
+𝑖=0
+𝑐−1
+𝑝𝑖𝑡2
+
+
+====== страница 33 ======
+Measure of Impurity: GINI
+
+Gini Index for a given node t :
+– For 2-class problem (p, 1 – p):
+GINI = 1 – p2 – (1 – p)2 = 2p (1-p)
+C1
+0
+C2
+6
+Gini=0.000
+C1
+2
+C2
+4
+Gini=0.444
+C1
+3
+C2
+3
+Gini=0.500
+C1
+1
+C2
+5
+Gini=0.278
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+33
+𝐺𝑖𝑛𝑖𝐼𝑛𝑑𝑒𝑥= 1 −෍
+𝑖=0
+𝑐−1
+𝑝𝑖𝑡2
+
+
+====== страница 34 ======
+Computing Gini Index of a Single Node
+C1 
+0 
+C2 
+6 
+ 
+ 
+C1 
+2 
+C2 
+4 
+ 
+ 
+C1 
+1 
+C2 
+5 
+ 
+ 
+P(C1) = 0/6 = 0     P(C2) = 6/6 = 1
+Gini = 1 – P(C1)2 – P(C2)2 = 1 – 0 – 1 = 0 
+P(C1) = 1/6          P(C2) = 5/6
+Gini = 1 – (1/6)2 – (5/6)2 = 0.278
+P(C1) = 2/6          P(C2) = 4/6
+Gini = 1 – (2/6)2 – (4/6)2 = 0.444
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+34
+𝐺𝑖𝑛𝑖𝐼𝑛𝑑𝑒𝑥= 1 −෍
+𝑖=0
+𝑐−1
+𝑝𝑖𝑡2
+
+
+====== страница 35 ======
+Computing Gini Index for a Collection of 
+Nodes
+l
+When a node 𝑝is split into 𝑘partitions (children)
+where,
+𝑛𝑖= number of records at child 𝑖,
+𝑛= number of records at parent node 𝑝.
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+35
+𝐺𝐼𝑁𝐼𝑠𝑝𝑙𝑖𝑡= ෍
+𝑖=1
+𝑘𝑛𝑖
+𝑛𝐺𝐼𝑁𝐼(𝑖)
+
+
+====== страница 36 ======
+Binary Attributes: Computing GINI Index
+
+Splits into two partitions (child nodes)
+
+Effect of Weighing partitions: 
+– Larger and purer partitions are sought
+B?
+Yes
+No
+Node N1
+Node N2
+ 
+Parent 
+C1 
+7 
+C2 
+5 
+Gini = 0.486 
+ 
+ 
+N1 N2 
+C1 
+5 
+2 
+C2 
+1 
+4 
+Gini=0.361 
+ 
+ 
+Gini(N1) 
+= 1 – (5/6)2 – (1/6)2
+= 0.278 
+Gini(N2) 
+= 1 – (2/6)2 – (4/6)2
+= 0.444
+Weighted Gini of N1 N2
+= 6/12 * 0.278 + 
+6/12 * 0.444
+= 0.361
+Gain = 0.486 – 0.361 = 0.125
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+36
+
+
+====== страница 37 ======
+Categorical Attributes: Computing Gini Index
+l For each distinct value, gather counts for each class in 
+the dataset
+l Use the count matrix to make decisions
+ 
+CarType 
+ 
+{Sports, 
+Luxury} {Family} 
+C1 
+9 
+1 
+C2 
+7 
+3 
+Gini 
+0.468 
+ 
+ 
+ 
+CarType 
+ 
+{Sports}  {Family,
+Luxury} 
+C1 
+8 
+2 
+C2 
+0 
+10 
+Gini 
+0.167 
+ 
+ 
+ 
+CarType 
+ 
+Family Sports Luxury 
+C1 
+1 
+8 
+1 
+C2 
+3 
+0 
+7 
+Gini 
+0.163 
+ 
+ 
+Multi-way split
+Two-way split 
+(find best partition of values)
+Which of these is the best?
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+37
+
+
+====== страница 38 ======
+Continuous Attributes: Computing Gini Index
+l
+Use Binary Decisions based on one 
+value
+l
+Several Choices for the splitting value
+– Number of possible splitting values 
+= Number of distinct values
+l
+Each splitting value has a count matrix 
+associated with it
+– Class counts in each of the 
+partitions, A ≤ v and A > v
+l
+Simple method to choose best v
+– For each v, scan the database to 
+gather count matrix and compute 
+its Gini index
+– Computationally Inefficient! 
+Repetition of work.
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income Defaulted 
+1 
+Yes 
+Single 
+125K 
+No 
+2 
+No 
+Married 
+100K 
+No 
+3 
+No 
+Single 
+70K 
+No 
+4 
+Yes 
+Married 
+120K 
+No 
+5 
+No 
+Divorced 95K 
+Yes 
+6 
+No 
+Married 
+60K 
+No 
+7 
+Yes 
+Divorced 220K 
+No 
+8 
+No 
+Single 
+85K 
+Yes 
+9 
+No 
+Married 
+75K 
+No 
+10 
+No 
+Single 
+90K 
+Yes 
+10 
+ 
+≤ 80
+> 80
+Defaulted Yes
+0
+3
+Defaulted No
+3
+4
+Annual Income ?
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+38
+
+
+====== страница 39 ======
+Cheat 
+No 
+No 
+No 
+Yes 
+Yes 
+Yes 
+No 
+No 
+No 
+No 
+Annual Income 
+ 
+60 
+70 
+75 
+85 
+90 
+95 
+100 
+120 
+125 
+220 
+55 
+65 
+72 
+80 
+87 
+92 
+97 
+110 
+122 
+172 
+230 
+ 
+<= > <= > <= > <= > <= > <= > <= > <= > 
+<= 
+> 
+<= 
+> 
+<= 
+> 
+Yes 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+1 
+2 
+2 
+1 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+No 
+0 
+7 
+1 
+6 
+2 
+5 
+3 
+4 
+3 
+4 
+3 
+4 
+3 
+4 
+4 
+3 
+5 
+2 
+6 
+1 
+7 
+0 
+Gini 
+0.420 
+0.400 
+0.375 
+0.343 
+0.417 
+0.400 
+0.300 
+0.343 
+0.375 
+0.400 
+0.420 
+ 
+Continuous Attributes: Computing Gini Index...
+l
+For efficient computation: for each attribute,
+– Sort the attribute on values
+– Linearly scan these values, each time updating the count matrix 
+and computing gini index
+– Choose the split position that has the least gini index
+Sorted Values
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+39
+
+
+====== страница 40 ======
+Cheat 
+No 
+No 
+No 
+Yes 
+Yes 
+Yes 
+No 
+No 
+No 
+No 
+Annual Income 
+ 
+60 
+70 
+75 
+85 
+90 
+95 
+100 
+120 
+125 
+220 
+55 
+65 
+72 
+80 
+87 
+92 
+97 
+110 
+122 
+172 
+230 
+ 
+<= > <= > <= > <= > <= > <= > <= > <= > 
+<= 
+> 
+<= 
+> 
+<= 
+> 
+Yes 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+1 
+2 
+2 
+1 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+No 
+0 
+7 
+1 
+6 
+2 
+5 
+3 
+4 
+3 
+4 
+3 
+4 
+3 
+4 
+4 
+3 
+5 
+2 
+6 
+1 
+7 
+0 
+Gini 
+0.420 
+0.400 
+0.375 
+0.343 
+0.417 
+0.400 
+0.300 
+0.343 
+0.375 
+0.400 
+0.420 
+ 
+Continuous Attributes: Computing Gini Index...
+l
+For efficient computation: for each attribute,
+– Sort the attribute on values
+– Linearly scan these values, each time updating the count matrix 
+and computing gini index
+– Choose the split position that has the least gini index
+Split Positions
+Sorted Values
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+40
+
+
+====== страница 41 ======
+Cheat 
+No 
+No 
+No 
+Yes 
+Yes 
+Yes 
+No 
+No 
+No 
+No 
+Annual Income 
+ 
+60 
+70 
+75 
+85 
+90 
+95 
+100 
+120 
+125 
+220 
+55 
+65 
+72 
+80 
+87 
+92 
+97 
+110 
+122 
+172 
+230 
+ 
+<= > <= > <= > <= > <= > <= > <= > <= > 
+<= 
+> 
+<= 
+> 
+<= 
+> 
+Yes 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+1 
+2 
+2 
+1 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+No 
+0 
+7 
+1 
+6 
+2 
+5 
+3 
+4 
+3 
+4 
+3 
+4 
+3 
+4 
+4 
+3 
+5 
+2 
+6 
+1 
+7 
+0 
+Gini 
+0.420 
+0.400 
+0.375 
+0.343 
+0.417 
+0.400 
+0.300 
+0.343 
+0.375 
+0.400 
+0.420 
+ 
+Continuous Attributes: Computing Gini Index...
+l
+For efficient computation: for each attribute,
+– Sort the attribute on values
+– Linearly scan these values, each time updating the count matrix 
+and computing gini index
+– Choose the split position that has the least gini index
+Split Positions
+Sorted Values
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+41
+
+
+====== страница 42 ======
+Cheat 
+No 
+No 
+No 
+Yes 
+Yes 
+Yes 
+No 
+No 
+No 
+No 
+Annual Income 
+ 
+60 
+70 
+75 
+85 
+90 
+95 
+100 
+120 
+125 
+220 
+55 
+65 
+72 
+80 
+87 
+92 
+97 
+110 
+122 
+172 
+230 
+ 
+<= > <= > <= > <= > <= > <= > <= > <= > 
+<= 
+> 
+<= 
+> 
+<= 
+> 
+Yes 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+1 
+2 
+2 
+1 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+No 
+0 
+7 
+1 
+6 
+2 
+5 
+3 
+4 
+3 
+4 
+3 
+4 
+3 
+4 
+4 
+3 
+5 
+2 
+6 
+1 
+7 
+0 
+Gini 
+0.420 
+0.400 
+0.375 
+0.343 
+0.417 
+0.400 
+0.300 
+0.343 
+0.375 
+0.400 
+0.420 
+ 
+Continuous Attributes: Computing Gini Index...
+l
+For efficient computation: for each attribute,
+– Sort the attribute on values
+– Linearly scan these values, each time updating the count matrix 
+and computing gini index
+– Choose the split position that has the least gini index
+Split Positions
+Sorted Values
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+42
+
+
+====== страница 43 ======
+Cheat 
+No 
+No 
+No 
+Yes 
+Yes 
+Yes 
+No 
+No 
+No 
+No 
+Annual Income 
+ 
+60 
+70 
+75 
+85 
+90 
+95 
+100 
+120 
+125 
+220 
+55 
+65 
+72 
+80 
+87 
+92 
+97 
+110 
+122 
+172 
+230 
+ 
+<= > <= > <= > <= > <= > <= > <= > <= > 
+<= 
+> 
+<= 
+> 
+<= 
+> 
+Yes 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+1 
+2 
+2 
+1 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+3 
+0 
+No 
+0 
+7 
+1 
+6 
+2 
+5 
+3 
+4 
+3 
+4 
+3 
+4 
+3 
+4 
+4 
+3 
+5 
+2 
+6 
+1 
+7 
+0 
+Gini 
+0.420 
+0.400 
+0.375 
+0.343 
+0.417 
+0.400 
+0.300 
+0.343 
+0.375 
+0.400 
+0.420 
+ 
+Continuous Attributes: Computing Gini Index...
+l
+For efficient computation: for each attribute,
+– Sort the attribute on values
+– Linearly scan these values, each time updating the count matrix 
+and computing gini index
+– Choose the split position that has the least gini index
+Split Positions
+Sorted Values
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+43
+
+
+====== страница 44 ======
+Measure of Impurity: Entropy
+l
+Entropy at a given node 𝒕
+Where 𝒑𝒊𝒕is the frequency of class 𝒊at node 𝒕, and 𝒄is the total number 
+of classes 
+Maximum of log2𝑐when records are equally distributed 
+among all classes, implying the least beneficial situation for 
+classification
+Minimum of 0 when all records belong to one class, 
+implying most beneficial situation for classification
+– Entropy based computations are quite similar to the GINI 
+index computations
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+44
+𝐸𝑛𝑡𝑟𝑜𝑝𝑦= −෍
+𝑖=0
+𝑐−1
+𝑝𝑖𝑡𝑙𝑜𝑔2𝑝𝑖(𝑡)
+
+
+====== страница 45 ======
+Computing Entropy of a Single Node
+C1 
+0 
+C2 
+6 
+ 
+ 
+C1 
+2 
+C2 
+4 
+ 
+ 
+C1 
+1 
+C2 
+5 
+ 
+ 
+P(C1) = 0/6 = 0     P(C2) = 6/6 = 1
+Entropy = – 0 log 0 – 1 log 1 = – 0 – 0 = 0 
+P(C1) = 1/6          P(C2) = 5/6
+Entropy = – (1/6) log2 (1/6) – (5/6) log2 (1/6) = 0.65
+P(C1) = 2/6          P(C2) = 4/6
+Entropy = – (2/6) log2 (2/6) – (4/6) log2 (4/6) = 0.92
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+45
+𝐸𝑛𝑡𝑟𝑜𝑝𝑦= −෍
+𝑖=0
+𝑐−1
+𝑝𝑖𝑡𝑙𝑜𝑔2𝑝𝑖(𝑡)
+
+
+====== страница 46 ======
+Computing Information Gain After Splitting
+l
+Information Gain: 
+Parent Node, 𝑝is split into 𝑘partitions (children)
+𝑛𝑖is number of records in child node 𝑖
+– Choose the split that achieves most reduction (maximizes 
+GAIN)
+– Used in the ID3 and C4.5 decision tree algorithms
+– Information gain is the mutual information between the class 
+variable and the splitting variable.  
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+46
+𝐺𝑎𝑖𝑛𝑠𝑝𝑙𝑖𝑡= 𝐸𝑛𝑡𝑟𝑜𝑝𝑦𝑝−෍
+𝑖=1
+𝑘𝑛𝑖
+𝑛𝐸𝑛𝑡𝑟𝑜𝑝𝑦(𝑖)
+
+
+====== страница 47 ======
+Problem with large number of partitions
+
+Node impurity measures tend to prefer splits that 
+result in large number of partitions, each being 
+small but pure
+– Customer ID has highest information gain 
+because entropy for all the children is zero
+Gender
+C0: 6
+C1: 4
+C0: 4
+C1: 6
+C0: 1
+C1: 3
+C0: 8
+C1: 0
+C0: 1
+C1: 7
+Car
+Type
+C0: 1
+C1: 0
+C0: 1
+C1: 0
+C0: 0
+C1: 1
+Customer
+ID
+...
+Yes
+No
+Family
+Sports
+Luxury
+c1
+c10
+c20
+C0: 0
+C1: 1
+...
+c11
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+47
+
+
+====== страница 48 ======
+Problem with large number of partitions
+Test conditions that result in a large number of outcomes 
+may not be desirable, because the number of records 
+associated with each partition is too small to enable us to 
+make any reliable predictions.
+Two strategies:
+
+Restrict the test conditions to binary splits only (used in 
+CART)
+
+Modify the splitting criterion to take into account the 
+number of outcomes produced by the attribute test 
+condition – an example of a criterion known as gain ratio
+used in C4.5 decision tree algorithm is presented on the 
+next slide.
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+48
+
+
+====== страница 49 ======
+Gain Ratio
+l
+Gain Ratio: 
+Parent Node, 𝑝is split into 𝑘partitions (children)
+𝑛𝑖is number of records in child node 𝑖
+– Adjusts Information Gain by the entropy of the partitioning 
+(𝑆𝑝𝑙𝑖𝑡𝐼𝑛𝑓𝑜). 
+Higher entropy partitioning (large number of small partitions) is 
+penalized!
+– Used in C4.5 algorithm
+– Designed to overcome the disadvantage of Information Gain
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+49
+𝐺𝑎𝑖𝑛𝑅𝑎𝑡𝑖𝑜= 𝐺𝑎𝑖𝑛𝑠𝑝𝑙𝑖𝑡
+𝑆𝑝𝑙𝑖𝑡𝐼𝑛𝑓𝑜
+𝑆𝑝𝑙𝑖𝑡𝐼𝑛𝑓𝑜= −෍
+𝑖=1
+𝑘𝑛𝑖
+𝑛𝑙𝑜𝑔2
+𝑛𝑖
+𝑛
+
+
+====== страница 50 ======
+Gain Ratio
+l
+Gain Ratio: 
+Parent Node, 𝑝is split into 𝑘partitions (children)
+𝑛𝑖is number of records in child node 𝑖
+Large number of splits means that the SplitInfo will also be large  and this 
+reduces the gain ratio.
+ 
+CarType 
+ 
+{Sports, 
+Luxury} {Family} 
+C1 
+9 
+1 
+C2 
+7 
+3 
+Gini 
+0.468 
+ 
+ 
+ 
+CarType 
+ 
+{Sports}  {Family,
+Luxury} 
+C1 
+8 
+2 
+C2 
+0 
+10 
+Gini 
+0.167 
+ 
+ 
+ 
+CarType 
+ 
+Family Sports Luxury 
+C1 
+1 
+8 
+1 
+C2 
+3 
+0 
+7 
+Gini 
+0.163 
+ 
+ 
+SplitINFO = 1.52
+SplitINFO = 0.72
+SplitINFO = 0.97
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+50
+𝐺𝑎𝑖𝑛𝑅𝑎𝑡𝑖𝑜= 𝐺𝑎𝑖𝑛𝑠𝑝𝑙𝑖𝑡
+𝑆𝑝𝑙𝑖𝑡𝐼𝑛𝑓𝑜
+𝑆𝑝𝑙𝑖𝑡𝐼𝑛𝑓𝑜= ෍
+𝑖=1
+𝑘𝑛𝑖
+𝑛𝑙𝑜𝑔2
+𝑛𝑖
+𝑛
+
+
+====== страница 51 ======
+Measure of Impurity: Classification Error
+l Classification error at a node 𝑡
+– Maximum of 1 −1/𝑐when records are equally 
+distributed among all classes, implying the least 
+interesting situation
+– Minimum of 0 when all records belong to one class, 
+implying the most interesting situation
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+51
+𝐸𝑟𝑟𝑜𝑟𝑡= 1 −max
+𝑖
+[𝑝𝑖𝑡]
+
+
+====== страница 52 ======
+Computing Error of a Single Node
+C1 
+0 
+C2 
+6 
+ 
+ 
+C1 
+2 
+C2 
+4 
+ 
+ 
+C1 
+1 
+C2 
+5 
+ 
+ 
+P(C1) = 0/6 = 0     P(C2) = 6/6 = 1
+Error = 1 – max (0, 1) = 1 – 1 = 0 
+P(C1) = 1/6          P(C2) = 5/6
+Error = 1 – max (1/6, 5/6) = 1 – 5/6 = 1/6
+P(C1) = 2/6          P(C2) = 4/6
+Error = 1 – max (2/6, 4/6) = 1 – 4/6 = 1/3
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+52
+𝐸𝑟𝑟𝑜𝑟𝑡= 1 −max
+𝑖
+[𝑝𝑖𝑡]
+
+
+====== страница 53 ======
+Comparison among Impurity Measures
+For a 2-class problem:
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+53
+
+
+====== страница 54 ======
+Misclassification Error vs Gini Index
+A?
+Yes
+No
+Node N1
+Node N2
+ 
+Parent 
+C1 
+7 
+C2 
+3 
+Gini = 0.42 
+ 
+ 
+N1 N2 
+C1 
+3 
+4 
+C2 
+0 
+3 
+Gini=0.342 
+ 
+ 
+Gini(N1) 
+= 1 – (3/3)2 – (0/3)2
+= 0 
+Gini(N2) 
+= 1 – (4/7)2 – (3/7)2
+= 0.489
+Gini(Children) 
+= 3/10 * 0 
++ 7/10 * 0.489
+= 0.342
+Gini improves but 
+error remains the 
+same!!
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+54
+
+
+====== страница 55 ======
+Misclassification Error vs Gini Index
+A?
+Yes
+No
+Node N1
+Node N2
+ 
+Parent 
+C1 
+7 
+C2 
+3 
+Gini = 0.42 
+ 
+ 
+N1 N2 
+C1 
+3 
+4 
+C2 
+0 
+3 
+Gini=0.342 
+ 
+ 
+ 
+N1 N2 
+C1 
+3 
+4 
+C2 
+1 
+2 
+Gini=0.416 
+ 
+ 
+Misclassification error for all three cases = 0.3 ! 
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+55
+
+
+====== страница 56 ======
+Decision Tree Based Classification
+l Advantages:
+–
+Relatively inexpensive to construct
+–
+Extremely fast at classifying unknown records (the tree is built)
+–
+Easy to interpret for small-sized trees
+–
+Robust to noise (especially when methods to avoid overfitting are 
+employed)
+–
+Can easily handle redundant attributes
+–
+Can easily handle irrelevant attributes (unless the attributes are 
+interacting)
+An attribute is redundant if it is strongly correlated with another attribute in 
+the data. One of the two redundant attributes will not be used for splitting 
+once the other attribute has been chosen. But if there are many irrelevant 
+attributes (not useful for classification) some may be chosen and it will 
+unnecessarily create larger tree. 
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+56
+
+
+====== страница 57 ======
+Decision Tree Based Classification
+l Disadvantages: .
+–
+Due to the greedy nature of splitting criterion,  interacting attributes (that 
+can distinguish between classes together but not individually) may be 
+passed over in favor of other attributed that are less discriminating.
+–
+Each decision boundary involves only a single attribute.
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+57
+
+
+====== страница 58 ======
+Handling interactions
+X 
+Y
++ : 1000 instances
+o : 1000 instances
+Entropy (X) : 0.99 
+Entropy (Y) : 0.99
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+58
+
+
+====== страница 59 ======
+Handling interactions
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+59
+
+
+====== страница 60 ======
+Handling interactions given irrelevant attributes
++ : 1000 instances
+o : 1000 instances
+Adding Z as a noisy 
+attribute generated 
+from a uniform 
+distribution
+Y
+Entropy (X) : 0.99 
+Entropy (Y) : 0.99
+Entropy (Z) : 0.98
+Attribute Z will be 
+chosen for splitting!
+X 
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+60
+
+
+====== страница 61 ======
+Limitations of single attribute-based decision boundaries
+Both positive (+) and 
+negative (o) classes 
+generated from 
+skewed Gaussians 
+with centers at (8,8) 
+and (12,12) 
+respectively.  
+2/1/2021
+Introduction to Data Mining, 2nd Edition
+61
+
+

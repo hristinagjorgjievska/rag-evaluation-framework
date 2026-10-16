@@ -1,0 +1,1216 @@
+====== страница 1 ======
+1
+Introduction to Machine Learning
+part 2
+
+
+====== страница 2 ======
+References
+Parts of this lecture are based on:
+1. Slides from the Harvard Course CS109A Introduction to Data Science by Pavlos 
+Protopapas, Kevin Rader and Chris Tanner, available at 
+https://github.com/Harvard-IACS/2019-CS109A
+2.James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. An introduction 
+to statistical learning. Vol. 112. New York: springer, 2013.
+3.Cielen, Davy, Arno Meysman, and Mohamed Ali. Introducing data science: big data, 
+machine learning, and more, using Python tools. Manning Publications Co., 2016.
+2
+
+
+====== страница 3 ======
+Agenda
+•
+Polynomial Regression
+•
+Overfitting
+•
+Regularization
+•
+Decision Trees
+3
+
+
+====== страница 4 ======
+Polynomial Regression
+•
+The simplest non-linear model we can consider, for a response Y and 
+a predictor X, is a polynomial model of degree M,
+•
+Just as in the case of linear regression with cross terms, polynomial 
+regression is a special case of linear regression - we treat each 𝑥𝑥𝑚𝑚 as 
+a separate predictor. Thus, we can write
+4
+
+
+====== страница 5 ======
+Curve fitting
+
+
+====== страница 6 ======
+Curve fitting
+
+
+====== страница 7 ======
+Curve fitting
+
+
+====== страница 8 ======
+Curve fitting
+
+
+====== страница 9 ======
+•
+Ockham’s 
+razor:
+Prefering 
+the 
+simplest 
+hypothesis 
+that is 
+consistant 
+with the 
+data.
+Curve fitting
+too much 
+overfitting
+just right
+
+
+====== страница 10 ======
+Training and testing
+Training set 
+(observed)
+Universal set
+(unobserved)
+Testing set
+(unobserved)
+Data acquisition
+Practical usage
+
+
+====== страница 11 ======
+Polynomial Regression (cont)
+11
+
+
+====== страница 12 ======
+Polynomial Regression (cont)
+12
+
+
+====== страница 13 ======
+Polynomial Regression (cont)
+13
+
+
+====== страница 14 ======
+Polynomial Regression (cont)
+14
+
+
+====== страница 15 ======
+Polynomial Regression (cont)
+15
+
+
+====== страница 16 ======
+Polynomial Regression (cont)
+16
+
+
+====== страница 17 ======
+Overfitting
+•
+Albert Einstein: Everything should be made as simple as possible, 
+but not simpler.
+•
+overfitting is "the production of an analysis that corresponds too 
+closely or exactly to a particular set of data, and may therefore fail to 
+fit additional data or predict future observations reliably”
+
+
+====== страница 18 ======
+Overfitting: Tune the complexity
+•
+The training set error is an 
+overly optimistic measure of 
+the performance of the model 
+for new data, particularly for 
+simple models.
+•
+Training set error should not be 
+used as a surrogate for the 
+prediction error on new data.
+Model complexity
+optimal complexity
+Mean 
+squared error
+
+
+====== страница 19 ======
+Model Selection
+•
+Model selection is the application of a principled method to determine 
+the complexity of the model, e.g. choosing a subset of predictors, 
+choosing the degree of the polynomial model etc.
+•
+A strong motivation for performing model selection is to avoid 
+overfitting, which we saw can happen when: 
+o there are too many predictors:
+-
+the feature space has high dimensionality
+-
+the polynomial degree is too high
+-
+too many cross terms are considered
+o the coefficients values are too extreme (we have not seen this yet)
+19
+
+
+====== страница 20 ======
+Cross Validation
+20
+
+
+====== страница 21 ======
+Cross Validation
+21
+
+
+====== страница 22 ======
+Cross Validation
+22
+
+
+====== страница 23 ======
+Cross Validation
+23
+
+
+====== страница 24 ======
+Validation
+24
+
+
+====== страница 25 ======
+Detection of overfitting
+25
+
+
+====== страница 26 ======
+Cross Validation: Motivation 
+•
+Using a single validation set to select amongst multiple models can 
+be problematic - there is the possibility of overfitting to the 
+validation set.
+•
+One solution to the problems raised by using a single validation set 
+is to evaluate each model on multiple validation sets and average 
+the validation performance. 
+•
+One can randomly split the training set into training and validation 
+multiple times.
+– But randomly creating these sets can create the scenario where important 
+features of the data never appear in our random draws.
+26
+
+
+====== страница 27 ======
+K-fold cross validation
+•
+K-fold cross validation is one way 
+to improve over the holdout 
+method. 
+•
+The data set is divided 
+into k subsets, and the holdout 
+method is repeated k times.
+•
+Each time, one of the k subsets is 
+used as the test set and the 
+other k-1 subsets are put together 
+to form a training set. Then the 
+average error across all k trials is 
+computed.
+
+
+====== страница 28 ======
+K-fold cross validation
+•
+The advantage of this method is 
+that it matters less how the data 
+gets divided. 
+– Every data point gets to be in a test set 
+exactly once, and gets to be in a training 
+set k-1 times. 
+– The variance of the resulting estimate is 
+reduced as k is increased. 
+•
+A variant of this method is to 
+randomly divide the data into a test 
+and training set k different times. 
+– The advantage of doing this is that you 
+can independently choose how large 
+each test set is and how many trials you 
+average over.
+
+
+====== страница 29 ======
+Cross Validation
+29
+
+
+====== страница 30 ======
+K-Fold Cross Validation
+•
+Given a data set 𝑋𝑋1, … , 𝑋𝑋𝑛𝑛, where each 𝑋𝑋1, … , 𝑋𝑋𝑛𝑛 contains J features. 
+•
+To ensure that every observation in the dataset is included in at least one 
+training set and at least one validation set we use the K-fold validation: 
+•
+split the data into K uniformly sized chunks, {𝐶𝐶1, … , 𝐶𝐶𝐾𝐾}
+•
+we create K number of training/validation splits, using one of  the K chunks for 
+validation and the rest for training.
+•
+We fit the model on each training set, denoted ̂𝑓𝑓𝐶𝐶−𝑖𝑖 , and evaluate it on the 
+corresponding validation set, ̂𝑓𝑓𝐶𝐶−𝑖𝑖 (𝐶𝐶𝑖𝑖). The cross validation is the 
+performance of the model averaged across all validation sets:
+•
+where L is a loss function 
+30
+𝐶𝐶𝐶𝐶Model = 1
+𝐾𝐾෍
+𝑖𝑖=1
+𝐾𝐾
+𝐿𝐿(̂𝑓𝑓𝐶𝐶−𝑖𝑖 (𝐶𝐶𝑖𝑖)) 
+
+
+====== страница 31 ======
+31
+Bias vs Variance
+
+
+====== страница 32 ======
+Bias vs Variance
+32
+
+
+====== страница 33 ======
+Bias vs Variance
+33
+
+
+====== страница 34 ======
+Bias vs Variance
+34
+
+
+====== страница 35 ======
+Linear models: … after 2000 simulations
+35
+
+
+====== страница 36 ======
+Bias vs Variance
+36
+
+
+====== страница 37 ======
+Bias vs Variance
+37
+
+
+====== страница 38 ======
+Bias vs Variance
+38
+
+
+====== страница 39 ======
+Poly 10-degree models: … after 2000 simulations
+39
+
+
+====== страница 40 ======
+Bias vs Variance
+•
+Left: 2000 best-fit straight lines using linear regression
+•
+Right: 2000 best-fit models using degree 10 polynomial
+40
+
+
+====== страница 41 ======
+Bias vs Variance
+•
+Left: Coefficients of linear regression
+•
+Right: Coefficients of poly regression of order 10
+41
+𝛽𝛽0
+𝛽𝛽1
+
+
+====== страница 42 ======
+Regularization: An Overview
+•
+The idea of regularization revolves around modifying the loss 
+function L; in particular, we add a regularization term that penalizes 
+some specified properties of the model parameters
+•
+where 𝜆𝜆is a scalar that gives the weight (or importance) of the 
+regularization term.
+•
+Fitting the model using the modified loss function Lreg would result in 
+model parameters with desirable properties (specified by R).
+42
+
+
+====== страница 43 ======
+LASSO Regression
+•
+Since we wish to discourage extreme values in model parameter, we 
+need to choose a regularization term that penalizes parameter 
+magnitudes. For our loss function, we will again use MSE.
+•
+Together our regularized loss function is:
+•
+Note that              is the l1 norm of the vector β
+43
+
+
+====== страница 44 ======
+LASSO Regression
+•
+Hence, we often say that LLASSO is the loss function for l1 regularization.
+•
+Finding the model parameters βLASSO that minimize the l1 regularized 
+loss function is called LASSO regression.
+44
+
+
+====== страница 45 ======
+Ridge Regression
+•
+Alternatively, we can choose a regularization term that penalizes the 
+squares of the parameter magnitudes. Then, our regularized loss 
+function is:
+•
+Note that               is the l2 norm of the vector β
+45
+
+
+====== страница 46 ======
+Ridge Regression
+•
+Hence, we often say that Lridge is the loss function for l2 regularization.
+•
+Finding the model parameters βridge that minimize the l2 regularized 
+loss function is called ridge regression.
+46
+
+
+====== страница 47 ======
+Choosing λ
+•
+In both ridge and LASSO regression, we see that the larger our choice 
+of the regularization parameter λ, the more heavily we penalize large 
+values in β,
+•
+If λ is close to zero, we recover the MSE, i.e. ridge and LASSO regression is just 
+ordinary regression.
+•
+If λ is sufficiently large, the MSE term in the regularized loss function will be 
+insignificant and the regularization term will force βridge and βLASSO to be close to 
+zero.
+•
+To avoid ad-hoc choices, we should select λ using cross-validation.
+47
+
+
+====== страница 48 ======
+Geometry of Data
+•
+Recall that, logistic regression for building classification 
+boundaries works best when:
+-
+the classes are well-separated in the feature space 
+-
+have a nice geometry to the classification boundary)
+48
+−0.8𝑥𝑥1 + 𝑥𝑥2 = 0 ⟹
+𝑥𝑥2 = 0.8𝑥𝑥1 ⇒ 
+𝐿𝐿𝐿𝐿𝐿𝐿= 0.8 𝐿𝐿𝐿𝐿𝐿𝐿
+
+
+====== страница 49 ======
+Geometry of Data
+•
+How about these?
+49
+
+
+====== страница 50 ======
+Geometry of Data
+•
+Or these?
+50
+
+
+====== страница 51 ======
+Geometry of Data
+• Notice that in all of the datasets the classes are still well-separated in 
+the feature space, but the decision boundaries cannot easily be 
+described by single equations: 
+51
+
+
+====== страница 52 ======
+Interpretable Models
+•
+People in everyday life have long been using interpretable models for 
+differentiating between classes of objects and phenomena: 
+52
+
+
+====== страница 53 ======
+Decision Trees 
+•
+It turns out that the simple flow charts in our examples can be 
+formulated as mathematical models for classification and these 
+models have the properties we desire; they are: 
+1.
+interpretable by humans 
+2.
+have sufficiently complex decision boundaries 
+3.
+the decision boundaries are locally linear, each component of the decision 
+boundary is simple to describe mathematically. 
+53
+
+
+====== страница 54 ======
+The Geometry of Flow Charts 
+•
+Flow charts whose graph is a tree (connected and no cycles) 
+represents a model called a decision tree. 
+•
+Formally, a decision tree model is one in which the final outcome of 
+the model is based on a series of comparisons of the values of 
+predictors against threshold values. 
+•
+In a graphical representation (flow chart), 
+•
+the internal nodes of the tree represent attribute testing.
+•
+branching in the next level is determined by attribute value (yes/no).
+•
+terminal leaf nodes represent class assignments.
+54
+
+
+====== страница 55 ======
+The Geometry of Flow Charts 
+•
+Flow charts whose graph is a 
+tree (connected and no 
+cycles) represents a model 
+called a decision tree. 
+•
+Formally, a decision tree 
+model is one in which the 
+final outcome of the model is 
+based on a series of 
+comparisons of the values of 
+predictors against threshold 
+values. 
+55
+
+
+====== страница 56 ======
+The Geometry of Flow Charts
+•
+Every flow chart tree corresponds to a partition of the feature space 
+by axis aligned lines or (hyper) planes. Conversely, every such 
+partition can be written as a flow chart tree. 
+56
+
+
+====== страница 57 ======
+The Geometry of Flow Charts
+57
+•
+Each comparison and branching represents splitting a region in the 
+feature space on a single feature. Typically, at each iteration, we split 
+once along one dimension (one predictor).  
+
+
+====== страница 58 ======
+Learning the Model
+• Given a training set, learning a decision tree 
+model for binary classification means:
+• producing an optimal partition of the 
+feature space with axis-aligned linear 
+boundaries (very interpretable!), 
+• each region is predicted to have a class 
+label based on the largest class of the 
+training points in that region (Bayes’ 
+classifier) when performing prediction. 
+58
+
+
+====== страница 59 ======
+Learning the Model
+•
+Learning the smallest ‘optimal’ decision tree for any given set of data 
+is NP complete for numerous simple definitions of ‘optimal’. Instead, 
+we will seek a reasonably model using a greedy algorithm. 
+1.
+Start with an empty decision tree (undivided feature space) 
+2.
+Choose the ‘optimal’ predictor on which to split and choose the ‘optimal’ 
+threshold value for splitting. 
+3.
+Recurse on each new node until stopping condition is met 
+•
+Now, we need only define our splitting criterion and stopping 
+condition. 
+59
+
+
+====== страница 60 ======
+Numerical vs Categorical Attributes
+•
+Note that the ‘compare and branch’ method by which we defined 
+classification tree works well for numerical features. 
+•
+However, if a feature is categorical (with more than two possible 
+values), comparisons like feature < threshold  does not make 
+sense. 
+•
+How can we handle this?  
+•
+A simple solution is to encode the values of a categorical feature 
+using numbers and treat this feature like a numerical variable.  This 
+is indeed what some computational libraries (e.g. sklearn) do, 
+however, this method has drawbacks. 
+60
+
+
+====== страница 61 ======
+Numerical vs Categorical Attributes
+61
+Example
+Supposed the feature we want to split on is color, and the values are: Red, Blue and 
+Yellow. If we encode the categories numerically as:
+Red = 0,  Blue = 1, Yellow = 2
+Then the possible non-trivial splits on color are
+{{Red}, {Blue, Yellow}}                   {{Red, Blue},{Yellow}}
+But if we encode the categories numerically as:
+Red = 2, Blue = 0, Yellow = 1
+The possible splits are
+{{Blue}, {Yellow, Red}}                    {{Blue,Yellow}, {Red}} 
+Depending on the encoding, the splits we can optimize over can be different!
+
+
+====== страница 62 ======
+Numerical vs Categorical Attributes
+•
+In practice, the effect of our choice of naive encoding of categorical 
+variables are often negligible - models resulting from different 
+choices of encoding will perform comparably. 
+•
+In cases where you might worry about encoding, there is a more 
+sophisticated way to numerically encode the values of categorical 
+variables so that one can optimize over all possible partitions of the 
+values of the variable.  
+•
+This more principled encoding scheme is computationally more 
+expensive but is implemented in a number of computational 
+libraries (e.g. R’s randomForest). 
+62
+
+
+====== страница 63 ======
+Example of building a Decision Tree from discrete 
+features
+Problem: decide whether to wait for a table at a restaurant based on the 
+following attributes:
+1.
+Alternate: is there an alternative restaurant nearby?
+2.
+Bar: is there a comfortable bar area to wait in?
+3.
+Fri/Sat: is today Friday or Saturday?
+4.
+Hungry: are we hungry?
+5.
+Patrons: number of patrons in the restaurant (None, Some, Full)
+6.
+Price: price range ($, $$, $$$)
+7.
+Raining: is it raining outside?
+8.
+Reservation: have we made a reservation?
+9.
+Type: kind of restaurant (French, Italian, Thai, Burger)
+10.
+ WaitEstimate: estimated waiting time (0-10, 10-30, 30-60, >60)
+
+
+====== страница 64 ======
+Example of building a Decision Tree from discrete features
+•
+Representing samples with attribute values that can be discrete, in ranges, 
+or Boolean
+•
+Classification of the samples as positive (T) or negative (F)
+
+
+====== страница 65 ======
+ID3 Algorithm – works with discrete values only
+ID3 Algorithm:
+1. If all samples of the training set S are positive examples of the 
+concept K, then the decision (sub)tree consists only of one leaf 
+labeled with K.
+2. Otherwise, choose a test that will split the training set S into two or 
+more subsets Si, depending on the result of the test (according to 
+the values of the attribute). 
+• The test becomes a root of the (sub)tree and each result of the test builds a 
+subtree, calling this procedure recursively for each Si.
+
+
+====== страница 66 ======
+ID3 Algorithm – works with discrete values only
+Hungry?
+1
+4
+6
+8
+12
+2
+10
+3
+5
+7
+9
+11
+T
+F
+Patrons?
+1
+3
+6
+8
+7
+11
+Type?
+4
+12
+2
+5
+9
+10
+Full
+Some
+None
+1
+5
+4
+8
+2
+11
+3
+12
+7
+9
+6
+10
+French
+Thai
+Burger
+Italian
+Patrons?
+1
+3
+6
+8
+7
+11
+4
+12
+2
+5
+9
+10
+Full
+Some
+None
+Hungry?
+4
+12
+2
+10
+5
+9
+Rain?
+9
+4
+12
+2
+5
+10
+T
+F
+T
+F
+
+
+====== страница 67 ======
+ID3 Algorithm – works with discrete values only
+None
+Some
+Full
+Patrons?
+No
+Yes
+No
+ Yes
+Hungry?
+No
+No
+ Yes
+Fri/Sat?
+Yes
+No
+Yes
+Type?
+French
+Italian
+Thai
+Burger
+Yes
+No
+
+
+====== страница 68 ======
+Splitting criteria
+•
+While there is no ‘correct’ way to define an optimal split, there are 
+some commonsensical guidelines for every splitting criterion: 
+•
+The regions in the feature space should grow progressively purer with the number 
+of splits. That is, we should see each region ‘specialize’ towards a single class. 
+•
+The fitness metric of a split should take a differentiable form (making 
+optimization possible). 
+•
+We shouldn’t end up with empty regions - regions containing no training points. 
+68
+
+
+====== страница 69 ======
+Classification Error
+•
+Suppose we have 𝐽𝐽 number of predictors and 𝐾𝐾 classes. 
+•
+Suppose we select the 𝑗𝑗th predictor and split a region containing 𝑁𝑁 
+number of training points along the threshold 𝑡𝑡𝑗𝑗∈ℝ . 
+•
+We can assess the quality of this split by measuring the 
+classification error made by each newly created region, 𝑅𝑅1, 𝑅𝑅2:
+•
+where 𝑝𝑝(𝑘𝑘|𝑅𝑅𝑖𝑖) is the proportion of training points in 𝑅𝑅𝑖𝑖 that are 
+labeled class 𝑘𝑘.
+69
+
+
+====== страница 70 ======
+Gini Index
+•
+Suppose we have 𝐽𝐽 number of predictors, 𝑁𝑁 number of training points and 
+𝐾𝐾 classes. 
+•
+Suppose we select the 𝑗𝑗th predictor and split a region containing 𝑁𝑁 number 
+of training points along the threshold 𝑡𝑡𝑗𝑗∈ℝ . 
+•
+We can assess the quality of this split by measuring the purity of each newly 
+created region, 𝑅𝑅1, 𝑅𝑅2. This metric is called the Gini Index: 
+71
+
+
+====== страница 71 ======
+Information Theory
+•
+The last metric for evaluating the quality of a split is motivated by metrics of 
+uncertainty in information theory. 
+•
+Ideally, our decision tree should split the feature space into regions such that 
+each region represents a single class. In practice, the training points in each 
+region is distributed over multiple classes, e.g.: 
+•
+However, though both imperfect, 𝑅𝑅1 is clearly sending a stronger ‘signal’ for a 
+single class (Class 2) than 𝑅𝑅2. 
+73
+
+
+====== страница 72 ======
+Information Theory
+•
+One way to quantify the strength of a signal in a particular region is to 
+analyze the distribution of classes within the region. We compute the 
+entropy of this distribution. 
+•
+For a random variable with a discrete distribution, the entropy is 
+computed by: 
+•
+Higher entropy means the distribution is uniform-like (flat histogram) 
+and thus values sampled from it are ‘less predictable’ (all possible 
+values are equally probable). 
+•
+Lower entropy means the distribution has more defined peaks and 
+valleys and thus values sampled from it are ‘more predictable’ (values 
+around the peaks are more probable). 
+74
+
+
+====== страница 73 ======
+Entropy
+•
+Suppose we have 𝐽𝐽 number of predictors, 𝑁𝑁 number of training points 
+and 𝐾𝐾 classes. 
+•
+Suppose we select the 𝑗𝑗th predictor and split a region containing 𝑁𝑁 
+number of training points along the threshold 𝑡𝑡𝑗𝑗∈ℝ . 
+•
+We can assess the quality of this split by measuring the entropy of 
+the class distribution in each newly created region, 𝑅𝑅1, 𝑅𝑅2:
+•
+•
+Note: we are actually computing the conditional entropy of the 
+distribution of training points amongst the 𝐾𝐾 classes given that the 
+point is in region 𝑖𝑖. 
+75
+These are 
+entropies 
+within 
+subsets after 
+the split
+
+
+====== страница 74 ======
+Summary of splitting criteria
+76
+Example
+Class 1
+Class 2
+Error(i | j, tj)
+R1
+0
+6
+1 – max{6/6, 0/6} = 0
+R2
+5
+8
+1 – max{5/13, 8/13} = 5/13 ≈ 0.38
+Example
+Class 1
+Class 2
+GINI(i | j, tj)
+R1
+0
+6
+1 – (6/6)2  + (0/6)2 = 0
+R2
+5
+8
+1 – (5/13)2 + (8/13)2 = 80/169 ≈ 0.47
+Example
+Class 1
+Class 2
+Entropy(i | j, tj)
+R1
+0
+6
+– (
+6
+6 log2
+6
+6  + 
+0
+6 log2
+0
+6 ) = 0
+R2
+5
+8
+– (
+5
+13 log2
+5
+13  + 
+8
+13 log2
+8
+13 ) ≈ 1.38
+
+
+====== страница 75 ======
+Comparison of Splitting Criteria
+•
+Recall our intuitive guidelines for splitting criteria, which of the three 
+criteria fits our guideline the best? 
+•
+We have the following comparison of the value of the three criteria at 
+different levels of purity (from 0 to 1) in a single region (for binary 
+outcomes). 
+77
+
+
+====== страница 76 ======
+Comparison of Splitting Criteria 
+•
+Recall our intuitive guidelines for splitting criteria, which of the three 
+criteria fits our guideline the best? 
+•
+To note that entropy penalizes impurity the most is not to say that 
+it is the best splitting criteria. For one, a model with purer leaf 
+nodes on a training set may not perform better on the testing test. 
+•
+Another factor to consider is the size of the tree (i.e. model 
+complexity) each criteria tends to promote. 
+•
+To compare different decision tree models, we need to first discuss 
+stopping conditions. 
+78
+
+
+====== страница 77 ======
+Stopping Criteria
+•
+If we don’t terminate the decision tree learning algorithm manually, 
+the tree will continue to grow until each region defined by the model 
+possibly contains exactly one training point (and the model attains 
+100% training accuracy). 
+– To prevent this from happening, we can simply stop the algorithm 
+at a particular depth. 
+– But how do we determine the appropriate depth? 
+79
+
+
+====== страница 78 ======
+Variance vs Bias
+80
+
+
+====== страница 79 ======
+Variance vs Bias
+•
+We make some observations about our models: 
+•
+(High Bias) A tree of depth 4 is not a good fit for the training data - it’s unable to capture the 
+nonlinear boundary separating the two classes. 
+•
+(Low Bias) With an extremely high depth, we can obtain a model that correctly classifies all 
+points on the boundary (by zig-zagging around each point). 
+•
+(Low Variance) The tree of depth 4 is robust to slight perturbations in the training data - the 
+square carved out by the model is stable if you move the boundary points a bit. 
+•
+(High Variance) Trees of high depth are sensitive to perturbations in the training data, especially 
+to changes in the boundary points. 
+•
+Not surprisingly, complex trees have low bias (able to capture more 
+complex geometry in the data) but high variance (can overfit). Complex 
+trees are also harder to interpret and more computationally expensive to 
+train. 
+81
+
+
+====== страница 80 ======
+Stopping Conditions
+•
+Common simple stopping conditions: 
+o
+Don’t split a region if all instances in the region belong to the same class
+o
+Don’t split a region if the number of instances in the sub-region will fall 
+below pre-defined threshold (min_samples_leaf)
+o
+Don’t split a region if the total number of leaves in the tree will exceed 
+pre-defined threshold
+•
+The appropriate thresholds can be determined by evaluating the 
+model on a held-out data set or, better yet, via cross-validation. 
+82
+
+
+====== страница 81 ======
+Stopping Conditions
+•
+More restrictive stopping conditions: 
+o
+Don’t split a region if the class distribution of the training points inside 
+the region are independent of the predictors. 
+o
+Compute the gain in purity, information or reduction in entropy of 
+splitting a region R into R1 and R2:
+𝐺𝐺𝐺𝐺𝐺𝐺𝐺𝐺𝑅𝑅= Δ 𝑅𝑅= 𝑚𝑚𝑅𝑅−𝑁𝑁1
+𝑁𝑁𝑚𝑚𝑅𝑅1 −𝑁𝑁2
+𝑁𝑁𝑚𝑚(𝑅𝑅2) 
+o
+where m is a metric like the Gini Index or entropy. Don’t split if the gain is 
+less than some pre-defined threshold (min_impurity_decrease). 
+83
+
+
+====== страница 82 ======
+Alternative to Using Stopping Conditions
+•
+What is the major issue with pre-specifying a stopping condition?
+•
+you may stop too early or stop too late.
+•
+How can we fix this issue?
+•
+choose several stopping criterion (set minimal Gain(R) at 
+various levels) and cross-validate which is the best.
+•
+What is an alternative approach to this issue?
+•
+Don’t stop.  Instead prune back!
+84
+
+
+====== страница 83 ======
+Motivation for Pruning
+85
+
+
+====== страница 84 ======
+Motivation for Pruning
+86
+
+
+====== страница 85 ======
+Motivation for Pruning
+87
+
+
+====== страница 86 ======
+Pruning 
+•
+Rather than preventing a complex tree from growing, we can obtain a 
+simpler tree by ‘pruning’ a complex one. 
+•
+There are many method of pruning, a common one is cost 
+complexity pruning, where we select from an array of smaller 
+subtrees of the full model that optimizes a balance of performance 
+and efficiency. 
+– That is, we measure
+𝐶𝐶𝑇𝑇= 𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝑇𝑇+ 𝛼𝛼𝑇𝑇
+– where T is a decision (sub) tree, 𝑇𝑇 is the number of leaves in the tree and 𝛼𝛼 is 
+the parameter for penalizing model complexity.
+88
+
+
+====== страница 87 ======
+Pruning 
+89
+
+
+====== страница 88 ======
+Pruning 
+90
+
+
+====== страница 89 ======
+Pruning 
+91
+
+
+====== страница 90 ======
+92
+slightly
+Pruning 
+
+
+====== страница 91 ======
+Pruning 
+𝐶𝐶𝑇𝑇= 𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝑇𝑇+ 𝛼𝛼𝑇𝑇
+1.
+Fix 𝛼𝛼.
+2. Find best tree for a given 𝛼𝛼 and based on cost complexity C.
+3. Find best 𝛼𝛼 using Cross-Validation (what should be the error measure?) 
+93
+
+
+====== страница 92 ======
+Orange Data Mining   (https://orangedatamining.com)
+94
+Open-source machine learning and data visualization.
+
+
+====== страница 93 ======
+Classification Tree Viewer in Orange
+95
+
+
+====== страница 94 ======
+Classification Tree Parameters
+96
+
+
+====== страница 95 ======
+An example with sklearn
+97
+
+
+====== страница 96 ======
+An example with sklearn (2)
+98
+
+
+====== страница 97 ======
+An example with sklearn (3)
+99
+
+
+====== страница 98 ======
+DecisionTreeClassifier Parameters
+The following parameters can be tuned to improve the model output (Scikit Learn, 2019):
+•
+criterion — Gini impurity is used to decide the variables based on which root node and following 
+decision nodes should be split
+•
+class_weight — None; All classes are assigned weight 1
+•
+max_depth — 3; Pruning is done. When “None”, it signifies that nodes will be expanded till all 
+leaves are homogeneous
+•
+max_features — None; All features or independent variables are considered while deciding split 
+of a node
+•
+max_leaf_nodes — None;
+•
+min_impurity_decrease — 0.0; A node is split only when the split ensures a decrease in the 
+impurity of greater than or equal to zero
+•
+min_impurity_split — None;
+•
+min_samples_leaf — 1; Minimum number of samples required for a leaf to exists
+•
+min_samples_split — 2; If min_samples_leaf =1, it signifies that the right and the left node 
+should have 1 sample each, i.e. the parent node or the root node should have at least two 
+samples
+•
+splitter — ‘best’; Strategy used to choose the split at each node. Best ensure that all features are 
+considered while deciding the split
+100
+
+
+====== страница 99 ======
+An example with sklearn (4)
+101
+
+

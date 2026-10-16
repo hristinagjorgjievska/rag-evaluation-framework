@@ -1,0 +1,1716 @@
+====== страница 1 ======
+1
+Introduction to Machine Learning
+part 3
+
+
+====== страница 2 ======
+References
+Parts of this lecture are based on:
+1. Slides from the Harvard Course CS109A Introduction to Data Science by Pavlos 
+Protopapas, Kevin Rader and Chris Tanner, available at 
+https://github.com/Harvard-IACS/2019-CS109A
+2. James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. An 
+introduction to statistical learning. Vol. 112. New York: springer, 2013.
+3. Prof. Alex Ihler, CS273a: Introduction to Machine Learning, Ensembles: Bagging, 
+Gradient Boosting, AdaBoost http://sli.ics.uci.edu/Classes/2012F-273a
+4. Obiamaka Agbaneje, “Building a Naive Bayes Text Classifier with scikit-learn” @ 
+EuroPython 2018, Edinburgh
+2
+
+
+====== страница 3 ======
+Agenda
+•
+Ensemble models
+•
+Bagging
+•
+Random Forest 
+•
+Boosting
+• XGBoost
+•
+Bayes Classifier
+3
+
+
+====== страница 4 ======
+Limitations of Decision Tree Models 
+•
+Decision trees models are highly interpretable and fast to train, 
+using our greedy learning algorithm. 
+•
+To capture a complex decision boundary (or to approximate a 
+complex function), we need to use a large tree (since each time we 
+can only make axis aligned splits). 
+– We’ve seen that large trees have high variance and are prone to overfitting. 
+•
+For these reasons, in practice, decision tree models often 
+underperforms when compared with other classification or 
+regression methods. 
+4
+
+
+====== страница 5 ======
+STEP 3:
+Combine 
+Classifiers
+STEP 2:
+Build Multiple 
+Classifiers
+STEP 1:
+Create Multiple 
+Data Sets
+General Idea (Bagging)
+majority
+voting
+D
+D1
+D2
+Dt-1
+Dt
+C1
+C2
+Ct-1
+Ct
+Original 
+Training data
+. . .
+. . .
+C*
+
+
+====== страница 6 ======
+Bootstrap: Combine 2 models
+6
+
+
+====== страница 7 ======
+Bootstrap: Combine 20 models
+7
+
+
+====== страница 8 ======
+Bootstrap: Combine 100 models
+8
+
+
+====== страница 9 ======
+Bootstrap: Combine 300 models
+9
+
+
+====== страница 10 ======
+Bagging
+•
+One way to adjust for the high variance of the output of an 
+experiment is to perform the experiment multiple times and then 
+average the results. 
+•
+This method is called Bagging (Breiman, 1996), short for, of course, 
+Bootstrap Aggregating. 
+•
+The same idea can be applied to high variance models: 
+1.
+(Bootstrap) we generate multiple samples of training data, via 
+bootstrapping. We train a full decision tree on each sample of data. 
+2.
+(Aggregate) for a given input, we output the averaged outputs of all the 
+models for that input. 
+•
+For classification, we return the class that is outputted by the plurality of the models.
+•
+For regression we return the average of the outputs for each tree. 
+10
+
+
+====== страница 11 ======
+Bagging
+•
+Note that bagging enjoys the benefits of: 
+1.
+High expressiveness - by using full trees each model can 
+approximate complex functions and decision boundaries. 
+2. Low variance - averaging the prediction of all the models 
+reduces the variance in the final prediction (if we choose a 
+sufficiently large number of trees). 
+•
+The major drawback of bagging (and other ensemble methods that 
+we will study) is that the averaged model is no longer easily 
+interpretable - i.e. one can no longer trace the ‘logic’ of an output 
+through a series of decisions based on predictor values!
+11
+
+
+====== страница 12 ======
+Bagging (regression)
+12
+
+
+====== страница 13 ======
+Bagging (classification)
+13
+
+
+====== страница 14 ======
+Bagging: The process 
+14
+X
+Y
+X1
+𝑦𝑦1
+X2
+y2
+X3
+y3
+𝑋𝑋4
+y4
+𝑋𝑋5
+y5
+⋮
+⋮
+Xn
+yn
+X
+Y
+X4
+𝑦𝑦4
+X14
+y14
+X11
+y11
+𝑋𝑋2
+y2
+𝑋𝑋35
+y35
+⋮
+⋮
+Xk
+yk
+X
+Y
+X1
+𝑦𝑦1
+X2
+y2
+X3
+y3
+𝑋𝑋4
+y4
+𝑋𝑋5
+y5
+⋮
+⋮
+Xn
+yn
+Decision Tree 1
+Bootstrap 
+Sample 1
+Original Data
+Original Data
+used data
+unused data
+
+
+====== страница 15 ======
+Bagging: The process 
+15
+X
+Y
+X1
+𝑦𝑦1
+X2
+y2
+X3
+y3
+𝑋𝑋4
+y4
+𝑋𝑋5
+y5
+⋮
+⋮
+Xn
+yn
+X
+Y
+X5
+𝑦𝑦5
+X3
+y3
+X12
+y12
+𝑋𝑋43
+y43
+𝑋𝑋1
+y1
+⋮
+⋮
+Xk
+yk
+X
+Y
+X1
+𝑦𝑦1
+X2
+y2
+X3
+y3
+𝑋𝑋4
+y4
+𝑋𝑋5
+y5
+⋮
+⋮
+Xn
+yn
+Decision Tree 2
+Bootstrap 
+Sample 2
+Original Data
+Original Data
+used data
+unused data
+
+
+====== страница 16 ======
+Bagging: The process 
+16
+X
+Y
+X1
+𝑦𝑦1
+X2
+y2
+X3
+y3
+𝑋𝑋4
+y4
+𝑋𝑋5
+y5
+⋮
+⋮
+Xn
+yn
+X
+Y
+X9
+𝑦𝑦9
+X4
+y4
+X1
+y1
+𝑋𝑋2
+y2
+𝑋𝑋65
+y65
+⋮
+⋮
+Xk
+yk
+X
+Y
+X1
+𝑦𝑦1
+X2
+y2
+X3
+y3
+𝑋𝑋4
+y4
+𝑋𝑋5
+y5
+⋮
+⋮
+Xn
+yn
+Decision Tree 3
+Bootstrap 
+Sample 3
+Original Data
+Original Data
+used data
+unused data
+
+
+====== страница 17 ======
+Point-wise out-of-bag error 
+17
+X
+Y
+X1
+𝑦𝑦1
+X2
+y2
+X3
+y3
+⋮
+⋮
+𝑋𝑋𝑖𝑖
+yi
+⋮
+⋮
+Xn
+yn
+B Trees that did not see {𝑋𝑋𝑖𝑖, 𝑦𝑦𝑖𝑖}
+prediction
+error
+ො𝑦𝑦𝑖𝑖,𝑝𝑝𝑝𝑝= 1
+𝑏𝑏෍
+𝑗𝑗∈𝐵𝐵
+ො𝑦𝑦𝑖𝑖,𝑗𝑗
+𝑒𝑒𝑖𝑖= 𝑦𝑦𝑖𝑖−ො𝑦𝑦𝑖𝑖.𝑝𝑝𝑝𝑝
+2
+prediction
+error
+ො𝑦𝑦𝑖𝑖,𝑝𝑝𝑝𝑝= majority( ො𝑦𝑦𝑖𝑖)
+𝑒𝑒𝑖𝑖= 𝕀𝕀(ො𝑦𝑦𝑖𝑖,𝑝𝑝𝑝𝑝≠yi)
+
+
+====== страница 18 ======
+Out-of-Bag Error
+•
+Bagging is an example of an ensemble method, a method of building a 
+single model by training and aggregating multiple models. 
+•
+Given a training set and an ensemble of models, each trained on a 
+bootstrap sample, we compute the out-of-bag error of the averaged 
+model by 
+1.
+For each point in the training set, we average the predicted output for this point 
+over the models whose bootstrap training set excludes this point. 
+2.
+We compute the error or squared error of this averaged prediction. Call this the 
+point-wise out-of-bag error. 
+3.
+The out-of-bag error is obtained by averaging the point-wise out-of-bag error over 
+the full training set. 
+18
+
+
+====== страница 19 ======
+Out-of-Bag Error
+•
+We average the point-wise out-of-bag error over the full training set. 
+19
+𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝑟𝑟𝑂𝑂𝑂𝑂𝑂𝑂= 1
+𝑛𝑛෍
+𝑖𝑖
+𝑛𝑛
+𝑒𝑒𝑖𝑖= 1
+𝑛𝑛෍
+𝑖𝑖
+𝑛𝑛
+𝕀𝕀(ො𝑦𝑦𝑖𝑖,𝑝𝑝𝑝𝑝≠yi) 
+𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝑟𝑟𝑂𝑂𝑂𝑂𝑂𝑂= 1
+𝑛𝑛෍
+𝑖𝑖
+𝑛𝑛
+𝑒𝑒𝑖𝑖= 1
+𝑛𝑛෍
+𝑖𝑖
+𝑛𝑛
+𝑦𝑦𝑖𝑖−ො𝑦𝑦𝑖𝑖,𝑝𝑝𝑝𝑝
+2
+Classification
+Regression
+
+
+====== страница 20 ======
+Variable Importance for Bagging 
+•
+Bagging improves 
+prediction accuracy at 
+the expense of 
+interpretability. 
+•
+Calculate the total 
+amount that the MSE 
+(for regression) or Gini 
+index (for 
+classification) is 
+decreased due to splits 
+over a given predictor, 
+averaged over all 𝐵𝐵 
+trees. 
+20
+100 trees, max_depth=10
+
+
+====== страница 21 ======
+Improving on Bagging
+•
+In practice, the ensembles of trees in Bagging tend to be highly 
+correlated. 
+•
+Suppose we have an extremely strong predictor, 𝒙𝒙𝒋𝒋 , in the training set 
+amongst moderate predictors. 
+– Then the greedy learning algorithm ensures that most of the models in the 
+ensemble will choose to split on 𝑥𝑥𝑗𝑗 in early iterations. 
+– Each tree in the ensemble is identically distributed, with the expected output of 
+the averaged model the same as the expected output of any one of the trees. 
+21
+
+
+====== страница 22 ======
+Random Forests
+•
+Random Forest is a modified form of bagging that creates 
+ensembles of independent decision trees. 
+•
+To de-correlate the trees, we: 
+1.
+train each tree on a separate bootstrap sample of the full training set 
+(same as in bagging) 
+2.
+for each tree, at each split, we randomly select a set of 𝐽𝐽𝐽 predictors 
+from the full set of predictors. 
+3.
+From amongst the 𝐽𝐽𝐽  predictors, we select the optimal predictor and 
+the optimal corresponding threshold for the split. 
+22
+
+
+====== страница 23 ======
+Tuning Random Forests
+•
+Random forest models have multiple hyper-parameters to tune: 
+1.
+the number of predictors to randomly select at each split 
+2.
+the total number of trees in the ensemble 
+3.
+the minimum leaf node size 
+•
+In theory, each tree in the random forest is full, but in practice this 
+can be computationally expensive (and added redundancies in the 
+model), thus, imposing a minimum node size is not unusual. 
+23
+
+
+====== страница 24 ======
+Tuning Random Forests
+•
+There are standard (default) values for each of random forest hyper-
+parameters recommended by long time practitioners
+•
+Generally, these parameters should be tuned through OOB (making 
+them data-dependent and problem-dependent). 
+– e.g. number of predictors to randomly select at each split: 
+– √𝑁𝑁𝑗𝑗 for classification
+–
+𝑁𝑁
+3 for regression 
+•
+Using out-of-bag errors, training and cross validation can be done in a 
+single sequence - we cease training once the out-of-bag error stabilizes 
+24
+
+
+====== страница 25 ======
+Variable Importance for Random Forests
+•
+Same as with Bagging: 
+– Calculate the total amount that the RSE (for regression) or Gini index (for 
+classification) is decreased due to splits over a given predictor, averaged over all 
+𝐵𝐵 trees.
+•
+Alternative:
+•
+Record the prediction accuracy on the oob samples for each tree. 
+•
+Randomly permute the data for column 𝑗𝑗 in the oob samples and record the 
+accuracy again. 
+•
+The decrease in accuracy as a result of this permuting is averaged over all trees 
+and is used as a measure of the importance of variable 𝑗𝑗 in the random forest. 
+25
+
+
+====== страница 26 ======
+Variable Importance for Random Forests
+26
+100 trees, max_depth=10
+
+
+====== страница 27 ======
+Final Thoughts on Random Forests
+•
+When the number of predictors is large, but the number of relevant 
+predictors is small, random forests can perform poorly.
+– In each split, the chances of selected a relevant predictor will be low and hence 
+most trees in the ensemble will be weak models. 
+•
+Increasing the number of trees in the ensemble generally does not 
+increase the risk of overfitting. 
+•
+Again, by decomposing the generalization error in terms of bias and 
+variance, we see that increasing the number of trees produces a 
+model that is at least as robust as a single tree. 
+– However, if the number of trees is too large, then the trees in the ensemble may 
+become more correlated, increase the variance. 
+27
+
+
+====== страница 28 ======
+Using Random Forest Classificator with Orange
+•
+We can be using 
+the Kaggle Housing 
+Prices dataset to 
+predict house prices 
+using a Random 
+Forest model.
+•
+Download the train.csv 
+and test.csv files from
+the kaggle site.
+28
+train.csv
+test.csv
+https://www.kaggle.com/c/house-prices-advanced-regression-techniques
+
+
+====== страница 29 ======
+Experimenting with the IRIS dataset
+#Import scikit-learn dataset library
+from sklearn import datasets
+#Load dataset
+iris = datasets.load_iris()
+# Creating a DataFrame of given iris dataset.
+import pandas as pd
+data = pd.DataFrame({ 'sepal length':iris.data[:,0], 
+                      'sepal width':iris.data[:,1], 
+                      'petal length':iris.data[:,2], 
+                      'petal width':iris.data[:,3], 
+                      'species':iris.target })
+29
+
+
+====== страница 30 ======
+Create train and test set with sklearn
+# Import train_test_split function
+from sklearn.model_selection import train_test_split
+X = data[['sepal length', 'sepal width', 'petal length', 'petal width']] # Features
+y = data['species'] # Labels
+# Split dataset into training set and test set
+# 70% training and 30% test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3)
+30
+
+
+====== страница 31 ======
+Building a RF model in sklearn
+#Import Random Forest Model
+from sklearn.ensemble import RandomForestClassifier
+#Create a RF Classifier
+clf = RandomForestClassifier(n_estimators = 100)
+#Train the model using the training sets
+clf.fit(X_train, y_train)
+#Make the predictions
+y_pred = clf.predict(X_test)
+31
+
+
+====== страница 32 ======
+Testing the model in sklearn
+#Import scikit-learn metrics module for accuracy calculation
+from sklearn import metrics
+# Model Accuracy, how often is the classifier correct?
+print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
+32
+Accuracy: 0.93333333333333335
+
+
+====== страница 33 ======
+Motivation for Boosting 
+•
+Question: Could we address the shortcomings of single decision 
+trees models in some other way? 
+•
+For example, rather than performing variance reduction on complex 
+trees, can we decrease the bias of simple trees - make them more 
+expressive? 
+•
+Can we learn from our mistakes? 
+•
+A solution to this problem, making an expressive model from simple 
+trees, is another class of ensemble methods called boosting. 
+33
+
+
+====== страница 34 ======
+Original 
+Training data
+. . .
+D1
+C1
+D2
+C2
+Dt-1
+Ct-1
+Dt
+Ct
+errors
+errors
+errors
+General Idea (Boosting)
+errors
+. . .
+
+
+====== страница 35 ======
+Boosting
+•
+Sequential algorithm where at each step, a weak learner is trained 
+based on the results of the previous learner.
+•
+Two main types:
+•
+Adaptive Boosting: Reweight datapoints based on performance of 
+last weak learner. Focuses on points where previous learner had 
+trouble. Example: AdaBoost.
+•
+Gradient Boosting: Train new learner on residuals of overall model. 
+Constitutes gradient boosting because approximating the residual 
+and adding to the previous result is essentially a form of gradient 
+descent. Example: XGBoost.
+35
+
+
+====== страница 36 ======
+Gradient Boosting
+36
+
+
+====== страница 37 ======
+Gradient Boosting 
+•
+The key intuition behind boosting is that one can take an ensemble 
+of simple models {Th}h∈H and additively combine them into a single, 
+more complex model.
+•
+Each model Th might be a poor fit for the data, but a linear 
+combination of the ensemble 
+•
+can be expressive/flexible.
+37
+
+
+====== страница 38 ======
+Gradient Boosting: the algorithm 
+•
+Gradient boosting is a method for iteratively building a complex regression model T  by adding 
+simple models. Each new simple model added to the ensemble compensates for the 
+weaknesses of the current ensemble. 
+1. Fit a simple model 𝑇𝑇(0) on the training data 
+{ 𝑥𝑥1, 𝑦𝑦1 , … , (𝑥𝑥𝑁𝑁, 𝑦𝑦𝑁𝑁)} 
+ 
+Set 𝑇𝑇←𝑇𝑇(0) .   Compute the residuals {r1 , . . . , rN } for T. 
+2. Fit a simple model, 𝑇𝑇(1) , to the current residuals, i.e. train using
+{ 𝑥𝑥1, 𝑟𝑟1 , … , (𝑥𝑥𝑁𝑁, 𝑟𝑟𝑁𝑁)} 
+3. Set 𝑇𝑇←𝑇𝑇+ 𝜆𝜆𝜆𝜆(1) 
+4. Compute residuals, set 𝑟𝑟𝑛𝑛←𝑟𝑟𝑛𝑛−𝜆𝜆𝑇𝑇𝑖𝑖𝑥𝑥𝑛𝑛, 𝑛𝑛= 1, … , 𝑁𝑁
+5. Repeat steps 2-4 until stopping condition met. Where 𝝀𝝀is a constant 
+called the learning rate. 
+38
+
+
+====== страница 39 ======
+Gradient Boosting (GB) vs Gradient Descent (GD)
+•
+Initialization:
+– GD: random/predefined initialization of weights/coefficients.
+– GB: train a weak model on training data.
+•
+Error calculation:
+– GD: error/loss on entire training set.
+– GB: error/residuals of weak model on training set.
+•
+Update/Fitting:
+– GD: update weights in opposite direction of gradient.
+– GB: fit new model to predict residual errors of previous model.
+•
+Combination:
+– GD: no combination needed.
+– GB: combine predictions of all models to make final prediction.
+•
+Convergence:
+– GD: repeat steps until convergence.
+– GB: repeat steps adding new models until stopping criteria met.
+39
+
+
+====== страница 40 ======
+Gradient 
+Boosting: 
+illustration 
+40
+
+
+====== страница 41 ======
+Gradient Boosting: illustration 
+41
+
+
+====== страница 42 ======
+Gradient Boosting: illustration 2
+42
+
+
+====== страница 43 ======
+Why Does Gradient Boosting Work? 
+•
+Intuitively, each simple model T(i) we add to our ensemble model T, models 
+the errors of T. 
+•
+Thus, with each addition of T(i), the residual is reduced:
+𝑟𝑟𝑛𝑛−𝜆𝜆𝑇𝑇𝑖𝑖(𝑥𝑥𝑛𝑛)
+•
+Note that gradient boosting has a tuning parameter, 𝜆𝜆. 
+– If we want to easily reason about how to choose 𝜆𝜆and investigate the effect of 
+𝜆𝜆on model T, we need a bit more mathematical formalism. 
+– How can we effectively descend through this optimization via an iterative 
+algorithm?
+– We need to formulate gradient boosting as a type of gradient descent. 
+43
+
+
+====== страница 44 ======
+Choosing a Learning Rate 
+•
+Under ideal conditions, gradient descent iteratively approximates and 
+converges to the optimum. 
+•
+When do we terminate gradient descent? 
+•
+We can limit the number of iterations in the descent. But for an arbitrary choice 
+of maximum iterations, we cannot guarantee that we are sufficiently close to 
+the optimum in the end. 
+•
+If the descent is stopped when the updates are sufficiently small (e.g. the 
+residuals of T are small), we encounter a new problem: the algorithm may never 
+terminate! 
+•
+Both problems have to do with the magnitude of the learning rate, 𝝀𝝀. 
+44
+
+
+====== страница 45 ======
+Choosing a Learning Rate 
+•
+For a constant learning rate, 𝜆𝜆, if 𝝀𝝀is too small, it takes too many 
+iterations to reach the optimum. 
+•
+If 𝝀𝝀is too large, the algorithm may ‘bounce’ around the optimum and 
+never get sufficiently close. 
+45
+
+
+====== страница 46 ======
+Choosing a Learning Rate 
+•
+Choosing 𝜆𝜆: 
+• If 𝜆𝜆is a constant, then it should be tuned through cross validation. 
+• For better results, use a variable 𝜆𝜆. That is, let the value of 𝜆𝜆depend 
+on the gradient
+ 
+ 
+ 
+ 
+• where                  is the magnitude of the gradient,              . So 
+•
+around the optimum, when the gradient is small, 𝜆𝜆should be small 
+•
+far from the optimum, when the gradient is large, 𝜆𝜆should be larger 
+46
+
+
+====== страница 47 ======
+Final thoughts on Boosting
+•
+There are few implementations on boosting: 
+•
+XGBoost:  An efficient Gradient Boosting Decision 
+•
+LGBM: Light Gradient Boosted Machines. It is a library for training 
+GBMs developed by Microsoft, and it competes with XGBoost
+•
+CatBoost: A new library for Gradient Boosting Decision Trees, offering 
+appropriate handling of categorical features
+47
+
+
+====== страница 48 ======
+eXtreme Gradient Boosting
+48
+eXtreme Gradient Boosting
+
+
+====== страница 49 ======
+XGBoost
+•
+XGBoost is essentially a very efficient Gradient Boosting Decision Tree 
+implementation with some interesting features:
+•
+Regularization: Can use L1 or L2 regularization.
+•
+Handling sparse data: Incorporates a sparsity-aware split finding algorithm to handle 
+different types of sparsity patterns in the data.
+•
+Weighted quantile sketch: Uses distributed weighted quantile sketch algorithm to 
+effectively handle weighted data.
+•
+Block structure for parallel learning: Makes use of multiple cores on the CPU, possible 
+because of a block structure in its system design. Block structure enables the data layout 
+to be reused. 
+•
+Cache awareness: Allocates internal buffers in each thread, where the gradient statistics 
+can be stored.
+•
+Out-of-core computing: Optimizes the available disk space and maximizes its usage 
+when handling huge datasets that do not fit into memory.
+49
+
+
+====== страница 50 ======
+Bayes Classifier
+•
+A probabilistic framework for solving classification 
+problems
+– A, C random variables
+– Joint probability: Pr(A=a, C=c)
+– Conditional probability: Pr(C=c | A=a)
+– Relationship between joint and conditional probability 
+distributions
+Pr(C, A) = Pr(C|A)xPr(A) = Pr(A|C)xPr(C)
+•
+Bayes Theorem:   𝑷𝑷𝑪𝑪𝑨𝑨=
+𝑷𝑷𝑨𝑨|𝑪𝑪𝑷𝑷𝑪𝑪
+𝑷𝑷𝑨𝑨
+
+
+====== страница 51 ======
+Bayesian Classifiers
+• Example: How to classify the new record X = (‘Yes’, ‘Single’, 80K)
+Maximum Aposteriori Probability 
+estimate:
+•
+Find the value c for class C that 
+maximizes P(C=c| X)
+How do we estimate P(C|X) for the 
+different values of C?
+•
+We want to estimate P(C=Yes| X)
+•
+and P(C=No| X)
+Tid
+Refund
+Matrial 
+Status
+Taxable 
+Income
+Evade
+1
+Yes
+Single
+125K
+No
+2
+No
+Married
+100K
+No
+3
+No
+Single
+70K
+No
+4
+Yes
+Married
+120K
+No
+5
+No
+Divorced
+95K
+Yes
+6
+No
+Married
+60K
+No
+7
+Yes
+Divorced
+220K
+No
+8
+No
+Single
+85K
+Yes
+9
+No
+Married
+75K
+No
+10
+No
+Single
+90K
+Yes
+A1               A2              A3             C
+
+
+====== страница 52 ======
+Bayesian Classifiers
+•
+Approach:
+– compute the posterior probability P(C | A1, A2, …, An) using the Bayes theorem:
+– Maximizing P(C | A1, A2, …, An) is equivalent to maximizing P(A1, A2, …, An|C) P(C)
+• The value 𝑃𝑃(𝐴𝐴1, … , 𝐴𝐴𝑛𝑛) is the same for all values of C.
+•
+How to estimate P(A1, A2, …, An | C )?
+– Assume conditional independence among attributes 𝐴𝐴𝑖𝑖 when class C is given:    
+• 𝑃𝑃(𝐴𝐴1, 𝐴𝐴2, … , 𝐴𝐴𝑛𝑛|𝐶𝐶) = 𝑃𝑃(𝐴𝐴1|𝐶𝐶) 𝑃𝑃(𝐴𝐴2 𝐶𝐶⋯𝑃𝑃(𝐴𝐴𝑛𝑛|𝐶𝐶)
+• We can estimate 𝑷𝑷(𝑨𝑨𝒊𝒊| 𝑪𝑪) from the data.
+𝑃𝑃𝐶𝐶𝐴𝐴1, 𝐴𝐴2, … , 𝐴𝐴𝑛𝑛= 𝑃𝑃𝐴𝐴1𝐴𝐴2 … 𝐴𝐴𝑛𝑛𝐶𝐶𝑃𝑃(𝐶𝐶)
+𝑃𝑃(𝐴𝐴1𝐴𝐴2 … 𝐴𝐴𝑛𝑛)
+
+
+====== страница 53 ======
+How to Estimate Probabilities from Data?
+Tid
+Refund
+Matrial 
+Status
+Taxable 
+Income
+Evade
+1
+Yes
+Single
+125K
+No
+2
+No
+Married
+100K
+No
+3
+No
+Single
+70K
+No
+4
+Yes
+Married
+120K
+No
+5
+No
+Divorced
+95K
+Yes
+6
+No
+Married
+60K
+No
+7
+Yes
+Divorced
+220K
+No
+8
+No
+Single
+85K
+Yes
+9
+No
+Married
+75K
+No
+10
+No
+Single
+90K
+Yes
+refund
+yes
+no
+yes
+0
+3
+yes
+no
+no
+3
+4
+matrial 
+status
+yes
+no
+2
+2
+yes
+no
+0
+4
+yes
+no
+1
+1
+single
+married
+divorced
+evade
+yes
+no
+3
+7
+taxable 
+income
+Gauss(104K, 1,874K) 
+
+
+====== страница 54 ======
+How to Estimate Probabilities from Data?
+A1               A2              A3             C
+Tid
+Refund
+Matrial 
+Status
+Taxable 
+Income
+Evade
+1
+Yes
+Single
+125K
+No
+2
+No
+Married
+100K
+No
+3
+No
+Single
+70K
+No
+4
+Yes
+Married
+120K
+No
+5
+No
+Divorced
+95K
+Yes
+6
+No
+Married
+60K
+No
+7
+Yes
+Divorced
+220K
+No
+8
+No
+Single
+85K
+Yes
+9
+No
+Married
+75K
+No
+10
+No
+Single
+90K
+Yes
+evade
+yes
+no
+3
+7
+Class Prior Probability:  
+𝑃𝑃𝐶𝐶= 𝑐𝑐=
+𝑁𝑁𝑐𝑐
+𝑁𝑁 
+Nc = Number of records with class c
+N = Number of records
+P(C = No) = 7/10 
+P(C = Yes) = 3/10
+
+
+====== страница 55 ======
+How to Estimate Probabilities from Data?
+A1               A2              A3             C
+Tid
+Refund
+Matrial 
+Status
+Taxable 
+Income
+Evade
+1
+Yes
+Single
+125K
+No
+2
+No
+Married
+100K
+No
+3
+No
+Single
+70K
+No
+4
+Yes
+Married
+120K
+No
+5
+No
+Divorced
+95K
+Yes
+6
+No
+Married
+60K
+No
+7
+Yes
+Divorced
+220K
+No
+8
+No
+Single
+85K
+Yes
+9
+No
+Married
+75K
+No
+10
+No
+Single
+90K
+Yes
+Refund
+Matrial Status
+Evade
+Yes
+No
+Yes
+No
+Yes
+No
+Yes
+0
+3
+Single
+2
+2
+3
+7
+No
+3
+4
+Married
+0
+4
+Divorced
+1
+1
+Discrete attributes:
+𝑃𝑃𝐴𝐴𝑖𝑖= 𝑎𝑎𝐶𝐶= 𝑐𝑐= 𝑁𝑁𝑎𝑎,𝑐𝑐
+𝑁𝑁𝑐𝑐
+• 𝑁𝑁𝑎𝑎,𝑐𝑐: number of instances having attribute 𝐴𝐴𝑖𝑖=
+𝑎𝑎 and belong to class 𝑐𝑐
+• 𝑁𝑁𝑐𝑐: number of instances of class 𝑐𝑐
+Refund
+Matrial Status
+Evade
+Yes
+No
+Yes
+No
+Yes
+No
+Yes
+0/3
+3/7
+Single
+2/3
+2/7
+3/10
+7/10
+No
+3/3
+4/7
+Married
+0/3
+4/7
+Divorced
+1/3
+1/7
+
+
+====== страница 56 ======
+How to Estimate Probabilities from Data?
+A1               A2              A3             C
+Tid
+Refund
+Matrial 
+Status
+Taxable 
+Income
+Evade
+1
+Yes
+Single
+125K
+No
+2
+No
+Married
+100K
+No
+3
+No
+Single
+70K
+No
+4
+Yes
+Married
+120K
+No
+5
+No
+Divorced
+95K
+Yes
+6
+No
+Married
+60K
+No
+7
+Yes
+Divorced
+220K
+No
+8
+No
+Single
+85K
+Yes
+9
+No
+Married
+75K
+No
+10
+No
+Single
+90K
+Yes
+Numerical values:
+•
+Normal distribution:
+– One for each (𝑎𝑎, 𝑐𝑐) pair
+2
+2
+2
+)
+(
+2
+2
+1
+)
+|
+(
+ij
+ij
+a
+ij
+j
+i
+e
+c
+a
+A
+P
+σ
+µ
+πσ
+−
+−
+=
+=
+C = Yes
+sample mean μ = 90
+sample variance σ2= 25
+𝑃𝑃𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼= 80 𝑌𝑌𝑌𝑌𝑌𝑌
+=
+1
+2𝜋𝜋ȉ 25
+𝑒𝑒−(80−902
+2ȉ25
+= 0,01
+C = No
+sample mean μ = 110
+sample variance σ2= 2975
+𝑃𝑃𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼= 80 𝑁𝑁𝑁𝑁
+=
+1
+2𝜋𝜋ȉ 2975
+𝑒𝑒−(80−1102
+2ȉ2975
+= 0,0062
+
+
+====== страница 57 ======
+Bayesian Classifiers
+•
+Record: 
+X = (Refund=‘Yes’, Status=‘Single’, Income=80K)
+Tid
+Refund
+Matrial 
+Status
+Taxable 
+Income
+Evade
+1
+Yes
+Single
+125K
+No
+2
+No
+Married
+100K
+No
+3
+No
+Single
+70K
+No
+4
+Yes
+Married
+120K
+No
+5
+No
+Divorced
+95K
+Yes
+6
+No
+Married
+60K
+No
+7
+Yes
+Divorced
+220K
+No
+8
+No
+Single
+85K
+Yes
+9
+No
+Married
+75K
+No
+10
+No
+Single
+90K
+Yes
+A1               A2              A3             C
+We compute:
+P(C = Yes|X) = P(C = Yes) *
+                           P(Refund = Yes | C = Yes) *
+                           P(Status = Single | C = Yes) *
+                           P(Income = 80K | C = Yes) =
+                        = 3/10* 0 * 2/3 * 0.01 = 0
+P(C = No|X) = P(C = No) * 
+                         P(Refund = Yes | C = No) * 
+                         P(Status = Single | C = No) *
+                         P(Income = 80K | C = No) =
+                      = 7/10 * 3/7 * 2/7 * 0.0062 = 0.0005
+P(C | A1, A2, …, An) = P(A1, A2, …, An|C) P(C)    
+                                = P(C) * P(A1|C) * P(A2|C)*…*P(An|C)
+
+
+====== страница 58 ======
+Example of Naïve Bayes Classifier
+•
+Creating a Naïve Bayes Classifier, essentially means to compute counts:
+Total number of records: N = 10
+Class No:
+Number of records: 7
+Attribute Refund: 
+ 
+Yes: 3 
+ 
+No:  4
+Attribute Marital Status:
+ 
+Single:     2
+ 
+Divorced: 1
+ 
+Married:   4
+Attribute Taxable Income:
+ 
+mean:     110
+ 
+variance: 2975
+Class Yes:
+Number of records: 3
+Attribute Refund: 
+ 
+Yes: 0 
+ 
+No:  3
+Attribute Marital Status:
+ 
+Single:     2
+ 
+Divorced: 1
+ 
+Married:   0
+Attribute Taxable Income:
+ 
+mean:     90
+ 
+variance: 25
+What happens 
+when we get 0 for 
+some of the 
+counts?
+
+
+====== страница 59 ======
+Naïve Bayes Classifier
+•
+If one of the conditional probability is zero, then the entire expression 
+becomes zero
+•
+Laplace Smoothing:
+𝑃𝑃𝐴𝐴𝑖𝑖= 𝑎𝑎𝐶𝐶= 𝑐𝑐= 𝑁𝑁𝑎𝑎𝑎𝑎+ 1
+𝑁𝑁𝑐𝑐+ 𝑁𝑁𝑖𝑖
+– 𝑁𝑁𝑖𝑖 : number of attribute values for attribute 𝐴𝐴𝑖𝑖
+
+
+====== страница 60 ======
+Example of Naïve Bayes Classifier
+P(X|Class=No) = P(Refund=No|Class=No)
+                            × P(Married| Class=No)
+                            × P(Income=120K| Class=No)
+                            = 4/9 × 3/10 × 0.0062 
+                            = 0.00082
+P(X|Class=Yes) = P(Refund=No| Class=Yes)
+                             × P(Married| Class=Yes)
+                             × P(Income=120K| Class=Yes)
+                             = 1/5 × 3/6 × 0.01 
+                             = 0.001
+P(No) = 0.7,  P(Yes) = 0.3
+P(X|No) × P(No) = 0.0005  
+P(X|Yes) × P(Yes) = 0.0003
+P(X|Class=No) = P(Refund=No|Class=No)
+                            × P(Married| Class=No)
+                            × P(Income=120K| Class=No)
+                            = 3/7 × 2/7 × 0.0062 
+                            = 0.00075
+P(X|Class=Yes) = P(Refund=No| Class=Yes)
+                             × P(Married| Class=Yes)
+                             × P(Income=120K| Class=Yes)
+                             = 0 × 2/3 × 0.01 
+                             = 0
+P(No) = 0.7,  P(Yes) = 0.3
+P(X|No) × P(No) = 0.000525
+P(X|Yes) × P(Yes) = 0
+P(Refund=Yes|No) = 3/7
+P(Refund=No|No) = 4/7
+P(Refund=Yes|Yes) = 0
+P(Refund=No|Yes) = 1
+P(Status=Single|No) = 2/7
+P(Status=Divorced|No) = 1/7
+P(Status=Married|No) = 4/7
+P(Status=Single|Yes) = 2/7
+P(Status=Divorced|Yes) = 1/7
+P(Status=Married|Yes) = 0
+For taxable income:
+If class=No:    
+    sample mean=110
+    sample variance=2975
+If class=Yes:  
+     sample mean=90
+     sample variance=25
+Naïve Bayes Classifier
+P(Refund=Yes|No) = 4/9
+P(Refund=No|No) = 5/9
+P(Refund=Yes|Yes) = 1/5
+P(Refund=No|Yes) = 4/5
+P(Status=Single|No) = 3/10
+P(Status=Divorced|No) = 2/10
+P(Status=Married|No) = 5/10
+P(Status=Single|Yes) = 3/6
+P(Status=Divorced|Yes) = 2/6
+P(Status=Married|Yes) = 1/6
+For taxable income:
+If class=No:    
+     sample mean=110
+     sample variance=2975
+If class=Yes:  
+     sample mean=90
+     sample variance=25
+Naïve Bayes Classifier
+with Laplacian Smoothing
+
+
+====== страница 61 ======
+Implementation details
+•
+Computing the conditional probabilities involves multiplication of 
+many very small numbers 
+– Numbers get very close to zero, and there is a danger of numeric instability
+•
+We can deal with this by computing the logarithm of the conditional 
+probability
+log 𝑃𝑃𝐶𝐶𝐴𝐴~ log 𝑃𝑃𝐴𝐴𝐶𝐶+ log 𝑃𝑃𝐶𝐶
+= ෍
+𝑖𝑖
+log 𝑃𝑃𝐴𝐴𝑖𝑖𝐶𝐶+ log 𝑃𝑃(𝐶𝐶)
+
+
+====== страница 62 ======
+Naïve Bayes for Text Classification
+•
+Naïve Bayes is commonly used for text classification
+•
+For a document with k terms 𝑑𝑑= (𝑡𝑡1, … , 𝑡𝑡𝑘𝑘)
+𝑃𝑃𝑐𝑐𝑑𝑑= 𝑃𝑃𝑐𝑐𝑃𝑃(𝑑𝑑|𝑐𝑐) = 𝑃𝑃(𝑐𝑐) ෑ
+𝑡𝑡𝑖𝑖∈𝑑𝑑
+𝑃𝑃(𝑡𝑡𝑖𝑖|𝑐𝑐)
+•
+𝑃𝑃𝑡𝑡𝑖𝑖𝑐𝑐= Fraction of terms from all documents in c that are 𝑡𝑡𝑖𝑖.
+𝑷𝑷𝒕𝒕𝒊𝒊𝒄𝒄= 𝑵𝑵𝒊𝒊𝒊𝒊+ 𝟏𝟏
+𝑵𝑵𝒄𝒄+ 𝑻𝑻
+•
+Easy to implement and works relatively well
+•
+Limitation: Hard to incorporate additional features (beyond words).
+– E.g., number of adjectives used.
+Number of times 𝑡𝑡𝑖𝑖 
+appears in some 
+document in c
+Total number of terms in all documents in c
+Number of unique words
+(vocabulary size)
+Laplace Smoothing
+Fraction of 
+documents in c
+
+
+====== страница 63 ======
+Multinomial document model
+•
+Probability of document 𝑑𝑑= 𝑡𝑡1, … , 𝑡𝑡𝑘𝑘 in class c:
+𝑃𝑃(𝑐𝑐|𝑑𝑑) = 𝑃𝑃(𝑐𝑐) ෑ
+𝑡𝑡𝑖𝑖∈𝑑𝑑
+𝑃𝑃(𝑡𝑡𝑖𝑖|𝑐𝑐)
+
+
+====== страница 64 ======
+Example
+“Obama meets Merkel”
+“Obama elected again”
+“Merkel visits Greece again”
+“OSFP European basketball champion”
+“Miami NBA basketball champion”
+“Greece basketball coach?”
+News titles for Politics and Sports
+Politics
+Sports
+documents
+P(p) = 0.5
+P(s) = 0.5
+obama:2, meets:1, merkel:2, 
+elected:1, again:2, visits:1, 
+greece:1
+OSFP:1, european:1, basketball:3, 
+champion:2, miami:1, nba:1, greece:1, 
+coach:1
+terms
+Total terms: 10 
+Total terms: 11
+New title:
+X = “Obama likes basketball”
+Vocabulary 
+size: 14
+P(Politics|X) ~ P(p)*P(obama|p)*P(likes|p)*P(basketball|p)
+                     = 0.5 * 3/(10+14) *1/(10+14) * 1/(10+14) = 0.000108
+P(Sports|X) ~ P(s)*P(obama|s)*P(likes|s)*P(basketball|s)
+                     = 0.5 * 1/(11+14) *1/(11+14) * 4/(11+14) = 0.000128 
+
+
+====== страница 65 ======
+Naïve Bayes (Summary)
+•
+Robust to isolated noise points
+•
+Handle missing values by ignoring the instance during probability 
+estimate calculations
+•
+Robust to irrelevant attributes
+•
+Independence assumption may not hold for some attributes
+– Use other techniques such as Bayesian Belief Networks (BBN)
+•
+Naïve Bayes can produce a probability estimate, but it is usually a 
+very biased one
+– Logistic Regression is better for obtaining probabilities.
+
+
+====== страница 66 ======
+Using Naïve Bayes Classifier with sklearn
+#Import Gaussian Naive Bayes model
+from sklearn.naive_bayes import GaussianNB
+#Create a Gaussian Classifier
+gnb = GaussianNB()
+#Train the model using the training sets
+gnb.fit(X_train, y_train)
+#Predict the response for test dataset
+y_pred = gnb.predict(X_test)
+#Import scikit-learn metrics module for accuracy calculation
+from sklearn import metrics
+# Model Accuracy, how often is the classifier correct? print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+67
+Accuracy: 0.90740740740740744)
+
+

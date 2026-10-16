@@ -1,0 +1,3487 @@
+====== страница 1 ======
+Data Mining
+Cluster Analysis: Basic Concepts 
+and Algorithms
+Lecture Notes for Chapter 7
+Introduction to Data Mining, 2nd Edition
+by
+Tan, Steinbach, Karpatne, Kumar
+
+
+====== страница 2 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+2
+What is Cluster Analysis?
+●Finding groups of objects such that the objects in a group 
+will be similar (or related) to one another and different 
+from (or unrelated to) the objects in other groups
+Inter-cluster 
+distances are 
+maximized
+Intra-cluster 
+distances are 
+minimized
+
+
+====== страница 3 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+3
+Applications of Cluster Analysis
+●Understanding
+– Group related documents 
+for browsing, group genes 
+and proteins that have 
+similar functionality, or 
+group stocks with similar 
+price fluctuations
+●Summarization
+– Reduce the size of large 
+data sets
+ 
+Discovered Clusters 
+Industry Group 
+1 
+Applied-Matl-DOWN,Bay-Network-Down,3-COM-DOWN, 
+Cabletron-Sys-DOWN,CISCO-DOWN,HP-DOWN, 
+DSC-Comm-DOWN,INTEL-DOWN,LSI-Logic-DOWN, 
+Micron-Tech-DOWN,Texas-Inst-Down,Tellabs-Inc-Down, 
+Natl-Semiconduct-DOWN,Oracl-DOWN,SGI-DOWN, 
+Sun-DOWN 
+ 
+ 
+Technology1-DOWN 
+2 
+Apple-Comp-DOWN,Autodesk-DOWN,DEC-DOWN, 
+ADV-Micro-Device-DOWN,Andrew-Corp-DOWN, 
+Computer-Assoc-DOWN,Circuit-City-DOWN, 
+Compaq-DOWN, EMC-Corp-DOWN, Gen-Inst-DOWN, 
+Motorola-DOWN,Microsoft-DOWN,Scientific-Atl-DOWN 
+ 
+ 
+Technology2-DOWN 
+3 
+Fannie-Mae-DOWN,Fed-Home-Loan-DOWN, 
+MBNA-Corp-DOWN,Morgan-Stanley-DOWN 
+ 
+Financial-DOWN 
+4 
+Baker-Hughes-UP,Dresser-Inds-UP,Halliburton-HLD-UP, 
+Louisiana-Land-UP,Phillips-Petro-UP,Unocal-UP, 
+Schlumberger-UP 
+ 
+Oil-UP 
+ 
+ 
+Clustering precipitation 
+in Australia
+
+
+====== страница 4 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+4
+What is not Cluster Analysis?
+●Simple segmentation
+– Dividing students into different registration groups 
+alphabetically, by last name
+●Results of a query
+– Groupings are a result of an external specification
+– Clustering is a grouping of objects based on the data
+●Supervised classification
+– Have class label information
+●Association Analysis
+– Local vs. global connections
+
+
+====== страница 5 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+5
+Notion of a Cluster can be Ambiguous
+How many clusters?
+Four Clusters
+Two Clusters
+Six Clusters
+
+
+====== страница 6 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+6
+Types of Clusterings
+●A clustering is a set of clusters
+●Important distinction between hierarchical and 
+partitional sets of clusters 
+●Partitional Clustering
+– A division of data objects into non-overlapping subsets 
+(clusters) such that each data object is in exactly one subset
+●Hierarchical clustering
+– A set of nested clusters organized as a hierarchical tree 
+
+
+====== страница 7 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+7
+Partitional Clustering
+Original Points
+A Partitional  Clustering
+
+
+====== страница 8 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+8
+Hierarchical Clustering
+p4
+p1
+p3
+p2
+p4 
+p1 
+p3 
+p2 
+p4
+p1
+p2
+p3
+p4
+p1 p2
+p3
+Traditional Hierarchical Clustering
+Non-traditional Hierarchical Clustering
+Non-traditional Dendrogram
+Traditional Dendrogram
+
+
+====== страница 9 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+9
+Other Distinctions Between Sets of Clusters
+●Exclusive versus non-exclusive
+– In non-exclusive clusterings, points may belong to multiple 
+clusters.
+– Can represent multiple classes or ‘border’ points
+●Fuzzy versus non-fuzzy
+– In fuzzy clustering, a point belongs to every cluster with some 
+weight between 0 and 1
+– Weights must sum to 1
+– Probabilistic clustering has similar characteristics
+●Partial versus complete
+– In some cases, we only want to cluster some of the data
+●Heterogeneous versus homogeneous
+– Clusters of widely different sizes, shapes, and densities
+
+
+====== страница 10 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+10
+Types of Clusters
+●Well-separated clusters
+●Center-based clusters
+●Contiguous clusters
+●Density-based clusters
+●Property or Conceptual
+●Described by an Objective Function
+
+
+====== страница 11 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+11
+Types of Clusters: Well-Separated
+●Well-Separated Clusters: 
+– A cluster is a set of points such that any point in a cluster is 
+closer (or more similar) to every other point in the cluster than 
+to any point not in the cluster. 
+3 well-separated clusters
+
+
+====== страница 12 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+12
+Types of Clusters: Center-Based
+●Center-based
+–
+A cluster is a set of objects such that an object in a cluster is 
+closer (more similar) to the “center” of a cluster, than to the 
+center of any other cluster  
+– The center of a cluster is often a centroid, the average of all 
+the points in the cluster, or a medoid, the most “representative” 
+point of a cluster 
+4 center-based clusters
+
+
+====== страница 13 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+13
+Types of Clusters: Contiguity-Based
+●Contiguous Cluster (Nearest neighbor or 
+Transitive)
+– A cluster is a set of points such that a point in a cluster is 
+closer (or more similar) to one or more other points in the 
+cluster than to any point not in the cluster.
+8 contiguous clusters
+
+
+====== страница 14 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+14
+Types of Clusters: Density-Based
+●Density-based
+– A cluster is a dense region of points, which is separated by 
+low-density regions, from other regions of high density. 
+– Used when the clusters are irregular or intertwined, and when 
+noise and outliers are present. 
+6 density-based clusters
+
+
+====== страница 15 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+15
+Types of Clusters: Conceptual Clusters
+●Shared Property or Conceptual Clusters
+– Finds clusters that share some common property or represent 
+a particular concept. 
+. 
+2 Overlapping Circles
+
+
+====== страница 16 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+16
+Types of Clusters: Objective Function
+●Clusters Defined by an Objective Function
+– Finds clusters that minimize or maximize an objective function. 
+– Enumerate all possible ways of dividing the points into clusters and 
+evaluate the `goodness' of each potential set of clusters by using 
+the given objective function.  (NP Hard)
+–
+Can have global or local objectives.
+u Hierarchical clustering algorithms typically have local objectives
+u Partitional algorithms typically have global objectives
+– A variation of the global objective function approach is to fit the 
+data to a parameterized model. 
+u Parameters for the model are determined from the data. 
+u Mixture models assume that the data is a ‘mixture' of a number of 
+statistical distributions.  
+
+
+====== страница 17 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+17
+Map Clustering Problem to a Different Problem
+●Map the clustering problem to a different domain 
+and solve a related problem in that domain
+– Proximity matrix defines a weighted graph, where the 
+nodes are the points being clustered, and the 
+weighted edges represent the proximities between 
+points
+– Clustering is equivalent to breaking the graph into 
+connected components, one for each cluster. 
+– Want to minimize the edge weight between clusters 
+and maximize the edge weight within clusters 
+
+
+====== страница 18 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+18
+Characteristics of the Input Data Are Important
+●Type of proximity or density measure
+–
+Central to clustering 
+–
+Depends on data and application 
+●Data characteristics that affect proximity and/or density are
+– Dimensionality
+u Sparseness
+– Attribute type
+– Special relationships in the data
+u For example, autocorrelation
+– Distribution of the data
+●Noise and Outliers
+– Often interfere with the operation of the clustering algorithm
+
+
+====== страница 19 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+19
+Clustering Algorithms
+●K-means and its variants
+●Hierarchical clustering
+●Density-based clustering
+
+
+====== страница 20 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+20
+K-means Clustering
+●
+Partitional clustering approach 
+●
+Number of clusters, K, must be specified
+●
+Each cluster is associated with a centroid (center point) 
+●
+Each point is assigned to the cluster with the closest 
+centroid
+●
+The basic algorithm is very simple
+
+
+====== страница 21 ======
+Example of K-means Clustering
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 1
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 2
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 3
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 4
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 5
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 6
+
+
+====== страница 22 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+22
+Example of K-means Clustering
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 1
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 2
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 3
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 4
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 5
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 6
+
+
+====== страница 23 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+23
+K-means Clustering – Details
+●
+Initial centroids are often chosen randomly.
+–
+Clusters produced vary from one run to another.
+●
+The centroid is (typically) the mean of the points in the 
+cluster.
+●
+‘Closeness’ is measured by Euclidean distance, cosine 
+similarity, correlation, etc.
+●
+K-means will converge for common similarity measures 
+mentioned above.
+●
+Most of the convergence happens in the first few 
+iterations.
+–
+Often the stopping condition is changed to ‘Until relatively few 
+points change clusters’
+●
+Complexity is O( n * K * I * d )
+–
+n = number of points, K = number of clusters, 
+I = number of iterations, d = number of attributes
+
+
+====== страница 24 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+24
+Evaluating K-means Clusters
+●Most common measure is Sum of Squared Error (SSE)
+– For each point, the error is the distance to the nearest cluster
+– To get SSE, we square these errors and sum them.
+– x is a data point in cluster Ci and mi is the representative point for 
+cluster Ci
+u can show that mi corresponds to the center (mean) of the cluster
+– Given two sets of clusters, we prefer the one with the smallest 
+error
+– One easy way to reduce SSE is to increase K, the number of 
+clusters
+u A good clustering with smaller K can have a lower SSE than a poor 
+clustering with higher K
+åå
+=
+Î
+=
+K
+i
+C
+x
+i
+i
+x
+m
+dist
+SSE
+1
+2
+)
+,
+(
+
+
+====== страница 25 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+25
+Two different K-means Clusterings
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Sub-optimal Clustering
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Optimal Clustering
+Original Points
+
+
+====== страница 26 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+26
+Limitations of K-means
+●K-means has problems when clusters are of 
+differing 
+– Sizes
+– Densities
+– Non-globular shapes
+●K-means has problems when the data contains 
+outliers.
+
+
+====== страница 27 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+27
+Limitations of K-means: Differing Sizes
+Original Points
+K-means (3 Clusters)
+
+
+====== страница 28 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+28
+Limitations of K-means: Differing Density
+Original Points
+K-means (3 Clusters)
+
+
+====== страница 29 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+29
+Limitations of K-means: Non-globular Shapes
+Original Points
+K-means (2 Clusters)
+
+
+====== страница 30 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+30
+Overcoming K-means Limitations
+Original Points
+K-means Clusters
+One solution is to use many clusters.
+Find parts of clusters, but need to put together.
+
+
+====== страница 31 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+31
+Overcoming K-means Limitations
+Original Points
+K-means Clusters
+
+
+====== страница 32 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+32
+Overcoming K-means Limitations
+Original Points
+K-means Clusters
+
+
+====== страница 33 ======
+Importance of Choosing Initial Centroids
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 1
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 2
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 3
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 4
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 5
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 6
+
+
+====== страница 34 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+34
+Importance of Choosing Initial Centroids
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 1
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 2
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 3
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 4
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 5
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 6
+
+
+====== страница 35 ======
+Importance of Choosing Initial Centroids …
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 1
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 2
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 3
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 4
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 5
+
+
+====== страница 36 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+36
+Importance of Choosing Initial Centroids …
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 1
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 2
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 3
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 4
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+0
+0.5
+1
+1.5
+2
+2.5
+3
+x
+y
+Iteration 5
+
+
+====== страница 37 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+37
+Problems with Selecting Initial Points
+●
+If there are K ‘real’ clusters then the chance of selecting 
+one centroid from each cluster is small. 
+–
+Chance is relatively small when K is large
+–
+If clusters are the same size, n, then
+–
+For example, if K = 10, then probability = 10!/1010 = 0.00036
+–
+Sometimes the initial centroids will readjust themselves in 
+‘right’ way, and sometimes they don’t
+–
+Consider an example of five pairs of clusters
+
+
+====== страница 38 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+38
+10 Clusters Example
+Starting with two initial centroids in one cluster of each pair of clusters
+
+
+====== страница 39 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+39
+10 Clusters Example
+0
+5
+10
+15
+20
+-6
+-4
+-2
+0
+2
+4
+6
+8
+x
+y
+Iteration 1
+0
+5
+10
+15
+20
+-6
+-4
+-2
+0
+2
+4
+6
+8
+x
+y
+Iteration 2
+0
+5
+10
+15
+20
+-6
+-4
+-2
+0
+2
+4
+6
+8
+x
+y
+Iteration 3
+0
+5
+10
+15
+20
+-6
+-4
+-2
+0
+2
+4
+6
+8
+x
+y
+Iteration 4
+Starting with two initial centroids in one cluster of each pair of clusters
+
+
+====== страница 40 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+40
+10 Clusters Example
+Starting with some pairs of clusters having three initial centroids, while other 
+have only one.
+
+
+====== страница 41 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+41
+10 Clusters Example
+Starting with some pairs of clusters having three initial centroids, while other have only one.
+0
+5
+10
+15
+20
+-6
+-4
+-2
+0
+2
+4
+6
+8
+x
+y
+Iteration 1
+0
+5
+10
+15
+20
+-6
+-4
+-2
+0
+2
+4
+6
+8
+x
+y
+Iteration 2
+0
+5
+10
+15
+20
+-6
+-4
+-2
+0
+2
+4
+6
+8
+x
+y
+Iteration 3
+0
+5
+10
+15
+20
+-6
+-4
+-2
+0
+2
+4
+6
+8
+x
+y
+Iteration 4
+
+
+====== страница 42 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+42
+Solutions to Initial Centroids Problem
+●Multiple runs
+– Helps, but probability is not on your side
+●Sample and use hierarchical clustering to 
+determine initial centroids
+●Select more than k initial centroids and then 
+select among these initial centroids
+– Select most widely separated
+●Postprocessing
+●Generate a larger number of clusters and then 
+perform a hierarchical clustering
+●Bisecting K-means
+– Not as susceptible to initialization issues
+
+
+====== страница 43 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+43
+K-means++
+●
+This approach can be slower than random initialization, 
+but very consistently produces better results in terms of 
+SSE
+–
+The k-means++ algorithm guarantees an approximation ratio 
+O(log k) in expectation, where k is the number of centers
+●
+To select a set of initial centroids, C, perform the following
+1.
+Select an initial point at random to be the first centroid
+2.
+For k – 1 steps
+3.
+For each of the N points, xi, 1 ≤ i ≤ N, find the minimum squared
+distance to the currently selected centroids, C1, …, Cj, 1 ≤ j < k,
+i.e.,min
+!
+d2( Cj, xi )
+4.
+Randomly select a new centroid by choosing a point with probability
+proportional to 
+"#$
+! d2( Cj, xi )
+∑" "#$
+! d2( Cj, xi )is 
+5.
+End For
+
+
+====== страница 44 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+44
+Empty Clusters
+●K-means can yield empty clusters
+6.5
+9
+10
+15
+16
+18.5
+X
+X
+X
+7.75
+12.5
+17.25
+6.5
+9
+10
+15
+16
+18.5
+X
+X
+X
+6.8
+13
+18
+Empty 
+Cluster
+
+
+====== страница 45 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+45
+Handling Empty Clusters
+●Basic K-means algorithm can yield empty 
+clusters
+●Several strategies
+– Choose the point that contributes most to SSE
+– Choose a point from the cluster with the highest SSE
+– If there are several empty clusters, the above can be 
+repeated several times.
+
+
+====== страница 46 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+46
+Updating Centers Incrementally
+●In the basic K-means algorithm, centroids are 
+updated after all points are assigned to a centroid
+●An alternative is to update the centroids after 
+each assignment (incremental approach)
+– Each assignment updates zero or two centroids
+– More expensive
+– Introduces an order dependency
+– Never get an empty cluster
+– Can use “weights” to change the impact
+
+
+====== страница 47 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+47
+Pre-processing and Post-processing
+●Pre-processing
+– Normalize the data
+– Eliminate outliers
+●Post-processing
+– Eliminate small clusters that may represent outliers
+– Split ‘loose’ clusters, i.e., clusters with relatively high 
+SSE
+– Merge clusters that are ‘close’ and that have relatively 
+low SSE
+– Can use these steps during the clustering process
+u ISODATA
+
+
+====== страница 48 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+48
+Bisecting K-means
+●
+Bisecting K-means algorithm
+–
+Variant of K-means that can produce a partitional or a 
+hierarchical clustering
+CLUTO:  http://glaros.dtc.umn.edu/gkhome/cluto/cluto/overview
+
+
+====== страница 49 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+49
+Bisecting K-means Example
+
+
+====== страница 50 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+50
+Hierarchical Clustering 
+●Produces a set of nested clusters organized as a 
+hierarchical tree
+●Can be visualized as a dendrogram
+– A tree like diagram that records the sequences of 
+merges or splits
+1
+3
+2
+5
+4
+6
+0
+0.05
+0.1
+0.15
+0.2
+1
+2
+3
+4
+5
+6
+1
+2
+3
+4
+5
+
+
+====== страница 51 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+51
+Strengths of Hierarchical Clustering
+●Do not have to assume any particular number of 
+clusters
+– Any desired number of clusters can be obtained by 
+‘cutting’ the dendrogram at the proper level
+●They may correspond to meaningful taxonomies
+– Example in biological sciences (e.g., animal kingdom, 
+phylogeny reconstruction, …)
+
+
+====== страница 52 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+52
+Hierarchical Clustering
+●Two main types of hierarchical clustering
+– Agglomerative:  
+u Start with the points as individual clusters
+u At each step, merge the closest pair of clusters until only one cluster 
+(or k clusters) left
+– Divisive:  
+u Start with one, all-inclusive cluster 
+u At each step, split a cluster until each cluster contains an individual 
+point (or there are k clusters)
+●Traditional hierarchical algorithms use a similarity or 
+distance matrix
+– Merge or split one cluster at a time
+
+
+====== страница 53 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+53
+Agglomerative Clustering Algorithm
+●
+Most popular hierarchical clustering technique
+●
+Basic algorithm is straightforward
+1.
+Compute the proximity matrix
+2.
+Let each data point be a cluster
+3.
+Repeat
+4.
+Merge the two closest clusters
+5.
+Update the proximity matrix
+6.
+Until only a single cluster remains
+●
+Key operation is the computation of the proximity of 
+two clusters
+–
+Different approaches to defining the distance between 
+clusters distinguish the different algorithms
+
+
+====== страница 54 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+54
+Starting Situation 
+●Start with clusters of individual points and a 
+proximity matrix
+p1
+p3
+p5
+p4
+p2
+p1
+p2
+p3
+p4
+p5
+. . .
+.
+.
+.
+Proximity Matrix
+...
+p1
+p2
+p3
+p4
+p9
+p10
+p11
+p12
+
+
+====== страница 55 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+55
+Intermediate Situation
+●After some merging steps, we have some clusters 
+C1
+C4
+C2
+C5
+C3
+C2
+C1
+C1
+C3
+C5
+C4
+C2
+C3
+C4
+C5
+Proximity Matrix
+...
+p1
+p2
+p3
+p4
+p9
+p10
+p11
+p12
+
+
+====== страница 56 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+56
+Intermediate Situation
+●We want to merge the two closest clusters (C2 and C5)  and 
+update the proximity matrix. 
+C1
+C4
+C2
+C5
+C3
+C2
+C1
+C1
+C3
+C5
+C4
+C2
+C3
+C4
+C5
+Proximity Matrix
+...
+p1
+p2
+p3
+p4
+p9
+p10
+p11
+p12
+
+
+====== страница 57 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+57
+After Merging
+●The question is “How do we update the proximity matrix?” 
+C1
+C4
+C2 U C5
+C3
+?        ?        ?        ?    
+?
+?
+?
+C2 
+U 
+C5
+C1
+C1
+C3
+C4
+C2 U C5
+C3
+C4
+Proximity Matrix
+...
+p1
+p2
+p3
+p4
+p9
+p10
+p11
+p12
+
+
+====== страница 58 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+58
+How to Define Inter-Cluster Distance
+p1
+p3
+p5
+p4
+p2
+p1
+p2
+p3
+p4
+p5
+. . .
+.
+.
+.
+Similarity?
+●MIN
+●MAX
+●Group Average
+●Distance Between Centroids
+●Other methods driven by an objective 
+function
+– Ward’s Method uses squared error
+Proximity Matrix
+
+
+====== страница 59 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+59
+How to Define Inter-Cluster Similarity
+p1
+p3
+p5
+p4
+p2
+p1
+p2
+p3
+p4
+p5
+. . .
+.
+.
+.
+Proximity Matrix
+●MIN
+●MAX
+●Group Average
+●Distance Between Centroids
+●Other methods driven by an objective 
+function
+– Ward’s Method uses squared error
+
+
+====== страница 60 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+60
+How to Define Inter-Cluster Similarity
+p1
+p3
+p5
+p4
+p2
+p1
+p2
+p3
+p4
+p5
+. . .
+.
+.
+.
+Proximity Matrix
+●MIN
+●MAX
+●Group Average
+●Distance Between Centroids
+●Other methods driven by an objective 
+function
+– Ward’s Method uses squared error
+
+
+====== страница 61 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+61
+How to Define Inter-Cluster Similarity
+p1
+p3
+p5
+p4
+p2
+p1
+p2
+p3
+p4
+p5
+. . .
+.
+.
+.
+Proximity Matrix
+●MIN
+●MAX
+●Group Average
+●Distance Between Centroids
+●Other methods driven by an objective 
+function
+– Ward’s Method uses squared error
+
+
+====== страница 62 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+62
+How to Define Inter-Cluster Similarity
+p1
+p3
+p5
+p4
+p2
+p1
+p2
+p3
+p4
+p5
+. . .
+.
+.
+.
+Proximity Matrix
+●MIN
+●MAX
+●Group Average
+●Distance Between Centroids
+●Other methods driven by an objective 
+function
+– Ward’s Method uses squared error
+´
+´
+
+
+====== страница 63 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+63
+MIN or Single Link 
+●Proximity of two clusters is based on the two 
+closest points in the different clusters
+– Determined by one pair of points, i.e., by one link in the 
+proximity graph
+●Example:
+Distance Matrix:
+
+
+====== страница 64 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+64
+Hierarchical Clustering: MIN
+Nested Clusters
+Dendrogram
+1
+2
+3
+4
+5
+6
+1
+2
+3
+4
+5
+3
+6
+2
+5
+4
+1
+0
+0.05
+0.1
+0.15
+0.2
+
+
+====== страница 65 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+65
+Strength of MIN
+Original Points
+Six Clusters
+• Can handle non-elliptical shapes
+
+
+====== страница 66 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+66
+Limitations of MIN
+Original Points
+Two Clusters
+• Sensitive to noise and outliers
+Three Clusters
+
+
+====== страница 67 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+67
+MAX or Complete Linkage
+●Proximity of two clusters is based on the two 
+most distant points in the different clusters
+– Determined by all pairs of points in the two clusters
+Distance Matrix:
+
+
+====== страница 68 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+68
+Hierarchical Clustering: MAX
+Nested Clusters
+Dendrogram
+3
+6
+4
+1
+2
+5
+0
+0.05
+0.1
+0.15
+0.2
+0.25
+0.3
+0.35
+0.4
+1
+2
+3
+4
+5
+6
+1
+2
+5
+3
+4
+
+
+====== страница 69 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+69
+Strength of MAX
+Original Points
+Two Clusters
+• Less susceptible to noise and outliers
+
+
+====== страница 70 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+70
+Limitations of MAX
+Original Points
+Two Clusters
+• Tends to break large clusters
+• Biased towards globular clusters
+
+
+====== страница 71 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+71
+Group Average
+●Proximity of two clusters is the average of pairwise proximity 
+between points in the two clusters.
+●Need to use average connectivity for scalability since total 
+proximity favors large clusters
+|
+|Cluster
+|
+|Cluster
+)
+p
+,
+p
+proximity(
+)
+Cluster
+,
+Cluster
+proximity(
+j
+i
+Cluster
+p
+Cluster
+p
+j
+i
+j
+i
+j
+j
+i
+i
+´
+=
+å
+Î
+Î
+Distance Matrix:
+
+
+====== страница 72 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+72
+Hierarchical Clustering: Group Average
+Nested Clusters
+Dendrogram
+3
+6
+4
+1
+2
+5
+0
+0.05
+0.1
+0.15
+0.2
+0.25
+1
+2
+3
+4
+5
+6
+1
+2
+5
+3
+4
+
+
+====== страница 73 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+73
+Hierarchical Clustering: Group Average
+●Compromise between Single and Complete 
+Link
+●Strengths
+– Less susceptible to noise and outliers
+●Limitations
+– Biased towards globular clusters
+
+
+====== страница 74 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+74
+Cluster Similarity: Ward’s Method
+●Similarity of two clusters is based on the increase 
+in squared error when two clusters are merged
+– Similar to group average if distance between points is 
+distance squared
+●Less susceptible to noise and outliers
+●Biased towards globular clusters
+●Hierarchical analogue of K-means
+– Can be used to initialize K-means
+
+
+====== страница 75 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+75
+Hierarchical Clustering: Comparison
+Group Average
+Ward’s Method
+1
+2
+3
+4
+5
+6
+1
+2
+5
+3
+4
+MIN
+MAX
+1
+2
+3
+4
+5
+6
+1
+2
+5
+3
+4
+1
+2
+3
+4
+5
+6
+1
+2
+5
+3
+4
+1
+2
+3
+4
+5
+6
+1
+2
+3
+4
+5
+
+
+====== страница 76 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+76
+MST: Divisive Hierarchical Clustering
+●Build MST (Minimum Spanning Tree)
+– Start with a tree that consists of any point
+– In successive steps, look for the closest pair of points (p, q)  such 
+that one point (p) is in the current tree but the other (q) is not
+– Add q to the tree and put an edge between p and q
+
+
+====== страница 77 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+77
+MST: Divisive Hierarchical Clustering
+●Use MST for constructing hierarchy of clusters
+
+
+====== страница 78 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+78
+Hierarchical Clustering:  Time and Space requirements
+●O(N2) space since it uses the proximity matrix.  
+– N is the number of points.
+●O(N3) time in many cases
+– There are N steps and at each step the size, N2, 
+proximity matrix must be updated and searched
+– Complexity can be reduced to O(N2 log(N) ) time with 
+some cleverness
+
+
+====== страница 79 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+79
+Hierarchical Clustering:  Problems and Limitations
+●Once a decision is made to combine two clusters, 
+it cannot be undone
+●No global objective function is directly minimized
+●Different schemes have problems with one or 
+more of the following:
+– Sensitivity to noise and outliers
+– Difficulty handling clusters of different sizes and non-
+globular shapes
+– Breaking large clusters
+
+
+====== страница 80 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+80
+DBSCAN
+●
+DBSCAN is a density-based algorithm.
+–
+Density = number of points within a specified radius (Eps)
+–
+A point is a core point if it has at least a specified number of 
+points (MinPts) within Eps
+u
+These are points that are at the interior of a cluster
+u
+Counts the point itself
+–
+A border point is not a core point, but is in the neighborhood 
+of a core point
+–
+A noise point is any point that is not a core point or a border 
+point 
+
+
+====== страница 81 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+81
+DBSCAN: Core, Border, and Noise Points
+MinPts = 7
+
+
+====== страница 82 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+82
+DBSCAN Algorithm
+●Eliminate noise points
+●Perform clustering on the remaining points
+
+
+====== страница 83 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+83
+DBSCAN: Core, Border and Noise Points
+Original Points
+Point types: core, 
+border and noise
+Eps = 10, MinPts = 4
+
+
+====== страница 84 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+84
+When DBSCAN Works Well
+Original Points
+Clusters
+• Resistant to Noise
+• Can handle clusters of different shapes and sizes
+
+
+====== страница 85 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+85
+When DBSCAN Does NOT Work Well
+Original Points
+(MinPts=4, Eps=9.75).
+(MinPts=4, Eps=9.92)
+• Varying densities
+• High-dimensional data
+
+
+====== страница 86 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+86
+DBSCAN: Determining EPS and MinPts
+●
+Idea is that for points in a cluster, their kth nearest 
+neighbors are at roughly the same distance
+●
+Noise points have the kth nearest neighbor at farther 
+distance
+●
+So, plot sorted distance of every point to its kth
+nearest neighbor
+
+
+====== страница 87 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+87
+Cluster Validity 
+●For supervised classification we have a variety of 
+measures to evaluate how good our model is
+– Accuracy, precision, recall
+●For cluster analysis, the analogous question is how to 
+evaluate the “goodness” of the resulting clusters?
+●But “clusters are in the eye of the beholder”! 
+●Then why do we want to evaluate them?
+– To avoid finding patterns in noise
+– To compare clustering algorithms
+– To compare two sets of clusters
+– To compare two clusters
+
+
+====== страница 88 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+88
+Clusters found in Random Data
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+Random 
+Points
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+K-means
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+DBSCAN
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+Complete 
+Link
+
+
+====== страница 89 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+89
+1.
+Determining the clustering tendency of a set of data, i.e., 
+distinguishing whether non-random structure actually exists in the 
+data. 
+2.
+Comparing the results of a cluster analysis to externally known 
+results, e.g., to externally given class labels.
+3.
+Evaluating how well the results of a cluster analysis fit the data 
+without reference to external information. 
+- Use only the data
+4.
+Comparing the results of two different sets of cluster analyses to 
+determine which is better.
+5.
+Determining the ‘correct’ number of clusters.
+For 2, 3, and 4, we can further distinguish whether we want to 
+evaluate the entire clustering or just individual clusters. 
+Different Aspects of Cluster Validation
+
+
+====== страница 90 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+90
+●Numerical measures that are applied to judge various aspects 
+of cluster validity, are classified into the following three types.
+– External Index: Used to measure the extent to which cluster labels 
+match externally supplied class labels.
+u Entropy 
+– Internal Index: Used to measure the goodness of a clustering 
+structure without respect to external information. 
+u Sum of Squared Error (SSE)
+– Relative Index: Used to compare two different clusterings or 
+clusters. 
+u Often an external or internal index is used for this function, e.g., SSE or 
+entropy
+●Sometimes these are referred to as criteria instead of indices
+– However, sometimes criterion is the general strategy and index is the 
+numerical measure that implements the criterion.
+Measures of Cluster Validity
+
+
+====== страница 91 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+91
+●
+Two matrices 
+–
+Proximity Matrix
+–
+Ideal Similarity Matrix
+u
+One row and one column for each data point
+u
+An entry is 1 if the associated pair of points belong to the same cluster
+u
+An entry is 0 if the associated pair of points belongs to different clusters
+●
+Compute the correlation between the two matrices
+–
+Since the matrices are symmetric, only the correlation between 
+n(n-1) / 2 entries needs to be calculated.
+●
+High correlation indicates that points that belong to the 
+same cluster are close to each other. 
+●
+Not a good measure for some density or contiguity based
+clusters.
+Measuring Cluster Validity Via Correlation
+
+
+====== страница 92 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+92
+Measuring Cluster Validity Via Correlation
+●Correlation of ideal similarity and proximity 
+matrices for the K-means clusterings of the 
+following two data sets. 
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+Corr = -0.9235
+Corr = -0.5810
+
+
+====== страница 93 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+93
+●Order the similarity matrix with respect to cluster 
+labels and inspect visually. 
+Using Similarity Matrix for Cluster Validation
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+Points
+Points
+20
+40
+60
+80
+100
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+Similarity
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+
+
+====== страница 94 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+94
+Using Similarity Matrix for Cluster Validation
+●Clusters in random data are not so crisp
+Points
+Points
+20
+40
+60
+80
+100
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+Similarity
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+DBSCAN
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+
+
+====== страница 95 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+95
+Points
+Points
+20
+40
+60
+80
+100
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+Similarity
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Using Similarity Matrix for Cluster Validation
+●Clusters in random data are not so crisp
+K-means
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+
+
+====== страница 96 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+96
+Using Similarity Matrix for Cluster Validation
+●Clusters in random data are not so crisp
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+Points
+Points
+20
+40
+60
+80
+100
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+Similarity
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Complete Link
+
+
+====== страница 97 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+97
+Using Similarity Matrix for Cluster Validation
+1 
+2
+3
+5
+6
+4
+7
+DBSCAN
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+500
+1000
+1500
+2000
+2500
+3000
+500
+1000
+1500
+2000
+2500
+3000
+
+
+====== страница 98 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+98
+●Clusters in more complicated figures aren’t well separated
+●Internal Index:  Used to measure the goodness of a clustering 
+structure without respect to external information
+– SSE
+●SSE is good for comparing two clusterings or two clusters 
+(average SSE).
+●Can also be used to estimate the number of clusters
+Internal Measures: SSE
+2 
+5 
+10
+15
+20
+25
+30
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+K
+SSE
+5
+10
+15
+-6
+-4
+-2
+0
+2
+4
+6
+
+
+====== страница 99 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+99
+Internal Measures: SSE
+●SSE curve for a more complicated data set
+1 
+2
+3
+5
+6
+4
+7
+SSE of clusters found using K-means
+
+
+====== страница 100 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+100
+●
+Need a framework to interpret any measure. 
+–
+For example, if our measure of evaluation has the value, 10, is that 
+good, fair, or poor?
+●
+Statistics provide a framework for cluster validity
+–
+The more “atypical” a clustering result is, the more likely it represents 
+valid structure in the data
+–
+Can compare the values of an index that result from random data or 
+clusterings to those of a clustering result.
+u
+If the value of the index is unlikely, then the cluster results are valid
+–
+These approaches are more complicated and harder to understand.
+●
+For comparing the results of two different sets of cluster 
+analyses, a framework is less necessary.
+–
+However, there is the question of whether the difference between two 
+index values is significant
+Framework for Cluster Validity
+
+
+====== страница 101 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+101
+●Example
+– Compare SSE of 0.005 against three clusters in random data
+– Histogram shows SSE of three clusters in 500 sets of random data 
+points of size 100 distributed over the range 0.2 – 0.8 for x and y 
+values
+Statistical Framework for SSE
+0.016
+0.018
+0.02
+0.022
+0.024
+0.026
+0.028
+0.03
+0.032
+0.034
+0
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+SSE
+Count
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+
+
+====== страница 102 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+102
+●Correlation of ideal similarity and proximity matrices 
+for the K-means clusterings of the following two data 
+sets. 
+Statistical Framework for Correlation
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+y
+Corr = -0.9235
+Corr = -0.5810
+
+
+====== страница 103 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+103
+●Cluster Cohesion: Measures how closely related 
+are objects in a cluster
+– Example: SSE
+●Cluster Separation: Measure how distinct or well-
+separated a cluster is from other clusters
+●Example: Squared Error
+– Cohesion is measured by the within cluster sum of squares (SSE)
+– Separation is measured by the between cluster sum of squares
+– Where |Ci| is the size of cluster i
+Internal Measures: Cohesion and Separation
+åå
+Î
+-
+=
+=
+i
+C
+x
+i
+i
+m
+x
+WSS
+SSE
+2)
+(
+å
+-
+=
+i
+i
+i
+m
+m
+C
+BSS
+2)
+(
+
+
+====== страница 104 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+104
+Internal Measures: Cohesion and Separation
+●Example: SSE
+– BSS + WSS = constant
+1
+2
+3
+4
+5
+´
+´
+´
+m1
+m2
+m
+10
+9
+1
+9
+)3
+5.4
+(
+2
+)
+5.1
+3
+(
+2
+1
+)
+5.4
+5
+(
+)
+5.4
+4
+(
+)
+5.1
+2
+(
+)
+5.1
+1(
+2
+2
+2
+2
+2
+2
+=
++
+=
+=
+-
+´
++
+-
+´
+=
+=
+-
++
+-
++
+-
++
+-
+=
+=
+Total
+BSS
+WSS
+SSE
+K=2 clusters:
+10
+0
+10
+0
+)3
+3
+(
+4
+10
+)3
+5
+(
+)3
+4
+(
+)3
+2
+(
+)3
+1(
+2
+2
+2
+2
+2
+=
++
+=
+=
+-
+´
+=
+=
+-
++
+-
++
+-
++
+-
+=
+=
+Total
+BSS
+WSS
+SSE
+K=1 cluster:
+
+
+====== страница 105 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+105
+●A proximity graph based approach can also be used for 
+cohesion and separation.
+– Cluster cohesion is the sum of the weight of all links within a cluster.
+– Cluster separation is the sum of the weights between nodes in the cluster 
+and nodes outside the cluster.
+Internal Measures: Cohesion and Separation
+cohesion
+separation
+
+
+====== страница 106 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+106
+●Silhouette coefficient combines ideas of both cohesion and separation, 
+but for individual points, as well as clusters and clusterings
+●For an individual point, i
+– Calculate a = average distance of i to the points in its cluster
+– Calculate b = min (average distance of i to points in another cluster)
+– The silhouette coefficient for a point is then given by 
+s = (b – a) / max(a,b)   
+– Typically between 0 and 1. 
+– The closer to 1 the better.
+●Can calculate the average silhouette coefficient for a cluster or a 
+clustering
+Internal Measures: Silhouette Coefficient
+Distances used 
+to calculate a
+i
+Distances used 
+to calculate b
+
+
+====== страница 107 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+107
+External Measures for Clustering Validity
+●Assume that the data is labeled with some class 
+labels
+– E.g., documents are classified into topics, people classified 
+according to their income, senators classified as republican 
+or democrat.
+●In this case we want the clusters to be homogeneous 
+with respect to classes
+– Each cluster should contain elements of mostly one class
+– Also each class should ideally be assigned to a single 
+cluster
+●This does not always make sense
+– Clustering is not the same as classification
+●But this is what people use most of the time
+
+
+====== страница 108 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+108
+Measures
+●𝑛= number of points
+●𝑚! = points in cluster i
+●𝑐" = points in class j
+●𝑚!"= points in cluster i coming from 
+class j
+●𝑝!" = 𝑚!"/𝑚!= prob of element from 
+class j in cluster i
+●Entropy:
+–
+Of a cluster i: 𝑒! = −∑"#$
+%
+𝑝!" log 𝑝!"
+uHighest when uniform, zero when single 
+class
+–
+Of a clustering: 𝑒= ∑!#$
+&
+'!
+( 𝑒!
+●Purity:
+–
+Of a cluster i: 𝑝! = max
+"
+𝑝!"
+–
+Of a clustering: 𝑝𝑢𝑟𝑖𝑡𝑦= ∑!#$
+&
+'!
+( 𝑝!
+Class 1
+Class 2
+Class 3
+Cluster 1
+𝑚&&
+𝑚&'
+𝑚&(
+𝑚&
+Cluster 2
+𝑚'&
+𝑚''
+𝑚'(
+𝑚'
+Cluster 3
+𝑚(&
+𝑚('
+𝑚((
+𝑚(
+𝑐&
+𝑐'
+𝑐(
+𝑛
+
+
+====== страница 109 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+109
+Measures
+●Precision:
+– Of cluster i with respect to class j: 𝑃𝑟𝑒𝑐𝑖, 𝑗= 𝑝'(
+uFor the precision of a clustering you can take the maximum
+●Recall:
+– Of cluster i with respect to class j: 𝑅𝑒𝑐𝑖, 𝑗=
+)!"
+*"
+uFor the precision of a clustering you can take the maximum
+●F-measure:
+– Harmonic Mean of Precision and Recall:
+𝐹𝑖, 𝑗= 2 ∗𝑃𝑟𝑒𝑐𝑖, 𝑗∗𝑅𝑒𝑐(𝑖, 𝑗)
+𝑃𝑟𝑒𝑐𝑖, 𝑗+ 𝑅𝑒𝑐(𝑖, 𝑗)
+
+
+====== страница 110 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+110
+Good and bad clustering
+Class 1
+Class 2
+Class 3
+Cluster 1
+20
+35
+35
+90
+Cluster 2
+30
+42
+38
+110
+Cluster 3
+38
+35
+27
+100
+100
+100
+100
+300
+Class 1
+Class 2
+Class 3
+Cluster 1
+2
+3
+85
+90
+Cluster 2
+90
+12
+8
+110
+Cluster 3
+8
+85
+7
+100
+100
+100
+100
+300
+Purity: (0.94, 0.81, 0.85) – overall 0.86
+Precision: (0.94, 0.81, 0.85)
+Recall: (0.85, 0.9, 0.85)  
+Purity: (0.38, 0.38, 0.38) – overall 0.38
+Precision: (0.38, 0.38, 0.38) 
+Recall: (0.35, 0.42, 0.38)  
+
+
+====== страница 111 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+111
+Another bad clustering
+Class 1
+Class 2
+Class 3
+Cluster 1
+0
+0
+35
+35
+Cluster 2
+50
+77
+38
+165
+Cluster 3
+38
+35
+27
+100
+100
+100
+100
+300
+Cluster 1: 
+Purity: 1
+Precision: 1
+Recall: 0.35  
+
+
+====== страница 112 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+112
+External Measures of Cluster Validity: Entropy and Purity
+
+
+====== страница 113 ======
+02/14/2018
+Introduction to Data Mining, 2nd Edition 
+113
+“The validation of clustering structures is the most 
+difficult and frustrating part of cluster analysis. 
+Without a strong effort in this direction, cluster 
+analysis will remain a black art accessible only to 
+those true believers who have experience and 
+great courage.”
+Algorithms for Clustering Data, Jain and Dubes
+Final Comment on Cluster Validity
+
+

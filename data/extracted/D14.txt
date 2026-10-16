@@ -1,0 +1,2099 @@
+====== страница 1 ======
+Introduction to Machine Learning
+part 1
+1
+
+
+====== страница 2 ======
+References
+Parts of this lecture are based on:
+1.
+Slides from the Harvard Course CS109A Introduction to Data Science by Pavlos 
+Protopapas, Kevin Rader and Chris Tanner, available at https://github.com/Harvard-
+IACS/2019-CS109A
+2. James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. An introduction 
+to statistical learning. Vol. 112. New York: springer, 2013.
+3. Cielen, Davy, Arno Meysman, and Mohamed Ali. Introducing data science: big data, 
+machine learning, and more, using Python tools. Manning Publications Co., 2016.
+2
+
+
+====== страница 3 ======
+Agenda
+•
+Introduction to ML
+– Types of ML
+– Using ML to make predictions
+•
+Regression
+– Defining the problem
+– Linear Regressing Models
+– Regressing model evaluation
+•
+Classification
+– Logistic regression
+– Classification metrics
+3
+
+
+====== страница 4 ======
+Paradigm shift
+Computer
+Data
+Program
+Output
+Computer
+Data
+Output
+Program
+Machine Learning
+Traditional Programming
+4
+
+
+====== страница 5 ======
+Understanding 
+how machines 
+learn
+5
+
+
+====== страница 6 ======
+What is machine learning?
+•
+A branch of artificial intelligence concerned with designing 
+and developing algorithms that allow computers to evolve 
+behaviors based on empirical data.
+•
+As intelligence requires knowledge, it is necessary for 
+computers to acquire knowledge
+•
+Automating automation
+•
+Getting computers to program themselves
+– Let the data do the work instead!
+6
+
+
+====== страница 7 ======
+Machine Learning Definition 
+•
+The Formal one:
+– “A computer program is said to learn from experience E 
+concerning some class of tasks T and performance 
+measure P if its performance at tasks in T, as measured 
+by P, improves with experience E.”
+•
+A Practical Example:
+– Look at data. Try something. Get the correct answer? No? 
+Look at the data. Do something different. Better? Yes? Do 
+that again. (Repeat)
+•
+Human learning is still far more sophisticated 
+than even the most advanced machine-learning 
+algorithms, but computers have the advantage 
+of greater capacity to memorize, recall, and 
+process data.
+7
+
+
+====== страница 8 ======
+Types of Learning
+•
+Supervised (inductive) learning
+– Labels provided
+– Training data includes desired outputs
+– Predicting the future. 
+– Learn from known past examples to predict future
+•
+Unsupervised learning
+– Labels not provided
+– Training data does not include desired outputs
+– Making sense of data
+– Understanding the past
+– Learning the structure of data
+•
+Semi-supervised learning
+– Training data includes a few desired outputs
+•
+Reinforcement learning
+– Rewards from sequence of actions
+8
+
+
+====== страница 9 ======
+Machine Learning Capabilities
+Which category
+(Classification)
+How much/many
+(Regression)
+Which group
+(Clustering,
+Recommender)
+Is it odd 
+(Anomaly)
+Which action
+(Reinforcement 
+Learning)
+9
+
+
+====== страница 10 ======
+ML in a Nutshell
+•
+Tens of thousands of machine learning algorithms
+•
+Hundreds of new every year
+•
+Every machine learning algorithm has three components:
+– Representation
+– Evaluation
+– Optimization
+10
+
+
+====== страница 11 ======
+Representation
+•
+Decision trees
+•
+Sets of rules / Logic programs
+•
+Instances
+•
+Graphical models (Bayes/Markov nets)
+•
+Neural networks
+•
+Support vector machines
+•
+Model ensembles
+•
+Etc.
+11
+
+
+====== страница 12 ======
+Evaluation
+•
+Accuracy
+•
+Precision and recall
+•
+Squared error
+•
+Likelihood
+•
+Posterior probability
+•
+Cost / Utility
+•
+Margin
+•
+Entropy
+•
+K-L divergence
+•
+Etc.
+12
+
+
+====== страница 13 ======
+Optimization
+•
+Combinatorial optimization
+– E.g.: Greedy search
+•
+Convex optimization
+– E.g.: Gradient descent
+•
+Constrained optimization
+– E.g.: Linear programming
+13
+
+
+====== страница 14 ======
+Using data to make decisions
+•
+Traditional approaches for the loan-approval 
+process for the microlending
+•
+Human Analyst look at the documents
+•
+Human Analyst makes the decision (YES or NO)
+15
+
+
+====== страница 15 ======
+•
+You need to manually analyze 
+incoming applications
+•
+Apply filtering rules and intuition 
+to approve or disapprove the 
+application
+Using data to make decisions
+16
+The loan rate is more 
+than 1/3 of the 
+applicant’s income
+Applicant has 
+active loan?
+
+
+====== страница 16 ======
+•
+ML learns the optimal decisions directly 
+from the data without arbitrarily 
+hardcoding decision rules. 
+•
+This graduation from rules-based to ML-
+based decision-making means that your 
+decisions will be more accurate and 
+improve over time as more loans are made.
+•
+Data provides the foundation for deriving 
+insights about the problem at hand
+•
+The input data consists of a set of features 
+and numerical or categorical metrics that 
+capture the relevant aspects of each 
+application, such as the applicant’s credit 
+score, gender, and occupation.
+The machine-learning approach
+17
+
+
+====== страница 17 ======
+•
+In logistic regression, the 
+logarithm of the odds that loan 
+will be accepted is modeled as a 
+linear function of the input 
+features:
+– the applicant’s credit line, 
+– education level, 
+– age
+•
+The optimal values of each 
+coefficient of the equation are 
+learned from the training data 
+examples.
+The machine-learning approach
+18
+y = 𝛃𝛃0 +
+    𝛃𝛃1 * Credit_Line +
+    𝛃𝛃2 * Education_Level +
+    𝛃𝛃3 * Age
+Log odds that 
+applicant will 
+get the loan
+coeficients
+
+
+====== страница 18 ======
+Linear vs Non-Linear ML Algorithms 
+•
+When the relationship between the inputs and the response is 
+complicated, models such as logistic regression can be limited. We 
+need to use more complicated models.
+19
+
+
+====== страница 19 ======
+Predicting a Variable (Regression) 
+•
+Let’s imagine a scenario where we'd like to predict one variable using 
+another (or a set of other) variables.
+•
+Thus, we'd like to define two categories of variables: 
+•
+variables whose value we want to predict 
+•
+variables whose values we use to make our prediction
+•
+Examples:
+•
+Predict the number of views a YouTube video will get next week based on video 
+length, the date it was posted, the previous number of views, etc.
+•
+Predict which movies a Netflix user will rate highly based on their previous movie 
+ratings, demographic data, etc.
+20
+
+
+====== страница 20 ======
+Data
+TV
+radio
+newspaper
+sales
+230.1
+37.8
+69.2
+22.1
+44.5
+39.3
+45.1
+10.4
+17.2
+45.9
+69.3
+9.3
+151.5
+41.3
+58.5
+18.5
+180.8
+10.8
+58.4
+12.9
+21
+,
+The Advertising data set consists of the sales of that product in 200 
+different markets, along with advertising budgets for the product in 
+each market for three different media: TV, radio, and newspaper.  
+Everything is given in units of $1000. 
+Some of the figures in this presentation are taken from "An Introduction to Statistical Learning, with 
+applications in R" (Springer, 2013)
+
+
+====== страница 21 ======
+Response vs. Predictor Variables
+TV
+radio
+newspaper
+sales
+230.1
+37.8
+69.2
+22.1
+44.5
+39.3
+45.1
+10.4
+17.2
+45.9
+69.3
+9.3
+151.5
+41.3
+58.5
+18.5
+180.8
+10.8
+58.4
+12.9
+22
+Y
+outcome
+response variable
+dependent variable
+X
+predictors
+features
+covariates
+p predictors
+n  observations
+
+
+====== страница 22 ======
+Response vs. Predictor Variables
+TV
+radio
+newspaper
+sales
+230.1
+37.8
+69.2
+22.1
+44.5
+39.3
+45.1
+10.4
+17.2
+45.9
+69.3
+9.3
+151.5
+41.3
+58.5
+18.5
+180.8
+10.8
+58.4
+12.9
+23
+outcome
+response variable
+dependent variable
+𝑋𝑋= 𝑋𝑋1, … , 𝑋𝑋𝑛𝑛
+𝑋𝑋𝑗𝑗= 𝑥𝑥1𝑗𝑗, … , 𝑥𝑥𝑖𝑖𝑗𝑗, … , 𝑥𝑥𝑝𝑝𝑗𝑗
+predictors
+features
+covariates
+p predictors
+n  observations
+𝑌𝑌= 𝑦𝑦1, … , 𝑦𝑦𝑛𝑛
+
+
+====== страница 23 ======
+True vs. Statistical Model
+•
+We will assume that the response variable, 𝑌𝑌, relates to the 
+predictors, 𝑋𝑋, through some unknown function expressed generally 
+as:
+𝑌𝑌= 𝑓𝑓𝑋𝑋+ 𝜀𝜀
+•
+Here, 𝑓𝑓 is the unknown function expressing an underlying rule for 
+relating 𝑌𝑌 to 𝑋𝑋, 𝜀𝜀 is the random amount (unrelated to 𝑋𝑋) that 𝑌𝑌 differs 
+from the rule 𝑓𝑓𝑋𝑋.
+•
+A statistical model is any algorithm that estimates 𝑓𝑓. 
+We denote the estimated function as ෡𝑓𝑓.
+24
+
+
+====== страница 24 ======
+Statistical Model
+25
+x
+y
+TV 
+budget
+Sales
+9.7
+4.75
+9.9
+7.41
+23.8
+9.1
+58.7
+12.1
+67.1
+8.12
+120
+12.75
+202
+10.9
+223
+17.35
+
+
+====== страница 25 ======
+Statistical Model
+26
+How do we find ̂𝑓𝑓𝑥𝑥?
+What is the 
+value of y at 
+this 𝑥𝑥?
+TV 
+budget
+Sales
+9.7
+4.75
+9.9
+7.41
+23.8
+9.1
+58.7
+12.1
+67.1
+8.12
+120
+12.75
+202
+10.9
+223
+17.35
+
+
+====== страница 26 ======
+Statistical Model
+27
+How do we find ̂𝑓𝑓𝑥𝑥?
+or this 
+one?
+TV 
+budget
+Sales
+9.7
+4.75
+9.9
+7.41
+23.8
+9.1
+58.7
+12.1
+67.1
+8.12
+120
+12.75
+202
+10.9
+223
+17.35
+
+
+====== страница 27 ======
+Statistical Model
+28
+Simple idea is to take the mean of all y’s, ̂𝑓𝑓𝑥𝑥=
+1
+𝑛𝑛∑1
+𝑛𝑛𝑦𝑦𝑖𝑖
+TV 
+budget
+Sales
+9.7
+4.75
+9.9
+7.41
+23.8
+9.1
+58.7
+12.1
+67.1
+8.12
+120
+12.75
+202
+10.9
+223
+17.35
+avg(Sales) = 10.31
+TV budget = 145.6
+Sales  10.31
+
+
+====== страница 28 ======
+Prediction vs. Estimation
+•
+For some problems, what's important is obtaining ̂𝑓𝑓, our estimate of 𝑓𝑓. 
+These are called inference problems. 
+•
+When we use a set of measurements, (𝑥𝑥𝑖𝑖,1, … , 𝑥𝑥𝑖𝑖,𝑝𝑝) to predict a value for the 
+response variable, we denote the predicted value by:
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ ො𝑦𝑦𝑖𝑖= ̂𝑓𝑓(𝑥𝑥𝑖𝑖,1, … , 𝑥𝑥𝑖𝑖,𝑝𝑝).
+•
+For some problems, we don't care about the specific form of ̂𝑓𝑓, we just 
+want to make our predictions ො𝑦𝑦’s as close to the observed values 𝑦𝑦’ as 
+possible. These are called prediction problems.
+29
+
+
+====== страница 29 ======
+Simple Prediction Model
+30
+What is ො𝑦𝑦𝑞𝑞at some 𝑥𝑥𝑞𝑞 ?
+Predict ො𝑦𝑦𝑞𝑞= 𝑦𝑦𝑝𝑝 
+from the closest 
+point
+Find distances to 
+all other points 
+𝐷𝐷(𝑥𝑥𝑞𝑞, 𝑥𝑥𝑖𝑖)
+TV 
+budget
+Sales
+9.7
+4.75
+9.9
+7.41
+23.8
+9.1
+58.7
+12.1
+67.1
+8.12
+120
+12.75
+202
+10.9
+223
+17.35
+xq
+ො𝑦𝑦𝑞𝑞
+TV 
+budget
+|Xq-TV 
+bud|
+9.7
+164.3
+9.9
+164.1
+23.8
+150.2
+58.7
+115.3
+67.1
+106.9
+120
+54
+202
+28
+223
+49
+For example xq = 174
+
+
+====== страница 30 ======
+Simple Prediction Model
+31
+Do the same for “all” 𝑥𝑥𝑥𝑥𝑥
+TV 
+budget
+Sales
+9.7
+4.75
+9.9
+7.41
+23.8
+9.1
+58.7
+12.1
+67.1
+8.12
+120
+12.75
+202
+10.9
+223
+17.35
+d
+
+
+====== страница 31 ======
+Extend the Prediction Model
+32
+Predict ෞ
+𝑦𝑦𝑞𝑞 =
+1
+𝑘𝑘∑𝑖𝑖
+𝑘𝑘𝑦𝑦𝑞𝑞𝑖𝑖
+Find the k-nearest 
+neighbors, 𝑥𝑥𝑞𝑞1, … , 𝑥𝑥𝑞𝑞𝑘𝑘
+What is ො𝑦𝑦𝑞𝑞at some 𝑥𝑥𝑞𝑞 ?
+Find distances to 
+all other points 
+𝐷𝐷(𝑥𝑥𝑞𝑞, 𝑥𝑥𝑖𝑖)
+xq
+ො𝑦𝑦𝑞𝑞
+TV 
+budget
+Sales
+9.7
+4.75
+9.9
+7.41
+23.8
+9.1
+58.7
+12.1
+67.1
+8.12
+120
+12.75
+202
+10.9
+223
+17.35
+14.125
+
+
+====== страница 32 ======
+Simple Prediction Models 
+33
+Which model is the 
+best for our data?
+
+
+====== страница 33 ======
+Simple Prediction Models 
+34
+We can try different k-models on more data
+
+
+====== страница 34 ======
+Error Evaluation
+35
+Start with some data (18 observations).
+TV 
+budget
+Sales
+9.7
+4.75
+9.9
+7.41
+23.8
+9.1
+58.7
+12.1
+67.1
+8.12
+120
+12.75
+202
+10.9
+223
+17.35
+10.1
+5.2
+67.2
+12.8
+67.6
+10.8
+99.6
+8.78
+149.1
+14.6
+200
+23.1
+209
+19.25
+225
+17.86
+242
+11.3
+293.4
+24.69
+
+
+====== страница 35 ======
+Error Evaluation
+36
+Hide some of the data from the model. 
+This is called train-test split. 
+We use the 
+train set (8 
+observations) 
+to estimate ො𝑦𝑦, 
+and the test 
+set to 
+evaluate the 
+model. 
+TV 
+budget
+Sales
+9.7
+4.75
+9.9
+7.41
+23.8
+9.1
+58.7
+12.1
+67.1
+8.12
+120
+12.75
+202
+10.9
+223
+17.35
+10.1
+5.2
+67.2
+12.8
+67.6
+10.8
+99.6
+8.78
+149.1
+14.6
+200
+23.1
+209
+19.25
+225
+17.86
+242
+11.3
+293.4
+24.69
+TEST
+TRAIN
+
+
+====== страница 36 ======
+Error Evaluation
+37
+Estimate ො𝑦𝑦 for k=1 , by using only train data.
+TV 
+budget
+Sales
+9.7
+4.75
+9.9
+7.41
+23.8
+9.1
+58.7
+12.1
+67.1
+8.12
+120
+12.75
+202
+10.9
+223
+17.35
+10.1
+5.2
+67.2
+12.8
+67.6
+10.8
+99.6
+8.78
+149.1
+14.6
+200
+23.1
+209
+19.25
+225
+17.86
+242
+11.3
+293.4
+24.69
+TRAIN
+
+
+====== страница 37 ======
+Error Evaluation
+38
+Now, we look at the data we have not used, 
+the test data (red crosses).
+Calculate the 
+residuals
+𝑦𝑦𝑖𝑖−ො𝑦𝑦𝑖𝑖.
+TV 
+budget
+Sales
+9.7
+4.75
+9.9
+7.41
+23.8
+9.1
+58.7
+12.1
+67.1
+8.12
+120
+12.75
+202
+10.9
+223
+17.35
+10.1
+5.2
+67.2
+12.8
+67.6
+10.8
+99.6
+8.78
+149.1
+14.6
+200
+23.1
+209
+19.25
+225
+17.86
+242
+11.3
+293.4
+24.69
+TEST
+TV 
+budget
+Sales
+෣
+𝑺𝑺𝑺𝑺𝑺𝑺𝑺𝑺
+𝚫𝚫
+10.1
+5.2
+7.41
+-2.21
+67.2
+12.8
+8.12
+4.68
+67.6
+10.8
+8.12
+2.68
+99.6
+8.78
+12.75
+-3.97
+149.1
+14.6
+12.75
+1.85
+200
+23.1
+10.9
+12.2
+209
+19.25
+10.9
+8.35
+225
+17.86
+17.35
+0.51
+242
+11.3
+17.35
+-6.05
+293.4
+24.69
+17.35
+7.35
+
+
+====== страница 38 ======
+Error Evaluation 
+39
+• In order to quantify how well a model performs, we define a loss or error 
+function. 
+• A common loss function for quantitative outcomes is the Mean Squared 
+Error (MSE): 
+• The quantity 𝑦𝑦𝑖𝑖−ො𝑦𝑦𝑖𝑖 is called a residual and measures the error at the i-th 
+prediction.
+• Note: The Root of the Mean of the Squared Errors (RMSE) is also 
+commonly used. 
+
+
+====== страница 39 ======
+Error Evaluation 
+40
+TV 
+budget
+Sales
+෣
+𝑺𝑺𝑺𝑺𝑺𝑺𝑺𝑺
+𝚫𝚫
+10.1
+5.2
+7.41
+-2.21
+67.2
+12.8
+8.12
+4.68
+67.6
+10.8
+8.12
+2.68
+99.6
+8.78
+12.75
+-3.97
+149.1
+14.6
+12.75
+1.85
+200
+23.1
+10.9
+12.2
+209
+19.25
+10.9
+8.35
+225
+17.86
+17.35
+0.51
+242
+11.3
+17.35
+-6.05
+293.4
+24.69
+17.35
+7.35
+𝚫𝚫2
+4.88
+21.9
+7.18
+15.76
+3.42
+148.84
+69.72
+0.26
+36.6
+54.02
+MSE = 36.2453
+RMSE = 6.0204
+
+
+====== страница 40 ======
+Error Evaluation 
+41
+Do the same for k=3.
+
+
+====== страница 41 ======
+Model Comparison
+42
+Do the same for all k’s and compare the RMSEs. 
+6.2
+6.0
+5.8
+For k=3 seems to be the best KNN model.
+
+
+====== страница 42 ======
+Model fitness
+43
+For a subset of the data, calculate 
+the RMSE for k=3. 
+Is RMSE=5.0 good enough?
+Is RMSE=5004.93 that good?
+What if we measure the Sales in 
+cents instead of dollars? 
+
+
+====== страница 43 ======
+Model fitness
+44
+It is better if we compare it to something. 
+We will use the 
+simplest model:
+
+
+====== страница 44 ======
+R-squared
+•
+If our model is as good as the mean 
+value, ത𝑦𝑦, then 𝑅𝑅2 = 0
+•
+If our model is perfect then 𝑅𝑅2 = 1
+•
+𝑅𝑅2 can be negative if the model is 
+worst than the average. This can 
+happen when we evaluate the model 
+in the test set. 
+45
+TV 
+budget
+Sales
+෣
+𝑺𝑺𝑺𝑺𝑺𝑺𝑺𝑺
+𝚫𝚫
+10.1
+5.2
+7.41
+-2.21
+67.2
+12.8
+8.12
+4.68
+67.6
+10.8
+8.12
+2.68
+99.6
+8.78
+12.75
+-3.97
+149.1
+14.6
+12.75
+1.85
+200
+23.1
+10.9
+12.2
+209
+19.25
+10.9
+8.35
+225
+17.86
+17.35
+0.51
+242
+11.3
+17.35
+-6.05
+293.4
+24.69
+17.35
+7.35
+𝚫𝚫2
+4.88
+21.9
+7.18
+15.76
+3.42
+148.84
+69.72
+0.26
+36.6
+54.02
+ത∆2
+26.11
+6.2
+0.24
+2.34
+18.4
+163.58
+79.92
+57
+0.98
+206.78
+ത𝑦𝑦 = 10.31 (calculated from the train data)
+561.57
+362.6
+R2 = 0.354
+
+
+====== страница 45 ======
+Linear Models (Inference)
+•
+Note that in building our kNN model for prediction, we did not 
+compute a closed form for ̂𝑓𝑓. 
+•
+What if we ask the question: “For particular market, how much sales do 
+we expect if we double the TV advertising budget?” 
+•
+Alternatively, we can build a model by first assuming a simple form of 𝑓𝑓: 
+•
+… then it follows that our estimate is:
+•
+where ̂𝛽𝛽1 and ̂𝛽𝛽0 are estimates of 𝛽𝛽1 and 𝛽𝛽0, respectively, that we compute 
+by using the observations.
+46
+
+
+====== страница 46 ======
+Estimate of the regression coefficients
+47
+Is this line good?
+
+
+====== страница 47 ======
+Estimate of the regression coefficients (cont) 
+48
+Maybe this one?
+
+
+====== страница 48 ======
+Estimate of the regression coefficients (cont) 
+49
+Or this one?
+
+
+====== страница 49 ======
+Estimate of the regression coefficients (cont) 
+50
+Question: Which line is the best? 
+First calculate the residuals 
+
+
+====== страница 50 ======
+Estimate of the regression coefficients (cont.) 
+•
+Again, we use MSE as our loss function, 
+•
+We choose ̂𝛽𝛽1and ̂𝛽𝛽0 in order to minimize the predictive errors made 
+by our model, i.e., minimize our loss function.
+•
+Then the optimal values for ̂𝛽𝛽0 and ̂𝛽𝛽1 should be:
+51
+
+
+====== страница 51 ======
+Estimate of the regression coefficients: brute force
+•
+A way to estimate argmin𝛽𝛽0,𝛽𝛽1 𝐿𝐿 is to calculate the loss function for 
+every possible 𝛽𝛽0 and 𝛽𝛽1. Then select the  𝛽𝛽0 and 𝛽𝛽1 where the loss 
+function is minimum. 
+•
+E.g., the loss function for different 𝛽𝛽1 when 𝛽𝛽0 is fixed to be 6:
+52
+
+
+====== страница 52 ======
+Regression line:
+Take the partial derivatives of 𝐿𝐿 with respect to 𝛽𝛽0 and 𝛽𝛽1, set to zero, and 
+find the solution to that equation. This procedure will give us explicit 
+formulae for ̂𝛽𝛽0 and ̂𝛽𝛽1:
+where ത𝑦𝑦 and ̅𝑥𝑥 are sample means. 
+Estimate of the regression coefficients: exact method 
+53
+
+
+====== страница 53 ======
+54
+
+
+====== страница 54 ======
+Estimate of the regression coefficients:  gradient descent 
+55
+A more flexible method is
+• Start from a random point
+1.
+Determine which direction to go to reduce the loss (left or right)
+2.
+Compute the slope of the function at this point and step to the right if the slope is 
+negative or step to the left if the slope is positive
+3.
+Goto to #1 
+
+
+====== страница 55 ======
+Estimate of the regression coefficients:  gradient descent 
+•
+We know that we want to go in the opposite direction of the derivative, 
+and we know we want to be making a step proportionally to the 
+derivative. 
+•
+Making a step means:
+56
+𝑤𝑤𝑛𝑛𝑛𝑛𝑛𝑛= 𝑤𝑤𝑜𝑜𝑜𝑜𝑜𝑜+ 𝑠𝑠𝑠𝑠𝑠𝑠𝑠𝑠
+Opposite direction of the derivative and proportional to the derivative 
+means:   
+𝑤𝑤𝑛𝑛𝑛𝑛𝑛𝑛= 𝑤𝑤𝑜𝑜𝑜𝑜𝑜𝑜−𝜆𝜆𝑑𝑑ℒ
+𝑑𝑑𝑑𝑑
+Change to more conventional notation:
+𝑤𝑤(𝑖𝑖+1) = 𝑤𝑤(𝑖𝑖) −𝜆𝜆𝑑𝑑ℒ
+𝑑𝑑𝑑𝑑
+Learning 
+Rate
+Notation:  𝑤𝑤= [𝛽𝛽0, 𝛽𝛽1]
+
+
+====== страница 56 ======
+Estimate of the regression coefficients:  gradient descent 
+•
+Summary of Gradient Descent 
+•
+Algorithm for first-order 
+optimization to find a minimum of 
+a function. 
+•
+It is an iterative method.
+•
+L is decreasing in the direction of 
+the negative derivative.
+•
+The learning rate is controlled by 
+the magnitude of 𝜆𝜆.
+57
+L
+w
+-
++
+𝑤𝑤(𝑖𝑖+1) = 𝑤𝑤(𝑖𝑖) −𝜆𝜆𝑑𝑑ℒ
+𝑑𝑑𝑑𝑑
+
+
+====== страница 57 ======
+Interpretation of Predictors
+Question: What do you think a predictor coefficient means?
+𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆= 7.5 + 0.04 𝑇𝑇𝑇𝑇
+•
+What does 7.5 mean and what does 0.04 mean?
+•
+If we increase the TV by $1000, what would you expect the increase in 
+sales to be? 
+•
+What if?                            𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆= 7.5 + 1.01 𝑇𝑇𝑇𝑇 
+58
+The interpretation of the predictors depends on the values.
+Decisions depend on how much we trust these values.
+
+
+====== страница 58 ======
+•
+We interpret the 𝜀𝜀 term in our observation
+ 
+to be the noise introduced by random variations in natural systems or 
+imprecisions of our scientific instruments. 
+•
+If we knew the exact form of 𝑓𝑓𝑥𝑥, for example, 𝑓𝑓𝑥𝑥= 𝛽𝛽0 + 𝛽𝛽1𝑥𝑥, and 
+there was no 𝜀𝜀 , then estimating the ̂𝛽𝛽′𝑠𝑠 would have been exact.
+•
+However, three things happen, which result in mistrust of the values 
+of ̂𝛽𝛽′𝑠𝑠 : 
+•
+𝜺𝜺 is always there 
+•
+we do not know the exact form of 𝑓𝑓𝑥𝑥
+•
+limited sample size
+Confidence intervals for the predictors estimates
+59
+
+
+====== страница 59 ======
+Confidence intervals for the predictors estimates (cont)
+•
+But due to error, every time we measure the response Y for a fixed 
+value of X, we will obtain a different observation. 
+•
+We have 3 “realizations” on the picture
+60
+
+
+====== страница 60 ======
+Confidence intervals for the predictors estimates (cont)
+•
+For each one of those “realizations”, we could fit a model and 
+estimate ̂𝛽𝛽0 and ̂𝛽𝛽1.
+61
+𝛃𝛃0 = 0.2
+𝛃𝛃1 = 2.13
+
+
+====== страница 61 ======
+Confidence intervals for the predictors estimates (cont)
+•
+For each one of those “realizations”, we could fit a model and 
+estimate, ̂𝛽𝛽0 and ̂𝛽𝛽1.
+62
+𝛃𝛃0 = 0.84
+𝛃𝛃1 = 1.53
+
+
+====== страница 62 ======
+Confidence intervals for the predictors estimates (cont)
+•
+For each one of those “realizations”, we could fit a model and 
+estimate, ̂𝛽𝛽0 and ̂𝛽𝛽1.
+63
+𝛃𝛃0 = 0.16
+𝛃𝛃1 = 2.3
+
+
+====== страница 63 ======
+Confidence intervals for the predictors estimates (cont)
+•
+For the three realizations of the experiment we obtain different 
+regression lines.
+64
+𝛃𝛃0 = 0.2
+𝛃𝛃1 = 2.13
+𝛃𝛃0 = 0.84
+𝛃𝛃1 = 1.53
+𝛃𝛃0 = 0.16
+𝛃𝛃1 = 2.3
+I)
+II)
+III)
+
+
+====== страница 64 ======
+Bootstrapping for Estimating Sampling Error
+•
+Bootstrapping is the practice of estimating properties of an 
+estimator by measuring those properties by, for example, 
+sampling from the observed data.
+•
+For example, we can compute ̂𝛽𝛽0 and ̂𝛽𝛽1 multiple times by 
+randomly sampling from our data set. We then use the 
+variance of our multiple estimates to approximate the true 
+variance of ̂𝛽𝛽0 and ̂𝛽𝛽1.
+Definition
+65
+
+
+====== страница 65 ======
+Idealized Sampling
+idealized original population
+(through an oracle)
+take samples
+apply test statistic (e.g. mean)
+histogram of statistic values
+compare test statistic on
+the given data, compute p
+66
+
+
+====== страница 66 ======
+Bootstrap Sampling
+Given data (sample)
+bootstrap samples,
+drawn with replacement
+apply test statistic (e.g. mean)
+histogram of statistic values
+The region containing 95% of the samples is a 95% confidence interval (CI)
+Original pop.
+67
+
+
+====== страница 67 ======
+Confidence intervals for the predictors estimates (cont)
+68
+.
+We sample multiple times and calculate ̂𝛽𝛽0 and ̂𝛽𝛽1
+
+
+====== страница 68 ======
+Confidence intervals for the predictors estimates (cont)
+69
+Another sample 
+
+
+====== страница 69 ======
+Confidence intervals for the predictors estimates (cont)
+70
+Another sample 
+
+
+====== страница 70 ======
+Confidence intervals for the predictors estimates (cont)
+71
+And another sample 
+
+
+====== страница 71 ======
+Confidence intervals for the predictors estimates (cont)
+72
+Repeat this for 100 times 
+
+
+====== страница 72 ======
+Confidence intervals for the predictors estimates (cont)
+73
+We can now estimate the mean and standard deviation of all the estimates ̂𝛽𝛽1. 
+The variance of ̂𝛽𝛽0 and ̂𝛽𝛽1  are also called their standard errors, 𝑆𝑆𝑆𝑆̂ 𝛽𝛽0 , 𝑆𝑆𝑆𝑆̂ 𝛽𝛽1 .
+2
+
+
+====== страница 73 ======
+Confidence intervals for the predictors estimates (cont)
+74
+68%
+95%
+Finally, we can calculate the confidence intervals, which are the ranges 
+of values such that the true value of 𝛽𝛽1is contained in this interval with 
+n percent probability.
+
+
+====== страница 74 ======
+Confidence intervals for the predictors estimates: Standard Errors
+•
+We can empirically estimate the standard errors, 𝑆𝑆𝑆𝑆̂ 𝛽𝛽0 , 𝑆𝑆𝑆𝑆̂ 𝛽𝛽1 
+of  𝛽𝛽0 and 𝛽𝛽1 through bootstrapping.  
+•
+If for each bootstrapped sample the estimated betas are: ̂𝛽𝛽0,𝑖𝑖, ̂
+𝛽𝛽1,𝑖𝑖, then
+•
+𝑆𝑆𝑆𝑆̂ 𝛽𝛽0 =
+var(෢
+𝛽𝛽0)
+•
+𝑆𝑆𝑆𝑆̂ 𝛽𝛽1 =
+var(෢
+𝛽𝛽1)
+75
+
+
+====== страница 75 ======
+Confidence intervals for the predictors estimates: Standard Errors
+•
+Alternatively: 
+•
+If we know the variance 𝜎𝜎𝜖𝜖2 of the noise 𝜖𝜖, we can compute 𝑆𝑆𝑆𝑆̂ 𝛽𝛽0 , 𝑆𝑆𝑆𝑆̂ 𝛽𝛽1 
+analytically using the formulae below (no need to bootstrap):
+* If data set is small this approximation does not work 
+76
+
+
+====== страница 76 ======
+Standard Errors
+•
+However, if we make the following assumptions, 
+• the errors 𝜖𝜖𝑖𝑖= 𝑦𝑦𝑖𝑖−ො𝑦𝑦𝑖𝑖 and 𝜖𝜖𝑗𝑗= 𝑦𝑦𝑗𝑗−ො𝑦𝑦𝑗𝑗 are uncorrelated, for 𝑖𝑖≠𝑗𝑗 ,
+• each 𝜖𝜖𝑖𝑖 has a mean 0 and variance 𝜎𝜎𝜖𝜖2,
+•
+then, we can empirically estimate 𝜎𝜎2, from the data and our regression 
+line: 
+Remember:
+𝑦𝑦𝑖𝑖= 𝑓𝑓𝑥𝑥𝑖𝑖+ 𝜖𝜖𝑖𝑖⟹𝜖𝜖𝑖𝑖= 𝑦𝑦𝑖𝑖−𝑓𝑓(𝑥𝑥𝑖𝑖)
+77
+
+
+====== страница 77 ======
+Hypothesis Testing
+Hypothesis testing is a formal process through which we evaluate the 
+validity of a statistical hypothesis by considering evidence for or against 
+the hypothesis gathered by random sampling of the data. 
+1.
+State the hypotheses, typically a null hypothesis, 𝐻𝐻0 and an 
+alternative hypothesis, 𝐻𝐻1, that is the negation of the former. 
+2. Choose a type of analysis, i.e. how to use sample data to evaluate the 
+null hypothesis. Typically this involves choosing a single test statistic.
+3. Sample data and compute the test statistic.
+4. Use the value of the test statistic to either reject or not reject the null 
+hypothesis.
+78
+
+
+====== страница 78 ======
+Hypothesis testing
+State Hypothesis:
+Null hypothesis:  
+ 
+𝐻𝐻0: There is no relation between X and Y 
+The alternative:
+ 
+ 𝐻𝐻𝑎𝑎: There is some relation between X and Y 
+Mathematically, this corresponds to testing H0 : β1 = 0 versus Ha : β1 != 0. 
+Since if β1 = 0 then the model Y = β0 + β1X + 𝛆𝛆 reduces to Y = β0 + 𝛆𝛆, and X is 
+not associated with Y .
+To test the null hypothesis, we need to determine whether, our estimate 
+for ̂𝛽𝛽1, is sufficiently far from zero that we can be confident that ̂𝛽𝛽1 is non-
+zero. We use the following t-statistic, which measures the number of 
+standard deviations that ̂𝛽𝛽1is away from 0 
+79
+
+
+====== страница 79 ======
+Hypothesis testing
+80
+The t-test statistic measures the distance from zero in
+ units of  standard deviation.
+We evaluate how often a particular value of t can 
+occur by accident. We expect that t will have a 
+t-distribution with n-2 degrees of freedom. 
+To compute the probability of observing any value equal to |𝑡𝑡| or larger, assuming  ̂
+𝛽𝛽1 = 0 is easy. We call this probability the p-value.
+ 
+a small p-value (<0.05) indicates that it is unlikely to observe such a 
+substantial association between the predictor and the response due to 
+chance. 
+𝜎𝜎෡𝛽𝛽1
+𝜇𝜇෡𝛽𝛽1 −0
+2
+
+
+====== страница 80 ======
+Error Types
+•
+A type I error (or error of the first kind) is the incorrect rejection of a true null hypothesis. 
+–
+Usually a type I error leads one to conclude that a supposed effect or relationship exists when in fact 
+it doesn't. 
+–
+Examples of type I errors include a test that shows a patient to have a disease when in fact the 
+patient does not have the disease, a fire alarm going on indicating a fire when in fact there is no fire, 
+or an experiment indicating that a medical treatment should cure a disease when in fact it does not.
+•
+A type II error (or error of the second kind) is the failure to reject a false null hypothesis. 
+–
+Examples of type II errors would be a blood test failing to detect the disease it was designed to detect, 
+in a patient who really has the disease; a fire breaking out and the fire alarm does not ring; or a 
+clinical trial of a medical treatment failing to show that the treatment works when really it does
+81
+
+
+====== страница 81 ======
+Important tests 
+•
+T-test: compare two groups, or two interventions on one 
+group. 
+•
+CHI-squared and Fisher’s test. Compare the counts in a 
+“contingency table”.
+•
+ANOVA: compare outcomes under several discrete 
+interventions. 
+82
+
+
+====== страница 82 ======
+T-test
+•
+Single-sample: Compute the test statistic:
+t =̅
+𝑥𝑥
+ഥ𝜎𝜎 
+•
+where ̅𝑥𝑥 is the sample mean and ത𝜎𝜎 is the sample standard deviation, 
+which is the square root of the sample variance Var(x). 
+•
+If X is normally distributed, t is almost normally distributed, but not 
+quite because of the presence of ത𝜎𝜎. It has a t-distribution. 
+•
+You use the single-sample test for one group of individuals in two 
+conditions. Just subtract the two measurements for each person, 
+and use the difference for the single sample t-test. 
+•
+This is called a within-subjects design. 
+83
+
+
+====== страница 83 ======
+T-statistic and T-distribution
+•
+We use the t-statistic from the last slide to test whether the 
+mean of our sample could be zero. 
+•
+If the underlying population has mean zero, the t-distribution 
+should be distributed like this:
+•
+The area of the tail beyond
+our measurement tells us how
+likely it is under the null 
+hypothesis. 
+•
+If that probability is low 
+(say < 0.05) we reject the null 
+hypothesis.
+84
+
+
+====== страница 84 ======
+Two sample T-test
+•
+In this test, there are two samples 𝑥𝑥1 and 𝑥𝑥2 of sizes 𝑛𝑛1 and 𝑛𝑛2. A 
+t-statistic is constructed from their sample means and sample 
+standard deviations:
+•
+𝑡𝑡=̅
+𝑥𝑥1−̅𝑥𝑥2
+𝜎𝜎ഥ𝑥𝑥1−ഥ𝑥𝑥2
+•
+where:    𝜎𝜎̅𝑥𝑥1−̅𝑥𝑥2 =
+𝜎𝜎12
+𝑛𝑛1 +
+𝜎𝜎22
+𝑛𝑛2  and 𝜎𝜎1 and 𝜎𝜎2 are sample stdevs,
+•
+You should try to understand the formula, but you shouldn’t need to 
+use it. most stats. software exposes a function that takes the 
+samples 𝑥𝑥1 and 𝑥𝑥2 as inputs directly.
+•
+This design is called a between-subjects test. 
+85
+
+
+====== страница 85 ======
+Chi-squared test
+•
+Often you will be faced with discrete (count) data. Given a table 
+like this: 
+•
+Where Prob(X) is part of a null hypothesis about the data (e.g. 
+that a coin is fair). 
+•
+The CHI-squared statistic lets you test whether an observation 
+is consistent with the data:
+•
+Oi is an observed count, and Ei is the expected value of that 
+count. It has a chi-squared distribution, whose p-values you 
+compute to do the test.  
+Prob(X)
+Count(X)
+X=0
+0.3
+10
+X=1
+0.7
+50
+86
+
+
+====== страница 86 ======
+Fisher’s exact test
+•
+In case we only have counts under different conditions
+•
+We can use Fisher’s exact test (n = a+b+c+d):
+•
+Which gives the probability directly (its not a statistic). 
+Count1(X)
+Count2(X)
+X=0
+a
+b
+X=1
+c
+d
+87
+
+
+====== страница 87 ======
+One-Way ANOVA
+•
+ANOVA (ANalysis Of VAriance) allows testing of multiple 
+differences in a single test. Suppose our experiment design has 
+an independent variable Y with four levels:
+•
+The table shows the mean values of a response variable (e.g. avg 
+number of Facebook posts per day) in each group.
+•
+We would like to know in a single test whether the response 
+variable depends on Y, at some particular significance such as 
+0.05. 
+Primary School
+High School
+College
+Grad degree
+4.1
+4.5
+4.2
+3.8
+Y
+88
+
+
+====== страница 88 ======
+ANOVA
+•
+In ANOVA we compute a single statistic (an F-statistic) that 
+compares variance between groups with variance within each group.
+•
+The higher the F-value is, the less probable is the null hypothesis that 
+the samples all come from the same population. 
+•
+We can look up the F-statistic value in a cumulative F-distribution 
+(similar to the other statistics) to get the p-value. 
+•
+ANOVA tests can be much more complicated, with multiple 
+dependent variables, hierarchies of variables, correlated 
+measurements etc.
+within
+between
+VAR
+VAR
+F =
+89
+
+
+====== страница 89 ======
+Non-Parametric Tests
+•
+All the tests so far are parametric tests that assume the data are 
+normally distributed, and that the samples are independent of each 
+other and all have the same distribution (IID). 
+•
+They may be arbitrarily inaccurate if those assumptions are not met. 
+Always make sure your data satisfies the assumptions of the test 
+you’re using. e.g. watch out for:
+– Outliers – will corrupt many tests that use variance estimates.
+– Correlated values as samples, e.g. if you repeated measurements on the same 
+subject. 
+– Skewed distributions – give invalid results.
+90
+
+
+====== страница 90 ======
+Non-Parametric Tests
+•
+These tests make no assumption about the distribution of 
+the input data, and can be used on very general datasets:
+– K-S test
+– Permutation tests
+– Bootstrap confidence intervals
+91
+
+
+====== страница 91 ======
+K-S test
+•
+The K-S (Kolmogorov-Smirnov) test is a very useful test for checking 
+whether two (continuous or discrete) distributions are the same. 
+•
+In the one-sided test, an observed distribution (e.g. some observed 
+values or a histogram) is compared against a reference distribution. 
+•
+In the two-sided test, two observed distributions are compared. 
+•
+The K-S statistic is just the max
+distance between the CDFs of
+the two distributions. 
+•
+While the statistic is simple, its
+distribution is not!
+•
+But it is available in most stat
+packages. 
+92
+
+
+====== страница 92 ======
+K-S test
+•
+The K-S test can be used to test whether a data sample has a 
+normal distribution or not.
+•
+Thus it can be used as a sanity check for any common parametric 
+test (which assumes normally-distributed data). 
+•
+It can also be used to compare distributions of data values in a large 
+data pipeline: Most errors will distort the distribution of a data 
+parameter and a K-S test can detect this. 
+93
+
+
+====== страница 93 ======
+Classification
+•
+Up to this point, the methods we have seen have centered around 
+modeling and predicting a quantitative response variable (ex, number 
+of taxi pickups, number of bike rentals, etc.).  Linear regression performs 
+well under these situations 
+ 
+•
+When the response variable is categorical, then the problem is no longer 
+called a regression problem but is instead labeled as a classification 
+problem.  
+•
+The goal is to attempt to classify each observation into a category (aka, 
+class or cluster) defined by Y, based on a set of predictor variables X. 
+94
+
+
+====== страница 94 ======
+Example
+•
+We are interested in predicting whether an individual will default on 
+their credit card payment based on annual income and monthly 
+credit card balance.
+•
+The individuals who defaulted on their credit card payments are 
+shown in orange and those who did not are shown in blue.
+95
+
+
+====== страница 95 ======
+Why not Linear Regression?
+•
+We model default =1 and not default = 0
+•
+Applying Linear Regression, we will get:
+96
+
+
+====== страница 96 ======
+Logistic Regression 
+•
+Rather than modelling this response Y directly, logistic regression 
+models the probability that Y belongs to a particular category
+•
+For the Default data, logistic regression models the probability of 
+default. 
+– The probability of default given balance can be written as 
+P( default = Yes | balance ), which we abbreviate as p(balance)
+– The values p(balance) will range between 0 and 1. 
+– Then, for any given value of balance, a prediction can be made for default. 
+– For example, one might predict default = Yes for any individual for whom 
+p(balance) > 0.5. 
+– Alternatively, if a company wishes to be conservative in predicting individuals 
+who are at risk for default, then they may choose to use a lower threshold, such 
+as p(balance) > 0.1.
+97
+
+
+====== страница 97 ======
+The Logistic Model
+•
+We need to model the relationship between p(X) = P(Y = 1|X) and X
+– We can try to apply linear regression model p(X) = β0 + β1X, but we will get the 
+model shown two slides before
+•
+To avoid this problem, we must model p(X) using a function that 
+gives outputs between 0 and 1 for all values of X. 
+•
+Many functions meet this description, but in logistic regression, we 
+use the logistic function,
+98
+
+
+====== страница 98 ======
+The Logistic Model
+•
+After a bit of manipulation of the original formula, we find that
+•
+The quantity p(X)/[1−p(X)] is called the odds and can take on any 
+value between 0 and ∞. 
+•
+Values of the odds close to 0 and ∞ indicate very low and very high 
+probabilities, respectively
+•
+For example, 
+– If on average, 1 in 5 people will default, we have p(X)=0.2 implies an odds of 
+0.2/(1−0.2) = 0.25. 
+– Likewise, on average, 9 out of every 10 people will default since p(X)=0.9 implies 
+an odds of 0.9/(1−0.9) = 9
+99
+
+
+====== страница 99 ======
+The Logistic Model
+•
+By taking the logarithm of both sides, we arrive at
+•
+The left-hand side is called the log odds or logit
+•
+The coefficients β0 and β1 need to be estimated based on the 
+available training data
+•
+The maximum likelihood method is used to fit a logistic regression 
+model and can be interpreted as follows: 
+– we seek estimates for β0 and β1 such that the predicted probability ̂𝑝𝑝(𝑥𝑥𝑖𝑖) of 
+default for each individual corresponds as closely as possible to the individual’s 
+observed default status.
+•
+Mathematical equation called a likelihood function is used to 
+estimate β0 and β1 :
+100
+
+
+====== страница 100 ======
+Making Predictions
+•
+Solving the model, a we get β0 = −10.6513 and β1 = 0.0055
+101
+= 0.586
+
+
+====== страница 101 ======
+Multiple Logistic Regression
+•
+We now consider the problem of predicting a binary 
+response using multiple predictors
+102
+
+
+====== страница 102 ======
+Important measures for classification and diagnostic 
+testing
+•
+Accuracy
+•
+Precision
+•
+Recall
+•
+Sensitivity
+•
+Specificity
+103
+
+
+====== страница 103 ======
+Why not to use “accuracy” directly
+•
+The simplest measure of performance would be the 
+fraction of items that are correctly classified, or the 
+“accuracy” which is:
+𝑡𝑡𝑡𝑡+ 𝑡𝑡𝑡𝑡
+𝑡𝑡𝑡𝑡+ 𝑡𝑡𝑡𝑡+ 𝑓𝑓𝑓𝑓+ 𝑓𝑓𝑓𝑓
+•
+(tp = true positive, fn = false negative etc.).
+•
+But this measure is dominated by the larger set (of positives or 
+negatives) and favors trivial classifiers.
+– e.g. if 5% of items are truly positive, then a classifier that always says “negative” 
+is 95% accurate.
+104
+
+
+====== страница 104 ======
+Precision and Recall
+105
+
+
+====== страница 105 ======
+Sensitivity and Specificity
+106
+
+
+====== страница 106 ======
+Important measures for classification and diagnostic 
+testing
+107
+
+
+====== страница 107 ======
+Confusion matrix
+•
+Is an error matrix that allows 
+visualization of the 
+performance of an algorithm. 
+•
+Each row of the matrix 
+represents the instances in a 
+predicted class, while each 
+column represents the 
+instances in an actual class (or 
+vice versa).
+108
+
+
+====== страница 108 ======
+ROC plots
+•
+ROC is Receiver-Operating Characteristic
+– Y-axis: true positive rate = tp/(tp + fn), same as recall (or sensitivity)
+– X-axis: false positive rate = fp/(fp + tn) = 1 - specificity 
+109
+
+
+====== страница 109 ======
+•
+ROC AUC is the “Area Under 
+the Curve” – a single number 
+that captures the overall 
+quality of the classifier.
+•
+It should be between 0.5 
+(random classifier) and 1.0 
+(perfect). 
+Random ordering
+area = 0.5
+110
+ROC AUC
+
+
+====== страница 110 ======
+•
+A variation of the ROC plot is 
+the lift plot, which compares 
+the performance of the actual 
+classifier against random 
+ordering or sometimes 
+against another classifier. 
+Lift is the ratio 
+of these lengths
+111
+Lift Plot
+
+
+====== страница 111 ======
+Lift Plot
+•
+Lift plots emphasize initial 
+precision (typically what you care 
+about) and performance in a 
+problem-independent way.
+•
+Note: The lift plot points should be 
+computed at regular spacing, e.g., 
+1/00 or 1/1000. Otherwise, the 
+initial lift value can be excessively 
+high and unstable. 
+1 - specificity
+112
+
+
