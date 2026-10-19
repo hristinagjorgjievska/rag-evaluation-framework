@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Lecture 2. Basic Classification in Data Mining
 Data Mining, prof. Biljana Tojtovska Ribarski
 FCSE, Skopje
@@ -91,7 +91,7 @@ The first questions are conceptual:
 1
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 • What exactly is the object being classified?
 • What exactly does the class label mean?
 • Which attributes are available when the prediction must actually be made?
@@ -132,7 +132,7 @@ of interest.
 2
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 Example: The object must be clear
 Suppose a university wants to predict academic risk. Are we classifying:
 • students,
@@ -178,7 +178,7 @@ These are different classification problems and may require different predictors
 3
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 Example: Finance example
 The label
 “bad customer”
@@ -207,7 +207,7 @@ Each patient may be described by the variables in Table 1.
 4
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 Table 1: A mixed-type medical triage example
 Attribute
 Type
@@ -285,7 +285,7 @@ There are few important families of classification methods:
 5
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 • nearest-neighbor methods,
 • Naïve Bayes and Bayesian belief networks,
 • support vector machines,
@@ -324,7 +324,7 @@ Different trees may arise because of:
 6
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 Example: Two reasonable first questions
 In the triage example, one tree may begin with symptom severity, while another begins
 with reported symptom type. Both may be defensible on the same training data, especially
@@ -365,7 +365,7 @@ For a nominal attribute, one may use:
 7
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 • a binary split that groups categories into two subsets.
 Example: Nominal attribute
 Reported symptom type may take values cough, fever, chest pain, and other. A tree may
@@ -414,7 +414,7 @@ automatically scientifically fundamental thresholds.
 8
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 1.12
 How Continuous Attributes Are Handled
 A continuous predictor may be discretized into intervals or handled directly through threshold
@@ -462,7 +462,7 @@ pi(t).
 9
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 Remark
 Gini and entropy are usually more sensitive than misclassification error when comparing
 candidate splits.
@@ -517,7 +517,7 @@ identifier. The tree is memorizing the training cases, which leads to severe ove
 10
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 does not generalize to new patients with unseen IDs.
 Example: A more meaningful split
 In the same dataset, a split on symptom severity may separate many urgent cases from
@@ -564,7 +564,7 @@ n .
 11
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 Remark
 Gain ratio discourages splits that fragment the data excessively into many tiny groups.
 1.18
@@ -622,7 +622,7 @@ Much weaker support
 12
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 Both leaves in Table 2 predict the class Urgent, but they are not equally convincing.
 Example: Same class, different support
 Suppose a new patient reaches Leaf A. The training cases in that leaf were 18 urgent and
@@ -664,7 +664,7 @@ A test record may contain a category not present in the training data.
 13
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 Example: Unseen category
 Suppose the training data contain reported symptom types
 {cough, fever, chest pain, other},
@@ -705,7 +705,7 @@ looks best at that moment according to the chosen impurity criterion.
 14
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 This is practical, but it has a limitation.
 Warning
 A split that is locally best need not lead to the globally best tree.
@@ -754,7 +754,7 @@ A small change in the dataset may lead to:
 15
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 Example: A small change, a different first question
 Suppose in the triage data the two best root candidates are symptom severity and age,
 with nearly identical impurity reduction. If one borderline patient is added, removed, or
@@ -794,7 +794,7 @@ Do’s
 16
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 • Ask whether a split is conceptually meaningful, not only numerically attractive.
 • Interpret a leaf as a local class distribution, not only as a hard label.
 • Be suspicious of identifiers and near-identifiers.
@@ -837,7 +837,7 @@ use of Gini, entropy, information gain, and gain ratio to compare candidate spli
 17
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 At the same time, real classification practice requires more than formulas. A classifier only learns
 the label that has been defined. Predictors must be available at prediction time. Not every
 impurity-reducing split is meaningful. Leaves store local class evidence, not only class names.
@@ -911,7 +911,7 @@ Yes
 18
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 Using the Gini measure, compute the impurity of the root node and the weighted Gini
 index obtained by splitting on A, on B, and on C. Choose the best root split and continue
 building the decision tree, again using the Gini measure at each non-pure node, until all

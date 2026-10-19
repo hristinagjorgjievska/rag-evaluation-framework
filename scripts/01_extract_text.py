@@ -7,9 +7,12 @@ import pymupdf
 from bs4 import BeautifulSoup
 
 DATA_FOLDER = Path(__file__).resolve().parent.parent / "data"
+RAW_FOLDER = DATA_FOLDER / "raw"
+EXTRACTED_FOLDER = DATA_FOLDER / "extracted"
 
-def extract_pdf_document(path):
-    pdf = pymupdf.open(path)
+
+def extract_pdf_document(filename):
+    pdf = pymupdf.open(filename)
     pages = []
 
     for page in pdf:
@@ -19,8 +22,10 @@ def extract_pdf_document(path):
     pdf.close()
     return pages
 
-def extract_html_document(path):
-    article = BeautifulSoup(path.read_text(encoding="utf-8"), "html.parser").find("article")
+
+def extract_html_document(filename):
+    html = filename.read_text(encoding="utf-8")
+    article = BeautifulSoup(html, "html.parser").find("article")
 
     for tag in article.select("script, style, a.headerlink"):
         tag.decompose()
@@ -28,18 +33,37 @@ def extract_html_document(path):
     for tag in article.find_all(["p", "li", "dt", "dd", "pre", "div", "h1", "h2", "h3", "h4"]):
         tag.insert_after("\n")
 
-    return [re.sub(r"\s*\n\s*\n\s*", "\n\n", article.get_text()).strip()]
+    article_text = article.get_text()
+    article_text = re.sub(r"\s*\n\s*\n\s*", "\n\n", article_text)
+    article_text = article_text.strip()
+    return [article_text]
 
-for doc in pd.read_csv(DATA_FOLDER / "corpus_manifest.csv", dtype=str).itertuples():
-    extract = extract_pdf_document if doc.format == "pdf" else extract_html_document
 
-    pages = extract(DATA_FOLDER / "raw" / doc.filename)
-    out = {"doc_id": doc.doc_id, "pages": pages}
-    (DATA_FOLDER / "extracted" / f"{doc.doc_id}.json").write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+manifest = pd.read_csv(DATA_FOLDER / "corpus_manifest.csv", dtype=str)
+for doc in manifest.itertuples():
+    file = RAW_FOLDER / doc.filename
+
+    if doc.format == "pdf":
+        pages = extract_pdf_document(file)
+    else:
+        pages = extract_html_document(file)
+
+    output = {"doc_id": doc.doc_id, "pages": pages}
+
+    with open(EXTRACTED_FOLDER / f"{doc.doc_id}.json", "w", encoding="utf-8") as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
 
     text = ""
-    for number, page in enumerate(pages, start=1):
-        text += f"====== страница {number} ======\n{page}\n\n"
-    (DATA_FOLDER / "extracted" / f"{doc.doc_id}.txt").write_text(text, encoding="utf-8")
+    page_number = 1
+    for page in pages:
+        text += f"---------- страница {page_number} ----------\n{page}\n\n"
+        page_number += 1
 
-    print(doc.doc_id, len(pages), "стр.", sum(len(p.split()) for p in pages), "збора")
+    with open(EXTRACTED_FOLDER / f"{doc.doc_id}.txt", "w", encoding="utf-8") as f:
+        f.write(text)
+
+    word_count = 0
+    for page in pages:
+        word_count += len(page.split())
+
+    print(doc.doc_id, len(pages), "стр.", word_count, "зборови")

@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 8.3. Preprocessing data
 
 The sklearn.preprocessing package provides several common

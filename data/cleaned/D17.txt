@@ -1,0 +1,893 @@
+---------- страница 1 ----------
+Artificial Neural Networks
+and Deep Learning
+
+---------- страница 2 ----------
+References
+Parts of this lecture are based on:
+Slides from the Harvard Course CS109A Introduction to Data Science by 
+Pavlos Protopapas, Kevin Rader and Chris Tanner, available at 
+https://github.com/Harvard-IACS/2019-CS109A
+2. Sharda, R., Dursun Delen, and E. Turban. "Analytics, data science." & Artificial 
+Intelligence: Systems for Decision Support. Eleventh ed: Pearson (2019).
+
+---------- страница 3 ----------
+Agenda
+Artificial neural network (ANN) 
+Deep Learning (DL)
+“AI is sometimes heralded as the new industrial revolution. If 
+deep learning is the steam engine of this revolution, then data 
+is its coal: the raw material that powers our intelligent 
+machines, without which nothing would be possible.” 
+—François Chollet, AI researcher 
+
+---------- страница 4 ----------
+Neural Network Concepts
+• Neural networks (NN): a human brain metaphor for information 
+processing
+• Artificial neural network (ANN)
+• Many uses for ANN for:
+pattern recognition
+forecasting
+prediction and 
+classification
+• Many application areas:
+finance
+marketing
+manufacturing
+operations
+information systems, and so on
+
+---------- страница 5 ----------
+Analogy between Neural Networks and Artificial Neural Networks
+Artificial
+Biological
+Node
+Soma
+Input
+Dendrites
+Output
+Axon
+Weight
+Synapse
+Fast
+Slow
+
+---------- страница 6 ----------
+Artificial Neural Network
+• A single neuron (processing element – PE) with inputs and outputs
+
+---------- страница 7 ----------
+Why Now?
+Neural Networks date back decades, so why the 
+resurgence?
+2. Hardware
+• Graphics 
+Processing 
+Units (GPUs)
+• Massively 
+Parallelizable
+1. Big Data
+• Larger 
+Datasets
+• Easier 
+Collection & 
+Storage
+3. Software
+• Improved 
+Techniques
+• New Models 
+Toolboxes
+
+---------- страница 8 ----------
+What is Deep Learning
+
+---------- страница 9 ----------
+Introduction to Deep Learning
+Neural networks, with their remarkable ability to derive meaning 
+from complicated or imprecise data, can be used to extract patterns 
+and detect trends that are too complex to be noticed by either 
+humans or other computer techniques
+– Adaptive learning
+• adjust their internal parameters (weights) based on experience
+– Self Organization
+• Networks automatically discover relevant features and structure in data
+– Fault Tolerance
+• Robust to noisy, incomplete, or corrupted input data
+
+---------- страница 10 ----------
+Introduction to Deep Learning
+The placement of Deep Learning within the overarching AI-based 
+learning methods
+
+---------- страница 11 ----------
+Introduction to Deep Learning
+Differences between Classic Machine-Learning Methods and 
+Representation Learning/Deep Learning
+
+---------- страница 12 ----------
+What is Deep Learning (DL) ? 
+A machine learning subfield of 
+learning representations of 
+data. Exceptional effective at 
+learning patterns.
+Deep learning algorithms 
+attempt to learn (multiple 
+levels of) representation by 
+using a hierarchy of multiple 
+layers.
+If you provide the system tons 
+of information, it begins to 
+understand it and respond in 
+useful ways.
+
+---------- страница 13 ----------
+Shallow Network
+Shallow (2 layer) networks need a lot more 
+hidden layer nodes to compensate for 
+lack of expressivity
+Deep Network
+In a deep network, high levels can express 
+combinations between features learned 
+at lower levels
+
+---------- страница 14 ----------
+What is Deep Learning (DL) ? 
+Deep learning (a.k.a. representation learning) seeks to learn rich 
+hierarchical representations (i.e. features) automatically through 
+multiple stage of feature learning process. 
+Low-level 
+features
+output
+Mid-level 
+features
+High-level 
+features
+Trainable 
+classifier
+Feature visualization of convolutional net trained on ImageNet (Zeiler and Fergus, 2013)
+
+---------- страница 15 ----------
+Learning Hierarchical Representations
+Hierarchy of representations with increasing level of abstraction.
+Each stage is a kind of trainable nonlinear feature transform.
+Image recognition 
+– Pixel →edge →texton →motif →part →object 
+Text recognition
+– Character →word →word group →clause →sentence →story 
+Low-
+level 
+features
+output
+Mid-
+level 
+features
+High-
+level 
+features
+Trainable 
+classifier
+Increasing level of abstraction
+Increasing level of abstraction
+
+---------- страница 16 ----------
+Boosting
+Deep 
+Learning
+Boosting vs Deep Learning
+Weak classifier
+Combine
+Weak classifier
+Weak classifier
+Input
+x
+1x
+2x
+N
+x
+Weak 
+classifier
+Boosted weak 
+classifier
+Boosted Boosted weak 
+classifier
+Input
+Data
+
+---------- страница 17 ----------
+Why Deep Learning?
+Performance 
+comparison of Deep 
+Learning and 
+traditional Machine 
+Learning
+Deep learning need a 
+tons of data to 
+create good 
+prediction model
+amount of data
+performance
+deep learning
+older learning 
+algorithms
+
+---------- страница 18 ----------
+Why is DL useful?
+Hand engineered features are time consuming, brittle and not 
+scalable in practice
+Can we learn the underlying features directly from data?
+Other mathematical hand-
+made low-level features
+
+---------- страница 19 ----------
+Example: Fighting Fraud with Deep Learning
+Business problem
+– Danske Bank 
+– Predictive analytics in banking
+Fraud detection
+The solution
+– Deep learning 
+• The results
+– Accuracy
+• R O C curve
+– D L vs traditional M L techniques
+
+---------- страница 20 ----------
+Why is DL useful? 
+Manually designed features are often over-specified, incomplete
+and take a long time to design and validate
+Learned Features are easy to adapt, fast to learn
+Deep learning provides a very flexible, (almost?) universal, learnable 
+framework for representing world, visual and linguistic information
+– Can learn both unsupervised and supervised
+– Effective end-to-end joint system learning
+– Utilize large amounts of training data
+
+---------- страница 21 ----------
+ML competitions
+In 2016 and 2017, Kaggle was dominated by two approaches: 
+– Gradient boosting machines - (XGBoost) is used for problems where 
+structured data is available. 
+– Deep learning - (Keras) is used for perceptual problems such as image 
+classification.
+
+---------- страница 22 ----------
+input
+neuron
+node
+output
+Anatomy of artificial neural network (ANN)
+X
+Y
+Y= f(h)
+Activation
+h = W்X
+W=
+Wଵ
+Wଶ
+Wௗ
+X=
+Xଵ
+Xଶ
+Xௗ
+Y= f
+W଴+ ෍W௜ȉ X௜
+
+---------- страница 23 ----------
+Anatomy of artificial neural network (ANN)
+X1
+X2
+W1
+W2
+Y෠
+Input layer 
+hidden layer 
+output layer 
+zଵ= Wଵ்X= WଵଵXଵ+ WଵଶXଶ+ Wଵ଴
+hଵ= f(zଵ)
+zଶ= Wଶ்X= WଶଵXଵ+ WଶଶXଶ+ Wଶ଴
+  hଶ= f(zଶ)
+Output function
+Y෠= g(hଵ, hଶ)
+Loss function
+J= L(Y෠, Y)
+
+---------- страница 24 ----------
+Y෠
+output layer 
+Anatomy of artificial neural network (ANN)
+X1
+X2
+W11
+W12
+Input layer 
+hidden layer 1 
+W21
+W22
+hidden layer 2 
+Adding another hidden layer
+
+---------- страница 25 ----------
+Y෠
+output layer 
+Anatomy of artificial neural network (ANN)
+X1
+X2
+W11
+W12
+Input layer 
+hidden layer 1 
+WN1
+WN2
+hidden layer N 
+ANN with N hidden layers
+
+---------- страница 26 ----------
+Y෠
+output layer 
+Anatomy of artificial neural network (ANN)
+X1
+X2
+W11
+W13
+Input layer 
+hidden layer 1 
+WN1
+WN3
+hidden layer N 
+Adding anouther node in every hidden layer
+W11
+WN3
+
+---------- страница 27 ----------
+Y෠
+output layer 
+Anatomy of artificial neural network (ANN)
+X1
+X2
+W11
+W1m
+Input layer 
+hidden layer 1 
+WN1
+WNm
+hidden layer N 
+Number of nodes in each hidden layer could be provisional
+
+---------- страница 28 ----------
+Output in matrix form
+Output with bias
+The Perceptron: Forward Propagation
+yො= g෍x௜ȉ w௜
+yො= gw଴+ ෍x௜ȉ w௜
+yො= gw଴+ X்W
+X=
+Xଵ
+Xଶ
+X௠
+W=
+Wଵ
+Wଶ
+W௠
+sigmoid function
+gz= σz=
+1 + eି
+w1
+w2
+wm
+w0
+
+---------- страница 29 ----------
+The Perceptron: Example
+How to predict if an internship applicant should be offered an 
+interview based on their GPA, year in school, major, and number of 
+extracurricular activities?
+Output Layer
+Input Layer
+X1
+Y෠
+X2
+X3
+X4
+g
+GPA = 3.90
+Year = 4
+Major = Stats(2)
+Extra = 5
+Offer = Yes 
+Probability of offer=
+1 −eି
+X= wଵGPA+ wଶYear+ wଷMajor+ wସExtra+ b
+The algorithm should 
+“learn” the best values for 
+the weights and the bias
+w1
+w2
+w3
+w4
+
+---------- страница 30 ----------
+Activation function
+h= fW்X+ b
+The activation function should:
+– Provide non-linearity
+– Ensure gradients remain large through 
+hidden unit
+Common choices are:
+– sigmoid 
+– Tanh
+– ReLU, leaky ReLU, Generalized ReLU,  MaxOut
+– Softplus
+– swish 
+
+---------- страница 31 ----------
+Sigmoid (aka Logistic)
+Derivative is zero for much of the domain. 
+This leads to “vanishing gradients” in backpropagation.
+y=
+1 + eି௫
+
+---------- страница 32 ----------
+Hyperbolic Tangent (Tanh)
+Same problem of “vanishing gradients” as sigmoid. .
+y= e௫−eି
+e௫+ eି
+
+---------- страница 33 ----------
+Rectified Linear Unit (ReLU)
+Two major advantages:
+No vanishing gradient when x > 0
+2. Provides sparsity (regularization) since y = 0 when x < 0
+y= max (0, x)
+
+---------- страница 34 ----------
+Leaky ReLU
+Tries to fix “dying ReLU” problem: derivative is non-zero everywhere.
+Some people report success with this form of activation function, but the results are not always 
+consistent
+y= max 0, x+ αmin(0, x)
+where α takes a small value
+
+---------- страница 35 ----------
+Generalized ReLU
+gx௜, α= max a, x௜+ αmin{0, x௜}
+Generalization: for  αi>0
+
+---------- страница 36 ----------
+softplus
+y= log(1 + e௫)
+The logistic sigmoid function is a smooth approximation of the derivative of the rectifier
+
+---------- страница 37 ----------
+Maxout
+g(x) = max
+௜∈{ଵ,...,௞} α௜x௜+ β
+Max of k linear functions. Directly learn the activation function.
+
+---------- страница 38 ----------
+Swish: A Self-Gated Activation Function 
+gx= x σ(x) = x/(1 + e−x)
+Currently, the most successful and widely-used activation function is the ReLU. Swish tends to work better than 
+ReLU on deeper models across several challenging datasets. 
+
+---------- страница 39 ----------
+Combining neurons allows us to model interesting 
+functions
+X
+Y
+σ(XW1)
+X
+Y′
+σ(XW2)
+
+---------- страница 40 ----------
+Combining neurons allows us to model interesting 
+functions
+X
+Y
+σ(XW1)
+X
+Y′
+σ(XW2)
+X
+Y
+σ(XW1)
+X
+Y′
+σ(XW2)
+σ(HW3)
+h1
+h2
+q= Wଷଵhଵ+ Wଷଶhଶ+ Wଷ଴
+p=
+1 + eି௤
+Passing through 
+sigmoid yields 
+probability
+L= −y ln p −1 −y ln(1 −p)
+
+---------- страница 41 ----------
+X
+Y
+Combining neurons allows us to model interesting 
+functions
+
+---------- страница 42 ----------
+X
+Y
+Combining neurons allows us to model interesting 
+functions
+
+---------- страница 43 ----------
+X
+Y
+Combining neurons allows us to model interesting 
+functions
+
+---------- страница 44 ----------
+X
+Y
+Combining neurons allows us to model interesting 
+functions
+
+---------- страница 45 ----------
+Loss Function
+Likelihood for a given point: 
+py௜W; x௜
+Assume independency, likelihood for all measurements:  
+LW; X, Y= pYW; X= ෑpy௜W; x௜
+Maximize the likelihood, or equivalently maximize the log-likelihood:
+log L(W; X, Y) = ෍log py௜W; x௜
+Turn this into a loss function: 
+LW; X, Y= −log L(W; X, Y)
+Loss Function: Takes all these results and averages them and tells us how 
+bad or good the computer or those weights are.
+
+---------- страница 46 ----------
+Loss Function
+Do not need to design separate loss functions if we follow this simple 
+procedure
+Distribution is Normal then likelihood is:
+py௜W; x௜=
+√2πଶσeି
+LW; X, Y= ∑y௜−yො௜ଶ
+Distribution is Bernouli then likelihood is:
+py௜W; x௜= p௜
+௬೔1 −p௜ଵି௬೔
+LW; X, Y= −∑y௜log p௜+ (1 −y௜) log(1 −p௜) 
+MSE
+Mean Squared Error
+Cross-Entropy
+
+---------- страница 47 ----------
+Loss Function
+Example: sigmoid output + squared loss
+L௦௤= y−yොଶ= y −σx
+
+---------- страница 48 ----------
+Loss Function
+Example: sigmoid output + cross-entropy loss
+L௖௘y, yො= −{ ylog yො+ 1 −ylog(1 −yො)}
+Saturates only when the model 
+makes correct predictions
+
+---------- страница 49 ----------
+Output Units
+Cost Function
+Output layer
+Output Distribution
+Output Type
+Binary Cross Entropy
+Sigmoid
+Bernoulli
+Binary
+Cross Entropy
+Softmax
+Multinoulli
+Discrete
+MSE (Mean Squared Error)
+Linear
+Gaussian
+Continuous
+Arbitrary
+Continuous
+Multinoulli (Categorical): Generalization of Bernoulli to K classes
+
+---------- страница 50 ----------
+NN in action 
+
+---------- страница 51 ----------
+NN in action 
+
+---------- страница 52 ----------
+NN in action 
+
+---------- страница 53 ----------
+NN in action 
+
+---------- страница 54 ----------
+NN in action 
+
+---------- страница 55 ----------
+NN in action
+
+---------- страница 56 ----------
+NN in action 
+
+---------- страница 57 ----------
+Universal Approximation Theorem
+Think of a Neural Network as function approximation. 
+Y= fx+ ε
+Y= fመ(x) + ε
+NN: ⟹fመ(x)
+One hidden layer is enough to represent an 
+approximation of any function to an arbitrary 
+degree of accuracy 
+So why deeper?
+• Shallow net may need (exponentially) more width
+• Shallow net may overfit more
+width
+Wଶ
+Wଷ
+Wସ
+Wଵ
+depth
+
+---------- страница 58 ----------
+Better Generalization with Depth
+(Goodfellow 2017)
+
+---------- страница 59 ----------
+Shallow Nets Overfit More
+(Goodfellow 2017)
+The 3-layer nets perform worse on the test set, 
+even with similar number of total parameters.
+The 11-layer net generalizes better on the test set 
+when controlling for number of parameters.
+Depth helps, and it’s not just because of more parameters
+Don’t worry 
+about this word 
+“convolutional”. 
+It’s just a special 
+type of neural 
+network, often 
+used for images.
+
+---------- страница 60 ----------
+The problem of Exploding and Vanishing Gradients
+Linear activation:
+deeplearning.ai
+hଵ= Wx
+h௜= Wh௜ିଵ,
+ i= 2, ... , n
+W= a
+b
+Suppose:
+
+---------- страница 61 ----------
+CASE 2: a=0.5, b=0.9:
+CASE 1: a=1, b=2:
+Exploding and Vanishing Gradients
+Explodes!
+Vanishes!
+Suppose:
+x= 1
+y→1,
+∇y→
+n
+ n2௡ିଵ 
+y→0,
+∇y→ 0 
+
+---------- страница 62 ----------
+Exploding and Vanishing Gradients
+Exploding gradients lead to cliffs
+Can be mitigated using gradient clipping: a technique that limits the 
+magnitude of gradients during backpropagation to prevent them from 
+becoming too large.
+– If the norm of the gradient exceeds a predefined threshold, it is scaled down to fit 
+within that limit.
+Goodfellow et al. (2016)
+if g
+> u
+g⟵gu
+g
+
+---------- страница 63 ----------
+Feature Normalization
+Features with large magnitudes or ranges can dominate 
+smaller-scale features, leading to biased learning.
+Example: If one feature ranges between 0 and 1, and another 
+ranges between 0 and 1000, the second feature will have a 
+disproportionate impact on the model.
+Normalizing features ensures gradients remain well-scaled, 
+improving optimization efficiency.
+In deep networks, unnormalized features can exacerbate 
+issues like exploding or vanishing gradients, making 
+training unstable.
+Enables Faster Convergence in Neural Networks
+
+---------- страница 64 ----------
+¢x = x -m
+s
+Feature Normalization
+Good practice to normalize features before applying learning 
+algorithm:
+Features in same scale: mean 0 and variance 1
+– Speeds up learning
+Vector of mean feature values
+Vector of SD of feature values
+Feature vector
+Before 
+normalization
+After 
+normalization
+
+---------- страница 65 ----------
+Internal Covariance Shift
+The phenomenon where the distribution of activations (outputs of 
+neurons) in each layer changes as the parameters of the previous 
+layers are updated during training. 
+This shift can slow down training and make optimization more 
+challenging.
+Normalize 
+inputs to layer 2
+Normalize 
+inputs to layer n
+
+---------- страница 66 ----------
+Batch Normalization
+Batch normalization normalizes the inputs to a layer for each mini-batch during training. 
+It ensures that the activations of a layer have a consistent mean and variance, which helps 
+stabilize the learning process.
+– Instead use:
+– Allows network to control range of normalization
+K hidden layer 
+activations
+N data 
+points in 
+mini-batch
+H ' = H -m
+s
+m෍H௜
+m෍(H−μ)௜
+Vector of mean 
+activations 
+across minibatch
+Vector of SD of 
+each unit across 
+mini-batch
+g
+H + b
+γ, β- learnable 
+parameters
+
+---------- страница 67 ----------
+Batch Normalization
+Batch 1
+Batch N
+Add normalization 
+operations for layer 1
+m1 = 1
+m
+Hi,:
+iå
+s 1 =
+m
+(H -m)i
+2 +d
+iå
+
+---------- страница 68 ----------
+m2 = 1
+m
+Hi,:
+iå
+s 2 =
+m
+(H -m)i
+2 +d
+iå
+Batch Normalization
+Batch 1
+Batch N
+Add normalization 
+operations for layer 2 
+and so on ... 
+
+---------- страница 69 ----------
+
+
+---------- страница 70 ----------
+Regularization
+• Regularization is any modification we make to a learning algorithm that is 
+intended to reduce its generalization error but not its training error.
+Overfitting
+Fitting a deep neural 
+network with 5 layers and 
+100 neurons per layer can 
+lead to a very good 
+prediction on the training set 
+but poor prediction on 
+validations set
+
+---------- страница 71 ----------
+Norm Penalties
+We used to optimize: L(W; X, y)
+Change to: LR(W; X, y) = L(W; X, y) + αΩ(W)
+L2 regularization:
+– Weights decay
+– MAP estimation with Gaussian prior
+L1 regularization:
+– encourages sparsity
+– MAP estimation with Laplacian prior
+Ω W= 1
+2 ∥W∥ଶ
+Ω W= 1
+2 ∥W∥ଵ
+
+---------- страница 72 ----------
+Early Stopping
+Terminate while validation set performance is better 
+Training time can 
+be treated as a 
+hyperparameter too
+
+---------- страница 73 ----------
+Dropout
+• Randomly set some neurons and their connections to zero (i.e. “dropped”)
+• Prevent overfitting by reducing co-adaptation of neurons
+• Like training many random sub-networks
+
+---------- страница 74 ----------
+Dropout
+• Widely used and highly effective
+• Proposed as an alternative to ensembling, which is too expensive for 
+neural nets
+http://jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf
+Test error for different 
+architectures with and 
+without dropout. 
+The networks have 2 to 4 
+hidden layers each with 1024 
+to 2048 units.
+
+---------- страница 75 ----------
+REGRESSION
+Statistical 
+Learning
+CLASSIFICATION
+Computing 
+Tools
+Logistic 
+Regression 
+Experimental 
+Design & Causal 
+Inference
+Pandas
+Matplotlib
+Scikit-
+Learn
+NumPy
+Linear 
+Regression 
+Uncertainty in 
+model and 
+prediction 
+Cross 
+validation 
+Overfitting: 
+Variance & 
+Bias
+Methods of 
+regularization: 
+Lasso and 
+Ridge
+PCA & 
+dimensionality 
+reduction 
+Trees 
+Neural 
+Networks 
+KNN 
+

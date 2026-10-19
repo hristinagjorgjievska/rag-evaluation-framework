@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 1.10. Decision Trees
 
 Decision Trees (DTs) are a non-parametric supervised learning method used

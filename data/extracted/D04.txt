@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Lecture 5. Evaluation measures, Imbalanced classes,
 Cost-Sensitive Classification
 Data mining, prof. Biljana Tojtovska Ribarski
@@ -72,7 +72,7 @@ The answer is not always “the classifier with the highest accuracy.” In many
 1
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 • we care not only about the final class label, but also about scores, ranking, thresholds, or
 cost.
 This is why evaluation is not a small technical detail. It is part of the classification problem itself.
@@ -121,7 +121,7 @@ any metric, one should always know which entries of the confusion matrix it depe
 2
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 1.4
 Measures of Classification Performance
 Definition: Accuracy and error rate
@@ -174,7 +174,7 @@ practical question behind each measure:
 3
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 Remark: Why different measures disagree?
 The measures emphasize different parts of the confusion matrix:
 • precision depends on TP and FP;
@@ -234,7 +234,7 @@ wrong conclusion. The confusion matrix and additional measures must also be repo
 4
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 1.6
 Comparisons of Different Measures
 Example 1. Same recall, very different precision
@@ -310,7 +310,7 @@ specificity, and the false positive rate.
 5
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 Remark: Threshold tradeoff
 If the threshold is lowered, the classifier predicts positive more easily. This often increases
 recall but may also increase false positives.
@@ -389,7 +389,7 @@ positive predictions remain as the threshold changes.
 6
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 Remark: Precision-recall tradeoff
 Usually for parameterized or score-based classifiers, changing the threshold controls a
 precision-recall tradeoff.
@@ -429,7 +429,7 @@ means reverse the meaning of the classifier’s output - it is done when there i
 7
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 interpretation mistake (ex. positive class defined oppositely.)
 Insight: Why ROC is useful?
 A single confusion matrix corresponds to one threshold only. A ROC curve shows how the
@@ -495,7 +495,7 @@ negative cases whose score is greater than the threshold and are therefore predi
 8
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 Interpretation of the threshold values. In this example, the threshold T = 3 corresponds to
 the point (FPR, TPR) = (0.12, 0.50), so
 TPR = 0.50,
@@ -621,7 +621,7 @@ FPR
 9
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 0
 0.2
 0.4
@@ -677,7 +677,7 @@ curve and area reflect the model’s ranking behavior more accurately.
 10
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 What exactly does AUC measure?
 AUC measures the overall ranking quality of the
 classifier across all possible thresholds. A larger AUC means that the classifier tends to place
@@ -709,7 +709,7 @@ overall AUC is not automatically the practically better choice.
 11
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 0
 0.1
 0.2
@@ -764,7 +764,7 @@ not let the majority class dominate every decision merely because it is frequent
 12
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 1.13
 Cost-Sensitive Classification
 In many applications, false positives and false negatives do not have the same cost. For example:
@@ -823,7 +823,7 @@ too many expensive positive cases.
 13
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 Remark: When is accuracy aligned with cost?
 Accuracy is proportional to a cost function only under a special symmetric situation: the
 two types of misclassification have equal cost and the two correct decisions have equal cost.
@@ -868,7 +868,7 @@ of each possible error are.
 14
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 Insight: Why this matters?
 The usual posterior-probability threshold rule is only one special case. Once costs differ,
 the threshold should usually change as well.
@@ -912,7 +912,7 @@ Oversampling increases the representation of the minority class in the training 
 15
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 Possible advantage: the model sees more minority-class examples and may detect the rare class
 better.
 Possible disadvantage: naive oversampling may encourage overfitting or simply duplicate infor-
@@ -955,7 +955,7 @@ question changes.
 16
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 1.17
 What To Do in Practice
 Remark: Where do these metrics enter the workflow?
@@ -997,7 +997,7 @@ A strong classifier should be judged at the level that matches the real goal of 
 17
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 1.18
 Summary
 A classifier is not automatically good just because it has high accuracy. On imbalanced data, a
@@ -1046,7 +1046,7 @@ The dataset describes loan applicants by a set of financial and personal attribu
 18
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 classifies them as good or bad credit risks. The dataset comes with the following cost matrix:
 Predict good
 Predict bad

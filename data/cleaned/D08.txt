@@ -1,0 +1,1781 @@
+---------- страница 1 ----------
+Data Mining 
+Classification: Basic Concepts and 
+Techniques
+Lecture Notes for Chapter 3
+Introduction to Data Mining, 2nd Edition
+by
+Tan, Steinbach, Karpatne, Kumar
+
+---------- страница 2 ----------
+Classification: Definition
+l Given a collection of records (training set )
+– Each record is by characterized by a tuple 
+(x,y), where x is the attribute set and y is the 
+class label
+x: attribute, predictor, independent variable, input
+y: class, response, dependent variable, output
+l Task:
+– Learn a model that maps each attribute set x 
+into one of the predefined class labels y
+
+---------- страница 3 ----------
+Examples of Classification Task
+Task
+Attribute set, x
+Class label, y
+Categorizing 
+email 
+messages
+Features extracted from 
+email message header 
+and content
+spam or non-spam
+Identifying 
+tumor cells
+Features extracted from 
+x-rays or MRI scans
+malignant or benign 
+cells
+Cataloging 
+galaxies
+Features extracted from 
+telescope images
+Elliptical, spiral, or 
+irregular-shaped 
+galaxies
+
+---------- страница 4 ----------
+General Approach for Building 
+Classification Model
+
+---------- страница 5 ----------
+Classification Techniques
+Base Classifiers
+– Decision Tree based Methods
+– Rule-based Methods
+– Nearest-neighbor
+– Naïve Bayes and Bayesian Belief Networks
+– Support Vector Machines
+– Neural Networks, Deep Neural Nets
+Ensemble Classifiers
+– Boosting, Bagging, Random Forests
+
+---------- страница 6 ----------
+Example of a Decision Tree
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+Yes 
+Single 
+125K 
+No 
+No 
+Married 
+100K 
+No 
+No 
+Single 
+70K 
+No 
+Yes 
+Married 
+120K 
+No 
+No 
+Divorced 95K 
+Yes 
+No 
+Married 
+60K 
+No 
+Yes 
+Divorced 220K 
+No 
+No 
+Single 
+85K 
+Yes 
+No 
+Married 
+75K 
+No 
+No 
+Single 
+90K 
+Yes 
+Home 
+Owner
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, Divorced
+< 80K
+> 80K
+Splitting Attributes
+Training Data
+Model:  Decision Tree
+
+---------- страница 7 ----------
+Apply Model to Test Data
+Home 
+Owner
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+No 
+Married 
+80K 
+Test Data
+Start from the root of tree.
+
+---------- страница 8 ----------
+Apply Model to Test Data
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+No 
+Married 
+80K 
+Test Data
+Home 
+Owner
+
+---------- страница 9 ----------
+Apply Model to Test Data
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+ No 
+Married 
+80K 
+Test Data
+Home 
+Owner
+
+---------- страница 10 ----------
+Apply Model to Test Data
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+No 
+Married 
+80K 
+Test Data
+Home 
+Owner
+
+---------- страница 11 ----------
+Apply Model to Test Data
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married 
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+No 
+Married 
+80K 
+Test Data
+Home 
+Owner
+
+---------- страница 12 ----------
+Apply Model to Test Data
+MarSt
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married 
+Single, Divorced
+< 80K
+> 80K
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+No 
+Married 
+80K 
+Test Data
+Assign Defaulted to 
+“No”
+Home 
+Owner
+
+---------- страница 13 ----------
+Another Example of Decision Tree
+MarSt
+Home 
+Owner
+Income
+YES
+NO
+NO
+NO
+Yes
+No
+Married
+Single, 
+Divorced
+< 80K
+> 80K
+There could be more than one tree that 
+fits the same data!
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+Yes 
+Single 
+125K 
+No 
+No 
+Married 
+100K 
+No 
+No 
+Single 
+70K 
+No 
+Yes 
+Married 
+120K 
+No 
+No 
+Divorced 95K 
+Yes 
+No 
+Married 
+60K 
+No 
+Yes 
+Divorced 220K 
+No 
+No 
+Single 
+85K 
+Yes 
+No 
+Married 
+75K 
+No 
+No 
+Single 
+90K 
+Yes 
+
+---------- страница 14 ----------
+Decision Tree Classification Task
+Apply 
+Model
+Induction
+Deduction
+Learn 
+Model
+Model
+Tid 
+Attrib1 
+Attrib2 
+Attrib3 
+Class 
+Yes 
+Large 
+125K 
+No 
+No 
+Medium 
+100K 
+No 
+No 
+Small 
+70K 
+No 
+Yes 
+Medium 
+120K 
+No 
+No 
+Large 
+95K 
+Yes 
+No 
+Medium 
+60K 
+No 
+Yes 
+Large 
+220K 
+No 
+No 
+Small 
+85K 
+Yes 
+No 
+Medium 
+75K 
+No 
+No 
+Small 
+90K 
+Yes 
+Tid 
+Attrib1 
+Attrib2 
+Attrib3 
+Class 
+No 
+Small 
+55K 
+Yes 
+Medium 
+80K 
+Yes 
+Large 
+110K 
+No 
+Small 
+95K 
+No 
+Large 
+67K 
+Test Set
+Tree
+Induction
+algorithm
+Training Set
+Decision 
+Tree
+
+---------- страница 15 ----------
+Decision Tree Induction
+Many Algorithms:
+– Hunt’s Algorithm (one of the earliest)
+– CART
+– ID3, C4.5
+– SLIQ,SPRINT
+
+---------- страница 16 ----------
+General Structure of Hunt’s Algorithm
+l
+Let Dt be the set of training 
+records that reach a node t
+l
+General Procedure:
+– If Dt contains records that 
+belong the same class yt, 
+then t is a leaf node 
+labeled as yt
+– If Dt contains records that 
+belong to more than one 
+class, use an attribute test 
+to split the data into smaller 
+subsets. Recursively apply 
+the procedure to each 
+subset.
+Dt
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+Yes 
+Single 
+125K 
+No 
+No 
+Married 
+100K 
+No 
+No 
+Single 
+70K 
+No 
+Yes 
+Married 
+120K 
+No 
+No 
+Divorced 95K 
+Yes 
+No 
+Married 
+60K 
+No 
+Yes 
+Divorced 220K 
+No 
+No 
+Single 
+85K 
+Yes 
+No 
+Married 
+75K 
+No 
+No 
+Single 
+90K 
+Yes 
+
+---------- страница 17 ----------
+Hunt’s Algorithm
+(a)
+(b)
+(c)
+Defaulted = No
+Home
+Owner
+Yes
+No
+Defaulted = No
+Defaulted = No
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+(d)
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+Annual
+Income
+< 80K
+>= 80K
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+Yes 
+Single 
+125K 
+No 
+No 
+Married 
+100K 
+No 
+No 
+Single 
+70K 
+No 
+Yes 
+Married 
+120K 
+No 
+No 
+Divorced 95K 
+Yes 
+No 
+Married 
+60K 
+No 
+Yes 
+Divorced 220K 
+No 
+No 
+Single 
+85K 
+Yes 
+No 
+Married 
+75K 
+No 
+No 
+Single 
+90K 
+Yes 
+
+---------- страница 18 ----------
+Hunt’s Algorithm
+(a)
+(b)
+(c)
+Defaulted = No
+Home
+Owner
+Yes
+No
+Defaulted = No
+Defaulted = No
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+(d)
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+Annual
+Income
+< 80K
+>= 80K
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+Yes 
+Single 
+125K 
+No 
+No 
+Married 
+100K 
+No 
+No 
+Single 
+70K 
+No 
+Yes 
+Married 
+120K 
+No 
+No 
+Divorced 95K 
+Yes 
+No 
+Married 
+60K 
+No 
+Yes 
+Divorced 220K 
+No 
+No 
+Single 
+85K 
+Yes 
+No 
+Married 
+75K 
+No 
+No 
+Single 
+90K 
+Yes 
+
+---------- страница 19 ----------
+Hunt’s Algorithm
+(a)
+(b)
+(c)
+Defaulted = No
+Home
+Owner
+Yes
+No
+Defaulted = No
+Defaulted = No
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+(d)
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+Annual
+Income
+< 80K
+>= 80K
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+Yes 
+Single 
+125K 
+No 
+No 
+Married 
+100K 
+No 
+No 
+Single 
+70K 
+No 
+Yes 
+Married 
+120K 
+No 
+No 
+Divorced 95K 
+Yes 
+No 
+Married 
+60K 
+No 
+Yes 
+Divorced 220K 
+No 
+No 
+Single 
+85K 
+Yes 
+No 
+Married 
+75K 
+No 
+No 
+Single 
+90K 
+Yes 
+
+---------- страница 20 ----------
+Hunt’s Algorithm
+(a)
+(b)
+(c)
+Defaulted = No
+Home
+Owner
+Yes
+No
+Defaulted = No
+Defaulted = No
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+(d)
+Yes
+No
+Marital
+Status
+Single,
+Divorced
+Married
+Annual
+Income
+< 80K
+>= 80K
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+Home
+Owner
+Defaulted = No
+Defaulted = No
+Defaulted = No
+Defaulted = Yes
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income 
+Defaulted 
+Borrower 
+Yes 
+Single 
+125K 
+No 
+No 
+Married 
+100K 
+No 
+No 
+Single 
+70K 
+No 
+Yes 
+Married 
+120K 
+No 
+No 
+Divorced 95K 
+Yes 
+No 
+Married 
+60K 
+No 
+Yes 
+Divorced 220K 
+No 
+No 
+Single 
+85K 
+Yes 
+No 
+Married 
+75K 
+No 
+No 
+Single 
+90K 
+Yes 
+
+---------- страница 21 ----------
+Design Issues of Decision Tree Induction
+l How should training records be split?
+– Method for expressing test condition 
+depending on attribute types
+– Measure for evaluating the goodness of a test 
+condition
+l How should the splitting procedure stop?
+– Stop splitting if all the records belong to the 
+same class or have identical attribute values
+– Early termination 
+
+---------- страница 22 ----------
+Methods for Expressing Test Conditions
+l Depends on attribute types
+– Binary
+– Nominal
+– Ordinal
+– Continuous
+
+---------- страница 23 ----------
+Test Condition for Nominal Attributes
+Multi-way split:
+– Use as many partitions as 
+distinct values. 
+Binary split:
+– Divides values into two subsets
+Marital
+Status
+Single
+Divorced
+Married
+{Single}
+{Married,
+Divorced}
+Marital
+Status
+{Married}
+{Single,
+Divorced}
+Marital
+Status
+OR
+OR
+{Single,
+Married}
+Marital
+Status
+{Divorced}
+
+---------- страница 24 ----------
+Test Condition for Ordinal Attributes
+l
+Multi-way split:
+– Use as many partitions 
+as distinct values
+l
+Binary split:
+– Divides values into two 
+subsets
+– Preserve order 
+property among 
+attribute values
+Large
+Shirt
+Size
+Medium
+Extra Large
+Small
+{Medium, Large,
+Extra Large}
+Shirt
+Size
+{Small}
+{Large,
+Extra Large}
+Shirt
+Size
+{Small,
+Medium}
+{Medium,
+Extra Large}
+Shirt
+Size
+{Small,
+Large}
+This grouping 
+violates order 
+property
+
+---------- страница 25 ----------
+Test Condition for Continuous Attributes
+Annual
+Income
+> 80K?
+Yes
+No
+Annual
+Income?
+(i) Binary split
+(ii) Multi-way split
+< 10K
+[10K,25K)
+[25K,50K)
+[50K,80K)
+> 80K
+
+---------- страница 26 ----------
+Splitting Based on Continuous Attributes
+Different ways of handling
+– Discretization to form an ordinal categorical 
+attribute
+Ranges can be found by equal interval bucketing, 
+equal frequency bucketing (percentiles), or 
+clustering.
+Static – discretize once at the beginning
+Dynamic – repeat at each node
+– Binary Decision: (A < v) or (A v)
+consider all possible splits and finds the best cut
+can be more compute intensive
+
+---------- страница 27 ----------
+How to determine the Best Split
+Gender
+C0: 6
+C1: 4
+C0: 4
+C1: 6
+C0: 1
+C1: 3
+C0: 8
+C1: 0
+C0: 1
+C1: 7
+Car
+Type
+C0: 1
+C1: 0
+C0: 1
+C1: 0
+C0: 0
+C1: 1
+Customer
+ID
+Yes
+No
+Family
+Sports
+Luxury
+c1
+c10
+c20
+C0: 0
+C1: 1
+c11
+Before Splitting: 10 records of class 0,
+10 records of class 1
+Which test condition is the best?
+
+---------- страница 28 ----------
+How to determine the Best Split
+l Greedy approach: 
+– Nodes with purer class distribution are 
+preferred
+l Need a measure of node impurity:
+C0: 5
+C1: 5
+C0: 9
+C1: 1
+High degree of impurity
+Low degree of impurity
+
+---------- страница 29 ----------
+Measures of Node Impurity
+l Gini Index
+l Entropy
+l Misclassification error
+Introduction to Data Mining, 2nd Edition
+GiniIndex= 1 −෍
+i=0
+c−1
+pit2
+Entropy= −෍
+i=0
+c−1
+pitlog2pi(t)
+Classificationerror= 1 −max[pi(t)]
+Where pitis the frequency 
+of class iat node t, and cis 
+the total number of classes  
+
+---------- страница 30 ----------
+Finding the Best Split
+1. Compute impurity measure of the parent node I(P) before splitting
+2. Compute weighted impurity measure of the child nodes (M) after 
+splitting
+M= σj=1
+k
+Nvj
+N
+I(vj)
+Where k is the number of values of the splitting attribute, N is the 
+total number of records at the parent node, Nvjis the number of 
+records associated with the child node vj, and I(vj) is the impurity of 
+the child node. Choose the attribute test condition that produces the 
+highest gain
+Gain = I(P) – M   (often denoted with ∆)
+or equivalently, lowest impurity measure after splitting (M).
+When entropy is used for impurity measure, the previous difference 
+is called information gain. 
+
+---------- страница 31 ----------
+Finding the Best Split
+B?
+Yes
+No
+Node N3
+Node N4
+A?
+Yes
+No
+Node N1
+Node N2
+Before Splitting:
+C0 
+N10 
+C1 
+N11 
+C0 
+N20 
+C1 
+N21 
+C0 
+N30 
+C1 
+N31 
+C0 
+N40 
+C1 
+N41 
+C0 
+N00 
+C1 
+N01 
+P
+M11
+M12
+M21
+M22
+M1
+M2
+Gain = P – M1    vs      P – M2
+
+---------- страница 32 ----------
+Measure of Impurity: GINI
+Gini Index for a given node t
+Where pitis the frequency of class iat node t, and cis the total 
+number of classes  
+– Maximum  of 1 −1/cwhen records are equally 
+distributed among all classes, implying the least 
+beneficial situation for classification
+– Minimum  of 0 when all records belong to one class, 
+implying the most beneficial situation for classification
+– Gini index is used in decision tree algorithms such as 
+CART, SLIQ, SPRINT
+Introduction to Data Mining, 2nd Edition
+GiniIndex= 1 −෍
+i=0
+c−1
+pit2
+
+---------- страница 33 ----------
+Measure of Impurity: GINI
+Gini Index for a given node t :
+– For 2-class problem (p, 1 – p):
+GINI = 1 – p2 – (1 – p)2 = 2p (1-p)
+C1
+C2
+Gini=0.000
+C1
+C2
+Gini=0.444
+C1
+C2
+Gini=0.500
+C1
+C2
+Gini=0.278
+Introduction to Data Mining, 2nd Edition
+GiniIndex= 1 −෍
+i=0
+c−1
+pit2
+
+---------- страница 34 ----------
+Computing Gini Index of a Single Node
+C1 
+C2 
+C1 
+C2 
+C1 
+C2 
+P(C1) = 0/6 = 0     P(C2) = 6/6 = 1
+Gini = 1 – P(C1)2 – P(C2)2 = 1 – 0 – 1 = 0 
+P(C1) = 1/6          P(C2) = 5/6
+Gini = 1 – (1/6)2 – (5/6)2 = 0.278
+P(C1) = 2/6          P(C2) = 4/6
+Gini = 1 – (2/6)2 – (4/6)2 = 0.444
+Introduction to Data Mining, 2nd Edition
+GiniIndex= 1 −෍
+i=0
+c−1
+pit2
+
+---------- страница 35 ----------
+Computing Gini Index for a Collection of 
+Nodes
+l
+When a node pis split into kpartitions (children)
+where,
+ni= number of records at child i,
+n= number of records at parent node p.
+Introduction to Data Mining, 2nd Edition
+GINIsplit= ෍
+i=1
+kni
+nGINI(i)
+
+---------- страница 36 ----------
+Binary Attributes: Computing GINI Index
+Splits into two partitions (child nodes)
+Effect of Weighing partitions: 
+– Larger and purer partitions are sought
+B?
+Yes
+No
+Node N1
+Node N2
+Parent 
+C1 
+C2 
+Gini = 0.486 
+N1 N2 
+C1 
+C2 
+Gini=0.361 
+Gini(N1) 
+Gini(N2) 
+Weighted Gini of N1 N2
+Gain = 0.486 – 0.361 = 0.125
+
+---------- страница 37 ----------
+Categorical Attributes: Computing Gini Index
+l For each distinct value, gather counts for each class in 
+the dataset
+l Use the count matrix to make decisions
+CarType 
+{Sports, 
+Luxury} {Family} 
+C1 
+C2 
+Gini 
+CarType 
+{Sports}  {Family,
+Luxury} 
+C1 
+C2 
+Gini 
+CarType 
+Family Sports Luxury 
+C1 
+C2 
+Gini 
+Multi-way split
+Two-way split 
+(find best partition of values)
+Which of these is the best?
+
+---------- страница 38 ----------
+Continuous Attributes: Computing Gini Index
+l
+Use Binary Decisions based on one 
+value
+l
+Several Choices for the splitting value
+– Number of possible splitting values 
+= Number of distinct values
+l
+Each splitting value has a count matrix 
+associated with it
+– Class counts in each of the 
+partitions, A ≤ v and A > v
+l
+Simple method to choose best v
+– For each v, scan the database to 
+gather count matrix and compute 
+its Gini index
+– Computationally Inefficient! 
+Repetition of work.
+ID 
+Home 
+Owner 
+Marital 
+Status 
+Annual 
+Income Defaulted 
+Yes 
+Single 
+125K 
+No 
+No 
+Married 
+100K 
+No 
+No 
+Single 
+70K 
+No 
+Yes 
+Married 
+120K 
+No 
+No 
+Divorced 95K 
+Yes 
+No 
+Married 
+60K 
+No 
+Yes 
+Divorced 220K 
+No 
+No 
+Single 
+85K 
+Yes 
+No 
+Married 
+75K 
+No 
+No 
+Single 
+90K 
+Yes 
+Defaulted Yes
+Defaulted No
+Annual Income ?
+
+---------- страница 39 ----------
+Cheat 
+No 
+No 
+No 
+Yes 
+Yes 
+Yes 
+No 
+No 
+No 
+No 
+Annual Income 
+Yes 
+No 
+Gini 
+Continuous Attributes: Computing Gini Index...
+l
+For efficient computation: for each attribute,
+– Sort the attribute on values
+– Linearly scan these values, each time updating the count matrix 
+and computing gini index
+– Choose the split position that has the least gini index
+Sorted Values
+
+---------- страница 40 ----------
+Cheat 
+No 
+No 
+No 
+Yes 
+Yes 
+Yes 
+No 
+No 
+No 
+No 
+Annual Income 
+Yes 
+No 
+Gini 
+Continuous Attributes: Computing Gini Index...
+l
+For efficient computation: for each attribute,
+– Sort the attribute on values
+– Linearly scan these values, each time updating the count matrix 
+and computing gini index
+– Choose the split position that has the least gini index
+Split Positions
+Sorted Values
+
+---------- страница 41 ----------
+Cheat 
+No 
+No 
+No 
+Yes 
+Yes 
+Yes 
+No 
+No 
+No 
+No 
+Annual Income 
+Yes 
+No 
+Gini 
+Continuous Attributes: Computing Gini Index...
+l
+For efficient computation: for each attribute,
+– Sort the attribute on values
+– Linearly scan these values, each time updating the count matrix 
+and computing gini index
+– Choose the split position that has the least gini index
+Split Positions
+Sorted Values
+
+---------- страница 42 ----------
+Cheat 
+No 
+No 
+No 
+Yes 
+Yes 
+Yes 
+No 
+No 
+No 
+No 
+Annual Income 
+Yes 
+No 
+Gini 
+Continuous Attributes: Computing Gini Index...
+l
+For efficient computation: for each attribute,
+– Sort the attribute on values
+– Linearly scan these values, each time updating the count matrix 
+and computing gini index
+– Choose the split position that has the least gini index
+Split Positions
+Sorted Values
+
+---------- страница 43 ----------
+Cheat 
+No 
+No 
+No 
+Yes 
+Yes 
+Yes 
+No 
+No 
+No 
+No 
+Annual Income 
+Yes 
+No 
+Gini 
+Continuous Attributes: Computing Gini Index...
+l
+For efficient computation: for each attribute,
+– Sort the attribute on values
+– Linearly scan these values, each time updating the count matrix 
+and computing gini index
+– Choose the split position that has the least gini index
+Split Positions
+Sorted Values
+
+---------- страница 44 ----------
+Measure of Impurity: Entropy
+l
+Entropy at a given node t
+Where pitis the frequency of class iat node t, and cis the total number 
+of classes 
+Maximum of log2cwhen records are equally distributed 
+among all classes, implying the least beneficial situation for 
+classification
+Minimum of 0 when all records belong to one class, 
+implying most beneficial situation for classification
+– Entropy based computations are quite similar to the GINI 
+index computations
+Introduction to Data Mining, 2nd Edition
+Entropy= −෍
+i=0
+c−1
+pitlog2pi(t)
+
+---------- страница 45 ----------
+Computing Entropy of a Single Node
+C1 
+C2 
+C1 
+C2 
+C1 
+C2 
+P(C1) = 0/6 = 0     P(C2) = 6/6 = 1
+Entropy = – 0 log 0 – 1 log 1 = – 0 – 0 = 0 
+P(C1) = 1/6          P(C2) = 5/6
+Entropy = – (1/6) log2 (1/6) – (5/6) log2 (1/6) = 0.65
+P(C1) = 2/6          P(C2) = 4/6
+Entropy = – (2/6) log2 (2/6) – (4/6) log2 (4/6) = 0.92
+Introduction to Data Mining, 2nd Edition
+Entropy= −෍
+i=0
+c−1
+pitlog2pi(t)
+
+---------- страница 46 ----------
+Computing Information Gain After Splitting
+l
+Information Gain: 
+Parent Node, pis split into kpartitions (children)
+niis number of records in child node i
+– Choose the split that achieves most reduction (maximizes 
+GAIN)
+– Used in the ID3 and C4.5 decision tree algorithms
+– Information gain is the mutual information between the class 
+variable and the splitting variable.  
+Introduction to Data Mining, 2nd Edition
+Gainsplit= Entropyp−෍
+i=1
+kni
+nEntropy(i)
+
+---------- страница 47 ----------
+Problem with large number of partitions
+Node impurity measures tend to prefer splits that 
+result in large number of partitions, each being 
+small but pure
+– Customer ID has highest information gain 
+because entropy for all the children is zero
+Gender
+C0: 6
+C1: 4
+C0: 4
+C1: 6
+C0: 1
+C1: 3
+C0: 8
+C1: 0
+C0: 1
+C1: 7
+Car
+Type
+C0: 1
+C1: 0
+C0: 1
+C1: 0
+C0: 0
+C1: 1
+Customer
+ID
+Yes
+No
+Family
+Sports
+Luxury
+c1
+c10
+c20
+C0: 0
+C1: 1
+c11
+
+---------- страница 48 ----------
+Problem with large number of partitions
+Test conditions that result in a large number of outcomes 
+may not be desirable, because the number of records 
+associated with each partition is too small to enable us to 
+make any reliable predictions.
+Two strategies:
+Restrict the test conditions to binary splits only (used in 
+CART)
+Modify the splitting criterion to take into account the 
+number of outcomes produced by the attribute test 
+condition – an example of a criterion known as gain ratio
+used in C4.5 decision tree algorithm is presented on the 
+next slide.
+
+---------- страница 49 ----------
+Gain Ratio
+l
+Gain Ratio: 
+Parent Node, pis split into kpartitions (children)
+niis number of records in child node i
+– Adjusts Information Gain by the entropy of the partitioning 
+(SplitInfo). 
+Higher entropy partitioning (large number of small partitions) is 
+penalized!
+– Used in C4.5 algorithm
+– Designed to overcome the disadvantage of Information Gain
+Introduction to Data Mining, 2nd Edition
+GainRatio= Gainsplit
+SplitInfo
+SplitInfo= −෍
+i=1
+kni
+nlog2
+ni
+n
+
+---------- страница 50 ----------
+Gain Ratio
+l
+Gain Ratio: 
+Parent Node, pis split into kpartitions (children)
+niis number of records in child node i
+Large number of splits means that the SplitInfo will also be large  and this 
+reduces the gain ratio.
+CarType 
+{Sports, 
+Luxury} {Family} 
+C1 
+C2 
+Gini 
+CarType 
+{Sports}  {Family,
+Luxury} 
+C1 
+C2 
+Gini 
+CarType 
+Family Sports Luxury 
+C1 
+C2 
+Gini 
+SplitINFO = 1.52
+SplitINFO = 0.72
+SplitINFO = 0.97
+Introduction to Data Mining, 2nd Edition
+GainRatio= Gainsplit
+SplitInfo
+SplitInfo= ෍
+i=1
+kni
+nlog2
+ni
+n
+
+---------- страница 51 ----------
+Measure of Impurity: Classification Error
+l Classification error at a node t
+– Maximum of 1 −1/cwhen records are equally 
+distributed among all classes, implying the least 
+interesting situation
+– Minimum of 0 when all records belong to one class, 
+implying the most interesting situation
+Introduction to Data Mining, 2nd Edition
+Errort= 1 −max
+i
+[pit]
+
+---------- страница 52 ----------
+Computing Error of a Single Node
+C1 
+C2 
+C1 
+C2 
+C1 
+C2 
+P(C1) = 0/6 = 0     P(C2) = 6/6 = 1
+Error = 1 – max (0, 1) = 1 – 1 = 0 
+P(C1) = 1/6          P(C2) = 5/6
+Error = 1 – max (1/6, 5/6) = 1 – 5/6 = 1/6
+P(C1) = 2/6          P(C2) = 4/6
+Error = 1 – max (2/6, 4/6) = 1 – 4/6 = 1/3
+Introduction to Data Mining, 2nd Edition
+Errort= 1 −max
+i
+[pit]
+
+---------- страница 53 ----------
+Comparison among Impurity Measures
+For a 2-class problem:
+
+---------- страница 54 ----------
+Misclassification Error vs Gini Index
+A?
+Yes
+No
+Node N1
+Node N2
+Parent 
+C1 
+C2 
+Gini = 0.42 
+N1 N2 
+C1 
+C2 
+Gini=0.342 
+Gini(N1) 
+Gini(N2) 
+Gini(Children) 
+Gini improves but 
+error remains the 
+same!!
+
+---------- страница 55 ----------
+Misclassification Error vs Gini Index
+A?
+Yes
+No
+Node N1
+Node N2
+Parent 
+C1 
+C2 
+Gini = 0.42 
+N1 N2 
+C1 
+C2 
+Gini=0.342 
+N1 N2 
+C1 
+C2 
+Gini=0.416 
+Misclassification error for all three cases = 0.3 ! 
+
+---------- страница 56 ----------
+Decision Tree Based Classification
+l Advantages:
+Relatively inexpensive to construct
+Extremely fast at classifying unknown records (the tree is built)
+Easy to interpret for small-sized trees
+Robust to noise (especially when methods to avoid overfitting are 
+employed)
+Can easily handle redundant attributes
+Can easily handle irrelevant attributes (unless the attributes are 
+interacting)
+An attribute is redundant if it is strongly correlated with another attribute in 
+the data. One of the two redundant attributes will not be used for splitting 
+once the other attribute has been chosen. But if there are many irrelevant 
+attributes (not useful for classification) some may be chosen and it will 
+unnecessarily create larger tree. 
+
+---------- страница 57 ----------
+Decision Tree Based Classification
+l Disadvantages: .
+Due to the greedy nature of splitting criterion,  interacting attributes (that 
+can distinguish between classes together but not individually) may be 
+passed over in favor of other attributed that are less discriminating.
+Each decision boundary involves only a single attribute.
+
+---------- страница 58 ----------
+Handling interactions
+X 
+Y
++ : 1000 instances
+o : 1000 instances
+Entropy (X) : 0.99 
+Entropy (Y) : 0.99
+
+---------- страница 59 ----------
+Handling interactions
+
+---------- страница 60 ----------
+Handling interactions given irrelevant attributes
++ : 1000 instances
+o : 1000 instances
+Adding Z as a noisy 
+attribute generated 
+from a uniform 
+distribution
+Y
+Entropy (X) : 0.99 
+Entropy (Y) : 0.99
+Entropy (Z) : 0.98
+Attribute Z will be 
+chosen for splitting!
+X 
+
+---------- страница 61 ----------
+Limitations of single attribute-based decision boundaries
+Both positive (+) and 
+negative (o) classes 
+generated from 
+skewed Gaussians 
+with centers at (8,8) 
+and (12,12) 
+respectively.  
+

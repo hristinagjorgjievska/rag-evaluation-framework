@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Data Mining 
 Classification: Alternative Techniques
 Lecture Notes for Chapter 4
@@ -8,7 +8,7 @@ by
 Tan, Steinbach, Karpatne, Kumar
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 2
@@ -27,7 +27,7 @@ Rule:
 - (Taxable Income < 50K) and (Refund=Yes) -> Evade=No
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 3
@@ -165,7 +165,7 @@ no
 birds
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 4
@@ -200,7 +200,7 @@ no
 ?
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 5
@@ -277,7 +277,7 @@ Yes
 Coverage = 40%, Accuracy = 50%
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 6
@@ -293,7 +293,7 @@ potential problem. What if they each specify a different
 class? Or what if no rule is satisfied by X?
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 7
@@ -332,7 +332,7 @@ yes
 ?
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 8
@@ -350,7 +350,7 @@ attribute values
 – Each record is covered by at least one rule
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 9
@@ -368,7 +368,7 @@ determine the class label of the record.
 -Use a default class
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 10
@@ -405,7 +405,7 @@ sometimes
 ?
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 11
@@ -434,7 +434,7 @@ Taxable Income<80K) ==> No
 Taxable Income>80K) ==> Yes
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 12
@@ -450,7 +450,7 @@ decision trees, neural networks, etc).
 - Examples: C4.5rules
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 13
@@ -472,7 +472,7 @@ depends on number of factors (class prevalence or the cost
 of misclassifying records from a class)
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 14
@@ -487,7 +487,7 @@ desirable rule – covers most of the positive examples and none
 (or few of the negative once)
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 15
@@ -502,7 +502,7 @@ bottom of the decision list R. Then we look for the second best
 rule for the class etc.
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 16
@@ -541,7 +541,7 @@ No:  1
 (a) General-to-specific
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 17
@@ -566,7 +566,7 @@ Status = Single
 (b) Specific-to-general
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 18
@@ -584,7 +584,7 @@ Possible approaches
 of the rule. Ex. FOIL's information gain
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 19
@@ -615,7 +615,7 @@ rule. The measure is proportional to p1 and p1/(p1+n1. Thus the measure
 prefers rules that have high support and accuracy)
 
 
-====== страница 20 ======
+---------- страница 20 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 20
@@ -635,7 +635,7 @@ as negative class
 – Repeat with next smallest class as positive class
 
 
-====== страница 21 ======
+---------- страница 21 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 21
@@ -662,7 +662,7 @@ then CD, BCD etc. Then delete any final sequence of conditions that
 maximizes v.
 
 
-====== страница 22 ======
+---------- страница 22 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 22
@@ -682,7 +682,7 @@ MDL). Another possible stopping condition is that the error rate
 of the rule on the validation set must not exceed 50%.
 
 
-====== страница 23 ======
+---------- страница 23 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 23
@@ -701,7 +701,7 @@ Repeat rule generation and rule optimization for the
 remaining positive examples
 
 
-====== страница 24 ======
+---------- страница 24 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 24
@@ -733,7 +733,7 @@ Method for generating a rule set from a decision tree. Every path from the
 root to a leaf in a decision tree can be expresses as a classification rule.
 
 
-====== страница 25 ======
+---------- страница 25 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 25
@@ -753,7 +753,7 @@ generalization error
 – Discard any duplicate rule, if there is any
 
 
-====== страница 26 ======
+---------- страница 26 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 26
@@ -770,7 +770,7 @@ Order classes in increasing order of their total description length.
 The first one is given the highest priority.
 
 
-====== страница 27 ======
+---------- страница 27 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 27
@@ -920,7 +920,7 @@ yes
 birds
 
 
-====== страница 28 ======
+---------- страница 28 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 28
@@ -958,7 +958,7 @@ RIPPER:
 () Mammals
 
 
-====== страница 29 ======
+---------- страница 29 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 29
@@ -1039,7 +1039,7 @@ C4.5 and C4.5rules:
 RIPPER:
 
 
-====== страница 30 ======
+---------- страница 30 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 30

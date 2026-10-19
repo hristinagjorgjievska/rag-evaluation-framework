@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 1.6. Nearest Neighbors
 
 sklearn.neighbors provides functionality for unsupervised and

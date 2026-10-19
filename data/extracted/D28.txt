@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Speech and Language Processing.
 Daniel Jurafsky & James H. Martin.
 Copyright © 2026.
@@ -66,7 +66,7 @@ is equally important. First, logistic regression has a close relationship with n
 networks. As we will see in Chapter 6, a neural network can be viewed as a series of
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 2
 CHAPTER 4
 •
@@ -124,7 +124,7 @@ learning
 addition to the input and the set of output classes, we have a labeled training set
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 4.1
 •
 MACHINE LEARNING AND CLASSIFICATION
@@ -178,7 +178,7 @@ moid function, and then turn to multinomial logistic regression for more than tw
 classes and the use of the softmax function in Section 4.7.
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 4
 CHAPTER 4
 •
@@ -248,7 +248,7 @@ shown graphically in Fig. 4.1:
 has a number of advantages; it takes a real-valued number and maps it into the range
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 4.2
 •
 THE SIGMOID FUNCTION
@@ -305,7 +305,7 @@ one scalar probability, knowing that we can always compute the missing probabili
 P(y = 0) as 1−P(y = 1).
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 6
 CHAPTER 4
 •
@@ -375,7 +375,7 @@ number of positive lexicon words (great, nice, enjoyable, etc.) is to a positive
 ment decision, while w2 tells us the importance of negative lexicon words. Note that
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 4.3
 •
 CLASSIFICATION WITH LOGISTIC REGRESSION
@@ -440,7 +440,7 @@ quires extensive human effort. For this reason, recent NLP systems avoid hand-
 designed features and instead focus on representation learning: ways to learn fea-
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 8
 CHAPTER 4
 •
@@ -521,7 +521,7 @@ dicted output probability as follows:
 ˆy(3) = P(y(3) = 1|x(3)) = σ(w ·x(3) +b)
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 4.4
 •
 LEARNING IN LOGISTIC REGRESSION
@@ -602,7 +602,7 @@ Eq. 4.5 is ˆy, the system’s probability of y being 1, which we can think of a
 of the true y (which is either 1 or 0). We want to learn parameters (meaning w and b)
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 10
 CHAPTER 4
 •
@@ -661,7 +661,7 @@ log p(y|x) = log
 (4.18)
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 4.5
 •
 THE CROSS-ENTROPY LOSS FUNCTION
@@ -722,7 +722,7 @@ Now we know what we want to minimize; in the next section, we’ll see how to
 find the minimum.
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 12
 CHAPTER 4
 •
@@ -790,7 +790,7 @@ dwL(f(x;w),y)
 Now let’s extend the intuition from a function of one scalar variable w to many
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 4.6
 •
 GRADIENT DESCENT
@@ -839,7 +839,7 @@ minimum: the opposite direction of the gradient (recall that the gradient points
 of increase not decrease).
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 14
 CHAPTER 4
 •
@@ -905,7 +905,7 @@ random example at a time; in Section 4.6.4 we’ll discuss other versions of gra
 descent that batch many examples at once. Fig. 4.5 shows the algorithm.
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 4.6
 •
 GRADIENT DESCENT
@@ -968,7 +968,7 @@ w1 = w2 = b = 0
 η = 0.1
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 16
 CHAPTER 4
 •
@@ -1072,7 +1072,7 @@ entropy loss for one example from Eq. 4.19 to mini-batches of size m. We’ll co
 to use the notation that x(i) and y(i) mean the ith training features and training label,
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 4.7
 •
 MULTINOMIAL LOGISTIC REGRESSION
@@ -1159,7 +1159,7 @@ class k from a set of K classes, under the stipulation that only one of these cl
 the correct one (sometimes called hard classification; an observation can not be in
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 18
 CHAPTER 4
 •
@@ -1230,7 +1230,7 @@ arately. Instead, it’s more common to set up the equation for more efficient c
 putation by modern vector processing hardware. We’ll do this by representing the
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 4.7
 •
 MULTINOMIAL LOGISTIC REGRESSION
@@ -1292,7 +1292,7 @@ each of which has a single weight. We’ll use this kind of notation in our desc
 of the CRF in Chapter 18.
 
 
-====== страница 20 ======
+---------- страница 20 ----------
 20
 CHAPTER 4
 •
@@ -1386,7 +1386,7 @@ And our classifier will produce an estimate vector with K elements ˆy, each ele
 ˆyk of which represents the estimated probability p(yk = 1|x).
 
 
-====== страница 21 ======
+---------- страница 21 ----------
 4.9
 •
 EVALUATION: PRECISION, RECALL, F-MEASURE
@@ -1458,7 +1458,7 @@ detects tweets concerning Delicious Pie. Here the positive class is tweets about
 Delicious Pie and the negative class is all other tweets.
 
 
-====== страница 22 ======
+---------- страница 22 ----------
 22
 CHAPTER 4
 •
@@ -1529,7 +1529,7 @@ recall
 correctly identified by the system. Recall is defined as
 
 
-====== страница 23 ======
+---------- страница 23 ----------
 4.9
 •
 EVALUATION: PRECISION, RECALL, F-MEASURE
@@ -1600,7 +1600,7 @@ ment as urgent, and we have shown how to compute a distinct precision and recall
 value for each class. In order to derive a single metric that tells us how well the
 
 
-====== страница 24 ======
+---------- страница 24 ----------
 24
 CHAPTER 4
 •
@@ -1743,7 +1743,7 @@ devset
 Note that the microaverage precision is always equal to the microaverage recall.
 
 
-====== страница 25 ======
+---------- страница 25 ----------
 4.11
 •
 STATISTICAL SIGNIFICANCE TESTING
@@ -1823,7 +1823,7 @@ for NLP classifiers, drawing especially on the work of Dror et al. (2020) and Be
 Kirkpatrick et al. (2012).
 
 
-====== страница 26 ======
+---------- страница 26 ----------
 26
 CHAPTER 4
 •
@@ -1884,7 +1884,7 @@ erally don’t use simple parametric tests like t-tests or ANOVAs that you might
 familiar with. Parametric tests make assumptions about the distributions of the test
 
 
-====== страница 27 ======
+---------- страница 27 ----------
 4.11
 •
 STATISTICAL SIGNIFICANCE TESTING
@@ -1945,7 +1945,7 @@ how surprising our observed δ(x) is, we would in other circumstances compute th
 p-value by counting over many test sets how often δ(x(i)) exceeds the expected zero
 
 
-====== страница 28 ======
+---------- страница 28 ----------
 28
 CHAPTER 4
 •
@@ -2035,7 +2035,7 @@ stereotypes about them. For example Kiritchenko and Mohammad (2018) exam-
 ined the performance of 200 sentiment analysis systems on pairs of sentences that
 
 
-====== страница 29 ======
+---------- страница 29 ----------
 4.12
 •
 AVOIDING HARMS IN CLASSIFICATION
@@ -2098,7 +2098,7 @@ information like:
 • model performance across different demographic or other groups and envi-
 
 
-====== страница 30 ======
+---------- страница 30 ----------
 30
 CHAPTER 4
 •
@@ -2150,7 +2150,7 @@ regularization
 tion in Eq. 4.21, resulting in the following loss for a batch of m examples (slightly
 
 
-====== страница 31 ======
+---------- страница 31 ----------
 4.14
 •
 ADVANCED: REGULARIZATION
@@ -2243,7 +2243,7 @@ for both these types of regularization we generally ignore the bias term and onl
 consider the other weights.
 
 
-====== страница 32 ======
+---------- страница 32 ----------
 32
 CHAPTER 4
 •
@@ -2329,7 +2329,7 @@ First, we want to know the derivative of the loss function with respect to a sin
 weight w j (we’ll need to compute it for each weight, and for the bias):
 
 
-====== страница 33 ======
+---------- страница 33 ----------
 4.16
 •
 SUMMARY
@@ -2416,7 +2416,7 @@ algorithms like gradient descent are used to find the optimal weights.
 ability to transparently study the importance of individual features.
 
 
-====== страница 34 ======
+---------- страница 34 ----------
 34
 CHAPTER 4
 •
@@ -2475,7 +2475,7 @@ A spam classifier is run on 1,000 emails, of which 40 are spam. It labels 30
 emails as spam, 24 of which really are. Compute accuracy, precision, recall,
 
 
-====== страница 35 ======
+---------- страница 35 ----------
 EXERCISES
 35
 and F1. Then compute the accuracy of a classifier that labels everything as
@@ -2487,7 +2487,7 @@ w1, w2, b, and verify that w2 has moved in the direction the text predicts at th
 end of the section.
 
 
-====== страница 36 ======
+---------- страница 36 ----------
 36
 Chapter 4
 •
@@ -2614,7 +2614,7 @@ Stamatatos, E. 2009. A survey of modern authorship attribu-
 tion methods. JASIST, 60(3):538–556.
 
 
-====== страница 37 ======
+---------- страница 37 ----------
 Exercises
 37
 Tibshirani, R. J. 1996. Regression shrinkage and selection

@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 1.11. Ensembles: Gradient boosting, random forests, bagging, voting, stacking
 
 Ensemble methods combine the predictions of several

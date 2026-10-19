@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Lecture 5b. Ensemble Methods and Boosted Trees for
 Classification
 Data mining, prof. Biljana Tojtovska Ribarski
@@ -89,7 +89,7 @@ of errors;
 1
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 • a tree that looks convincing on one sample may change noticeably if the sample changes.
 Next we want to understand what happens when many trees are combined into one stronger
 classifier.
@@ -134,7 +134,7 @@ errors, and combining them can improve generalization.
 2
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 1.3
 The General Idea of Ensemble Learning
 An ensemble combines multiple base models into one final predictor. For classification, the
@@ -176,7 +176,7 @@ the observed dataset as an empirical stand-in for that population. If a train/va
 3
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 split already exists, bootstrap resampling is applied to the training set, while the validation
 and test sets remain untouched.
 Warning 1.1: Bootstrap is not a universal fix
@@ -220,7 +220,7 @@ are making almost the same error, so their average is still about 0.877, which r
 4
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 from the truth. In contrast, if the three trees predict 0.9, 0.2, and 0.1, then their errors
 are less aligned, and their average is
 0.9 + 0.2 + 0.1
@@ -265,7 +265,7 @@ often with less computational cost than repeated cross-validation.
 5
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 Warning 1.2: What OOB does not replace?
 Out-of-bag error is helpful, but it does not replace a final untouched test set. Final model
 assessment should still be based on honest evaluation on data not used in model building.
@@ -307,7 +307,7 @@ class probabilities (soft voting).
 6
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 Example 1.3: Medical triage and dominant variables
 Suppose oxygen saturation is by far the strongest triage variable. Under plain bagging,
 many trees may repeatedly split first on that same variable. Under Random Forest, some
@@ -352,7 +352,7 @@ assuming that one variable alone carries the entire importance.
 7
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 1.8
 Boosting: Sequential Error Correction
 Bagging builds trees independently and then aggregates them. Boosting is fundamentally different.
@@ -402,7 +402,7 @@ The second view is more general and leads directly to modern boosted tree system
 8
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 1.9
 AdaBoost
 AdaBoost is the classical error-focused boosting method. Its main idea is simple: observations
@@ -471,7 +471,7 @@ If errt = 0 (respectively, errt = 1), then the weak learner classified all weigh
 9
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 correctly (respectively, incorrectly), and the formula for αt is not finite. In practice, this
 corresponds to a degenerate case, and one usually stops early or handles it separately.
 Thus, AdaBoost is intended for weak learners that perform at least slightly better than
@@ -519,7 +519,7 @@ score may be transformed into a probability through the logistic function.
 10
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 Insight 1.4: Score function and probability
 In binary classification, a model may first produce a score F(x) and then convert it to a
 probability by
@@ -569,7 +569,7 @@ In the algorithm above:
 11
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 • L(y, s) is the loss function, differentiable with respect to s;
 • η is the learning rate;
 • T is the total number of boosting rounds;
@@ -615,7 +615,7 @@ move downward; if the derivative is negative, increasing the score would decreas
 12
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 score should move upward. Therefore, the negative gradient points in the direction in which the
 current score should move in order to reduce the loss.
 These derivatives are known only at the training points, and we need a function ht(x) that
@@ -678,7 +678,7 @@ The partial derivative of this function with respect to s is s −y. At boosting
 13
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 evaluate the negative gradient at y = yi and s = Ft−1(xi), where yi is the true class label
 and Ft−1(xi) is the current prediction score.
 Choose a learning rate η, for example η = 0.1 and the number of boosting rounds T.
@@ -735,7 +735,7 @@ so the predicted classes become
 14
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 Thus, this example shows the real logic of gradient boosting: each round makes a small
 correction to the score function, and only after enough corrections may the final class
 labels change. In other words, scores may improve before the final class labels change.
@@ -774,7 +774,7 @@ At the same time, boosting can overfit when:
 15
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 Warning 1.4: Boosting is powerful, but not immune to noise
 A boosted model can fit subtle signal very well, but the same flexibility can also fit noise.
 Small learning rates, shallow trees, proper validation, and early stopping are therefore
@@ -814,7 +814,7 @@ datasets.
 16
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 Remark 2.1: How to think about XGBoost
 The main conceptual picture of XGBoost is not “a completely different method,” but “a
 highly optimized, strongly regularized gradient-boosted tree system.”
@@ -853,7 +853,7 @@ Typical cautions include:
 17
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 • speed does not remove the need for proper evaluation.
 2.5
 CatBoost
@@ -895,7 +895,7 @@ across modern boosted-tree systems.
 18
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 • Number of trees / boosting rounds. More trees increase expressive power, because the
 model can make more correction steps. But too many trees may overfit, especially if the
 learning rate is large or the individual trees are too complex.
@@ -936,7 +936,7 @@ Don’ts
 19
 
 
-====== страница 20 ======
+---------- страница 20 ----------
 • Do not assume that a modern library automatically removes the need for careful preprocessing
 and validation.
 • Do not treat one package as universally best for every tabular dataset.
@@ -1061,7 +1061,7 @@ it builds trees sequentially so that each new tree improves the current ensemble
 20
 
 
-====== страница 21 ======
+---------- страница 21 ----------
 emphasizes harder cases through reweighting, while gradient boosting fits correction trees to a
 loss-based error signal.
 Modern systems such as XGBoost, LightGBM, and CatBoost are all boosted-tree systems built

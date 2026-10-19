@@ -1,0 +1,1575 @@
+---------- страница 1 ----------
+Data Mining: Data
+Lecture Notes for Chapter 2
+Introduction to Data Mining , 2nd Edition
+by
+Tan, Steinbach, Kumar
+(with additional explanations and examples)
+
+---------- страница 2 ----------
+What are the goals of Data science?
+Exploration: finding patterns in data
+Descriptive statistics
+Visualizations
+Explanation: providing reasons for patterns in data. 
+Use knowledge domain, inference statistics etc. to tell a 
+causal story (ex. smoking causes cancer)
+Prediction: predicting patterns in unseen data
+Model potentially complex relationships in observed 
+data, and use the model to make predictions about 
+unobserved data
+
+---------- страница 3 ----------
+Steps in Data Analysis
+Define the problem, design study
+Identify the data and its relevance, gather the data
+Prepare the data (preprocess the data, data cleaning)
+Statistical specification of the problem, exploratory data 
+analysis
+Method selection
+Analysis of method
+Evaluate and validate the model (statistical 
+significance, power of the study, comparison to other 
+models)
+Interpret the results
+
+---------- страница 4 ----------
+Outline
+Attributes and Objects
+Types of Data
+Data Quality
+Similarity and Distance
+Data Preprocessing
+
+---------- страница 5 ----------
+What is Data?
+Collection of data objects 
+and their attributes
+An attribute is a property 
+or characteristic of an 
+object
+– Examples: eye color of a 
+person, temperature, etc.
+– Attribute is also known as 
+variable, field, characteristic, 
+dimension, or feature
+A collection of attributes 
+describe an object
+– Object is also known as 
+record, point, case, sample, 
+entity, or instance
+Tid Refund Marital 
+Status 
+Taxable 
+Income Cheat 
+Yes 
+Single 
+125K 
+No 
+No 
+Married 
+100K 
+No 
+No 
+Single 
+70K 
+No 
+Yes 
+Married 
+120K 
+No 
+No 
+Divorced 95K 
+Yes 
+No 
+Married 
+60K 
+No 
+Yes 
+Divorced 220K 
+No 
+No 
+Single 
+85K 
+Yes 
+No 
+Married 
+75K 
+No 
+No 
+Single 
+90K 
+Yes 
+Attributes
+Objects
+
+---------- страница 6 ----------
+Attribute Values
+Attribute values are numbers or symbols assigned to an 
+attribute for a particular object
+Distinction between attributes and attribute values
+– Same attribute can be mapped to different attribute values
+Example: height can be measured in feet or meters
+– Different attributes can be mapped to the same set of values
+Example: Attribute values for ID and age are integers
+But properties of attribute can be different than the 
+properties of the values used to represent the attribute
+(ID may not have a limit but age has a maximum and 
+minimum value)
+
+---------- страница 7 ----------
+Measurement of Length 
+The way you measure an attribute may not match the 
+attributes properties.
+A
+B
+C
+D
+E
+This scale 
+preserves  
+the ordering  
+and additvity 
+properties of 
+length.
+This scale 
+preserves  
+only the 
+ordering 
+property of  
+length.
+
+---------- страница 8 ----------
+Types of Attributes
+
+---------- страница 9 ----------
+Types of Attributes 
+There are different types of attributes
+Categorical data represents characteristics( person’s gender, 
+language etc). Categorical data can also take on numerical 
+values, though they represent some ordering. There are two 
+types of categorical data
+– Nominal can be expressed in words or in numbers, but can 
+not be ordered in some meaningful way  and we can not 
+perform arithmetic operations on them (ID numbers, eye 
+color, zip codes)
+– Ordinal data can be ranked in a natural order (rankings 
+(e.g., user rates from 1-10), grades, height {tall, medium, 
+short}
+
+---------- страница 10 ----------
+Numerical data is used to express quantitative values and we can 
+transform this data with arithmetic operations. It can be discrete and 
+continuous. Continuous data is additionally explained as
+– Interval data - numeric values that are ordered and where we 
+know the exact differences between the values, but there is no 
+“true zero” (calendar dates, temperatures in Celsius or 
+Fahrenheit.) Some statistics can not be applied.
+– Ratio values also ordered units that have the same difference. 
+Ratio values are the same as interval values, with the 
+difference that they do have an absolute zero. Good 
+examples are height, weight, length, temperature in Kelvin, 
+length, counts, elapsed time (e.g., time to run a race) etc.
+
+---------- страница 11 ----------
+Properties of Attribute Values 
+The type of an attribute depends on which of the 
+following properties/operations it possesses:
+– Distinctness:  
+– Order:  
+– Differences are
+meaningful : 
+– Ratios are  
+meaningful
+– Nominal attribute: distinctness
+– Ordinal attribute: distinctness & order
+– Interval attribute: distinctness, order & meaningful 
+differences
+– Ratio attribute: all 4 properties/operations
+
+---------- страница 12 ----------
+Difference Between Ratio and Interval 
+Is it physically meaningful to say that a 
+temperature of 10 ° is twice that of 5° on 
+– the Celsius scale?
+– the Fahrenheit scale?
+– the Kelvin scale?
+Consider measuring the height above average
+– If Bill’s height is three inches above average and 
+Bob’s height is six inches above average, then would 
+we say that Bob is twice as tall as Bill?
+– Is this situation analogous to that of temperature?
+
+---------- страница 13 ----------
+Attribute 
+Type 
+Description 
+Examples 
+Operations 
+Nominal 
+Nominal attribute 
+values only  
+distinguish. (=, ) 
+zip codes, employee 
+ID numbers, eye 
+color, sex: {male, 
+female} 
+mode, entropy, 
+contingency 
+correlation, 2 
+test 
+Categorical 
+Qualitative 
+Ordinal 
+Ordinal attribute 
+values also order 
+objects.  
+hardness of minerals, 
+{good, better, best},  
+grades, street 
+numbers 
+median, 
+percentiles, rank 
+correlation, run 
+tests, sign tests 
+Interval 
+For interval 
+attributes, 
+differences between 
+values are 
+meaningful. (+, - ) 
+calendar dates, 
+temperature in 
+Celsius or Fahrenheit 
+mean, standard 
+deviation, 
+Pearson's 
+correlation, t and 
+F tests 
+Numeric 
+Quantitative 
+Ratio 
+For ratio variables, 
+both differences and 
+ratios are 
+meaningful. (*, /) 
+temperature in Kelvin, 
+monetary quantities, 
+counts, age, mass, 
+length, current 
+geometric mean, 
+harmonic mean, 
+percent variation 
+This categorization of attributes is due to S. S. Stevens
+
+---------- страница 14 ----------
+Attribute 
+Type 
+Transformation 
+Comments 
+Categorical 
+Qualitative 
+Nominal 
+Any permutation of values 
+If all employee ID numbers 
+were reassigned, would it 
+make any difference? 
+Ordinal 
+An order preserving change of 
+values, i.e.,  
+new_value = f(old_value)  
+where f is a monotonic function 
+An attribute encompassing 
+the notion of good, better best 
+can be represented equally 
+well by the values {1, 2, 3} or 
+by { 0.5, 1, 10}. 
+Numeric 
+Quantitative 
+Interval 
+new_value = a * old_value + b 
+where a and b are constants 
+Thus, the Fahrenheit and 
+Celsius temperature scales 
+differ in terms of where their 
+zero value is and the size of a 
+unit (degree). 
+Ratio 
+new_value = a * old_value 
+Length can be measured in 
+meters or feet. 
+This categorization of attributes is due to S. S. Stevens
+
+---------- страница 15 ----------
+Discrete and Continuous Attributes 
+Discrete Attribute
+– Has only a finite or countably infinite set of values
+– Examples: zip codes, counts, or the set of words in a 
+collection of documents 
+– Often represented as integer variables.   
+– Note: binary attributes are a special case of discrete 
+attributes 
+Continuous Attribute 
+– Has real numbers as attribute values
+– Examples: temperature, height, or weight.  
+– Practically, real values can only be measured and 
+represented using a finite number of digits.
+– Continuous attributes are typically represented as floating-
+point variables.  
+
+---------- страница 16 ----------
+Asymmetric Attributes
+In symmetric attributes, all values are equally important 
+(example male vs female). On the contrary, in asymmetric 
+attributes, they are not equally important. Example:
+Only presence (a non-zero attribute value) is regarded as 
+important
+Words present in documents
+Items present in customer transactions
+If we met a friend in the grocery store would we ever say 
+the following?
+“I see our purchases are very similar since we didn’t buy most 
+of the same things.” 
+
+---------- страница 17 ----------
+Critiques of the attribute categorization 
+Incomplete (there are other categories of data)
+– Asymmetric binary (1-positive for a disease, more important, otherwise 
+– Cyclical (time when we get out of bed, start lunch etc.)
+– Seasonal (sales of ice cream, gloves, average temperature
+– Multivariate
+Partially ordered (collection of people ordered 
+by genealogical descendancy)
+– Partial membership
+– Relationships between the data
+Real data is approximate and noisy
+– This can complicate recognition of the proper attribute type
+– Treating one attribute type as another may be approximately correct
+
+---------- страница 18 ----------
+Key Messages for Attribute Types
+The types of operations you choose should be 
+“meaningful” for the type of data you have
+– Distinctness, order, meaningful intervals, and meaningful 
+ratios are only four (among many possible) properties of 
+data
+– The data type you see – often numbers or strings – may not 
+capture all the properties or may suggest properties that are 
+not present
+– Analysis may depend on these other properties of the data
+Many statistical analyses depend only on the distribution
+– In the end, what is meaningful can be specific to domain
+
+---------- страница 19 ----------
+Important Characteristics of Data
+– Dimensionality (number of attributes)
+High dimensional data brings a number of challenges. As dimensionality 
+increases, the data becomes increasingly sparse – problem with both 
+classification and classtering
+– Sparsity
+Only presence counts
+– Resolution
+Patterns depend on the scale (For example, variations in atmospheric 
+pressure on a scale of hours reflect the movement of storms and other 
+weather systems. On a scale of months, such phenomena are not 
+detectable.)
+– Size
+Type of analysis may depend on size of data
+
+---------- страница 20 ----------
+Types of data sets
+Record
+– Data Matrix
+– Document Data
+– Transaction Data
+Graph
+– World Wide Web
+– Molecular Structures
+Ordered
+– Spatial Data
+– Temporal Data
+– Sequential Data
+– Genetic Sequence Data
+
+---------- страница 21 ----------
+Record Data 
+Data that consists of a collection of records, each 
+of which consists of a fixed set of attributes 
+Tid Refund Marital 
+Status 
+Taxable 
+Income 
+Cheat 
+Yes 
+Single 
+125K 
+No 
+No 
+Married 
+100K 
+No 
+No 
+Single 
+70K 
+No 
+Yes 
+Married 
+120K 
+No 
+No 
+Divorced 95K 
+Yes 
+No 
+Married 
+60K 
+No 
+Yes 
+Divorced 220K 
+No 
+No 
+Single 
+85K 
+Yes 
+No 
+Married 
+75K 
+No 
+No 
+Single 
+90K 
+Yes 
+
+---------- страница 22 ----------
+Data Matrix 
+If data objects have the same fixed set of numeric 
+attributes, then the data objects can be thought of as 
+points in a multi-dimensional space, where each 
+dimension represents a distinct attribute 
+Such a data set can be represented by an m by n matrix, 
+where there are m rows, one for each object, and n
+columns, one for each attribute
+Thickness 
+Load
+Distance
+Projection 
+of y load
+Projection 
+of x Load
+Thickness 
+Load
+Distance
+Projection 
+of y load
+Projection 
+of x Load
+
+---------- страница 23 ----------
+Document Data
+Each document becomes a ‘term’ vector 
+– Each term is a component (attribute) of the vector
+– The value of each component is the number of times 
+the corresponding term occurs in the document. 
+Document 1
+season
+timeout
+lost
+win
+game
+score
+ball
+play
+coach
+team
+Document 2
+Document 3
+
+---------- страница 24 ----------
+Transaction Data
+A special type of data, where 
+– Each transaction involves a set of items.  
+– For example, consider a grocery store.  The set of products 
+purchased by a customer during one shopping trip constitute a 
+transaction, while the individual products that were purchased 
+are the items.
+– Can represent transaction data as record data 
+TID 
+Items 
+Bread, Coke, Milk 
+Beer, Bread 
+Beer, Coke, Diaper, Milk 
+Beer, Bread, Diaper, Milk 
+Coke, Diaper, Milk 
+
+---------- страница 25 ----------
+Graph Data 
+Examples: Generic graph, a molecule, and webpages 
+Benzene Molecule: C6H6
+
+---------- страница 26 ----------
+Ordered Data 
+Sequences of transactions (example for data containing 
+info about purchased items by customer). If time is also 
+recorded we get sequential data.
+An element of 
+the sequence
+Items/Events
+
+---------- страница 27 ----------
+Ordered Data 
+Genomic sequence data
+GGTTCCGCCTTCAGCCCCGCGCC
+CGCAGGGCCCGCCCCGCGCCGTC
+GAGAAGGGCCCGCCTGGCGGGCG
+GGGGGAGGCGGGGCCGCCCGAGC
+CCAACCGAGTCCGACCAGGTGCC
+CCCTCTGCTCGGCCTAGACCTGA
+GCTCATTAGGCGGCAGCGGACAG
+GCCAAGTAGAACACGCGAAGCGC
+TGGGCTGCCTGCTGCGACCAGGG
+
+---------- страница 28 ----------
+Ordered Data
+Spatio-Temporal Data
+Average Monthly 
+Temperature of 
+land and ocean
+
+---------- страница 29 ----------
+Data Quality 
+Poor data quality negatively affects many data processing 
+efforts
+Data mining example: a classification model for detecting 
+people who are loan risks is built using poor data
+– Some credit-worthy candidates are denied loans
+– More loans are given to individuals that default
+
+---------- страница 30 ----------
+Data Quality ...
+What kinds of data quality problems?
+How can we detect problems with the data? 
+What can we do about these problems? 
+Examples of data quality problems: 
+– Noise and outliers 
+– Wrong data 
+– Fake data 
+– Missing values 
+– Duplicate data 
+
+---------- страница 31 ----------
+Noise
+For objects, noise is an extraneous object
+For attributes, noise refers to modification of original values
+Examples: distortion of a person’s voice when talking on a poor phone 
+and “snow” on television screen
+The figures below show two sine waves of the same magnitude and 
+different frequencies, the waves combined, and the two sine waves with 
+random noise
+The magnitude and shape of the original signal is distorted 
+
+---------- страница 32 ----------
+Outliers are data objects with characteristics that 
+are considerably different than most of the other 
+data objects in the data set
+– Case 1: Outliers are 
+noise that interferes
+with data analysis 
+– Case 2: Outliers are 
+the goal of our analysis
+Credit card fraud
+Intrusion detection
+Causes?
+Outliers
+
+---------- страница 33 ----------
+Types of outliers
+There are different types of outliers 
+univariate (in a single attribute); 
+multivariate (occurs in the joint combination of two or 
+more attributes); 
+global outlier (with respect to the whole data set; 
+contextual outlier (temperature in a region – we need 
+some knowledge about the seasonal characteristics of 
+that region); 
+collective outlier (a subset of the data is significantly 
+different than the rest of the data set)
+
+---------- страница 34 ----------
+Types of outliers
+Univariate vs. multivariate outlier
+
+---------- страница 35 ----------
+Types of outliers
+Collective outlier
+
+---------- страница 36 ----------
+Does the outlier change our assumption or result? On left – if we 
+remove it the regression line remains the same, on the right it will 
+change. The point on the right is part of the data and we need to 
+analyze more before deciding to delete it.
+
+---------- страница 37 ----------
+How to deal with outliers
+We should distinguish noise from outliers. Noise is
+random error or variance in the data (mistake, mislabel
+etc.) Outlier is part of the data, just significantly different
+compared to the rest.
+It does affect statistical results so we may need to drop it.
+But it may also change our assumption of the data.
+Sometimes we have to analyze the domain in details
+before we decide to omit it.
+Different techniques: IQR for numeric outliers, Residual
+analysis in Linear regression, Mahalanobis distance, z-
+scores etc.
+
+---------- страница 38 ----------
+Missing Values
+Reasons for missing values
+– Information is not collected 
+(e.g., people decline to give their age and weight)
+– Attributes may not be applicable to all cases 
+(e.g., annual income is not applicable to children)
+Handling missing values
+– Eliminate data objects or variables
+– Estimate missing values
+Example: time series of temperature
+Example: census results 
+There are different techniques to substitute a missing value
+– Ignore the missing value during analysis
+
+---------- страница 39 ----------
+Duplicate Data
+Data set may include data objects that are 
+duplicates, or almost duplicates of one another
+– Major issue when merging data from heterogeneous 
+sources
+Examples:
+– Same person with multiple email addresses
+Data cleaning
+– Process of dealing with duplicate data issues
+When should duplicate data not be removed?
+
+---------- страница 40 ----------
+Change format of data
+Sometimes we may change the format of the data in
+order to better process it later. For example, birth date
+may be stored as a string 02/01/2020. We may transform
+it to numerical data in a format which allows to calculate
+age or other time interval. We may also decide just to
+keep
+the
+year
+or
+even
+define
+more
+attributes
+(day/month/year).
+
+---------- страница 41 ----------
+Similarity and Dissimilarity Measures
+Similarity measure
+– Numerical measure of how alike two data objects are.
+– Is higher when objects are more alike.
+– Often falls in the range [0,1]
+Dissimilarity measure
+– Numerical measure of how different two data objects are 
+– Lower when objects are more alike
+– Minimum dissimilarity is often 0
+– Upper limit varies
+Proximity refers to a similarity or dissimilarity
+Check the range of the measure, before using an algorithm.
+
+---------- страница 42 ----------
+Similarity/Dissimilarity for Simple Attributes
+The following table shows the similarity and dissimilarity 
+between two objects, x and y, with respect to a single, simple 
+attribute.
+
+---------- страница 43 ----------
+Euclidean Distance
+Euclidean Distance
+where n is the number of dimensions (attributes) and 
+xk and yk are, respectively, the kth attributes 
+(components) or data objects x and y.
+Standardization is necessary, if scales differ.
+
+---------- страница 44 ----------
+Cosine Similarity
+Cosine similarity measures the similarity between two vectors of
+an inner product space.
+It is often used to measure document similarity in text analysis.
+1- cosine similarity = cosine distance
+Some sources use them interchangeable so it may be confusing.
+(Similarity should increase as the distance between two vectors
+increases and vice versa. Next – definition for distance)
+
+---------- страница 45 ----------
+Cosine Similarity
+If d1 and d2 are two document vectors, then
+cos( d1, d2 ) = <d1,d2> / ||d1|| ||d2|| ,
+where <d1,d2> indicates inner product or vector dot
+product of vectors, d1 and d2, and || d || is the
+length of
+vector d.
+Example:
+d1 = 3 2 0 5 0 0 0 2 0 0
+d2 =  1 0 0 0 0 0 0 1 0 2
+<d1, d2> =  3*1 + 2*0 + 0*0 + 5*0 + 0*0 + 0*0 + 0*0 + 2*1 + 0*0 + 0*2 = 5
+|| d1 || = (3*3+2*2+0*0+5*5+0*0+0*0+0*0+2*2+0*0+0*0)0.5 =  (42) 0.5 = 6.481
+|| d2 || = (1*1+0*0+0*0+0*0+0*0+0*0+0*0+1*1+0*0+2*2) 0.5 = (6) 0.5 = 2.449
+cos(d1, d2 ) = 0.3150
+
+---------- страница 46 ----------
+Euclidean Distance
+p1
+p2
+p3
+p4
+point
+x
+y
+p1
+p2
+p3
+p4
+Distance Matrix
+p1
+p2
+p3
+p4
+p1
+p2
+p3
+p4
+
+---------- страница 47 ----------
+Cosine similarity vs. Euclidean distance
+
+---------- страница 48 ----------
+Minkowski Distance
+Minkowski Distance is a generalization of Euclidean 
+Distance
+Where r is a parameter, n is the number of dimensions 
+(attributes) and xk and yk are, respectively, the kth
+attributes (components) or data objects x and y.
+
+---------- страница 49 ----------
+Minkowski Distance: Examples
+r = 1.  City block (Manhattan, taxicab, L1 norm) distance. 
+– A common example of this for binary vectors is the 
+Hamming distance, which is just the number of bits that are 
+different between two binary vectors
+r = 2.  Euclidean distance
+r .  “supremum” (Lmax norm, Lnorm) distance. 
+– This is the maximum difference between any component of 
+the vectors
+Do not confuse r with n, i.e., all these distances are 
+defined for all numbers of dimensions.
+
+---------- страница 50 ----------
+Minkowski Distance
+Distance Matrix
+point
+x
+y
+p1
+p2
+p3
+p4
+L1
+p1
+p2
+p3
+p4
+p1
+p2
+p3
+p4
+L2
+p1
+p2
+p3
+p4
+p1
+p2
+p3
+p4
+L
+p1
+p2
+p3
+p4
+p1
+p2
+p3
+p4
+
+---------- страница 51 ----------
+Minkowski distance
+Example: Let x=(0.01, 0.1, 0.7, 0.05, 0.5, 0.7, 2) and 
+y=(0,0,0,0,0,0,0). Then the value of Minkowski distance dr, for 
+different values of r we have
+d1=4.06
+d2=2.897
+d3=2.066
+d4=2.017 etc.
+How to chose r? Depends on the type of data, number of attributes, 
+knowledge about the problem. 
+Do we want small differences in attributes to count? If there are a lot 
+of such attributes these values will accumulate and for smaller values 
+of r, they will affect the distance. As seen from the calculations above, 
+for large values of r the first 6 attributes will not contribute to the 
+distance.
+Another question – do we want large differences to count? 
+Sometimes we need to standardize data and put the attributes on the 
+same scale.
+
+---------- страница 52 ----------
+How to choose measure to compare data?
+Depends again on the data and the problem we want to
+analyze. Are two shoppers similar because they bought the
+same products or because they bought the same number of
+products? How do we compare text documents – do we care
+about the words that appear in the text or also about their
+count (length of text)?
+Does the number of attributes count? -
+“Research results
+show that in high dimensional space, the concept of proximity,
+distance or nearest neighbor may not even be qualitatively
+meaningful. The data becomes sparse, and traditional indexing
+and
+algorithmic
+techniques
+fail
+from
+a
+efficiency
+and/or
+effectiveness perspective.” Hence we have to think about the
+methods we will use and which is the most appropriate
+measure.
+
+---------- страница 53 ----------
+Other examples: Mahalanobis Distance
+Mahalanobis distance is commonly used in multivariate
+analysis to detect multivariate outliers, which indicates
+unusual combinations of two or more variables. It measures
+distance relative to the centroid — central point in the data
+which can be thought of as an overall mean for multivariate
+data.
+mahalanobisx, y= ((x−y)TƩ−1(x−y))-0.5
+is the covariance matrix. One of the cons of the distance is 
+the calculations of the inverse of the covariance matrix and it 
+may not be calculated if the variables are highly correlated. 
+For uncorrelated variables, the Euclidean distance equals the 
+Mahalanobis distance.
+
+---------- страница 54 ----------
+Mahalanobis Distance
+For red points, the Euclidean distance is 14.7, Mahalanobis
+distance is 6.
+
+---------- страница 55 ----------
+Mahalanobis Distance
+Covariance 
+Matrix:
+A: (0.5, 0.5)
+B: (0, 1)
+C: (1.5, 1.5)
+Mahal(A,B) = 5
+Mahal(A,C) = 4 
+B
+A
+C
+
+---------- страница 56 ----------
+Common Properties of a Distance
+Distances, such as the Euclidean distance, 
+have some well known properties.
+d(x, y) 0   for all x and y and d(x, y) = 0 if and only 
+if  x = y.
+d(x, y) = d(y, x)   for all x and y. (Symmetry)
+d(x, z) d(x, y) + d(y, z)
+for all points x, y, and z.  
+(Triangle Inequality)
+where d(x, y) is the distance (dissimilarity) between 
+points (data objects), x and y.
+A distance that satisfies these properties is a 
+metric
+
+---------- страница 57 ----------
+Common Properties of a Similarity
+Similarities, also have some well known 
+properties.
+s(x, y) = 1 (or maximum similarity) only if x = y. 
+(does not always hold, e.g., cosine)
+s(x, y) = s(y, x)
+for all x and y. (Symmetry)
+where s(x, y) is the similarity between points (data 
+objects), x and y.
+
+---------- страница 58 ----------
+Similarity Between Binary Vectors
+Common situation is that objects, x and y, have only binary 
+attributes
+Compute similarities using the following quantities
+f01 = the number of attributes where x was 0 and y was 1
+f10 = the number of attributes where x was 1 and y was 0
+f00 = the number of attributes where x was 0 and y was 0
+f11 = the number of attributes where x was 1 and y was 1
+Simple Matching coefficient and Jaccard coefficient
+SMC =  number of matches / number of attributes 
+=  (f11 + f00) / (f01 + f10 + f11 + f00)
+J = number of 11 matches / number of non-zero attributes
+= (f11) / (f01 + f10 + f11)          often defined as J = |A∩B|
+|A∪B|
+
+---------- страница 59 ----------
+SMC versus Jaccard: Example
+x =  1 0 0 0 0 0 0 0 0 0    
+y =  0 0 0 0 0 0 1 0 0 1
+f01 = 2   (the number of attributes where x was 0 and y was 1)
+f10 = 1   (the number of attributes where x was 1 and y was 0)
+f00 = 7   (the number of attributes where x was 0 and y was 0)
+f11 = 0   (the number of attributes where x was 1 and y was 1)
+SMC 
+= (f11 + f00) / (f01 + f10 + f11 + f00)
+J = (f11) / (f01 + f10 + f11) = 0 / (2 + 1 + 0) = 0 
+
+---------- страница 60 ----------
+Pearson Correlation coefficient – measures the 
+linear relationship between objects
+
+---------- страница 61 ----------
+Visually Evaluating Correlation
+Scatter plots 
+showing the 
+similarity from 
+–1 to 1.
+
+---------- страница 62 ----------
+Drawback of Correlation
+x = (-3, -2, -1, 0, 1, 2, 3)
+y = (9, 4, 1, 0, 1, 4, 9)
+yi = xi
+mean(x) = 0, mean(y) = 4
+std(x) = 2.16, std(y) = 3.74
+corr(x,y) = (-3)(5)+(-2)(0)+(-1)(-3)+(0)(-4)+(1)(-3)+(2)(0)+3(5) / ( 6 * 2.16 * 3.74 
+Important: The Pearson correlation can evaluate ONLY a linear 
+relationship between two continuous variables.
+
+---------- страница 63 ----------
+Correlation vs Cosine vs Euclidean Distance
+Compare the three proximity measures according to their behavior under 
+variable transformation
+scaling: multiplication by a value
+translation: adding a constant
+Consider the example
+x = (1, 2, 4, 3, 0, 0, 0), y = (1, 2, 3, 4, 0, 0, 0)
+ys = y * 2 (scaled version of y),  yt = y + 5 (translated version)
+Property
+Cosine
+Correlation
+Euclidean Distance
+Invariant to scaling 
+(multiplication)
+Yes
+Yes
+No
+Invariant to translation 
+(addition)
+No
+Yes
+No
+Measure
+(x , y)
+(x , ys)
+(x , yt)
+Cosine
+Correlation
+Euclidean Distance
+
+---------- страница 64 ----------
+Correlation vs cosine vs Euclidean distance
+Choice of the right proximity measure depends on the domain
+What is the correct choice of proximity measure for the 
+following situations?
+– Comparing documents using the frequencies of words
+Documents are considered similar if the word frequencies are similar
+– Comparing the temperature in Celsius of two locations
+Two locations are considered similar if the temperatures are similar in 
+magnitude
+– Comparing two time series of temperature measured in Celsius
+Two time series are considered similar if their “shape” is similar, i.e., they 
+vary in the same way over time, achieving minimums and maximums at 
+similar times, etc. 
+(cosine or Jaccard;  Euclidean; correlation – read details in the book – good example for a 
+test question. )
+
+---------- страница 65 ----------
+Remarks on Pearson Correlation
+The previous definition of correlation corresponds to the so
+called Pearson correlation coefficient and it is used for interval
+od ratio data.
+The variables should ideally be jointly normally distributed and
+have equal variances and if we have small sample which does
+not fulfil this criteria there might be a problem with the
+estimated value. But it is also important that the data are
+continuous, paired and the scatterplot shows some linear
+relationship. The measure is also sensitive to outliers.
+
+---------- страница 66 ----------
+Spearmann correlation coefficient
+There are also Spearmann correlation coefficient – measures strength and 
+direction of relationship between ranked data. It can evaluate a monotonic 
+relationship between two variables - Continous or Ordinal and it is based on the 
+ranked values for each variable rather than the raw data.
+R= 0.851
+R= −0.093 
+R= −0.799
+S= 1
+S= −0.093 
+S= -1
+(nonlinear and nonmonotonous)
+Alternative to the Spearmann correlation coefficient is the Kendall coefficient, 
+especially when we have a small sample size and many tide ranks.
+
+---------- страница 67 ----------
+An example of Spearmann correlation ceofficient
+1,000 companies were asked about their number of employees and their 
+revenue over 2018
+Questions – is company size related to revenue and if yes, how strong is 
+that relationship?
+
+---------- страница 68 ----------
+An example of Spearmann correlation coefficient -
+continued
+There is positive monotonous relation between size and revenue. We can not 
+use Pearson correlation since one of the variables is not continuous. We use 
+ranks to represent the categories for the ordinal variable (1, 2 and so one) and 
+the calculated Spearman coefficient is 0.81 which shows strong monotonous 
+relations between the variables.
+
+---------- страница 69 ----------
+What about time series?
+Be careful when you want to apply correlation for time series. Time
+series should first be checked for trends, seasonality, periodicity and
+autocorrelation. Check this example for the effect of trend on the
+correlation. These two series are just sequences of 100 random
+numbers between -1 and 1.
+Pearson correlation -0.02
+
+---------- страница 70 ----------
+What about time series?
+If a linear trend is added, the series will be transformed as on the figures. In this 
+case the correlation coefficient is 0.96, even though the series are no more 
+related than before, coz only a slopping line was added. 
+
+---------- страница 71 ----------
+Comparison of Proximity Measures
+Domain of application
+– Similarity measures tend to be specific to the type of 
+attribute and data 
+– Record data, images, graphs, sequences, 3D-protein 
+structure, etc. tend to have different measures
+However, one can talk about various properties that 
+you would like a proximity measure to have
+– Symmetry is a common one
+– Tolerance to noise and outliers is another
+– Ability to find more types of patterns? 
+– Many others possible
+The measure must be applicable to the data and 
+produce results that agree with domain knowledge
+
+---------- страница 72 ----------
+Information Based Measures
+Information theory is a well-developed and 
+fundamental disciple with broad applications
+Some similarity measures are based on 
+information theory 
+– Mutual information in various versions
+– Maximal Information Coefficient (MIC) and related 
+measures
+– General and can handle non-linear relationships
+– Can be complicated and time intensive to compute
+
+---------- страница 73 ----------
+Information and Probability
+Information relates to possible outcomes of an event 
+– transmission of a message, flip of a coin, or measurement 
+of a piece of data 
+The more certain an outcome, the less information 
+that it contains and vice-versa
+– For example, if a coin has two heads, then an outcome of 
+heads provides no information
+– More quantitatively, the information is related the 
+probability of an outcome
+The smaller the probability of an outcome, the more information it 
+provides and vice-versa
+– Entropy is the commonly used measure of uncertainty.
+
+---------- страница 74 ----------
+Entropy
+For 
+– a variable (event), X, 
+– with n possible values (outcomes), x1, x2 ..., xn
+– each outcome having probability, p1, p2 ..., pn
+– the entropy of X , H(X), is given by
+HX= −෍
+i=1
+n
+pilog2 pi
+Entropy is between 0 and log2n and is measured 
+in bits
+– Thus, entropy is a measure of how many bits it takes 
+to represent an observation of X on average
+
+---------- страница 75 ----------
+Entropy Examples
+For a coin with probability p of heads and 
+probability q = 1 – p of tails
+H= −plog2 p−qlog2 q
+– For p= 0.5, q = 0.5 (fair coin) H = 1
+– For p = 1 or q = 1, H = 0
+What is the entropy of a fair four-sided die? 
+
+---------- страница 76 ----------
+Entropy for Sample Data: Example
+Maximum entropy is log25 = 2.3219 It is achieved if 
+all pi=1/5 => uniform distribution brings the most 
+uncertainty.
+Hair Color
+Count
+p
+-plog2p
+Black
+Brown
+Blond
+Red
+Other
+Total
+
+---------- страница 77 ----------
+Entropy for Sample Data
+Suppose we have 
+– a number of observations (m) of some attribute, X, 
+e.g., the hair color of students in the class, 
+– where there are n different possible values
+– And the number of observation in the ith category is mi
+– Then, for this sample
+HX= −෍
+i=1
+nmi
+mlog2
+mi
+m
+For continuous data, the calculation is harder
+
+---------- страница 78 ----------
+Entropy in Data Science
+Consider these subsets containing points from positive and negative class
+in a classification problem. The x-axis represents the proportion of positive
+classes in each subset and the corresponding entropy is given on y-axis.
+Which is the subset with highest entropy?
+Entropy is a measure of disorder or uncertainty and in ML and in Data
+Science we often want to reduce uncertainty. Next we need a metric to
+measure the reduction of the uncertainty in our target variable, given some
+additional
+information
+(attribute)
+about
+it
+Mutual
+information
+or
+Information gain.
+
+---------- страница 79 ----------
+Mutual Information (or Information Gain)
+Mutual information measures the amount of information we can obtain 
+from one variable, given the other, that is it measures the average 
+amount of information that X conveys about Y 
+Formally,
+IX, Y= HX+ HY−HX, Y= H(X)−H(X|Y), where H(X,Y)
+is the joint entropy of X and Y, 
+HX, Y= −෍
+i
+j
+pijlog2 pij
+Where pij is the probability that the ith value of X and the jth value of Y
+occur together (use joint distribution) 
+For discrete variables, this is easy to compute
+Maximum mutual information for discrete variables is 
+log2(min( nX, nY )), where nX (nY) is the number of values of X (Y) 
+
+---------- страница 80 ----------
+Mutual Information Example
+Student 
+Status
+Count
+p
+-plog2p
+Undergrad
+Grad
+Total
+Grade
+Count
+p
+-plog2p
+A
+B
+C
+Total
+Student 
+Status
+Grade
+Count
+p
+-plog2p
+Undergrad
+A
+Undergrad
+B
+Undergrad
+C
+Grad
+A
+Grad
+B
+Grad
+C
+Total
+Mutual information of Student Status and Grade =  0.9928 + 1.4406 - 2.2710 = 0.1624
+
+---------- страница 81 ----------
+Maximal Information Coefficient (know the applications of MIC
+Applies mutual information to two continuous 
+variables
+Consider the possible binnings of the variables 
+into discrete categories
+– nX × nY ≤  N0.6 where 
+nX is the number of values of X
+nY is the number of values of Y
+N is the number of samples (observations, data objects)
+Compute the mutual information
+– Normalized by log2(min( nX, nY )
+Take the highest value
+
+---------- страница 82 ----------
+Properties of MIC
+MIC can capture different relationships between variables (apart from
+linear, also cubic, exponential, sinusoidal etc). It does not make any
+assumption about the data distribution, is robust to outliers, is a value
+from [0,1] easy to interpret . Cons – it is computationally expensive and
+does not report the direction and the type of relationship.
+
+---------- страница 83 ----------
+Where is Mutual information applied?
+(Expected) Mutual information and information gain are the 
+same thing and are both used just named differently in 
+different context.
+Example. 
+- Information gain is important when building decision trees 
+(effect of transformation of data set).
+- Mutual information is important for feature selection (find 
+dependence between variables).
+
+---------- страница 84 ----------
+General Approach for Combining Similarities
+Sometimes attributes are of many different types, but an 
+overall similarity is needed.
+1: For the kth attribute, compute a similarity, sk(x, y), in the 
+range [0, 1].
+2: Define an indicator variable, k, for the kth attribute as 
+follows:
+k = 0 if the kth attribute is an asymmetric attribute and
+both objects have a value of 0, or if one of the objects   
+has a missing value for the kth attribute
+k = 1 otherwise
+3. Compute
+
+---------- страница 85 ----------
+Using Weights to Combine Similarities
+May not want to treat all attributes the same.
+– Use non-negative weights ωk
+– similarityx, y=
+σk=1
+n
+ωkδksk(x,y)
+σk=1
+n
+ωkδk
+Can also define a weighted form of distance
+
+---------- страница 86 ----------
+Data Preprocessing
+Aggregation
+Sampling
+Discretization and Binarization
+Attribute Transformation
+Dimensionality Reduction
+Feature subset selection
+Feature creation
+
+---------- страница 87 ----------
+Aggregation
+Combining two or more attributes (or objects) into a single 
+attribute (or object)
+Purpose
+Data reduction - reduce the number of attributes or objects
+Change of scale
+Cities aggregated into regions, states, countries, etc.
+Days aggregated into weeks, months, or years
+More “stable” data - aggregated data tends to have less variability 
+
+---------- страница 88 ----------
+Example: Precipitation in Australia
+This example is based on precipitation in 
+Australia from the period 1982 to 1993. 
+The next slide shows 
+– A histogram for the standard deviation of average 
+monthly precipitation for 3,030 0.5◦by 0.5◦grid cells in 
+Australia, and
+– A histogram for the standard deviation of the average 
+yearly precipitation for the same locations.
+The average yearly precipitation has less 
+variability than the average monthly precipitation. 
+All precipitation measurements (and their 
+standard deviations) are in centimeters.
+
+---------- страница 89 ----------
+Example: Precipitation in Australia ...
+Standard Deviation of Average 
+Monthly Precipitation
+Standard Deviation of 
+Average Yearly Precipitation
+Variation of Precipitation in Australia
+
+---------- страница 90 ----------
+Sampling 
+Sampling is the main technique employed for data
+reduction.
+– It is often used for both the preliminary investigation of
+the data and the final data analysis.
+Statisticians often sample because obtaining the
+entire set of data of interest is too expensive or
+time consuming.
+Sampling is typically used in data mining because
+processing the entire set of data of interest is too
+expensive or time consuming.
+
+---------- страница 91 ----------
+Sampling ... 
+The key principle for effective sampling is the 
+following: 
+– Using a sample will work almost as well as using the 
+entire data set, if the sample is representative
+– A sample is representative if it has approximately the 
+same properties (of interest) as the original set of data  
+
+---------- страница 92 ----------
+Sample Size
+8000 points
+2000 Points
+500 Points
+
+---------- страница 93 ----------
+Types of Sampling
+Simple Random Sampling
+– There is an equal probability of selecting any particular 
+item
+– Sampling without replacement
+As each item is selected, it is removed from the 
+population
+– Sampling with replacement
+Objects are not removed from the population as they 
+are selected for the sample.   
+In sampling with replacement, the same object can 
+be picked up more than once
+Stratified sampling
+– Split the data into several partitions; then draw random 
+samples from each partition
+
+---------- страница 94 ----------
+Sample Size
+What sample size is necessary to get at least one
+object from each of 10 equal-sized groups.
+
+---------- страница 95 ----------
+Discretization
+Some data mining algorithms, especially for classification 
+problems require that the data be in the form of categorical 
+attributes (if they look for association patterns the attributes 
+should be binary) => discretization and binarization.
+Discretization is the process of converting a continuous 
+attribute into an ordinal attribute
+– A potentially infinite number of values are mapped 
+into  a small number of categories
+– Discretization is  used in both unsupervised and 
+supervised settings
+
+---------- страница 96 ----------
+Unsupervised Discretization (class information is not used)
+Data consists of four groups of points and two outliers. Data is one-
+dimensional, but a random y component is added to reduce overlap.
+
+---------- страница 97 ----------
+Unsupervised Discretization
+Equal interval width approach used to obtain 4 values. The 
+intervals are defined to have the same width – this approach can 
+be affected from outliers, as here.
+
+---------- страница 98 ----------
+Unsupervised Discretization
+Equal frequency approach used to obtain 4 values – same 
+number of objects are put in 4 intervals. This approach is 
+often preferred.
+
+---------- страница 99 ----------
+Unsupervised Discretization
+K-means approach to obtain 4 values. In our case this approach 
+is the best.
+
+---------- страница 100 ----------
+Discretization in Supervised Settings
+– Many classification algorithms work best if both the independent 
+and dependent variables have only a few values
+– We give an illustration of the usefulness of discretization using 
+the following example. The method is based on minimizing the 
+entropy – see details in the book.
+
+---------- страница 101 ----------
+Binarization
+Binarization maps a continuous or categorical attribute
+into one or more binary variables – association analysis
+requires asymmetric binary attributes.
+
+---------- страница 102 ----------
+Attribute Transformation
+An attribute transform is a function that maps the 
+entire set of values of a given attribute to a new 
+set of replacement values such that each old 
+value can be identified with one of the new values
+– Simple functions: xk, log(x), ex, |x|
+– Normalization
+Refers to various techniques to adjust to 
+differences among attributes in terms of frequency 
+of occurrence, mean, variance, range
+Take out unwanted, common signal, e.g., 
+seasonality  
+– In statistics, standardization refers to subtracting off 
+the means and dividing by the standard deviation
+
+---------- страница 103 ----------
+Example: Sample Time Series of Plant Growth
+Correlations between time series
+Minneapolis
+Minneapolis 
+Atlanta 
+Sao Paolo 
+Minneapolis 
+Atlanta 
+Sao Paolo 
+Correlations between time series
+Net Primary 
+Production (NPP) 
+is a measure of 
+plant growth used 
+by ecosystem 
+scientists.
+
+---------- страница 104 ----------
+Seasonality Accounts for Much Correlation
+Correlations between time series
+Minneapolis
+Normalized using 
+monthly Z Score:
+Subtract off monthly 
+mean and divide by 
+monthly standard 
+deviation
+Minneapolis 
+Atlanta 
+Sao Paolo 
+Minneapolis 
+Atlanta 
+Sao Paolo 
+Correlations between time series
+
+---------- страница 105 ----------
+Curse of Dimensionality
+When dimensionality 
+increases, data becomes 
+increasingly sparse in the 
+space that it occupies
+Definitions of density and 
+distance between points, 
+which are critical for 
+clustering and outlier 
+detection, become less 
+meaningful
+•Randomly generate 500 points
+•Compute difference between max and 
+min distance between any pair of points
+
+---------- страница 106 ----------
+Dimensionality Reduction
+Purpose:
+– Avoid curse of dimensionality
+– Reduce amount of time and memory required by data 
+mining algorithms
+– Allow data to be more easily visualized
+– May help to eliminate irrelevant features or reduce 
+noise
+Techniques
+– Principal Components Analysis (PCA)
+– Singular Value Decomposition
+– Others: supervised and non-linear techniques
+
+---------- страница 107 ----------
+Dimensionality Reduction: PCA
+Goal is to find a projection that captures the 
+largest  amount of variation in data
+x2
+x1
+e
+
+---------- страница 108 ----------
+Dimensionality Reduction: PCA
+
+---------- страница 109 ----------
+Feature Subset Selection
+Another way to reduce dimensionality of data
+Redundant features 
+– Duplicate much or all of the information contained in 
+one or more other attributes
+– Example: purchase price of a product and the amount 
+of sales tax paid
+Irrelevant features
+– Contain no information that is useful for the data 
+mining task at hand
+– Example: students' ID is often irrelevant to the task of 
+predicting students' GPA
+Many techniques developed, especially for 
+classification
+
+---------- страница 110 ----------
+Feature Creation
+Create new attributes that can capture the 
+important information in a data set much more 
+efficiently than the original attributes
+Three general methodologies:
+– Feature extraction
+Example: extracting edges from images
+– Feature construction
+Example: dividing mass by volume to get density
+– Mapping data to new space
+Example: Fourier and wavelet analysis 
+
+---------- страница 111 ----------
+Mapping Data to a New Space
+Two Sine Waves + Noise
+Frequency
+Fourier and wavelet transform
+Frequency
+

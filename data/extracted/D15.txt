@@ -1,10 +1,10 @@
-====== страница 1 ======
+---------- страница 1 ----------
 1
 Introduction to Machine Learning
 part 2
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 References
 Parts of this lecture are based on:
 1. Slides from the Harvard Course CS109A Introduction to Data Science by Pavlos 
@@ -17,7 +17,7 @@ machine learning, and more, using Python tools. Manning Publications Co., 2016.
 2
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 Agenda
 •
 Polynomial Regression
@@ -30,7 +30,7 @@ Decision Trees
 3
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 Polynomial Regression
 •
 The simplest non-linear model we can consider, for a response Y and 
@@ -42,23 +42,23 @@ a separate predictor. Thus, we can write
 4
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 Curve fitting
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 Curve fitting
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 Curve fitting
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 Curve fitting
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 •
 Ockham’s 
 razor:
@@ -76,7 +76,7 @@ overfitting
 just right
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 Training and testing
 Training set 
 (observed)
@@ -88,37 +88,37 @@ Data acquisition
 Practical usage
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 Polynomial Regression (cont)
 11
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 Polynomial Regression (cont)
 12
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 Polynomial Regression (cont)
 13
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 Polynomial Regression (cont)
 14
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 Polynomial Regression (cont)
 15
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 Polynomial Regression (cont)
 16
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 Overfitting
 •
 Albert Einstein: Everything should be made as simple as possible, 
@@ -129,7 +129,7 @@ closely or exactly to a particular set of data, and may therefore fail to
 fit additional data or predict future observations reliably”
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 Overfitting: Tune the complexity
 •
 The training set error is an 
@@ -147,7 +147,7 @@ Mean
 squared error
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 Model Selection
 •
 Model selection is the application of a principled method to determine 
@@ -167,37 +167,37 @@ o the coefficients values are too extreme (we have not seen this yet)
 19
 
 
-====== страница 20 ======
+---------- страница 20 ----------
 Cross Validation
 20
 
 
-====== страница 21 ======
+---------- страница 21 ----------
 Cross Validation
 21
 
 
-====== страница 22 ======
+---------- страница 22 ----------
 Cross Validation
 22
 
 
-====== страница 23 ======
+---------- страница 23 ----------
 Cross Validation
 23
 
 
-====== страница 24 ======
+---------- страница 24 ----------
 Validation
 24
 
 
-====== страница 25 ======
+---------- страница 25 ----------
 Detection of overfitting
 25
 
 
-====== страница 26 ======
+---------- страница 26 ----------
 Cross Validation: Motivation 
 •
 Using a single validation set to select amongst multiple models can 
@@ -215,7 +215,7 @@ features of the data never appear in our random draws.
 26
 
 
-====== страница 27 ======
+---------- страница 27 ----------
 K-fold cross validation
 •
 K-fold cross validation is one way 
@@ -234,7 +234,7 @@ average error across all k trials is
 computed.
 
 
-====== страница 28 ======
+---------- страница 28 ----------
 K-fold cross validation
 •
 The advantage of this method is 
@@ -255,12 +255,12 @@ each test set is and how many trials you
 average over.
 
 
-====== страница 29 ======
+---------- страница 29 ----------
 Cross Validation
 29
 
 
-====== страница 30 ======
+---------- страница 30 ----------
 K-Fold Cross Validation
 •
 Given a data set 𝑋𝑋1, … , 𝑋𝑋𝑛𝑛, where each 𝑋𝑋1, … , 𝑋𝑋𝑛𝑛 contains J features. 
@@ -286,52 +286,52 @@ where L is a loss function
 𝐿𝐿(̂𝑓𝑓𝐶𝐶−𝑖𝑖 (𝐶𝐶𝑖𝑖)) 
 
 
-====== страница 31 ======
+---------- страница 31 ----------
 31
 Bias vs Variance
 
 
-====== страница 32 ======
+---------- страница 32 ----------
 Bias vs Variance
 32
 
 
-====== страница 33 ======
+---------- страница 33 ----------
 Bias vs Variance
 33
 
 
-====== страница 34 ======
+---------- страница 34 ----------
 Bias vs Variance
 34
 
 
-====== страница 35 ======
+---------- страница 35 ----------
 Linear models: … after 2000 simulations
 35
 
 
-====== страница 36 ======
+---------- страница 36 ----------
 Bias vs Variance
 36
 
 
-====== страница 37 ======
+---------- страница 37 ----------
 Bias vs Variance
 37
 
 
-====== страница 38 ======
+---------- страница 38 ----------
 Bias vs Variance
 38
 
 
-====== страница 39 ======
+---------- страница 39 ----------
 Poly 10-degree models: … after 2000 simulations
 39
 
 
-====== страница 40 ======
+---------- страница 40 ----------
 Bias vs Variance
 •
 Left: 2000 best-fit straight lines using linear regression
@@ -340,7 +340,7 @@ Right: 2000 best-fit models using degree 10 polynomial
 40
 
 
-====== страница 41 ======
+---------- страница 41 ----------
 Bias vs Variance
 •
 Left: Coefficients of linear regression
@@ -351,7 +351,7 @@ Right: Coefficients of poly regression of order 10
 𝛽𝛽1
 
 
-====== страница 42 ======
+---------- страница 42 ----------
 Regularization: An Overview
 •
 The idea of regularization revolves around modifying the loss 
@@ -366,7 +366,7 @@ model parameters with desirable properties (specified by R).
 42
 
 
-====== страница 43 ======
+---------- страница 43 ----------
 LASSO Regression
 •
 Since we wish to discourage extreme values in model parameter, we 
@@ -379,7 +379,7 @@ Note that              is the l1 norm of the vector β
 43
 
 
-====== страница 44 ======
+---------- страница 44 ----------
 LASSO Regression
 •
 Hence, we often say that LLASSO is the loss function for l1 regularization.
@@ -389,7 +389,7 @@ loss function is called LASSO regression.
 44
 
 
-====== страница 45 ======
+---------- страница 45 ----------
 Ridge Regression
 •
 Alternatively, we can choose a regularization term that penalizes the 
@@ -400,7 +400,7 @@ Note that               is the l2 norm of the vector β
 45
 
 
-====== страница 46 ======
+---------- страница 46 ----------
 Ridge Regression
 •
 Hence, we often say that Lridge is the loss function for l2 regularization.
@@ -410,7 +410,7 @@ loss function is called ridge regression.
 46
 
 
-====== страница 47 ======
+---------- страница 47 ----------
 Choosing λ
 •
 In both ridge and LASSO regression, we see that the larger our choice 
@@ -428,7 +428,7 @@ To avoid ad-hoc choices, we should select λ using cross-validation.
 47
 
 
-====== страница 48 ======
+---------- страница 48 ----------
 Geometry of Data
 •
 Recall that, logistic regression for building classification 
@@ -443,21 +443,21 @@ have a nice geometry to the classification boundary)
 𝐿𝐿𝐿𝐿𝐿𝐿= 0.8 𝐿𝐿𝐿𝐿𝐿𝐿
 
 
-====== страница 49 ======
+---------- страница 49 ----------
 Geometry of Data
 •
 How about these?
 49
 
 
-====== страница 50 ======
+---------- страница 50 ----------
 Geometry of Data
 •
 Or these?
 50
 
 
-====== страница 51 ======
+---------- страница 51 ----------
 Geometry of Data
 • Notice that in all of the datasets the classes are still well-separated in 
 the feature space, but the decision boundaries cannot easily be 
@@ -465,7 +465,7 @@ described by single equations:
 51
 
 
-====== страница 52 ======
+---------- страница 52 ----------
 Interpretable Models
 •
 People in everyday life have long been using interpretable models for 
@@ -473,7 +473,7 @@ differentiating between classes of objects and phenomena:
 52
 
 
-====== страница 53 ======
+---------- страница 53 ----------
 Decision Trees 
 •
 It turns out that the simple flow charts in our examples can be 
@@ -489,7 +489,7 @@ boundary is simple to describe mathematically.
 53
 
 
-====== страница 54 ======
+---------- страница 54 ----------
 The Geometry of Flow Charts 
 •
 Flow charts whose graph is a tree (connected and no cycles) 
@@ -509,7 +509,7 @@ terminal leaf nodes represent class assignments.
 54
 
 
-====== страница 55 ======
+---------- страница 55 ----------
 The Geometry of Flow Charts 
 •
 Flow charts whose graph is a 
@@ -527,7 +527,7 @@ values.
 55
 
 
-====== страница 56 ======
+---------- страница 56 ----------
 The Geometry of Flow Charts
 •
 Every flow chart tree corresponds to a partition of the feature space 
@@ -536,7 +536,7 @@ partition can be written as a flow chart tree.
 56
 
 
-====== страница 57 ======
+---------- страница 57 ----------
 The Geometry of Flow Charts
 57
 •
@@ -545,7 +545,7 @@ feature space on a single feature. Typically, at each iteration, we split
 once along one dimension (one predictor).  
 
 
-====== страница 58 ======
+---------- страница 58 ----------
 Learning the Model
 • Given a training set, learning a decision tree 
 model for binary classification means:
@@ -559,7 +559,7 @@ classifier) when performing prediction.
 58
 
 
-====== страница 59 ======
+---------- страница 59 ----------
 Learning the Model
 •
 Learning the smallest ‘optimal’ decision tree for any given set of data 
@@ -578,7 +578,7 @@ condition.
 59
 
 
-====== страница 60 ======
+---------- страница 60 ----------
 Numerical vs Categorical Attributes
 •
 Note that the ‘compare and branch’ method by which we defined 
@@ -597,7 +597,7 @@ however, this method has drawbacks.
 60
 
 
-====== страница 61 ======
+---------- страница 61 ----------
 Numerical vs Categorical Attributes
 61
 Example
@@ -613,7 +613,7 @@ The possible splits are
 Depending on the encoding, the splits we can optimize over can be different!
 
 
-====== страница 62 ======
+---------- страница 62 ----------
 Numerical vs Categorical Attributes
 •
 In practice, the effect of our choice of naive encoding of categorical 
@@ -631,7 +631,7 @@ libraries (e.g. R’s randomForest).
 62
 
 
-====== страница 63 ======
+---------- страница 63 ----------
 Example of building a Decision Tree from discrete 
 features
 Problem: decide whether to wait for a table at a restaurant based on the 
@@ -658,7 +658,7 @@ Type: kind of restaurant (French, Italian, Thai, Burger)
  WaitEstimate: estimated waiting time (0-10, 10-30, 30-60, >60)
 
 
-====== страница 64 ======
+---------- страница 64 ----------
 Example of building a Decision Tree from discrete features
 •
 Representing samples with attribute values that can be discrete, in ranges, 
@@ -667,7 +667,7 @@ or Boolean
 Classification of the samples as positive (T) or negative (F)
 
 
-====== страница 65 ======
+---------- страница 65 ----------
 ID3 Algorithm – works with discrete values only
 ID3 Algorithm:
 1. If all samples of the training set S are positive examples of the 
@@ -680,7 +680,7 @@ the values of the attribute).
 subtree, calling this procedure recursively for each Si.
 
 
-====== страница 66 ======
+---------- страница 66 ----------
 ID3 Algorithm – works with discrete values only
 Hungry?
 1
@@ -766,7 +766,7 @@ T
 F
 
 
-====== страница 67 ======
+---------- страница 67 ----------
 ID3 Algorithm – works with discrete values only
 None
 Some
@@ -793,7 +793,7 @@ Yes
 No
 
 
-====== страница 68 ======
+---------- страница 68 ----------
 Splitting criteria
 •
 While there is no ‘correct’ way to define an optimal split, there are 
@@ -809,7 +809,7 @@ We shouldn’t end up with empty regions - regions containing no training points
 68
 
 
-====== страница 69 ======
+---------- страница 69 ----------
 Classification Error
 •
 Suppose we have 𝐽𝐽 number of predictors and 𝐾𝐾 classes. 
@@ -825,7 +825,7 @@ labeled class 𝑘𝑘.
 69
 
 
-====== страница 70 ======
+---------- страница 70 ----------
 Gini Index
 •
 Suppose we have 𝐽𝐽 number of predictors, 𝑁𝑁 number of training points and 
@@ -839,7 +839,7 @@ created region, 𝑅𝑅1, 𝑅𝑅2. This metric is called the Gini Index:
 71
 
 
-====== страница 71 ======
+---------- страница 71 ----------
 Information Theory
 •
 The last metric for evaluating the quality of a split is motivated by metrics of 
@@ -854,7 +854,7 @@ single class (Class 2) than 𝑅𝑅2.
 73
 
 
-====== страница 72 ======
+---------- страница 72 ----------
 Information Theory
 •
 One way to quantify the strength of a signal in a particular region is to 
@@ -874,7 +874,7 @@ around the peaks are more probable).
 74
 
 
-====== страница 73 ======
+---------- страница 73 ----------
 Entropy
 •
 Suppose we have 𝐽𝐽 number of predictors, 𝑁𝑁 number of training points 
@@ -898,7 +898,7 @@ subsets after
 the split
 
 
-====== страница 74 ======
+---------- страница 74 ----------
 Summary of splitting criteria
 76
 Example
@@ -955,7 +955,7 @@ R2
 13 ) ≈ 1.38
 
 
-====== страница 75 ======
+---------- страница 75 ----------
 Comparison of Splitting Criteria
 •
 Recall our intuitive guidelines for splitting criteria, which of the three 
@@ -967,7 +967,7 @@ outcomes).
 77
 
 
-====== страница 76 ======
+---------- страница 76 ----------
 Comparison of Splitting Criteria 
 •
 Recall our intuitive guidelines for splitting criteria, which of the three 
@@ -985,7 +985,7 @@ stopping conditions.
 78
 
 
-====== страница 77 ======
+---------- страница 77 ----------
 Stopping Criteria
 •
 If we don’t terminate the decision tree learning algorithm manually, 
@@ -998,12 +998,12 @@ at a particular depth.
 79
 
 
-====== страница 78 ======
+---------- страница 78 ----------
 Variance vs Bias
 80
 
 
-====== страница 79 ======
+---------- страница 79 ----------
 Variance vs Bias
 •
 We make some observations about our models: 
@@ -1027,7 +1027,7 @@ train.
 81
 
 
-====== страница 80 ======
+---------- страница 80 ----------
 Stopping Conditions
 •
 Common simple stopping conditions: 
@@ -1045,7 +1045,7 @@ model on a held-out data set or, better yet, via cross-validation.
 82
 
 
-====== страница 81 ======
+---------- страница 81 ----------
 Stopping Conditions
 •
 More restrictive stopping conditions: 
@@ -1064,7 +1064,7 @@ less than some pre-defined threshold (min_impurity_decrease).
 83
 
 
-====== страница 82 ======
+---------- страница 82 ----------
 Alternative to Using Stopping Conditions
 •
 What is the major issue with pre-specifying a stopping condition?
@@ -1082,22 +1082,22 @@ Don’t stop.  Instead prune back!
 84
 
 
-====== страница 83 ======
+---------- страница 83 ----------
 Motivation for Pruning
 85
 
 
-====== страница 84 ======
+---------- страница 84 ----------
 Motivation for Pruning
 86
 
 
-====== страница 85 ======
+---------- страница 85 ----------
 Motivation for Pruning
 87
 
 
-====== страница 86 ======
+---------- страница 86 ----------
 Pruning 
 •
 Rather than preventing a complex tree from growing, we can obtain a 
@@ -1114,28 +1114,28 @@ the parameter for penalizing model complexity.
 88
 
 
-====== страница 87 ======
+---------- страница 87 ----------
 Pruning 
 89
 
 
-====== страница 88 ======
+---------- страница 88 ----------
 Pruning 
 90
 
 
-====== страница 89 ======
+---------- страница 89 ----------
 Pruning 
 91
 
 
-====== страница 90 ======
+---------- страница 90 ----------
 92
 slightly
 Pruning 
 
 
-====== страница 91 ======
+---------- страница 91 ----------
 Pruning 
 𝐶𝐶𝑇𝑇= 𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝐸𝑇𝑇+ 𝛼𝛼𝑇𝑇
 1.
@@ -1145,38 +1145,38 @@ Fix 𝛼𝛼.
 93
 
 
-====== страница 92 ======
+---------- страница 92 ----------
 Orange Data Mining   (https://orangedatamining.com)
 94
 Open-source machine learning and data visualization.
 
 
-====== страница 93 ======
+---------- страница 93 ----------
 Classification Tree Viewer in Orange
 95
 
 
-====== страница 94 ======
+---------- страница 94 ----------
 Classification Tree Parameters
 96
 
 
-====== страница 95 ======
+---------- страница 95 ----------
 An example with sklearn
 97
 
 
-====== страница 96 ======
+---------- страница 96 ----------
 An example with sklearn (2)
 98
 
 
-====== страница 97 ======
+---------- страница 97 ----------
 An example with sklearn (3)
 99
 
 
-====== страница 98 ======
+---------- страница 98 ----------
 DecisionTreeClassifier Parameters
 The following parameters can be tuned to improve the model output (Scikit Learn, 2019):
 •
@@ -1209,7 +1209,7 @@ considered while deciding the split
 100
 
 
-====== страница 99 ======
+---------- страница 99 ----------
 An example with sklearn (4)
 101
 

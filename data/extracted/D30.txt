@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Journal of Artiﬁcial Intelligence Research 16 (2002) 321–357
 Submitted 09/01; published 06/02
 SMOTE: Synthetic Minority Over-sampling Technique
@@ -49,7 +49,7 @@ on the order of 100 to 1 is prevalent in fraud detection and imbalance of up to 
 c⃝2002 AI Access Foundation and Morgan Kaufmann Publishers. All rights reserved.
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 1 has been reported in other applications (Provost & Fawcett, 2001).
 There have been
@@ -99,7 +99,7 @@ rows are the Actual class. In the confusion matrix, TN is the number of negative
 322
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 SMOTE
 Predicted
 Negative
@@ -149,7 +149,7 @@ borderline examples were detected using the Tomek links concept (Tomek, 1976). A
 323
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 Percent
 True
@@ -197,7 +197,7 @@ the evaluation criteria. A lift curve is similar to an ROC curve, but is more ta
 324
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 SMOTE
 marketing analysis problem (Ling & Li, 1998). In one experiment, they under-sampled the
 majority class and noted that the best lift index is obtained when the classes are equally
@@ -249,7 +249,7 @@ in the dataset. A document or web page is converted into a bag-of-words represen
 325
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 that is, a feature vector reﬂecting occurrences of words in the page is constructed. Usually,
 there are very few instances of the interesting category in text categorization. This over-
@@ -296,7 +296,7 @@ This eﬀect for decision trees can be understood from the plots in Figure 3.
 326
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 SMOTE
 0
 2
@@ -365,7 +365,7 @@ after over-sampling the minority class with synthetic generation.
 327
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 The data for the plot in Figure 3 was extracted from a Mammography dataset1 (Woods
 et al., 1993). The minority class samples are shown by + and the majority class samples
@@ -417,7 +417,7 @@ originally. We have approximately 9831 examples in the majority class and 233 ex
 328
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 SMOTE
 in the minority class for the training set used in 10-fold cross-validation. The minority class
 was over-sampled at 100%, 200%, 300%, 400% and 500% of its original size. The graphs
@@ -484,7 +484,7 @@ End of Pseudo-Code.
 329
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 Consider a sample (6,4) and let (4,3) be its nearest neighbor.
 (6,4) is the sample for which k-nearest neighbors are being identiﬁed.
@@ -528,7 +528,7 @@ the Mammography dataset
 330
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 SMOTE
 0
 50
@@ -575,7 +575,7 @@ under-sampling using C4.5 release 8 (Quinlan, 1992) as the base classiﬁer.
 331
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 C4.5
 Ripper
@@ -618,7 +618,7 @@ classiﬁers (Provost & Fawcett, 2001).
 332
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 SMOTE
 5.1 Datasets
 We experimented on nine diﬀerent datasets. These datasets are summarized in Table 5.2.
@@ -666,7 +666,7 @@ sidered are Ponderosa Pine with 35,754 samples and Cottonwood/Willow with 2,747
 333
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 Dataset
 Majority Class
@@ -729,7 +729,7 @@ majority class for a Naive Bayes Classiﬁer.
 334
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 SMOTE
 10
 20
@@ -784,7 +784,7 @@ point for a given ROC curve is from the raw dataset, without any majority class 
 335
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 0
 10
@@ -847,7 +847,7 @@ Bayes. Naive Bayes dominates over SMOTE-C4.5 in the ROC space.
 336
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 SMOTE
 10
 20
@@ -907,7 +907,7 @@ of more majority class errors. For almost all the ROC curves, the SMOTE approach
 337
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 0
 10
@@ -976,7 +976,7 @@ hull is mostly constructed with points from SMOTE-Ripper.
 338
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 SMOTE
 0
 10
@@ -1035,7 +1035,7 @@ the Can dataset, SMOTE-classiﬁer (classiﬁer = C4.5 or Ripper) and Under-clas
 339
 
 
-====== страница 20 ======
+---------- страница 20 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 0
 10
@@ -1102,7 +1102,7 @@ SMOTE-C4.5 curve lie on the ROC convex hull.
 340
 
 
-====== страница 21 ======
+---------- страница 21 ----------
 SMOTE
 0
 10
@@ -1169,7 +1169,7 @@ potentially optimal classiﬁers.
 341
 
 
-====== страница 22 ======
+---------- страница 22 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 0
 10
@@ -1235,7 +1235,7 @@ dataset.
 342
 
 
-====== страница 23 ======
+---------- страница 23 ----------
 SMOTE
 0
 10
@@ -1307,7 +1307,7 @@ on the number of points on the ROC convex hull.
 343
 
 
-====== страница 24 ======
+---------- страница 24 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 0
 10
@@ -1375,7 +1375,7 @@ the ROC space.
 344
 
 
-====== страница 25 ======
+---------- страница 25 ----------
 SMOTE
 Dataset
 Under
@@ -1474,7 +1474,7 @@ at 100-400% and varying degrees of under-sampling and achieved comparable result
 345
 
 
-====== страница 26 ======
+---------- страница 26 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 10
 20
@@ -1528,7 +1528,7 @@ see diﬀerent data points. SMOTE oﬀers no clear improvement over one-sided se
 346
 
 
-====== страница 27 ======
+---------- страница 27 ----------
 SMOTE
 Method
 Acc+
@@ -1595,7 +1595,7 @@ Table 5: Cross-validation results for SMOTE at 500% SMOTE on the Oil data set.
 347
 
 
-====== страница 28 ======
+---------- страница 28 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 6. Future Work
 There are several topics to be considered further in this line of research. Automated adaptive
@@ -1639,7 +1639,7 @@ Table 6: Example of nearest neighbor computation for SMOTE-NC.
 348
 
 
-====== страница 29 ======
+---------- страница 29 ----------
 SMOTE
 3. Populate the synthetic sample: The continuous features of the new synthetic minority
 class sample are created using the same approach of SMOTE as described earlier. The
@@ -1696,7 +1696,7 @@ looks at the overlap of feature values over all feature vectors. A matrix deﬁn
 349
 
 
-====== страница 30 ======
+---------- страница 30 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 0
 10
@@ -1756,7 +1756,7 @@ C4.5 is observed under this scenario as well.
 350
 
 
-====== страница 31 ======
+---------- страница 31 ----------
 SMOTE
 between corresponding feature values for all feature vectors is created.
 The distance δ
@@ -1812,7 +1812,7 @@ Table 7: Example of SMOTE-N
 351
 
 
-====== страница 32 ======
+---------- страница 32 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 6.3 Application of SMOTE to Information Retrieval
 We are investigating the application of SMOTE to information retrieval (IR). The IR prob-
@@ -1858,7 +1858,7 @@ the Sandia National Laboratories ASCI VIEWS Data Discovery Program, contract num
 352
 
 
-====== страница 33 ======
+---------- страница 33 ----------
 SMOTE
 DE-AC04-76DO00789. We thank Robert Holte for providing the oil spill dataset used in
 their paper. We also thank Foster Provost for clarifying his method of using the Satimage
@@ -1867,7 +1867,7 @@ comments and suggestions.
 353
 
 
-====== страница 34 ======
+---------- страница 34 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 Appendix A. ROC graphs for Oil Dataset
 The following ﬁgures show diﬀerent sets of ROC curves for the oil dataset. Figure 29 (a)
@@ -1974,7 +1974,7 @@ SMOTE.
 354
 
 
-====== страница 35 ======
+---------- страница 35 ----------
 SMOTE
 References
 Blake,
@@ -2021,7 +2021,7 @@ International Conference on Information and Knowledge Management., pp. 148–155
 355
 
 
-====== страница 36 ======
+---------- страница 36 ----------
 Chawla, Bowyer, Hall & Kegelmeyer
 Ezawa, K., J., Singh, M., & Norton, S., W. (1996).
 Learning Goal Oriented Bayesian
@@ -2067,7 +2067,7 @@ Machine Learning San Francisco, CA. Morgan Kauﬀmann.
 356
 
 
-====== страница 37 ======
+---------- страница 37 ----------
 SMOTE
 Provost, F., & Fawcett, T. (2001). Robust Classiﬁcation for Imprecise Environments. Ma-
 chine Learning, 42/3, 203–231.

@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Lecture 3. Errors, Overfitting, Model Selection, and Evaluation
 in Classification
 Data mining, prof. Biljana Tojtovska Ribarski
@@ -71,7 +71,7 @@ presents principled ways to select, simplify, and evaluate models.
 1
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 1.2
 Classification Errors
 When evaluating a classifier, several notions of error must be distinguished.
@@ -114,7 +114,7 @@ records.
 2
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 The difference between these values suggests that the classifier may not generalize as well
 as the training error alone would indicate.
 1.3
@@ -154,7 +154,7 @@ that do not generalize.
 3
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 Insight: Central practical principle
 As model complexity increases, training error often decreases monotonically. Test error
 does not have to do so. This is the essence of overfitting.
@@ -192,7 +192,7 @@ for the model to memorize accidental patterns. Still, if the dataset and the the
 4
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 are not suitable for the classification problem, increasing the dataset will not improve the
 predictive power of the model.
 1.6
@@ -233,7 +233,7 @@ can lead to a more complex tree and worse test performance.
 5
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 Warning: A practical lesson
 The presence of many irrelevant or noisy variables increases the risk that a greedy algorithm
 will discover accidental improvements and build an unnecessarily large model.
@@ -278,7 +278,7 @@ Three general approaches are especially important:
 6
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 3. estimating statistical bounds on error.
 Algorithm: What quantity is actually compared during pruning?
 When deciding whether to keep a split, keep a subtree, or prune it away, what we actually
@@ -320,7 +320,7 @@ Estimated Generalization Error = Training Error + λ · Complexity(Model),
 7
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 where λ is a trade-off parameter.
 The intuition is simple:
 • good fit is desirable;
@@ -371,7 +371,7 @@ more evidence, so one can often allow a weaker penalty.
 8
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 Why does validation help? Because the penalty parameter should be chosen by asking:
 which value gives the best out-of-sample performance? In practice, one usually builds
 candidate trees for several penalty strengths, or several pruning settings, and compares
@@ -417,7 +417,7 @@ Typical stopping rules include:
 9
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 • stop if estimated generalization error no longer improves.
 Remark: Advantage and risk of pre-pruning
 Pre-pruning can prevent overfitting and reduce computation, but if used too aggressively
@@ -463,7 +463,7 @@ The main goal is to estimate predictive performance honestly.
 10
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 1.11.1 Holdout Method
 Definition: Holdout method
 In the holdout method, the available data are partitioned into a training set and a test set.
@@ -505,7 +505,7 @@ This is especially important when:
 11
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 • the sample size is small.
 Definition: Nested cross-validation
 Nested cross-validation uses an inner cross-validation loop for model selection and an outer
@@ -549,7 +549,7 @@ Do’s
 12
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 • Treat default tree settings as baselines, not as final problem-specific decisions.
 • Choose the evaluation metric to match the task; for example, in screening problems sensitiv-
 ity/recall may matter more than raw accuracy.
@@ -591,7 +591,7 @@ The main message is simple but fundamental:
 13
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 The goal of classification is not to fit the observed data as closely as possible, but to
 predict new data as accurately as possible.
 1.14
@@ -692,7 +692,7 @@ Exercises
 14
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 2. Why can training error be a poor estimate of predictive performance?
 3. Give a conceptual explanation of underfitting and overfitting.
 4. Why can increasing the number of nodes in a decision tree reduce training error but increase

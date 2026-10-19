@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Data Mining 
 Classification: Alternative Techniques
 Lecture Notes for Chapter 4
@@ -8,7 +8,7 @@ by
 Tan, Steinbach, Karpatne, Kumar
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 2
@@ -27,7 +27,7 @@ Choose k of the
 “nearest” records
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 3
@@ -51,7 +51,7 @@ class label of unknown record
 Unknown record
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 4
@@ -67,7 +67,7 @@ the k-nearest neighbors
 weight factor, 𝑤= 1/𝑑2
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 5
@@ -80,7 +80,7 @@ other classes
 X
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 6
@@ -97,7 +97,7 @@ vs
 Euclidean distance = 1.4142  for both pairs
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 7
@@ -115,7 +115,7 @@ attributes
 means a standard deviation of 1
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 8
@@ -132,7 +132,7 @@ decision boundaries of
 arbitrary shapes. 
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 9
@@ -150,7 +150,7 @@ each pair of instances
 Thus, proximities are not comparable
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 10
@@ -166,7 +166,7 @@ reduction to address irrelevant and redundant
 attributes
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 11
@@ -186,7 +186,7 @@ Editing
 – Remove objects to improve efficiency 
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 12
@@ -201,7 +201,7 @@ table. The entry will be
 classified with Y.
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 13
@@ -211,7 +211,7 @@ We see that the neighbors of the entry have changed, and now it is
 classified as N.
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 14
@@ -240,14 +240,14 @@ Heterogeneous
 Euclidean-Overlap Metric (HEOM) etc.)
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 15
 Kd trees – approximation of the choice of knn
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 16
@@ -259,7 +259,7 @@ criterion, depending of the application of the kd tree ( example subinterval loc
 variance ratio when kd is used for outliers detection, etc. )
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 17
@@ -270,7 +270,7 @@ number of points in a leaf (see next example). Such binary tree can help us find
 the closest neighbour of a point (or k neighbours).
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 18
@@ -295,7 +295,7 @@ attribute y
 (8,8),
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 19
@@ -318,7 +318,7 @@ neighbours. Represent the points graphically and check the choice of
 (8,8),
 
 
-====== страница 20 ======
+---------- страница 20 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 20
@@ -330,13 +330,13 @@ point are more similar between each other. This is especially good
 approach if we use kd tree to detect outliers.
 
 
-====== страница 21 ======
+---------- страница 21 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 21
 
 
-====== страница 22 ======
+---------- страница 22 ----------
 2/12/2020
 Introduction to Data Mining, 2nd Edition 
 22

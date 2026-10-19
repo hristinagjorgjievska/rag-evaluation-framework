@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 XGBoost: A Scalable Tree Boosting System
 Tianqi Chen
 University of Washington
@@ -104,7 +104,7 @@ ploration. More importantly, XGBoost exploits out-of-core
 3Solutions come from of top-3 teams of each competitions.
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 computation and enables data scientists to process hundred
 millions of examples on a desktop. Finally, it is even more
 exciting to combine these techniques to make an end-to-end
@@ -242,7 +242,7 @@ t (xi)] + Ω(ft)
 (3)
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 Figure 2:
 Structure Score Calculation.
 We only
@@ -411,7 +411,7 @@ entirely into memory. Same problem also arises in the dis-
 4https://www.salford-systems.com/products/treenet
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 0
 10
 20
@@ -556,7 +556,7 @@ a value is missing in the sparse matrix x, the instance is
 http://homes.cs.washington.edu/˜tqchen/pdf/xgboost-supp.pdf
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 Figure 6: Block structure for parallel learning. Each column in a block is sorted by the corresponding feature
 value. A linear scan over one column in the block is suﬃcient to enumerate all the split points.
 Algorithm 3: Sparsity-aware Split Finding
@@ -685,7 +685,7 @@ the column block structure also supports column subsam-
 pling, as it is easy to select a subset of columns in a block.
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 1
 2
 4
@@ -855,7 +855,7 @@ various choices of block size on two data sets. The results
 are given in Fig. 9. This result validates our discussion and
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 Table 1: Comparison of major tree boosting systems.
 System
 exact
@@ -1015,7 +1015,7 @@ these datasets is given in Table 2. In some of the experi-
 8https://tianchi.aliyun.com
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 Table 2: Dataset used in the Experiments.
 Dataset
 n
@@ -1174,7 +1174,7 @@ learning to rank problem. We compare against pGBRT [22],
 the best previously pubished system on this task. XGBoost
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 128
 256
 512
@@ -1320,7 +1320,7 @@ This shows the
 system’s potential to handle even larger data.
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 4
 8
 16

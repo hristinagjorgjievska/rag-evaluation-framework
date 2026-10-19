@@ -1,10 +1,10 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Artificial Neural Networks
 and Deep Learning
 1
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 References
 Parts of this lecture are based on:
 1.
@@ -16,7 +16,7 @@ Intelligence: Systems for Decision Support. Eleventh ed: Pearson (2019).
 2
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 Agenda
 •
 Artificial neural network (ANN) 
@@ -30,7 +30,7 @@ machines, without which nothing would be possible.”
 —François Chollet, AI researcher 
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 Neural Network Concepts
 • Neural networks (NN): a human brain metaphor for information 
 processing
@@ -58,7 +58,7 @@ information systems, and so on
 4
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 Analogy between Neural Networks and Artificial Neural Networks
 Artificial
 Biological
@@ -75,13 +75,13 @@ Slow
 5
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 Artificial Neural Network
 • A single neuron (processing element – PE) with inputs and outputs
 6
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 Why Now?
 •
 Neural Networks date back decades, so why the 
@@ -108,12 +108,12 @@ Toolboxes
 2020
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 What is Deep Learning
 8
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 Introduction to Deep Learning
 •
 Neural networks, with their remarkable ability to derive meaning 
@@ -129,7 +129,7 @@ humans or other computer techniques
 9
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 Introduction to Deep Learning
 •
 The placement of Deep Learning within the overarching AI-based 
@@ -137,7 +137,7 @@ learning methods
 10
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 Introduction to Deep Learning
 •
 Differences between Classic Machine-Learning Methods and 
@@ -145,7 +145,7 @@ Representation Learning/Deep Learning
 11
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 What is Deep Learning (DL) ? 
 •
 A machine learning subfield of 
@@ -166,7 +166,7 @@ useful ways.
 12
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 Shallow Network
 Shallow (2 layer) networks need a lot more 
 hidden layer nodes to compensate for 
@@ -178,7 +178,7 @@ at lower levels
 13
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 What is Deep Learning (DL) ? 
 •
 Deep learning (a.k.a. representation learning) seeks to learn rich 
@@ -197,7 +197,7 @@ Feature visualization of convolutional net trained on ImageNet (Zeiler and Fergu
 14
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 Learning Hierarchical Representations
 •
 Hierarchy of representations with increasing level of abstraction.
@@ -226,7 +226,7 @@ Increasing level of abstraction
 15
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 Boosting
 Deep 
 Learning
@@ -260,7 +260,7 @@ Input
 Data
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 Why Deep Learning?
 •
 Performance 
@@ -281,7 +281,7 @@ algorithms
 17
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 Why is DL useful?
 •
 Hand engineered features are time consuming, brittle and not 
@@ -293,7 +293,7 @@ made low-level features
 18
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 Example: Fighting Fraud with Deep Learning
 •
 Business problem
@@ -311,7 +311,7 @@ The solution
 19
 
 
-====== страница 20 ======
+---------- страница 20 ----------
 Why is DL useful? 
 •
 Manually designed features are often over-specified, incomplete
@@ -327,7 +327,7 @@ framework for representing world, visual and linguistic information
 20
 
 
-====== страница 21 ======
+---------- страница 21 ----------
 ML competitions
 •
 In 2016 and 2017, Kaggle was dominated by two approaches: 
@@ -338,7 +338,7 @@ classification.
 21
 
 
-====== страница 22 ======
+---------- страница 22 ----------
 input
 neuron
 node
@@ -367,7 +367,7 @@ h = 𝑊்𝑋
  
 
 
-====== страница 23 ======
+---------- страница 23 ----------
 Anatomy of artificial neural network (ANN)
 X1
 X2
@@ -388,7 +388,7 @@ Loss function
 23
 
 
-====== страница 24 ======
+---------- страница 24 ----------
 𝑌෠
 output layer 
 Anatomy of artificial neural network (ANN)
@@ -405,7 +405,7 @@ hidden layer 2
 Adding another hidden layer
 
 
-====== страница 25 ======
+---------- страница 25 ----------
 𝑌෠
 output layer 
 Anatomy of artificial neural network (ANN)
@@ -424,7 +424,7 @@ ANN with N hidden layers
 . . .
 
 
-====== страница 26 ======
+---------- страница 26 ----------
 𝑌෠
 output layer 
 Anatomy of artificial neural network (ANN)
@@ -445,7 +445,7 @@ W11
 WN3
 
 
-====== страница 27 ======
+---------- страница 27 ----------
 𝑌෠
 output layer 
 Anatomy of artificial neural network (ANN)
@@ -466,7 +466,7 @@ Number of nodes in each hidden layer could be provisional
 . . .
 
 
-====== страница 28 ======
+---------- страница 28 ----------
 Output in matrix form
 Output with bias
 The Perceptron: Forward Propagation
@@ -500,7 +500,7 @@ wm
 w0
 
 
-====== страница 29 ======
+---------- страница 29 ----------
 The Perceptron: Example
 •
 How to predict if an internship applicant should be offered an 
@@ -535,7 +535,7 @@ w3
 w4
 
 
-====== страница 30 ======
+---------- страница 30 ----------
 Activation function
 ℎ= 𝑓𝑊்𝑋+ 𝑏
 •
@@ -553,7 +553,7 @@ Common choices are:
 30
 
 
-====== страница 31 ======
+---------- страница 31 ----------
 Sigmoid (aka Logistic)
 Derivative is zero for much of the domain. 
 This leads to “vanishing gradients” in backpropagation.
@@ -563,7 +563,7 @@ This leads to “vanishing gradients” in backpropagation.
 31
 
 
-====== страница 32 ======
+---------- страница 32 ----------
 Hyperbolic Tangent (Tanh)
 Same problem of “vanishing gradients” as sigmoid. .
 𝑦= 𝑒௫−𝑒ି
@@ -573,7 +573,7 @@ Same problem of “vanishing gradients” as sigmoid. .
 32
 
 
-====== страница 33 ======
+---------- страница 33 ----------
 Rectified Linear Unit (ReLU)
 Two major advantages:
 1.
@@ -583,7 +583,7 @@ No vanishing gradient when x > 0
 33
 
 
-====== страница 34 ======
+---------- страница 34 ----------
 Leaky ReLU
 Tries to fix “dying ReLU” problem: derivative is non-zero everywhere.
 Some people report success with this form of activation function, but the results are not always 
@@ -593,21 +593,21 @@ where 𝛼 takes a small value
 34
 
 
-====== страница 35 ======
+---------- страница 35 ----------
 Generalized ReLU
 𝑔𝑥௜, 𝛼= max 𝑎, 𝑥௜+ 𝛼min{0, 𝑥௜}
 Generalization: for  𝛼𝑖>0
 35
 
 
-====== страница 36 ======
+---------- страница 36 ----------
 softplus
 𝑦= log(1 + 𝑒௫)
 36
 The logistic sigmoid function is a smooth approximation of the derivative of the rectifier
 
 
-====== страница 37 ======
+---------- страница 37 ----------
 Maxout
 𝑔(𝑥) = max
 ௜∈{ଵ,…,௞} 𝛼௜𝑥௜+ 𝛽
@@ -615,7 +615,7 @@ Maxout
 Max of k linear functions. Directly learn the activation function.
 
 
-====== страница 38 ======
+---------- страница 38 ----------
 Swish: A Self-Gated Activation Function 
 𝑔𝑥= 𝑥 𝜎(𝑥) = x/(1 + e⁻ˣ)
 38
@@ -623,7 +623,7 @@ Currently, the most successful and widely-used activation function is the ReLU. 
 ReLU on deeper models across several challenging datasets. 
 
 
-====== страница 39 ======
+---------- страница 39 ----------
 Combining neurons allows us to model interesting 
 functions
 39
@@ -635,7 +635,7 @@ functions
 𝜎(XW2)
 
 
-====== страница 40 ======
+---------- страница 40 ----------
 Combining neurons allows us to model interesting 
 functions
 40
@@ -664,7 +664,7 @@ probability
 𝐿= −𝑦 ln p −1 −y ln(1 −p)
 
 
-====== страница 41 ======
+---------- страница 41 ----------
 41
 X
 Y
@@ -672,7 +672,7 @@ Combining neurons allows us to model interesting
 functions
 
 
-====== страница 42 ======
+---------- страница 42 ----------
 42
 X
 Y
@@ -680,7 +680,7 @@ Combining neurons allows us to model interesting
 functions
 
 
-====== страница 43 ======
+---------- страница 43 ----------
 43
 X
 Y
@@ -688,7 +688,7 @@ Combining neurons allows us to model interesting
 functions
 
 
-====== страница 44 ======
+---------- страница 44 ----------
 44
 X
 Y
@@ -696,7 +696,7 @@ Combining neurons allows us to model interesting
 functions
 
 
-====== страница 45 ======
+---------- страница 45 ----------
 Loss Function
 •
 Likelihood for a given point: 
@@ -717,7 +717,7 @@ Loss Function: Takes all these results and averages them and tells us how
 bad or good the computer or those weights are.
 
 
-====== страница 46 ======
+---------- страница 46 ----------
 Loss Function
 •
 Do not need to design separate loss functions if we follow this simple 
@@ -743,7 +743,7 @@ Cross-Entropy
 46
 
 
-====== страница 47 ======
+---------- страница 47 ----------
 Loss Function
 •
 Example: sigmoid output + squared loss
@@ -752,7 +752,7 @@ Example: sigmoid output + squared loss
 47
 
 
-====== страница 48 ======
+---------- страница 48 ----------
 Loss Function
 •
 Example: sigmoid output + cross-entropy loss
@@ -762,7 +762,7 @@ Saturates only when the model
 makes correct predictions
 
 
-====== страница 49 ======
+---------- страница 49 ----------
 Output Units
 Cost Function
 Output layer
@@ -788,43 +788,43 @@ Continuous
 Multinoulli (Categorical): Generalization of Bernoulli to K classes
 
 
-====== страница 50 ======
+---------- страница 50 ----------
 NN in action 
 50
 
 
-====== страница 51 ======
+---------- страница 51 ----------
 NN in action 
 51
 
 
-====== страница 52 ======
+---------- страница 52 ----------
 NN in action 
 52
 
 
-====== страница 53 ======
+---------- страница 53 ----------
 NN in action 
 …
 53
 
 
-====== страница 54 ======
+---------- страница 54 ----------
 NN in action 
 54
 
 
-====== страница 55 ======
+---------- страница 55 ----------
 NN in action
 55
 
 
-====== страница 56 ======
+---------- страница 56 ----------
 NN in action 
 56
 
 
-====== страница 57 ======
+---------- страница 57 ----------
 Universal Approximation Theorem
 •
 Think of a Neural Network as function approximation. 
@@ -848,13 +848,13 @@ depth
 57
 
 
-====== страница 58 ======
+---------- страница 58 ----------
 Better Generalization with Depth
 (Goodfellow 2017)
 58
 
 
-====== страница 59 ======
+---------- страница 59 ----------
 Shallow Nets Overfit More
 (Goodfellow 2017)
 The 3-layer nets perform worse on the test set, 
@@ -872,7 +872,7 @@ used for images.
 59
 
 
-====== страница 60 ======
+---------- страница 60 ----------
 The problem of Exploding and Vanishing Gradients
 60
 Linear activation:
@@ -887,7 +887,7 @@ deeplearning.ai
 Suppose:
 
 
-====== страница 61 ======
+---------- страница 61 ----------
 CASE 2: a=0.5, b=0.9:
 CASE 1: a=1, b=2:
 Exploding and Vanishing Gradients
@@ -906,7 +906,7 @@ Suppose:
  0 
 
 
-====== страница 62 ======
+---------- страница 62 ----------
 Exploding and Vanishing Gradients
 •
 Exploding gradients lead to cliffs
@@ -924,7 +924,7 @@ if 𝑔
 𝑔
 
 
-====== страница 63 ======
+---------- страница 63 ----------
 Feature Normalization
 •
 Features with large magnitudes or ranges can dominate 
@@ -945,7 +945,7 @@ Enables Faster Convergence in Neural Networks
 63
 
 
-====== страница 64 ======
+---------- страница 64 ----------
 ¢x = x -m
 s
 Feature Normalization
@@ -965,7 +965,7 @@ After
 normalization
 
 
-====== страница 65 ======
+---------- страница 65 ----------
 Internal Covariance Shift
 •
 The phenomenon where the distribution of activations (outputs of 
@@ -981,7 +981,7 @@ inputs to layer n
 …
 
 
-====== страница 66 ======
+---------- страница 66 ----------
 Batch Normalization
 •
 Batch normalization normalizes the inputs to a layer for each mini-batch during training. 
@@ -1021,7 +1021,7 @@ H + b
 parameters
 
 
-====== страница 67 ======
+---------- страница 67 ----------
 Batch Normalization
 67
 …..
@@ -1041,7 +1041,7 @@ m
 iå
 
 
-====== страница 68 ======
+---------- страница 68 ----------
 m2 = 1
 m
 Hi,:
@@ -1062,11 +1062,11 @@ operations for layer 2
 and so on … 
 
 
-====== страница 69 ======
+---------- страница 69 ----------
 69
 
 
-====== страница 70 ======
+---------- страница 70 ----------
 Regularization
 70
 • Regularization is any modification we make to a learning algorithm that is 
@@ -1081,7 +1081,7 @@ but poor prediction on
 validations set
 
 
-====== страница 71 ======
+---------- страница 71 ----------
 Norm Penalties
 •
 We used to optimize: L(W; X, y)
@@ -1103,7 +1103,7 @@ L1 regularization:
 2 ∥𝑊∥ଵ
 
 
-====== страница 72 ======
+---------- страница 72 ----------
 Early Stopping
 72
 •
@@ -1113,7 +1113,7 @@ be treated as a
 hyperparameter too
 
 
-====== страница 73 ======
+---------- страница 73 ----------
 Dropout
 73
 • Randomly set some neurons and their connections to zero (i.e. “dropped”)
@@ -1121,7 +1121,7 @@ Dropout
 • Like training many random sub-networks
 
 
-====== страница 74 ======
+---------- страница 74 ----------
 Dropout
 74
 • Widely used and highly effective
@@ -1136,7 +1136,7 @@ hidden layers each with 1024
 to 2048 units.
 
 
-====== страница 75 ======
+---------- страница 75 ----------
 REGRESSION
 Statistical 
 Learning

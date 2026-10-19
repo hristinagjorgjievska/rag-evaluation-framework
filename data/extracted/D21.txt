@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 1.9. Naive Bayes
 
 Naive Bayes methods are a set of supervised learning algorithms

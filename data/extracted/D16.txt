@@ -1,10 +1,10 @@
-====== страница 1 ======
+---------- страница 1 ----------
 1
 Introduction to Machine Learning
 part 3
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 References
 Parts of this lecture are based on:
 1. Slides from the Harvard Course CS109A Introduction to Data Science by Pavlos 
@@ -19,7 +19,7 @@ EuroPython 2018, Edinburgh
 2
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 Agenda
 •
 Ensemble models
@@ -35,7 +35,7 @@ Bayes Classifier
 3
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 Limitations of Decision Tree Models 
 •
 Decision trees models are highly interpretable and fast to train, 
@@ -52,7 +52,7 @@ regression methods.
 4
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 STEP 3:
 Combine 
 Classifiers
@@ -81,27 +81,27 @@ Training data
 C*
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 Bootstrap: Combine 2 models
 6
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 Bootstrap: Combine 20 models
 7
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 Bootstrap: Combine 100 models
 8
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 Bootstrap: Combine 300 models
 9
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 Bagging
 •
 One way to adjust for the high variance of the output of an 
@@ -125,7 +125,7 @@ For regression we return the average of the outputs for each tree.
 10
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 Bagging
 •
 Note that bagging enjoys the benefits of: 
@@ -143,17 +143,17 @@ through a series of decisions based on predictor values!
 11
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 Bagging (regression)
 12
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 Bagging (classification)
 13
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 Bagging: The process 
 14
 X
@@ -213,7 +213,7 @@ used data
 unused data
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 Bagging: The process 
 15
 X
@@ -273,7 +273,7 @@ used data
 unused data
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 Bagging: The process 
 16
 X
@@ -333,7 +333,7 @@ used data
 unused data
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 Point-wise out-of-bag error 
 17
 X
@@ -367,7 +367,7 @@ error
 𝑒𝑒𝑖𝑖= 𝕀𝕀(ො𝑦𝑦𝑖𝑖,𝑝𝑝𝑝𝑝≠yi)
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 Out-of-Bag Error
 •
 Bagging is an example of an ensemble method, a method of building a 
@@ -388,7 +388,7 @@ the full training set.
 18
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 Out-of-Bag Error
 •
 We average the point-wise out-of-bag error over the full training set. 
@@ -416,7 +416,7 @@ Classification
 Regression
 
 
-====== страница 20 ======
+---------- страница 20 ----------
 Variable Importance for Bagging 
 •
 Bagging improves 
@@ -437,7 +437,7 @@ trees.
 100 trees, max_depth=10
 
 
-====== страница 21 ======
+---------- страница 21 ----------
 Improving on Bagging
 •
 In practice, the ensembles of trees in Bagging tend to be highly 
@@ -452,7 +452,7 @@ the averaged model the same as the expected output of any one of the trees.
 21
 
 
-====== страница 22 ======
+---------- страница 22 ----------
 Random Forests
 •
 Random Forest is a modified form of bagging that creates 
@@ -471,7 +471,7 @@ the optimal corresponding threshold for the split.
 22
 
 
-====== страница 23 ======
+---------- страница 23 ----------
 Tuning Random Forests
 •
 Random forest models have multiple hyper-parameters to tune: 
@@ -488,7 +488,7 @@ model), thus, imposing a minimum node size is not unusual.
 23
 
 
-====== страница 24 ======
+---------- страница 24 ----------
 Tuning Random Forests
 •
 There are standard (default) values for each of random forest hyper-
@@ -507,7 +507,7 @@ single sequence - we cease training once the out-of-bag error stabilizes
 24
 
 
-====== страница 25 ======
+---------- страница 25 ----------
 Variable Importance for Random Forests
 •
 Same as with Bagging: 
@@ -527,13 +527,13 @@ and is used as a measure of the importance of variable 𝑗𝑗 in the random fo
 25
 
 
-====== страница 26 ======
+---------- страница 26 ----------
 Variable Importance for Random Forests
 26
 100 trees, max_depth=10
 
 
-====== страница 27 ======
+---------- страница 27 ----------
 Final Thoughts on Random Forests
 •
 When the number of predictors is large, but the number of relevant 
@@ -552,7 +552,7 @@ become more correlated, increase the variance.
 27
 
 
-====== страница 28 ======
+---------- страница 28 ----------
 Using Random Forest Classificator with Orange
 •
 We can be using 
@@ -571,7 +571,7 @@ test.csv
 https://www.kaggle.com/c/house-prices-advanced-regression-techniques
 
 
-====== страница 29 ======
+---------- страница 29 ----------
 Experimenting with the IRIS dataset
 #Import scikit-learn dataset library
 from sklearn import datasets
@@ -587,7 +587,7 @@ data = pd.DataFrame({ 'sepal length':iris.data[:,0],
 29
 
 
-====== страница 30 ======
+---------- страница 30 ----------
 Create train and test set with sklearn
 # Import train_test_split function
 from sklearn.model_selection import train_test_split
@@ -599,7 +599,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3)
 30
 
 
-====== страница 31 ======
+---------- страница 31 ----------
 Building a RF model in sklearn
 #Import Random Forest Model
 from sklearn.ensemble import RandomForestClassifier
@@ -612,7 +612,7 @@ y_pred = clf.predict(X_test)
 31
 
 
-====== страница 32 ======
+---------- страница 32 ----------
 Testing the model in sklearn
 #Import scikit-learn metrics module for accuracy calculation
 from sklearn import metrics
@@ -622,7 +622,7 @@ print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
 Accuracy: 0.93333333333333335
 
 
-====== страница 33 ======
+---------- страница 33 ----------
 Motivation for Boosting 
 •
 Question: Could we address the shortcomings of single decision 
@@ -639,7 +639,7 @@ trees, is another class of ensemble methods called boosting.
 33
 
 
-====== страница 34 ======
+---------- страница 34 ----------
 Original 
 Training data
 . . .
@@ -659,7 +659,7 @@ errors
 . . .
 
 
-====== страница 35 ======
+---------- страница 35 ----------
 Boosting
 •
 Sequential algorithm where at each step, a weak learner is trained 
@@ -678,12 +678,12 @@ descent. Example: XGBoost.
 35
 
 
-====== страница 36 ======
+---------- страница 36 ----------
 Gradient Boosting
 36
 
 
-====== страница 37 ======
+---------- страница 37 ----------
 Gradient Boosting 
 •
 The key intuition behind boosting is that one can take an ensemble 
@@ -697,7 +697,7 @@ can be expressive/flexible.
 37
 
 
-====== страница 38 ======
+---------- страница 38 ----------
 Gradient Boosting: the algorithm 
 •
 Gradient boosting is a method for iteratively building a complex regression model T  by adding 
@@ -716,7 +716,7 @@ called the learning rate.
 38
 
 
-====== страница 39 ======
+---------- страница 39 ----------
 Gradient Boosting (GB) vs Gradient Descent (GD)
 •
 Initialization:
@@ -741,24 +741,24 @@ Convergence:
 39
 
 
-====== страница 40 ======
+---------- страница 40 ----------
 Gradient 
 Boosting: 
 illustration 
 40
 
 
-====== страница 41 ======
+---------- страница 41 ----------
 Gradient Boosting: illustration 
 41
 
 
-====== страница 42 ======
+---------- страница 42 ----------
 Gradient Boosting: illustration 2
 42
 
 
-====== страница 43 ======
+---------- страница 43 ----------
 Why Does Gradient Boosting Work? 
 •
 Intuitively, each simple model T(i) we add to our ensemble model T, models 
@@ -776,7 +776,7 @@ algorithm?
 43
 
 
-====== страница 44 ======
+---------- страница 44 ----------
 Choosing a Learning Rate 
 •
 Under ideal conditions, gradient descent iteratively approximates and 
@@ -796,7 +796,7 @@ Both problems have to do with the magnitude of the learning rate, 𝝀𝝀.
 44
 
 
-====== страница 45 ======
+---------- страница 45 ----------
 Choosing a Learning Rate 
 •
 For a constant learning rate, 𝜆𝜆, if 𝝀𝝀is too small, it takes too many 
@@ -807,7 +807,7 @@ never get sufficiently close.
 45
 
 
-====== страница 46 ======
+---------- страница 46 ----------
 Choosing a Learning Rate 
 •
 Choosing 𝜆𝜆: 
@@ -826,7 +826,7 @@ far from the optimum, when the gradient is large, 𝜆𝜆should be larger
 46
 
 
-====== страница 47 ======
+---------- страница 47 ----------
 Final thoughts on Boosting
 •
 There are few implementations on boosting: 
@@ -841,13 +841,13 @@ appropriate handling of categorical features
 47
 
 
-====== страница 48 ======
+---------- страница 48 ----------
 eXtreme Gradient Boosting
 48
 eXtreme Gradient Boosting
 
 
-====== страница 49 ======
+---------- страница 49 ----------
 XGBoost
 •
 XGBoost is essentially a very efficient Gradient Boosting Decision Tree 
@@ -873,7 +873,7 @@ when handling huge datasets that do not fit into memory.
 49
 
 
-====== страница 50 ======
+---------- страница 50 ----------
 Bayes Classifier
 •
 A probabilistic framework for solving classification 
@@ -890,7 +890,7 @@ Bayes Theorem:   𝑷𝑷𝑪𝑪𝑨𝑨=
 𝑷𝑷𝑨𝑨
 
 
-====== страница 51 ======
+---------- страница 51 ----------
 Bayesian Classifiers
 • Example: How to classify the new record X = (‘Yes’, ‘Single’, 80K)
 Maximum Aposteriori Probability 
@@ -964,7 +964,7 @@ Yes
 A1               A2              A3             C
 
 
-====== страница 52 ======
+---------- страница 52 ----------
 Bayesian Classifiers
 •
 Approach:
@@ -980,7 +980,7 @@ How to estimate P(A1, A2, …, An | C )?
 𝑃𝑃(𝐴𝐴1𝐴𝐴2 … 𝐴𝐴𝑛𝑛)
 
 
-====== страница 53 ======
+---------- страница 53 ----------
 How to Estimate Probabilities from Data?
 Tid
 Refund
@@ -1077,7 +1077,7 @@ income
 Gauss(104K, 1,874K) 
 
 
-====== страница 54 ======
+---------- страница 54 ----------
 How to Estimate Probabilities from Data?
 A1               A2              A3             C
 Tid
@@ -1152,7 +1152,7 @@ P(C = No) = 7/10
 P(C = Yes) = 3/10
 
 
-====== страница 55 ======
+---------- страница 55 ----------
 How to Estimate Probabilities from Data?
 A1               A2              A3             C
 Tid
@@ -1272,7 +1272,7 @@ Divorced
 1/7
 
 
-====== страница 56 ======
+---------- страница 56 ----------
 How to Estimate Probabilities from Data?
 A1               A2              A3             C
 Tid
@@ -1387,7 +1387,7 @@ sample variance σ2= 2975
 = 0,0062
 
 
-====== страница 57 ======
+---------- страница 57 ----------
 Bayesian Classifiers
 •
 Record: 
@@ -1465,7 +1465,7 @@ P(C | A1, A2, …, An) = P(A1, A2, …, An|C) P(C)
                                 = P(C) * P(A1|C) * P(A2|C)*…*P(An|C)
 
 
-====== страница 58 ======
+---------- страница 58 ----------
 Example of Naïve Bayes Classifier
 •
 Creating a Naïve Bayes Classifier, essentially means to compute counts:
@@ -1514,7 +1514,7 @@ some of the
 counts?
 
 
-====== страница 59 ======
+---------- страница 59 ----------
 Naïve Bayes Classifier
 •
 If one of the conditional probability is zero, then the entire expression 
@@ -1526,7 +1526,7 @@ Laplace Smoothing:
 – 𝑁𝑁𝑖𝑖 : number of attribute values for attribute 𝐴𝐴𝑖𝑖
 
 
-====== страница 60 ======
+---------- страница 60 ----------
 Example of Naïve Bayes Classifier
 P(X|Class=No) = P(Refund=No|Class=No)
                             × P(Married| Class=No)
@@ -1593,7 +1593,7 @@ Naïve Bayes Classifier
 with Laplacian Smoothing
 
 
-====== страница 61 ======
+---------- страница 61 ----------
 Implementation details
 •
 Computing the conditional probabilities involves multiplication of 
@@ -1608,7 +1608,7 @@ log 𝑃𝑃𝐶𝐶𝐴𝐴~ log 𝑃𝑃𝐴𝐴𝐶𝐶+ log 𝑃𝑃𝐶𝐶
 log 𝑃𝑃𝐴𝐴𝑖𝑖𝐶𝐶+ log 𝑃𝑃(𝐶𝐶)
 
 
-====== страница 62 ======
+---------- страница 62 ----------
 Naïve Bayes for Text Classification
 •
 Naïve Bayes is commonly used for text classification
@@ -1637,7 +1637,7 @@ Fraction of
 documents in c
 
 
-====== страница 63 ======
+---------- страница 63 ----------
 Multinomial document model
 •
 Probability of document 𝑑𝑑= 𝑡𝑡1, … , 𝑡𝑡𝑘𝑘 in class c:
@@ -1646,7 +1646,7 @@ Probability of document 𝑑𝑑= 𝑡𝑡1, … , 𝑡𝑡𝑘𝑘 in class c:
 𝑃𝑃(𝑡𝑡𝑖𝑖|𝑐𝑐)
 
 
-====== страница 64 ======
+---------- страница 64 ----------
 Example
 “Obama meets Merkel”
 “Obama elected again”
@@ -1679,7 +1679,7 @@ P(Sports|X) ~ P(s)*P(obama|s)*P(likes|s)*P(basketball|s)
                      = 0.5 * 1/(11+14) *1/(11+14) * 4/(11+14) = 0.000128 
 
 
-====== страница 65 ======
+---------- страница 65 ----------
 Naïve Bayes (Summary)
 •
 Robust to isolated noise points
@@ -1697,7 +1697,7 @@ very biased one
 – Logistic Regression is better for obtaining probabilities.
 
 
-====== страница 66 ======
+---------- страница 66 ----------
 Using Naïve Bayes Classifier with sklearn
 #Import Gaussian Naive Bayes model
 from sklearn.naive_bayes import GaussianNB

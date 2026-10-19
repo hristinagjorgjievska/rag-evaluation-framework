@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Data Mining
 Cluster Analysis: Basic Concepts 
 and Algorithms
@@ -8,7 +8,7 @@ by
 Tan, Steinbach, Karpatne, Kumar
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 2
@@ -24,7 +24,7 @@ distances are
 minimized
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 3
@@ -78,7 +78,7 @@ Clustering precipitation
 in Australia
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 4
@@ -95,7 +95,7 @@ alphabetically, by last name
 – Local vs. global connections
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 5
@@ -106,7 +106,7 @@ Two Clusters
 Six Clusters
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 6
@@ -121,7 +121,7 @@ partitional sets of clusters
 – A set of nested clusters organized as a hierarchical tree 
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 7
@@ -130,7 +130,7 @@ Original Points
 A Partitional  Clustering
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 8
@@ -156,7 +156,7 @@ Non-traditional Dendrogram
 Traditional Dendrogram
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 9
@@ -176,7 +176,7 @@ weight between 0 and 1
 – Clusters of widely different sizes, shapes, and densities
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 10
@@ -189,7 +189,7 @@ Types of Clusters
 ●Described by an Objective Function
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 11
@@ -201,7 +201,7 @@ to any point not in the cluster.
 3 well-separated clusters
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 12
@@ -217,7 +217,7 @@ point of a cluster
 4 center-based clusters
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 13
@@ -230,7 +230,7 @@ cluster than to any point not in the cluster.
 8 contiguous clusters
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 14
@@ -243,7 +243,7 @@ noise and outliers are present.
 6 density-based clusters
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 15
@@ -255,7 +255,7 @@ a particular concept.
 2 Overlapping Circles
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 16
@@ -276,7 +276,7 @@ u Mixture models assume that the data is a ‘mixture' of a number of
 statistical distributions.  
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 17
@@ -293,7 +293,7 @@ connected components, one for each cluster.
 and maximize the edge weight within clusters 
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 18
@@ -314,7 +314,7 @@ u For example, autocorrelation
 – Often interfere with the operation of the clustering algorithm
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 19
@@ -324,7 +324,7 @@ Clustering Algorithms
 ●Density-based clustering
 
 
-====== страница 20 ======
+---------- страница 20 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 20
@@ -342,7 +342,7 @@ centroid
 The basic algorithm is very simple
 
 
-====== страница 21 ======
+---------- страница 21 ----------
 Example of K-means Clustering
 -2
 -1.5
@@ -460,7 +460,7 @@ y
 Iteration 6
 
 
-====== страница 22 ======
+---------- страница 22 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 22
@@ -581,7 +581,7 @@ y
 Iteration 6
 
 
-====== страница 23 ======
+---------- страница 23 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 23
@@ -612,7 +612,7 @@ n = number of points, K = number of clusters,
 I = number of iterations, d = number of attributes
 
 
-====== страница 24 ======
+---------- страница 24 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 24
@@ -650,7 +650,7 @@ SSE
 (
 
 
-====== страница 25 ======
+---------- страница 25 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 25
@@ -714,7 +714,7 @@ Optimal Clustering
 Original Points
 
 
-====== страница 26 ======
+---------- страница 26 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 26
@@ -728,7 +728,7 @@ differing
 outliers.
 
 
-====== страница 27 ======
+---------- страница 27 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 27
@@ -737,7 +737,7 @@ Original Points
 K-means (3 Clusters)
 
 
-====== страница 28 ======
+---------- страница 28 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 28
@@ -746,7 +746,7 @@ Original Points
 K-means (3 Clusters)
 
 
-====== страница 29 ======
+---------- страница 29 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 29
@@ -755,7 +755,7 @@ Original Points
 K-means (2 Clusters)
 
 
-====== страница 30 ======
+---------- страница 30 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 30
@@ -766,7 +766,7 @@ One solution is to use many clusters.
 Find parts of clusters, but need to put together.
 
 
-====== страница 31 ======
+---------- страница 31 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 31
@@ -775,7 +775,7 @@ Original Points
 K-means Clusters
 
 
-====== страница 32 ======
+---------- страница 32 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 32
@@ -784,7 +784,7 @@ Original Points
 K-means Clusters
 
 
-====== страница 33 ======
+---------- страница 33 ----------
 Importance of Choosing Initial Centroids
 -2
 -1.5
@@ -902,7 +902,7 @@ y
 Iteration 6
 
 
-====== страница 34 ======
+---------- страница 34 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 34
@@ -1023,7 +1023,7 @@ y
 Iteration 6
 
 
-====== страница 35 ======
+---------- страница 35 ----------
 Importance of Choosing Initial Centroids …
 -2
 -1.5
@@ -1122,7 +1122,7 @@ y
 Iteration 5
 
 
-====== страница 36 ======
+---------- страница 36 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 36
@@ -1224,7 +1224,7 @@ y
 Iteration 5
 
 
-====== страница 37 ======
+---------- страница 37 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 37
@@ -1245,7 +1245,7 @@ Sometimes the initial centroids will readjust themselves in
 Consider an example of five pairs of clusters
 
 
-====== страница 38 ======
+---------- страница 38 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 38
@@ -1253,7 +1253,7 @@ Introduction to Data Mining, 2nd Edition
 Starting with two initial centroids in one cluster of each pair of clusters
 
 
-====== страница 39 ======
+---------- страница 39 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 39
@@ -1325,7 +1325,7 @@ Iteration 4
 Starting with two initial centroids in one cluster of each pair of clusters
 
 
-====== страница 40 ======
+---------- страница 40 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 40
@@ -1334,7 +1334,7 @@ Starting with some pairs of clusters having three initial centroids, while other
 have only one.
 
 
-====== страница 41 ======
+---------- страница 41 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 41
@@ -1406,7 +1406,7 @@ y
 Iteration 4
 
 
-====== страница 42 ======
+---------- страница 42 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 42
@@ -1425,7 +1425,7 @@ perform a hierarchical clustering
 – Not as susceptible to initialization issues
 
 
-====== страница 43 ======
+---------- страница 43 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 43
@@ -1460,7 +1460,7 @@ proportional to
 End For
 
 
-====== страница 44 ======
+---------- страница 44 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 44
@@ -1494,7 +1494,7 @@ Empty
 Cluster
 
 
-====== страница 45 ======
+---------- страница 45 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 45
@@ -1508,7 +1508,7 @@ clusters
 repeated several times.
 
 
-====== страница 46 ======
+---------- страница 46 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 46
@@ -1524,7 +1524,7 @@ each assignment (incremental approach)
 – Can use “weights” to change the impact
 
 
-====== страница 47 ======
+---------- страница 47 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 47
@@ -1542,7 +1542,7 @@ low SSE
 u ISODATA
 
 
-====== страница 48 ======
+---------- страница 48 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 48
@@ -1555,14 +1555,14 @@ hierarchical clustering
 CLUTO:  http://glaros.dtc.umn.edu/gkhome/cluto/cluto/overview
 
 
-====== страница 49 ======
+---------- страница 49 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 49
 Bisecting K-means Example
 
 
-====== страница 50 ======
+---------- страница 50 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 50
@@ -1596,7 +1596,7 @@ merges or splits
 5
 
 
-====== страница 51 ======
+---------- страница 51 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 51
@@ -1610,7 +1610,7 @@ clusters
 phylogeny reconstruction, …)
 
 
-====== страница 52 ======
+---------- страница 52 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 52
@@ -1629,7 +1629,7 @@ distance matrix
 – Merge or split one cluster at a time
 
 
-====== страница 53 ======
+---------- страница 53 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 53
@@ -1658,7 +1658,7 @@ Different approaches to defining the distance between
 clusters distinguish the different algorithms
 
 
-====== страница 54 ======
+---------- страница 54 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 54
@@ -1691,7 +1691,7 @@ p11
 p12
 
 
-====== страница 55 ======
+---------- страница 55 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 55
@@ -1724,7 +1724,7 @@ p11
 p12
 
 
-====== страница 56 ======
+---------- страница 56 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 56
@@ -1758,7 +1758,7 @@ p11
 p12
 
 
-====== страница 57 ======
+---------- страница 57 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 57
@@ -1794,7 +1794,7 @@ p11
 p12
 
 
-====== страница 58 ======
+---------- страница 58 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 58
@@ -1824,7 +1824,7 @@ function
 Proximity Matrix
 
 
-====== страница 59 ======
+---------- страница 59 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 59
@@ -1853,7 +1853,7 @@ function
 – Ward’s Method uses squared error
 
 
-====== страница 60 ======
+---------- страница 60 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 60
@@ -1882,7 +1882,7 @@ function
 – Ward’s Method uses squared error
 
 
-====== страница 61 ======
+---------- страница 61 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 61
@@ -1911,7 +1911,7 @@ function
 – Ward’s Method uses squared error
 
 
-====== страница 62 ======
+---------- страница 62 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 62
@@ -1942,7 +1942,7 @@ function
 ´
 
 
-====== страница 63 ======
+---------- страница 63 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 63
@@ -1955,7 +1955,7 @@ proximity graph
 Distance Matrix:
 
 
-====== страница 64 ======
+---------- страница 64 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 64
@@ -1986,7 +1986,7 @@ Dendrogram
 0.2
 
 
-====== страница 65 ======
+---------- страница 65 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 65
@@ -1996,7 +1996,7 @@ Six Clusters
 • Can handle non-elliptical shapes
 
 
-====== страница 66 ======
+---------- страница 66 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 66
@@ -2007,7 +2007,7 @@ Two Clusters
 Three Clusters
 
 
-====== страница 67 ======
+---------- страница 67 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 67
@@ -2018,7 +2018,7 @@ most distant points in the different clusters
 Distance Matrix:
 
 
-====== страница 68 ======
+---------- страница 68 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 68
@@ -2053,7 +2053,7 @@ Dendrogram
 4
 
 
-====== страница 69 ======
+---------- страница 69 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 69
@@ -2063,7 +2063,7 @@ Two Clusters
 • Less susceptible to noise and outliers
 
 
-====== страница 70 ======
+---------- страница 70 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 70
@@ -2074,7 +2074,7 @@ Two Clusters
 • Biased towards globular clusters
 
 
-====== страница 71 ======
+---------- страница 71 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 71
@@ -2119,7 +2119,7 @@ i
 Distance Matrix:
 
 
-====== страница 72 ======
+---------- страница 72 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 72
@@ -2151,7 +2151,7 @@ Dendrogram
 4
 
 
-====== страница 73 ======
+---------- страница 73 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 73
@@ -2164,7 +2164,7 @@ Link
 – Biased towards globular clusters
 
 
-====== страница 74 ======
+---------- страница 74 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 74
@@ -2179,7 +2179,7 @@ distance squared
 – Can be used to initialize K-means
 
 
-====== страница 75 ======
+---------- страница 75 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 75
@@ -2234,7 +2234,7 @@ MAX
 5
 
 
-====== страница 76 ======
+---------- страница 76 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 76
@@ -2246,7 +2246,7 @@ that one point (p) is in the current tree but the other (q) is not
 – Add q to the tree and put an edge between p and q
 
 
-====== страница 77 ======
+---------- страница 77 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 77
@@ -2254,7 +2254,7 @@ MST: Divisive Hierarchical Clustering
 ●Use MST for constructing hierarchy of clusters
 
 
-====== страница 78 ======
+---------- страница 78 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 78
@@ -2268,7 +2268,7 @@ proximity matrix must be updated and searched
 some cleverness
 
 
-====== страница 79 ======
+---------- страница 79 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 79
@@ -2284,7 +2284,7 @@ globular shapes
 – Breaking large clusters
 
 
-====== страница 80 ======
+---------- страница 80 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 80
@@ -2308,7 +2308,7 @@ A noise point is any point that is not a core point or a border
 point 
 
 
-====== страница 81 ======
+---------- страница 81 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 81
@@ -2316,7 +2316,7 @@ DBSCAN: Core, Border, and Noise Points
 MinPts = 7
 
 
-====== страница 82 ======
+---------- страница 82 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 82
@@ -2325,7 +2325,7 @@ DBSCAN Algorithm
 ●Perform clustering on the remaining points
 
 
-====== страница 83 ======
+---------- страница 83 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 83
@@ -2336,7 +2336,7 @@ border and noise
 Eps = 10, MinPts = 4
 
 
-====== страница 84 ======
+---------- страница 84 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 84
@@ -2347,7 +2347,7 @@ Clusters
 • Can handle clusters of different shapes and sizes
 
 
-====== страница 85 ======
+---------- страница 85 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 85
@@ -2359,7 +2359,7 @@ Original Points
 • High-dimensional data
 
 
-====== страница 86 ======
+---------- страница 86 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 86
@@ -2375,7 +2375,7 @@ So, plot sorted distance of every point to its kth
 nearest neighbor
 
 
-====== страница 87 ======
+---------- страница 87 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 87
@@ -2393,7 +2393,7 @@ evaluate the “goodness” of the resulting clusters?
 – To compare two clusters
 
 
-====== страница 88 ======
+---------- страница 88 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 88
@@ -2482,7 +2482,7 @@ Complete
 Link
 
 
-====== страница 89 ======
+---------- страница 89 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 89
@@ -2507,7 +2507,7 @@ evaluate the entire clustering or just individual clusters.
 Different Aspects of Cluster Validation
 
 
-====== страница 90 ======
+---------- страница 90 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 90
@@ -2529,7 +2529,7 @@ numerical measure that implements the criterion.
 Measures of Cluster Validity
 
 
-====== страница 91 ======
+---------- страница 91 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 91
@@ -2559,7 +2559,7 @@ clusters.
 Measuring Cluster Validity Via Correlation
 
 
-====== страница 92 ======
+---------- страница 92 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 92
@@ -2609,7 +2609,7 @@ Corr = -0.9235
 Corr = -0.5810
 
 
-====== страница 93 ======
+---------- страница 93 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 93
@@ -2666,7 +2666,7 @@ Similarity
 1
 
 
-====== страница 94 ======
+---------- страница 94 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 94
@@ -2723,7 +2723,7 @@ x
 y
 
 
-====== страница 95 ======
+---------- страница 95 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 95
@@ -2780,7 +2780,7 @@ x
 y
 
 
-====== страница 96 ======
+---------- страница 96 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 96
@@ -2837,7 +2837,7 @@ Similarity
 Complete Link
 
 
-====== страница 97 ======
+---------- страница 97 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 97
@@ -2875,7 +2875,7 @@ DBSCAN
 3000
 
 
-====== страница 98 ======
+---------- страница 98 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 98
@@ -2919,7 +2919,7 @@ SSE
 6
 
 
-====== страница 99 ======
+---------- страница 99 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 99
@@ -2935,7 +2935,7 @@ Internal Measures: SSE
 SSE of clusters found using K-means
 
 
-====== страница 100 ======
+---------- страница 100 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 100
@@ -2965,7 +2965,7 @@ index values is significant
 Framework for Cluster Validity
 
 
-====== страница 101 ======
+---------- страница 101 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 101
@@ -3019,7 +3019,7 @@ x
 y
 
 
-====== страница 102 ======
+---------- страница 102 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 102
@@ -3069,7 +3069,7 @@ Corr = -0.9235
 Corr = -0.5810
 
 
-====== страница 103 ======
+---------- страница 103 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 103
@@ -3113,7 +3113,7 @@ BSS
 (
 
 
-====== страница 104 ======
+---------- страница 104 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 104
@@ -3240,7 +3240,7 @@ SSE
 K=1 cluster:
 
 
-====== страница 105 ======
+---------- страница 105 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 105
@@ -3254,7 +3254,7 @@ cohesion
 separation
 
 
-====== страница 106 ======
+---------- страница 106 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 106
@@ -3277,7 +3277,7 @@ Distances used
 to calculate b
 
 
-====== страница 107 ======
+---------- страница 107 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 107
@@ -3297,7 +3297,7 @@ cluster
 ●But this is what people use most of the time
 
 
-====== страница 108 ======
+---------- страница 108 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 108
@@ -3355,7 +3355,7 @@ Cluster 3
 𝑛
 
 
-====== страница 109 ======
+---------- страница 109 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 109
@@ -3374,7 +3374,7 @@ uFor the precision of a clustering you can take the maximum
 𝑃𝑟𝑒𝑐𝑖, 𝑗+ 𝑅𝑒𝑐(𝑖, 𝑗)
 
 
-====== страница 110 ======
+---------- страница 110 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 110
@@ -3431,7 +3431,7 @@ Precision: (0.38, 0.38, 0.38)
 Recall: (0.35, 0.42, 0.38)  
 
 
-====== страница 111 ======
+---------- страница 111 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 111
@@ -3464,14 +3464,14 @@ Precision: 1
 Recall: 0.35  
 
 
-====== страница 112 ======
+---------- страница 112 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 112
 External Measures of Cluster Validity: Entropy and Purity
 
 
-====== страница 113 ======
+---------- страница 113 ----------
 02/14/2018
 Introduction to Data Mining, 2nd Edition 
 113

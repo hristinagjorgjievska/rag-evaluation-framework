@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 1
                              RANDOM FORESTS--RANDOM FEATURES
    Leo Breiman
@@ -26,7 +26,7 @@ of features used in the splitting.  These ideas are al;so
 applicable to regression.
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 2
 1. Random Forests
 1.1 Introduction
@@ -66,7 +66,7 @@ overfitting is not a problem.  We give a simplified and extended version of
 the Amit and Geman [1997] analysis to show that the accuracy of of a random
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 3
 forest depends on the strength of the individual tree classifiers and a measure
 of the dependence between them.
@@ -105,7 +105,7 @@ results for regression are in Section 10.  Concluding remarks are given in
 Section 11.
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 4
 2  Characterizing the Accuracy of Random Forests
 2.1 Random Forests Converge
@@ -138,7 +138,7 @@ Definition 2.1.   The margin function for a random forest is
 and the strength of the set of classifiers  {h(x,Θ)} is
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 5
            s=EX,Y mr(X,Y)
 Assuming s ≥0, Chebychev’s inequality gives
@@ -168,7 +168,7 @@ var(mr) = ρ(EΘsd(Θ))2
                                                    ≤ρEΘ var(Θ)
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 6
 where  ρ is the mean value of the correlation.    Write
 EΘ var(Θ) ≤EΘ(EX,Yrmg(Θ,X,Y))2 −s2
@@ -205,7 +205,7 @@ Define
 sj =EX,Y (PΘ(h(X,Θ)=Y)−PΘ(h(X,Θ)= j))
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 7
 to be the strength of the set of classifiers {h(x,Θ)} relative to class j.   Note that
 this definition of strength does not depend on the forest.  Using Chebyshev
@@ -256,7 +256,7 @@ replacement, from the original training set.  Then a tree is grown on the new
 training set using random feature selection.   The trees grown are not pruned.
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 8
 There are two reasons for using  bagging.  The first is that the use of bagging
 seems to enhance accuracy when random features are used.  The second is
@@ -299,7 +299,7 @@ only one randomly selected variable, i.e. F=1.  The second took F to be  the
 first integer less than log2M+1, where M is the number of inputs.
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 9
 Our experiments use 13 smaller sized data sets from the UCI repository,  4
 larger sets separated into training and test sets, and 4 synthetic data The first
@@ -416,7 +416,7 @@ the test set errors averaged.    The same procedure was followed for the
 Adaboost runs which are based on combining  50 trees.
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 10
 In the runs on the larger data sets, the random forest results for the first three
 sets were based on combining 100 trees--the zip-code procedure combined 200.
@@ -520,7 +520,7 @@ more values of F instead of the preset two.   But the procedure is not overly
 sensitive to the value of F.   The average absolute difference between the error
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 11
 rate using F=1 and the higher value of F is less than 1% .   The difference is
 most pronounced on the three large data sets.
@@ -559,7 +559,7 @@ determined from the training set. The test set results are given in Table 3
 where the 3rd column contains the results for F=2.
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 12
 Table 2 Test Set Errors (%)
 Data Set
@@ -657,7 +657,7 @@ values of F are close together, then the out-of-bag estimates will select a valu
 of F almost at random.
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 13
 6.  Empirical Results  on Strength and Correlation
 The purpose of this section is to look at the effect of strength and correlation
@@ -700,7 +700,7 @@ show a slight decease.   We conjecture that with larger and more complex data
 sets, the strength continues to increase longer before it plateaus out.
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 14
   Our results indicate that better random forests have lower correlation
 between classifiers  and higher strength,   The randomness used in tree
@@ -749,7 +749,7 @@ For any function f defined on the weight space, define the operator
 Tf (w)= f (φ(w)) .  We conjecture that T is ergodic with invariant measure
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 15
 π(dw).    Then (7) will converge to  EQπ[I(h(x,w)= j)] where the distribution
 Qπ(dw)=Q(w)π(dw)/ Q(v)π(dv)
@@ -789,7 +789,7 @@ and 6 experiments.  Because of the lengths of the runs, only the 9 smallest
 data sets are used.   Table 3 gives the increases in error rates due to the noise.
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 16
 Table 3 Increases in Error Rates Due to Noise (%)
 Data Set
@@ -860,7 +860,7 @@ p(j,k)=p(j,k)+.4*rnd
 end do
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 17
 end do
 do n=1,N
@@ -904,7 +904,7 @@ with the trend,  Forest-RI was run with F=25 and stopped after 2000 iterations.
 The test set error is 2.8%.  Strength is .28, correlation .065  and c/s2 = .83.
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 18
 Its interesting that forest-RI could produce error rates not far above the Bayes
 error rate.   The individual classifiers are weak.  For F=1, the average tree
@@ -939,7 +939,7 @@ PE*( forest) = EX,Y[EΘ(Y−h(X,Θ)]2
            = EΘEΘ'EX,Y (Y−h(X,Θ))(Y−h(X,Θ'))                   (9)
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 19
 The term on the right in (9) is a covariance and can be written as
 EΘEΘ' (ρ(Θ, Θ' )sd(Θ)sd(Θ' ))
@@ -1000,7 +1000,7 @@ Of these data sets, the Boston Housing, Abalone and Servo are available at the
 UCI repository.  The Robot Arm data was provided by Michael Jordan.    The
 
 
-====== страница 20 ======
+---------- страница 20 ----------
 20
 last three data sets are synthetic.   They originated in Friedman [1991] and are
 also described in Breiman[1998].  These are the same data sets used to compare
@@ -1071,7 +1071,7 @@ the bagging or by using  a large number of features.  For instance, for the robo
 arm data set, using 100 features drops the error to 3.9.
 
 
-====== страница 21 ======
+---------- страница 21 ----------
 21
 For the same number of inputs combined, over a wide range,  the error does
 not change much with the number of features.  In the number used is too
@@ -1132,7 +1132,7 @@ reduce bias and operates effectively in classification as well as in regression.
 But , like arcing, it also changes the training set as it progresses.
 
 
-====== страница 22 ======
+---------- страница 22 ----------
 22
 Forests give results competitive with boosting and adaptive bagging, yet do
 not progressively change the training set.   Their accuracy indicates that they
@@ -1178,7 +1178,7 @@ International Conference, pp. 148-156
 new explanation for the effectiveness of voting methods.
 
 
-====== страница 23 ======
+---------- страница 23 ----------
 23
        
 The Annals of Statistics, 26(5):1651-1686, 1998.
@@ -1239,7 +1239,7 @@ I(x∈Sk ).
 The right hand side is PΘ(h(Θ,x)= j).
 
 
-====== страница 24 ======
+---------- страница 24 ----------
 24
 Proof of Theorem 9.1  There are a finite set of hyper-rectangles R1, ... RK such
 that if  yk is the average of the training sets y-values for all training input
@@ -1279,7 +1279,7 @@ sd(θ ) = [ p1 + p2 + ( p1 −p2 )2 ]
 where
 
 
-====== страница 25 ======
+---------- страница 25 ----------
 25
 p1 = EX,Y (h(X, Θ) = Y )
 p2 = EX,Y (h(X, Θ) = ˆj (X, Y ))
@@ -1292,7 +1292,7 @@ Substitute these estimates into (A2) to get an estimate of  sd(Θk ).  Average
 the sd(Θk ) over all k to get the final estimate of sd(Θ).
 
 
-====== страница 26 ======
+---------- страница 26 ----------
 26
 0
 . 1
@@ -1333,7 +1333,7 @@ CORRELATION AND STRENGTH
 TEST SET AND OB ERROR
 
 
-====== страница 27 ======
+---------- страница 27 ----------
 27
 0
 .3
@@ -1371,7 +1371,7 @@ CORRELATION AND STRENGTH
 TEST SET AND OB ERROR
 
 
-====== страница 28 ======
+---------- страница 28 ----------
 28
 0
 . 2
@@ -1410,7 +1410,7 @@ CORRELATION AND STRENGTH
 TEST SET AND OB ERROR
 
 
-====== страница 29 ======
+---------- страница 29 ----------
 29
 
 

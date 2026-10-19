@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 3.4. Metrics and scoring: quantifying the quality of predictions
 
 3.4.1. Which scoring function should I use?

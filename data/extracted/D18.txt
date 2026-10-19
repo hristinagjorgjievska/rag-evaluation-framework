@@ -1,10 +1,10 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Unsupervised learning
 Clustering, Auto-encoders
 1
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 Outline
 •
 Clustering
@@ -19,7 +19,7 @@ Autoencoders
 CS109b: Advanced Topics in Data Science, https://harvard-iacs.github.io/2020-CS109B/
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 What is Cluster Analysis?
 •
 Finding groups of objects such that the objects in a group 
@@ -34,7 +34,7 @@ distances are
 maximized
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 Applications of Cluster Analysis
 4
 •
@@ -87,7 +87,7 @@ Schlumberger-UP
 4
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 Clustering Techniques
 5
 Clustering 
@@ -155,7 +155,7 @@ Chamelon [1999]
 • CLARANS [1994]
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 Notion of a Cluster can be Ambiguous
 How many clusters?
 6
@@ -164,7 +164,7 @@ How many clusters?
 4
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 Types of Clusterings
 • A clustering is a set of clusters
 • Important distinction between hierarchical and partitional sets 
@@ -177,14 +177,14 @@ such that each data object belongs in exactly one subset
 7
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 Partitional Clustering
 Original Points
 A Partitional  Clustering
 8
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 Hierarchical Clustering
 Traditional Hierarchical Clustering
 Traditional Dendrogram
@@ -199,7 +199,7 @@ p3
 p4
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 Types of Clusters
 •
 Well-separated clusters
@@ -213,7 +213,7 @@ Density-based clusters
 10
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 Types of Clusters: Well-Separated
 • Well-Separated Clusters: 
 – A cluster is a set of points such that any point in a cluster is closer (or 
@@ -223,7 +223,7 @@ the cluster.
 11
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 Types of Clusters: Prototype-Based
 • Prototype-based
 – A cluster is a set of objects such that an object in a cluster is closer 
@@ -235,7 +235,7 @@ in the cluster, or a medoid, the most “representative” point of a cluster
 12
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 Types of Clusters: Contiguity-Based
 • Contiguous Cluster (Nearest neighbor or Transitive)
 – A cluster is a set of points such that a point in a cluster is closer (or more 
@@ -245,7 +245,7 @@ the cluster.
 13
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 Types of Clusters: Density-Based
 • Density-based
 – A cluster is a dense region of points, which is separated by low-density 
@@ -256,7 +256,7 @@ outliers are present.
 14
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 Clustering Algorithms
 • K-means and its variants
 • Hierarchical clustering
@@ -264,7 +264,7 @@ Clustering Algorithms
 15
 
 
-====== страница 16 ======
+---------- страница 16 ----------
 K-means Clustering
 •
 Partitional clustering approach 
@@ -279,7 +279,7 @@ The basic algorithm is very simple:
 16
 
 
-====== страница 17 ======
+---------- страница 17 ----------
 Example of K-means Clustering
 -2
 -1.5
@@ -398,7 +398,7 @@ Iteration 6
 17
 
 
-====== страница 18 ======
+---------- страница 18 ----------
 Example of K-means Clustering
 -2
 -1.5
@@ -517,7 +517,7 @@ Iteration 6
 18
 
 
-====== страница 19 ======
+---------- страница 19 ----------
 K-means Clustering – Details
 •
 Simple iterative algorithm
@@ -547,7 +547,7 @@ I = number of iterations, d = number of attributes
 19
 
 
-====== страница 20 ======
+---------- страница 20 ----------
 • A common objective function (used with Euclidean distance measure) 
 is Sum of Squared Error (SSE)
 – For each point, the error is the distance to the nearest cluster center
@@ -563,7 +563,7 @@ K-means Objective Function
 20
 
 
-====== страница 21 ======
+---------- страница 21 ----------
 Two different K-means Clusterings
 -2
 -1.5
@@ -625,7 +625,7 @@ Original Points
 21
 
 
-====== страница 22 ======
+---------- страница 22 ----------
 Importance of Choosing Initial Centroids …
 -2
 -1.5
@@ -725,7 +725,7 @@ Iteration 5
 22
 
 
-====== страница 23 ======
+---------- страница 23 ----------
 Importance of Choosing Initial Centroids …
 -2
 -1.5
@@ -835,7 +835,7 @@ or remain
 separate
 
 
-====== страница 24 ======
+---------- страница 24 ----------
 Problems with Selecting Initial Points
 •
 If there are K ‘real’ clusters, then the chance of selecting one centroid from 
@@ -854,13 +854,13 @@ Consider an example of five pairs of clusters
 24
 
 
-====== страница 25 ======
+---------- страница 25 ----------
 10 Clusters Example
 25
 Starting with two initial centroids in one cluster of each pair of clusters
 
 
-====== страница 26 ======
+---------- страница 26 ----------
 10 Clusters Example
 0
 5
@@ -930,13 +930,13 @@ Starting with two initial centroids in one cluster of each pair of clusters
 26
 
 
-====== страница 27 ======
+---------- страница 27 ----------
 10 Clusters Example
 Starting with some pairs of clusters having three initial centroids, while other have only one
 27
 
 
-====== страница 28 ======
+---------- страница 28 ----------
 10 Clusters Example
 0
 5
@@ -1006,7 +1006,7 @@ Iteration 4
 Starting with some pairs of clusters having three initial centroids, while other have only one
 
 
-====== страница 29 ======
+---------- страница 29 ----------
 Solutions to Initial Centroids Problem
 •
 Multiple runs
@@ -1020,7 +1020,7 @@ select among these initial centroids
 29
 
 
-====== страница 30 ======
+---------- страница 30 ----------
 K-means++
 •
 This approach can be slower than random initialization, but very 
@@ -1047,7 +1047,7 @@ proportional to
 30
 
 
-====== страница 31 ======
+---------- страница 31 ----------
 Pre-processing and Post-processing
 •
 Pre-processing
@@ -1063,7 +1063,7 @@ Post-processing
 31
 
 
-====== страница 32 ======
+---------- страница 32 ----------
 Empty Clusters
 32
 •
@@ -1096,7 +1096,7 @@ Empty
 Cluster
 
 
-====== страница 33 ======
+---------- страница 33 ----------
 Handling Empty Clusters
 •
 Basic K-means algorithm can yield empty clusters
@@ -1111,7 +1111,7 @@ times.
 33
 
 
-====== страница 34 ======
+---------- страница 34 ----------
 Updating Centers Incrementally
 •
 In the basic K-means algorithm, centroids are updated after all 
@@ -1126,7 +1126,7 @@ An alternative is to update the centroids after each assignment
 34
 
 
-====== страница 35 ======
+---------- страница 35 ----------
 Limitations of K-means
 •
 K-means has problems when clusters are of differing 
@@ -1138,28 +1138,28 @@ K-means has problems when the data contains outliers.
 35
 
 
-====== страница 36 ======
+---------- страница 36 ----------
 Limitations of K-means: Differing Sizes
 Original Points
 K-means (3 Clusters)
 36
 
 
-====== страница 37 ======
+---------- страница 37 ----------
 Limitations of K-means: Differing Density
 Original Points
 K-means (3 Clusters)
 37
 
 
-====== страница 38 ======
+---------- страница 38 ----------
 Limitations of K-means: Non-globular Shapes (non-convex)
 Original Points
 K-means (2 Clusters)
 38
 
 
-====== страница 39 ======
+---------- страница 39 ----------
 Overcoming K-means Limitations
 Original Points
 K-means Clusters
@@ -1168,7 +1168,7 @@ Find parts of clusters, but need to put together.
 39
 
 
-====== страница 40 ======
+---------- страница 40 ----------
 Overcoming K-means Limitations
 40
 Original Points
@@ -1177,7 +1177,7 @@ One solution is to use many clusters.
 Find parts of clusters, but need to put together.
 
 
-====== страница 41 ======
+---------- страница 41 ----------
 Overcoming K-means Limitations
 41
 Original Points
@@ -1186,7 +1186,7 @@ One solution is to use many clusters.
 Find parts of clusters, but need to put together.
 
 
-====== страница 42 ======
+---------- страница 42 ----------
 Hierarchical Clustering 
 •
 Produces a set of nested clusters organized as a hierarchical tree
@@ -1212,7 +1212,7 @@ Can be visualized as a dendrogram
 0.05
 
 
-====== страница 43 ======
+---------- страница 43 ----------
 Strengths of Hierarchical Clustering
 •
 Do not have to assume any particular number of clusters
@@ -1225,7 +1225,7 @@ reconstruction, …)
 43
 
 
-====== страница 44 ======
+---------- страница 44 ----------
 Hierarchical Clustering
 •
 Two main types of hierarchical clustering:
@@ -1243,7 +1243,7 @@ Traditional hierarchical algorithms use a similarity or distance matrix
 44
 
 
-====== страница 45 ======
+---------- страница 45 ----------
 Agglomerative Clustering Algorithm
 •
 Most popular hierarchical clustering technique
@@ -1271,7 +1271,7 @@ the different algorithms
 45
 
 
-====== страница 46 ======
+---------- страница 46 ----------
 Starting Situation 
 •
 Start with clusters of individual points and a proximity matrix
@@ -1293,7 +1293,7 @@ p5
 Proximity Matrix
 
 
-====== страница 47 ======
+---------- страница 47 ----------
 Starting Situation 
 •
 Start with clusters of individual points and a proximity matrix
@@ -1316,7 +1316,7 @@ Proximity Matrix
 p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12
 
 
-====== страница 48 ======
+---------- страница 48 ----------
 Intermediate Situation
 C1
 C4
@@ -1345,7 +1345,7 @@ C4
 C3
 
 
-====== страница 49 ======
+---------- страница 49 ----------
 •
 We want to merge the two closest clusters (C2 and C5)  and update 
 the proximity matrix. 
@@ -1375,7 +1375,7 @@ C4
 C3
 
 
-====== страница 50 ======
+---------- страница 50 ----------
 After Merging
 •
 The question is “How do we update the proximity matrix?” 
@@ -1408,7 +1408,7 @@ C3
 C2 U C5
 
 
-====== страница 51 ======
+---------- страница 51 ----------
 How to Define Inter-Cluster Distance
 p1
 p3
@@ -1443,7 +1443,7 @@ Proximity Matrix
 51
 
 
-====== страница 52 ======
+---------- страница 52 ----------
 How to Define Inter-Cluster Similarity
 p1
 p3
@@ -1477,7 +1477,7 @@ Ward’s Method uses
 squared error
 
 
-====== страница 53 ======
+---------- страница 53 ----------
 How to Define Inter-Cluster Similarity
 p1
 p3
@@ -1511,7 +1511,7 @@ Ward’s Method uses
 squared error
 
 
-====== страница 54 ======
+---------- страница 54 ----------
 How to Define Inter-Cluster Similarity
 p1
 p3
@@ -1545,7 +1545,7 @@ Ward’s Method uses
 squared error
 
 
-====== страница 55 ======
+---------- страница 55 ----------
 How to Define Inter-Cluster Similarity
 p1
 p3
@@ -1581,7 +1581,7 @@ Ward’s Method uses
 squared error
 
 
-====== страница 56 ======
+---------- страница 56 ----------
 •
 Proximity of two clusters is based on the two closest points in the 
 different clusters
@@ -1639,7 +1639,7 @@ p5
 p6
 
 
-====== страница 57 ======
+---------- страница 57 ----------
 Hierarchical Clustering: MIN
 Nested Clusters
 Dendrogram
@@ -1662,7 +1662,7 @@ C5
 3               6                2                5               4                1
 
 
-====== страница 58 ======
+---------- страница 58 ----------
 Strength of MIN
 •
 Can handle non-elliptical shapes
@@ -1671,7 +1671,7 @@ Original Points
 Six Clusters
 
 
-====== страница 59 ======
+---------- страница 59 ----------
 Limitations of MIN
 •
 Sensitive to noise and outliers
@@ -1681,7 +1681,7 @@ Two Clusters
 Three Clusters
 
 
-====== страница 60 ======
+---------- страница 60 ----------
 MAX or Complete Linkage
 •
 Proximity of two clusters is based on the two most distant points in 
@@ -1739,7 +1739,7 @@ p5
 p6
 
 
-====== страница 61 ======
+---------- страница 61 ----------
 0.4
 0.35
 0.3
@@ -1810,7 +1810,7 @@ p5
 p6
 
 
-====== страница 62 ======
+---------- страница 62 ----------
 0.4
 0.35
 0.3
@@ -1869,7 +1869,7 @@ p4
 p5
 
 
-====== страница 63 ======
+---------- страница 63 ----------
 0.4
 0.35
 0.3
@@ -1918,7 +1918,7 @@ C1
 p4
 
 
-====== страница 64 ======
+---------- страница 64 ----------
 0.4
 0.35
 0.3
@@ -1960,7 +1960,7 @@ C3
 C5
 
 
-====== страница 65 ======
+---------- страница 65 ----------
 Strength of MAX
 •
 Less susceptible to noise and outliers
@@ -1969,7 +1969,7 @@ Original Points
 Two Clusters
 
 
-====== страница 66 ======
+---------- страница 66 ----------
 Limitations of MAX
 •
 Tends to break large clusters
@@ -1980,7 +1980,7 @@ Original Points
 Two Clusters
 
 
-====== страница 67 ======
+---------- страница 67 ----------
 Group Average
 •
 Proximity of two clusters is the average of pairwise proximity 
@@ -2073,7 +2073,7 @@ p5
 p6
 
 
-====== страница 68 ======
+---------- страница 68 ----------
 Hierarchical Clustering: Group Average
 Nested Clusters
 Dendrogram
@@ -2144,7 +2144,7 @@ p6
 0.34
 
 
-====== страница 69 ======
+---------- страница 69 ----------
 Hierarchical Clustering: Group Average
 Nested Clusters
 Dendrogram
@@ -2190,7 +2190,7 @@ p4
 p5
 
 
-====== страница 70 ======
+---------- страница 70 ----------
 Hierarchical Clustering: Group Average
 Nested Clusters
 Dendrogram
@@ -2230,7 +2230,7 @@ C1
 p4
 
 
-====== страница 71 ======
+---------- страница 71 ----------
 Hierarchical Clustering: Group Average
 Nested Clusters
 Dendrogram
@@ -2266,7 +2266,7 @@ C2
 C3
 
 
-====== страница 72 ======
+---------- страница 72 ----------
 Hierarchical Clustering: Group Average
 •
 Compromise between Single and Complete Link
@@ -2281,7 +2281,7 @@ Biased towards globular clusters
 72
 
 
-====== страница 73 ======
+---------- страница 73 ----------
 Cluster Similarity: Ward’s Method
 •
 Similarity of two clusters is based on the increase in squared error 
@@ -2297,7 +2297,7 @@ Hierarchical analogue of K-means
 73
 
 
-====== страница 74 ======
+---------- страница 74 ----------
 Hierarchical Clustering: Comparison
 Group Average
 Ward’s Method
@@ -2350,7 +2350,7 @@ MAX
 74
 
 
-====== страница 75 ======
+---------- страница 75 ----------
 Hierarchical Clustering:  Problems and Limitations
 •
 Once a decision is made to combine two clusters, it cannot be 
@@ -2365,7 +2365,7 @@ Different schemes have problems with one or more of the following:
 75
 
 
-====== страница 76 ======
+---------- страница 76 ----------
 Density Based Clustering
 •
 Clusters are regions of high density that are separated from one 
@@ -2373,7 +2373,7 @@ another by regions on low density.
 76
 
 
-====== страница 77 ======
+---------- страница 77 ----------
 DBSCAN
 •
 DBSCAN is a density-based algorithm.
@@ -2394,7 +2394,7 @@ A noise point is any point that is not a core point or a border point
 77
 
 
-====== страница 78 ======
+---------- страница 78 ----------
 DBSCAN: Core, Border, and Noise Points
 MinPts = 7
 78
@@ -2409,7 +2409,7 @@ C
 Eps
 
 
-====== страница 79 ======
+---------- страница 79 ----------
 DBSCAN: Core, Border and Noise Points
 •
 Eps = 10, MinPts = 4
@@ -2418,7 +2418,7 @@ Original Points
 Point types: core, border, noise
 
 
-====== страница 80 ======
+---------- страница 80 ----------
 DBSCAN Algorithm
 • Form clusters using core points, and assign border 
 points to one of its neighboring clusters
@@ -2435,7 +2435,7 @@ Assign each border point to one of the clusters of its associated core points
 80
 
 
-====== страница 81 ======
+---------- страница 81 ----------
 Clusters
 When DBSCAN Works Well
 •
@@ -2446,7 +2446,7 @@ Can handle clusters of different shapes and sizes
 Original Points
 
 
-====== страница 82 ======
+---------- страница 82 ----------
 When DBSCAN Does NOT Work Well
 •
 Varying densities
@@ -2458,7 +2458,7 @@ Original Points
 (MinPts = 4, Eps = 9.75)
 
 
-====== страница 83 ======
+---------- страница 83 ----------
 DBSCAN: Determining EPS and MinPts
 •
 Idea is that for points in a cluster, their kth nearest neighbors are at 
@@ -2470,7 +2470,7 @@ So, plot sorted distance of every point to its kth nearest neighbor
 83
 
 
-====== страница 84 ======
+---------- страница 84 ----------
 Cluster Validity 
 •
 For supervised classification we have a variety of measures to 
@@ -2491,7 +2491,7 @@ Then why do we want to evaluate them?
 84
 
 
-====== страница 85 ======
+---------- страница 85 ----------
 Clusters found in Random Data
 0
 0.2
@@ -2578,7 +2578,7 @@ Link
 85
 
 
-====== страница 86 ======
+---------- страница 86 ----------
 Measuring Cluster Validity Via Correlation
 •
 Correlation of ideal similarity and proximity matrices for the K-means 
@@ -2626,7 +2626,7 @@ Corr = −0.5810
 86
 
 
-====== страница 87 ======
+---------- страница 87 ----------
 Using Similarity Matrix for Cluster Validation
 • Order the similarity matrix with respect to cluster labels and inspect 
 visually. 
@@ -2681,7 +2681,7 @@ Similarity
 87
 
 
-====== страница 88 ======
+---------- страница 88 ----------
 Using Similarity Matrix for Cluster Validation
 •
 Clusters in random data are not so crisp
@@ -2737,7 +2737,7 @@ y
 88
 
 
-====== страница 89 ======
+---------- страница 89 ----------
 Points
 Points
 20
@@ -2793,7 +2793,7 @@ y
 K-means
 
 
-====== страница 90 ======
+---------- страница 90 ----------
 Using Similarity Matrix for Cluster Validation
 •
 Clusters in random data are not so crisp
@@ -2849,7 +2849,7 @@ Similarity
 Complete Link
 
 
-====== страница 91 ======
+---------- страница 91 ----------
 Using Similarity Matrix for Cluster Validation
 1 
 2
@@ -2885,7 +2885,7 @@ Using Similarity Matrix for Cluster Validation
 DBSCAN
 
 
-====== страница 92 ======
+---------- страница 92 ----------
 Internal Measures: SSE
 • Clusters in more complicated figures aren’t well separated
 • Internal Index:  Used to measure the goodness of a clustering 
@@ -2926,7 +2926,7 @@ SSE
 92
 
 
-====== страница 93 ======
+---------- страница 93 ----------
 Internal Measures: SSE
 •
 SSE curve for a more complicated data set
@@ -2942,12 +2942,12 @@ means
 93
 
 
-====== страница 94 ======
+---------- страница 94 ----------
 Autoencoders
 94
 
 
-====== страница 95 ======
+---------- страница 95 ----------
 REVIEW: Neural Networks as function approximation
 •
 Given an input x and an output y there exists a mapping from input 
@@ -2964,7 +2964,7 @@ obtain the estimate 𝑓መ(𝑥).
 95
 
 
-====== страница 96 ======
+---------- страница 96 ----------
 Autoencoders
 •
 An Autoencoder is a feedforward 
@@ -2980,7 +2980,7 @@ encoder
 decoder
 
 
-====== страница 97 ======
+---------- страница 97 ----------
 Representational Learning
 Task
 Learn
@@ -2998,7 +2998,7 @@ Latent space
 97
 
 
-====== страница 98 ======
+---------- страница 98 ----------
 Representational Learning: Self-supervised Learning
 •
 We train the two networks by minimizing the reconstruction loss 
@@ -3019,7 +3019,7 @@ The autoencoder gets that name because it automatically finds the best way to en
 input so that the decoded version is as close as possible to the input.
 
 
-====== страница 99 ======
+---------- страница 99 ----------
 The simplest autoencoder
 •
 Encode with a simple fully connected network (FCN)
@@ -3034,7 +3034,7 @@ Flatten Image 10,000
 Parameters: 10K x 20 + 20
 
 
-====== страница 100 ======
+---------- страница 100 ----------
 The simplest autoencoder
 •
 Encode and decode together after training
@@ -3054,7 +3054,7 @@ Flatten Image 10,000
 …
 
 
-====== страница 101 ======
+---------- страница 101 ----------
 Residuals 100x100
 Output Image 100x100
 Input Image 100x100
@@ -3064,7 +3064,7 @@ Comparing the input and output pixel by pixel.
 101
 
 
-====== страница 102 ======
+---------- страница 102 ----------
 Bottleneck
 102
 • We start with  10,000 
@@ -3080,7 +3080,7 @@ HIDDEN LAYERS
 Latent Variables
 
 
-====== страница 103 ======
+---------- страница 103 ----------
 Unsupervised Learning of Latent Variables
 •
 It sort-of is supervised learning because we give the system 
@@ -3091,7 +3091,7 @@ inputs.
 103
 
 
-====== страница 104 ======
+---------- страница 104 ----------
 Autoencoders in action (cont)
 •
 Passing a face to the trained autoencoder returns:
@@ -3104,14 +3104,14 @@ How about if we input a photo of an eagle?
 10K neurons
 
 
-====== страница 105 ======
+---------- страница 105 ----------
 Autoencoders in action (cont)
 •
 We must train with a variety of images.
 105
 
 
-====== страница 106 ======
+---------- страница 106 ----------
 Autoencoders in action (cont)
 •
 After training with those images, let’s test how well it generalizes: 
@@ -3122,7 +3122,7 @@ Network have never seen anything like this, so it is no surprise that
 could not reconstruct this. 
 
 
-====== страница 107 ======
+---------- страница 107 ----------
 Autoencoders in action (cont)
 •
 We can use a better training set such as the Olivetti faces
@@ -3131,7 +3131,7 @@ We can use a better training set such as the Olivetti faces
 10K neurons
 
 
-====== страница 108 ======
+---------- страница 108 ----------
 A better autoencoder
 108
 20 neurons
@@ -3142,7 +3142,7 @@ with one-layer FCN encoder
 and one-layer FCN decoder
 
 
-====== страница 109 ======
+---------- страница 109 ----------
 20 latent                original
 variables        reconstructed
 109
@@ -3154,7 +3154,7 @@ variables   reconstructed
 WHY DOES IT WORK?
 
 
-====== страница 110 ======
+---------- страница 110 ----------
 Deeper
 110
 Shallow 20 latent variables
@@ -3182,7 +3182,7 @@ For a better representation we can add neurons in one layer or go deeper.
 DEEPER IS BETTER 
 
 
-====== страница 111 ======
+---------- страница 111 ----------
 Exploring autoencoders
 •
 How can be sure that there is information in the latent space? 
@@ -3193,7 +3193,7 @@ How can be sure that there is information in the latent space?
 variables   reconstructed
 
 
-====== страница 112 ======
+---------- страница 112 ----------
 Exploring autoencoders
 •
 For that let’s explore the actual latent space.  
@@ -3208,7 +3208,7 @@ Output
 Latent space
 
 
-====== страница 113 ======
+---------- страница 113 ----------
 Exploring autoencoders
 •
 If latent space does not contain any information, then changing  the 
@@ -3223,7 +3223,7 @@ Output
 Latent space
 
 
-====== страница 114 ======
+---------- страница 114 ----------
 Exploring autoencoders
 •
 If latent space does not contain any information, then changing  the 
@@ -3238,7 +3238,7 @@ Output
 Latent space
 
 
-====== страница 115 ======
+---------- страница 115 ----------
 Exploring autoencoders
 •
 If latent space does not contain any information, then changing  the 
@@ -3251,7 +3251,7 @@ Output
 Latent space
 
 
-====== страница 116 ======
+---------- страница 116 ----------
 Applying to novel input
 •
 Check again if the deep AE trained on MNIST works with an image of a 
@@ -3273,7 +3273,7 @@ NO
 Since we are dealing with images, it is best to use CNNs
 
 
-====== страница 117 ======
+---------- страница 117 ----------
 Max pooling 2x2 
 Output: 14x14x16
 Max pooling 
@@ -3290,7 +3290,7 @@ Output: 14x14x8
 Output: 7x7x3
 
 
-====== страница 118 ======
+---------- страница 118 ----------
 Upsampling 2x2
 Output: 28x28x16
 Convolutional Autoencoders
@@ -3305,7 +3305,7 @@ Output: 14x14x16
 Output: 28x28x1
 
 
-====== страница 119 ======
+---------- страница 119 ----------
 Convolutional Autoencoders
 119
 Original Images
@@ -3318,14 +3318,14 @@ ConvAE
 latent variables
 
 
-====== страница 120 ======
+---------- страница 120 ----------
 Variational Autoencoders (VAE) – an improvement
 120
 • Keeps track of means and standard deviations in the latent space
 • VAE preserve details unlike Autoencoders that tend to average things
 
 
-====== страница 121 ======
+---------- страница 121 ----------
 A history of generative AI models
 •
 2014-2017: The VAE and GAN era

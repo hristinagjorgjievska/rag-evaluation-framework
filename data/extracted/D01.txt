@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 Lecture 1. Data, Similarity Measures, Preprocessing, and
 Transformation of Data
 Data Mining, prof. Biljana Tojtovska Ribarski
@@ -75,7 +75,7 @@ Data →Task →Compare →Measure →Why it fits / Pitfall.
 1
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 Many mistakes arise from skipping one of the middle steps.
 Definition: Comparison-aware analysis
 A comparison-aware analysis is an analysis in which the representation of the data, the
@@ -120,7 +120,7 @@ absolute totals.
 2
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 If one z-scores each building separately, the problem changes. It no longer answers which building
 consumes the most. Instead, it answers which building has a month that is unusual relative to
 its own baseline. That may be a useful question, but it is a different question.
@@ -147,7 +147,7 @@ comparable influence, and the clustering can change.
 3
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 −4
 −2
 0
@@ -200,7 +200,7 @@ Dynamic Time Warping (DTW) provides a second cautionary example. DTW is often ve
 4
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 useful for time series, but it can fail both triangle inequality and identity of indiscernibles. This
 motivates semi-metric corrections in some settings.
 1.4.3 Example Where Cosine Similarity Is Zero
@@ -250,7 +250,7 @@ by coordinate - wise comparison.
 5
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 1.5.3 Example: Mixed Data and the Failure of One-Hot Euclidean Distance
 Consider a small mixed-type table of six customer or person records. Some variables are numeric
 (age, income), some ordinal (education level), some categorical (occupation, city), and one is
@@ -296,7 +296,7 @@ to naive Euclidean comparison of adjacency matrices or node-order-dependent enco
 6
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 1.6.1 Graphs and Networks
 Ego - network data such as SNAP ego - Facebook graphs are a good example. A common task is
 social - circle discovery or social - structure comparison. The question is not how different two
@@ -340,7 +340,7 @@ These points are therefore close on Earth even though they look far apart numeri
 7
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 1.7.2 When Spherical Geometry Is Still Not Enough: Street-Network Distance
 Geodesic closeness is still not the right concept when movement is constrained by a road network.
 If two points are separated by a river, they may be geographically close and yet require a long
@@ -389,7 +389,7 @@ inserted, deleted, or substituted segments.
 8
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 Example: Route comparison
 Let
 T1 = (a, b, c, d, e),
@@ -439,7 +439,7 @@ versus pass/fail.
 9
 
 
-====== страница 10 ======
+---------- страница 10 ----------
 • Phi coefficient: binary versus binary variables, for example smoker yes/no versus disease
 yes/no.
 1.8.4 Circular Correlation
@@ -487,7 +487,7 @@ checking, for example on event logs such as the BPI Challenge 2012 dataset.
 10
 
 
-====== страница 11 ======
+---------- страница 11 ----------
 • Change-point or drift detection: detect when the generating process changes over time.
 • Causal discovery: infer plausible causal graph structure rather than only statistical
 association.
@@ -532,7 +532,7 @@ great-circle distance.
 11
 
 
-====== страница 12 ======
+---------- страница 12 ----------
 1.13.6 Which City Will Be Affected First by Smoke or Pollution?
 Atmospheric spread follows flow rather than straight lines. A flow-based or Lagrangian travel-time
 notion is therefore more appropriate. A city farther away geographically but downwind may be
@@ -577,7 +577,7 @@ Task.
 12
 
 
-====== страница 13 ======
+---------- страница 13 ----------
 1. Compute the asymmetric counts on A:
 a = #(1, 1),
 b = #(1, 0),
@@ -626,7 +626,7 @@ answer.
 13
 
 
-====== страница 14 ======
+---------- страница 14 ----------
 • Do not compare mixed-type records with one-hot Euclidean distance without checking
 whether the induced geometry makes sense.
 • Do not assume that two routes, two graphs, or two distributions should be compared by
@@ -671,7 +671,7 @@ B = (240, 160, 0, 80, 20),
 14
 
 
-====== страница 15 ======
+---------- страница 15 ----------
 where the components correspond to spending on groceries, clothing, electronics, books,
 and pharmacy products.
 (b) The same two customers are also described by their total monthly spending over the

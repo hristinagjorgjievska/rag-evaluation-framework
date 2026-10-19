@@ -1,0 +1,23 @@
+{
+  "D01": ["NUMBER"],
+  "D02": ["NUMBER"],
+  "D03": ["NUMBER"],
+  "D04": ["NUMBER"],
+  "D05": ["NUMBER"],
+  "D06": ["NUMBER/NUMBER"],
+  "D07": ["NUMBER", "NUMBER/NUMBER/NUMBER", "Introduction to Data Mining, NUMBERnd Edition", "Tan, Steinbach, Karpatne, Kumar"],
+  "D08": ["NUMBER", "NUMBER/NUMBER/NUMBER", "Introduction to Data Mining, NUMBERnd Edition"],
+  "D09": ["NUMBER", "NUMBER/NUMBER/NUMBER", "Introduction to Data Mining, NUMBERnd Edition"],
+  "D10": ["NUMBER", "NUMBER/NUMBER/NUMBER", "Introduction to Data Mining, NUMBERnd Edition"],
+  "D11": ["NUMBER", "NUMBER/NUMBER/NUMBER", "Introduction to Data Mining, NUMBERnd Edition"],
+  "D12": ["NUMBER", "NUMBER/NUMBER/NUMBER", "Introduction to Data Mining, NUMBERnd Edition"],
+  "D13": ["NUMBER", "NUMBER/NUMBER/NUMBER", "Introduction to Data Mining, NUMBERnd Edition"],
+  "D14": ["NUMBER"],
+  "D15": ["NUMBER"],
+  "D16": ["NUMBER"],
+  "D17": ["NUMBER"],
+  "D18": ["NUMBER"],
+  "D28": ["NUMBER", "NUMBER.NUMBER", "•", "CHAPTER NUMBER", "LOGISTIC REGRESSION"],
+  "D30": ["NUMBER", "Chawla, Bowyer, Hall & Kegelmeyer", "SMOTE"],
+  "D31": ["NUMBER"]
+}

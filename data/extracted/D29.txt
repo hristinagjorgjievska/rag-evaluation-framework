@@ -1,4 +1,4 @@
-====== страница 1 ======
+---------- страница 1 ----------
 A Few Useful Things to Know about Machine Learning
 Pedro Domingos
 Department of Computer Science and Engineering
@@ -104,7 +104,7 @@ far when every single possible combination has appeared in
 some learner!
 
 
-====== страница 2 ======
+---------- страница 2 ----------
 Table 1: The three components of learning algorithms.
 Representation
 Evaluation
@@ -233,7 +233,7 @@ his famous “no free lunch” theorems, according to which no
 learner can beat random guessing over all possible functions
 
 
-====== страница 3 ======
+---------- страница 3 ----------
 to be learned [25].
 This seems like rather depressing news. How then can we
 ever hope to learn anything? Luckily, the functions we want
@@ -349,7 +349,7 @@ are two standard deviations. See Domingos and Pazzani [10]
 for details.
 
 
-====== страница 4 ======
+---------- страница 4 ----------
 50
 55
 60
@@ -469,7 +469,7 @@ bor works quite well for handwritten digit recognition even
 though images of digits have one dimension per pixel, be-
 
 
-====== страница 5 ======
+---------- страница 5 ----------
 cause the space of digit images is much smaller than the
 space of all possible images. Learners can implicitly take
 advantage of this lower eﬀective dimension, or algorithms
@@ -600,7 +600,7 @@ One way this is often done today is by automatically gen-
 erating large numbers of candidate features and selecting
 
 
-====== страница 6 ======
+---------- страница 6 ----------
 the best by (say) their information gain with respect to the
 class. But bear in mind that features that look irrelevant
 in isolation may be relevant in combination. For example,
@@ -716,7 +716,7 @@ In the early days of machine learning, everyone had their fa-
 vorite learner, together with some a priori reasons to believe
 
 
-====== страница 7 ======
+---------- страница 7 ----------
 in its superiority. Most eﬀort went into trying many varia-
 tions of it and selecting the best one. Then systematic em-
 pirical comparisons showed that the best learner varies from
@@ -842,7 +842,7 @@ sible functions, and these subsets are diﬀerent for learners
 with diﬀerent representations. Therefore the key question is
 
 
-====== страница 8 ======
+---------- страница 8 ----------
 not “Can it be represented?”, to which the answer is often
 trivial, but “Can it be learned?” And it pays to try diﬀerent
 learners (and possibly combine them).
@@ -965,7 +965,7 @@ York, NY, 1997.
 data. In Proceedings of the Fourteenth International
 
 
-====== страница 9 ======
+---------- страница 9 ----------
 Conference on Machine Learning, pages 245–253,
 Nashville, TN, 1997. Morgan Kaufmann.
 [18] J. Pearl. On the connection between the complexity
